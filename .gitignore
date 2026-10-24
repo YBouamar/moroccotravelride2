@@ -1,0 +1,39 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# builds
+.next/
+out/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# expo
+.expo/
+apps/driver/android/
+apps/driver/ios/
+
+# env (only .env.example is committed)
+.env
+.env.*
+!.env.example
+
+# supabase local
+supabase/.branches/
+supabase/.temp/
+
+# tests
+coverage/
+playwright-report/
+test-results/
+
+# os / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+
+# claude local settings
+.claude/settings.local.json

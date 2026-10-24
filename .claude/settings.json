@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm db:test:*)",
+      "Bash(pnpm build:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*.local)",
+      "Read(./**/.env.local)",
+      "Bash(supabase db push:*)",
+      "Bash(git push --force:*)"
+    ]
+  }
+}
