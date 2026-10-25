@@ -7,11 +7,11 @@
 | Outil | Version | État constaté le 2026-10-24 |
 |---|---|---|
 | Node.js | 24 LTS | ✅ 24.22.1 |
-| pnpm | 12.x | ⬜ à installer : `corepack enable && corepack prepare pnpm@latest --activate` |
+| pnpm | 12.15.0 | ✅ installé via `npm i -g pnpm@12.15.0` (corepack demande des droits administrateur) |
 | Docker Desktop | récent | ✅ 29.8.2 |
-| Supabase CLI | 2.x | ⬜ à installer (via `pnpm add -D supabase` dans le repo, recommandé) |
+| Supabase CLI | 2.122.0 | ✅ dépendance du dépôt (`pnpm exec supabase`) |
 | Git | récent | ✅ 2.56 |
-| gitleaks | récent | ⬜ à installer (hook pre-commit) |
+| gitleaks | 8.30.1 | ✅ `winget install Gitleaks.Gitleaks` (redémarrer le terminal pour le PATH) |
 
 ## 2. Variables d'environnement
 
@@ -19,7 +19,7 @@ Référence : [`.env.example`](../.env.example). Stockage : variables d'environn
 
 ## 3. Hébergement et déploiement ⬜ (ADR-013)
 
-Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify** (À CONFIRMER).
+Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify** (ACTÉ).
 
 - **Préparation du serveur** : Ubuntu LTS, utilisateur non root, SSH par clé, ufw, fail2ban, unattended-upgrades (voir SECURITY.md §2.9).
 - **Supabase auto-hébergé** : docker compose officiel, secrets régénérés, Studio accessible par tunnel SSH uniquement.

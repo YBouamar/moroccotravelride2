@@ -63,7 +63,8 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 ### 2.7 Secrets et chaîne d'approvisionnement
 - 🟡 `.gitignore` excluant `.env*` (hors `.env.example`) : en place (Phase 0).
 - 🟡 `.env.example` documenté : version initiale (Phase 0).
-- ⬜ Hook pre-commit gitleaks, `pnpm audit` en CI, Dependabot.
+- ✅ Hook pre-commit gitleaks (fichiers indexés) ; historique analysé le 2026-10-25 : aucune fuite.
+- 🟡 `pnpm audit` (0 vulnérabilité au 2026-10-25) et Dependabot : configurés dans `.github/`, actifs dès que le dépôt GitHub existe.
 - ⬜ Logs sans PII ni jetons ; Sentry `beforeSend` filtrant.
 
 ### 2.8 Sauvegarde et continuité (auto-hébergement, ADR-013)

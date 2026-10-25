@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-25 · **Phase en cours** : Phase 0 terminée (réponses de Yassine intégrées), en attente du feu vert pour l'étape 2 · **Prochaine étape** : Étape 2 (Phase 1a, socle monorepo)
+**Dernière mise à jour** : 2026-10-25 · **Phase en cours** : Phase 1, étape 2 terminée, en attente de validation · **Prochaine étape** : Étape 3 (Phase 1b, web + design system + i18n)
 
 ## 1. Plan d'exécution par étapes
 
@@ -9,7 +9,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | Étape | Phase | Contenu | Critère de validation | État |
 |---|---|---|---|---|
 | 1 | 0 | Cadrage : dépôt git, rangement des visuels, docs de contexte, commandes `.claude/`, questions ouvertes, intégration des réponses | `CLAUDE.md` + `PROGRESS.md` suffisent pour comprendre le plan | ✅ fait |
-| 2 | 1a | Socle : pnpm + Turborepo, paquets `shared` / `db` / `ui` / `payments` vides mais câblés, TS strict, ESLint, Prettier, Vitest, `pnpm check` + hook pre-commit (gitleaks), workflow GitHub prêt mais inactif (ADR-015), versions figées | `pnpm check` au vert en local | ⬜ |
+| 2 | 1a | Socle : pnpm + Turborepo, paquets `shared` / `db` / `ui` / `payments` vides mais câblés, TS strict, ESLint, Prettier, Vitest, `pnpm check` + hook pre-commit (gitleaks), workflow GitHub prêt mais inactif (ADR-015), versions figées | `pnpm check` au vert en local | ✅ fait |
 | 3 | 1b | Web : Next.js, design system (tokens de la marque, shadcn/ui, composants de base), logos dérivés (favicon carré, icônes), i18n fr / en / ar + RTL, layouts public / SaaS / admin | Page d'accueil vide avec logo, bascule fr / en / ar avec RTL, contrastes AA | ⬜ |
 | 4 | 1c | Supabase local : migrations identité (profiles, companies, company_members, company_documents, platform_settings, cities, vehicle_types), fonctions de sécurité, RLS + pgTAP, seed de base, types générés | `pnpm db:test` au vert, isolation société A / B prouvée | ⬜ |
 | 5 | 1d | Auth : inscription transporteur (crée société `pending` + owner), connexion, mot de passe oublié, MFA admin, rate limiting, Turnstile, en-têtes de sécurité, sélection de société ; Expo initialisé (écran de connexion, i18n, icône) | **Critère Phase 1** : inscription, connexion, changement de langue avec RTL, isolation prouvée | ⬜ |
@@ -32,14 +32,15 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
   - Précisions : le transporteur encaisse dans les deux modes et règle la commission chaque mois (ADR-016, remplace ADR-012) ; Coolify et dépôt privé actés.
   - Docs mises à jour : BUSINESS_RULES (nouvelle machine à états), ARCHITECTURE, DATA_MODEL, UX, SECURITY (§2.9 serveur), RUNBOOK, TESTING, BACKLOG, PROJECT_OVERVIEW, CLAUDE.md.
 
+- 2026-10-25, étape 2 : monorepo pnpm 12 + Turborepo, paquets `@mtr/shared` (commission, montants, modes de paiement), `@mtr/ui` (tokens de marque + contrôle des contrastes), `@mtr/db` (types provisoires), `@mtr/payments` (interface `PaymentProvider`) ; TypeScript 6.0.3 strict, ESLint 10, Prettier, Vitest (25 tests), CLI Supabase, `pnpm check`, hook pre-commit (gitleaks + lint-staged), workflow CI + Dependabot prêts. ADR-017.
+
 ## 3. En cours
 
-Rien. Attente du feu vert pour l'étape 2.
+Rien. Attente de validation de l'étape 2.
 
 ## 4. Bloqué / points d'attention
 
-- `pnpm` et le CLI Supabase ne sont pas installés sur le poste (installés au début de l'étape 2, avec ton accord).
-- Pas encore de dépôt distant : dépôt privé GitHub à créer dès que le MCP GitHub est connecté (ADR-015).
+- **Dépôt GitHub non créé** : le MCP GitHub est connecté (compte `YBouamar`) mais la création de `moroccotravelride2` a échoué (403 : le jeton n'a pas la permission de créer des dépôts). À corriger côté Yassine (voir session du 2026-10-25), puis création + push.
 - Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
@@ -48,8 +49,8 @@ Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au 
 
 Q17 (suspension 15 jours après l'échéance) et Q18 (GitHub) réglées. **Aucune question ouverte.**
 
-Action en attente côté Yassine : créer un jeton GitHub et enregistrer le serveur MCP GitHub (commande dans le journal du 2026-10-25), puis redémarrer Claude Code.
+Action en attente côté Yassine : donner au jeton GitHub le droit de créer des dépôts, ou créer `moroccotravelride2` vide à la main.
 
 ## 6. Prochaine étape précise
 
-Étape 2 (Phase 1a) : installer pnpm (corepack) et le CLI Supabase en dépendance de dev, créer le monorepo (pnpm workspaces, Turborepo, paquets internes), configurer TS strict, ESLint, Prettier, Vitest avec un premier test réel (`computeCommission` : 80 000 c à 20 % donne 16 000 / 64 000), script `pnpm check`, hook pre-commit gitleaks, workflow CI prêt, figer les versions dans ARCHITECTURE.md.
+Étape 3 (Phase 1b) : application `apps/web` (Next.js 16, App Router, `output: 'standalone'`), Tailwind 4 branché sur `@mtr/ui`, shadcn/ui et composants de base (bouton, champ, carte, badge, toast, dialogue), polices Montserrat / Inter / Noto Sans Arabic via `next/font`, logos et favicons copiés depuis `assets/brand/logos/`, next-intl fr / en / ar avec RTL et sélecteur de langue, layouts public / SaaS / admin vides, en-têtes de sécurité de base.

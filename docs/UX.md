@@ -80,7 +80,7 @@ Répartition indicative : 60 % fonds clairs, 25 % bleu nuit, 15 % turquoise.
 | `background` | `#F4F8FA` | `#0B1D2E` | Fond de page |
 | `surface` | `#FFFFFF` | `#102A43` | Cartes, modales |
 | `foreground` | `#102A43` | `#F4F8FA` | Texte courant |
-| `muted` | `#5B7083` | `#9FB3C8` | Texte secondaire (à valider au contraste en Phase 1) |
+| `muted` | `#52667A` | `#9FB3C8` | Texte secondaire (AA vérifié par test : 5,55 sur fond clair) |
 | `border` | `#D9E2EC` | `#243B53` | Séparateurs |
 | `danger` / `warning` / `success` | à définir en Phase 1 avec contraste AA | | États |
 

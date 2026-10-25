@@ -42,17 +42,18 @@ supabase/          migrations, functions, seed.sql, tests pgTAP
 assets/brand/logos/  kit officiel svg/ png/ favicon/ (ne pas modifier) ; v1/ archivé
 ```
 
-## Commandes (disponibles à partir de la Phase 1)
+## Commandes
 
 ```
 pnpm install            # dépendances
 pnpm dev                # web + mobile via turbo
-pnpm lint | typecheck | test | build
+pnpm check              # format + lint + typecheck + test + build (gate locale)
+pnpm lint | typecheck | test | build | format
 pnpm db:start           # supabase start (Docker requis)
 pnpm db:reset           # migrations + seed
 pnpm db:test            # supabase test db (pgTAP)
-pnpm db:types           # régénère packages/db/src/types.ts
-pnpm e2e                # Playwright
+pnpm db:types           # régénère packages/db/src/types.ts (étape 4)
+pnpm e2e                # Playwright (étape 5)
 ```
 
 Commandes de session : `/debut-session`, `/fin-session`, `/decision`, `/audit-securite`.

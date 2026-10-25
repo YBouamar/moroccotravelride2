@@ -41,6 +41,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 - **Date** : 2026-10-24 · **Statut** : ACCEPTÉE (règle d'arrondi À CONFIRMER)
 - **Décision** : tous les montants en `bigint` centimes. Taux stockés en `numeric(5,4)` (ex. 0.2000). Commission arrondie au centime le plus proche (arrondi bancaire non retenu, half-up). La part transporteur est toujours `total - commission`.
+- **Implémentation (2026-10-25)** : côté TypeScript, montants en `number` entiers sûrs (`Number.isSafeInteger`) et taux en **points de base entiers** (20 % = 2000 bps = `numeric` 0.2000 en base) ; produit intermédiaire calculé en `bigint`. Voir `packages/shared/src/money.ts`.
 
 ## ADR-007 : TVA paramétrable
 
@@ -58,7 +59,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 - **Date** : 2026-10-24 · **Statut** : ACCEPTÉE (imposée par le cadrage) ; partie hébergement (Vercel, Supabase managé) REMPLACÉE PAR ADR-013
 - **Décision** : stack de la section 4 du cadrage. Versions relevées le 2026-10-24 dans [ARCHITECTURE.md](ARCHITECTURE.md), à figer en Phase 1 après test de compatibilité.
-- **Point d'attention** : TypeScript 7 (compilateur natif) est la dernière version stable ; si l'écosystème (Next.js, ESLint, Expo) n'est pas encore compatible, on figera la dernière 5.x / 6.x compatible et on le notera ici.
+- **Point d'attention (résolu le 2026-10-25)** : TypeScript 7.0.2 est la dernière stable, mais typescript-eslint 8.72 exige `typescript < 6.1`. TypeScript est donc figé en **6.0.3** ; montée en 7.x quand typescript-eslint la supportera (Dependabot le signalera).
 
 ## ADR-010 : Identité visuelle et accessibilité des couleurs
 
@@ -150,3 +151,18 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
   - La plateforme ne reçoit jamais l'argent du voyageur : la question de l'**encaissement pour compte de tiers disparaît** au lancement. Restent À VÉRIFIER : facturation de la commission au transporteur (facture mensuelle de la plateforme, TVA) et plafonds légaux de paiement en espèces.
   - La politique d'annulation (ADR-004) s'applique au remboursement par le transporteur s'il a déjà reçu un virement ; la commission due suit le prorata.
   - Risque principal : **commissions non déclarées** ou impayées. Mesures : rapprochement réservations terminées / paiements confirmés, relances automatiques du relevé, suspension marketplace (`marketplace_enabled = false`) si relevé impayé (15 jours après l'échéance, paramétrable, validé par Yassine le 2026-10-25).
+
+## ADR-017 : Outillage du monorepo (étape 2)
+
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE
+- **Décision** : dépendances de développement à la racine, versions exactes (pas de `^`) pour des builds reproductibles, mises à jour proposées par Dependabot :
+  - `turbo` : orchestration et cache des tâches lint / typecheck / test / build (imposé par le cadrage).
+  - `typescript` 6.0.3 : voir ADR-009.
+  - `eslint`, `@eslint/js`, `typescript-eslint`, `globals`, `eslint-config-prettier` : lint (interdiction de `any`, imports de types cohérents) sans conflit avec Prettier.
+  - `prettier` : formatage unique.
+  - `vitest` : tests unitaires (imposé par le cadrage).
+  - `@types/node` 24 : types de la version de Node utilisée.
+  - `husky` + `lint-staged` : hook pre-commit (gitleaks puis lint et formatage des seuls fichiers modifiés), indispensable tant qu'il n'y a pas de CI distante (ADR-015).
+  - `supabase` (CLI) : base locale, migrations, tests pgTAP, génération de types ; installé dans le dépôt pour que la version soit la même partout.
+- **Outils système** : pnpm 12.15.0 (installé par `npm i -g`, corepack nécessitant des droits administrateur sur ce poste) ; gitleaks 8.30.1 (winget).
+- **Paquets internes** (`@mtr/shared`, `@mtr/db`, `@mtr/ui`, `@mtr/payments`) : exportent directement leurs sources TypeScript, sans étape de build ; Next.js (`transpilePackages`) et Metro les compileront. Moins de configuration pour un développeur seul.

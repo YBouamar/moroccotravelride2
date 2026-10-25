@@ -9,14 +9,16 @@
 | Composants / actions | Vitest + Testing Library | Server Actions critiques (validation, refus d'accès), composants à logique | Ciblé |
 | E2E | Playwright | Réservation complète (paiement mock), acceptation transporteur, création et émission de facture, isolation entre deux sociétés, bascule RTL | Oui (scénarios listés) |
 
-## 2. Commandes (à partir de la Phase 1)
+## 2. Commandes
 
 ```
-pnpm test            # Vitest sur tous les paquets (turbo)
-pnpm db:test         # pgTAP, nécessite supabase start
-pnpm e2e             # Playwright, nécessite web + supabase locaux
-pnpm e2e --ui        # mode interactif
+pnpm check           # format + lint + typecheck + tests + build (avant tout commit important)
+pnpm test            # Vitest sur tous les paquets (turbo, avec cache)
+pnpm db:test         # pgTAP, nécessite pnpm db:start (à partir de l'étape 4)
+pnpm e2e             # Playwright (à partir de l'étape 5)
 ```
+
+État au 2026-10-25 : 25 tests unitaires (`@mtr/shared` : commission et arrondis ; `@mtr/ui` : contrastes AA de chaque paire de tokens, clair et sombre).
 
 ## 3. Données de démonstration (`supabase/seed.sql`, Phase 1 à 3)
 

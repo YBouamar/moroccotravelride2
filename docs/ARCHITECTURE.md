@@ -101,36 +101,40 @@ App chauffeur : démarrage du trajet (statut `in_progress`) puis envoi des posit
 
 `plan_features(plan_code, feature_key)` ; fonction SQL `has_feature(company_id, key)` utilisée par les politiques RLS des tables V2/V3 ; helper serveur `hasFeature()` et composant `<FeatureGate>` pour l'UI.
 
-## 5. Versions relevées (npm, 2026-10-24)
+## 5. Versions
 
-À figer en Phase 1 après vérification de compatibilité croisée (voir ADR-009).
+### 5.1 Figées (étape 2, 2026-10-25)
 
-| Paquet | Dernière stable |
-|---|---|
-| node (local) | 24.22.1 |
-| pnpm | 12.15.0 (non installé localement) |
-| turbo | 2.11.10 |
-| next | 16.4.3 |
-| react | 19.3.1 |
-| typescript | 7.0.2 (compatibilité à valider) |
-| tailwindcss | 4.3.3 |
-| next-intl | 4.14.9 |
-| @supabase/supabase-js | 2.118.0 |
-| @supabase/ssr | 0.12.7 |
-| supabase (CLI) | 2.122.0 (non installé localement) |
-| zod | 4.6.7 |
-| react-hook-form | 7.91.0 |
-| @tanstack/react-query | 5.104.5 |
-| expo | 58.0.19 |
-| expo-router | 58.0.26 |
-| i18next | 26.5.10 |
-| resend | 6.34.1 |
-| @react-pdf/renderer | 4.9.0 |
-| maplibre-gl | 6.15.0 |
-| vitest | 5.0.5 |
-| @playwright/test | 1.64.1 |
+| Outil / paquet | Version | Note |
+|---|---|---|
+| Node.js | 24.x (`.nvmrc`) | local 24.22.1 |
+| pnpm | 12.15.0 | champ `packageManager` |
+| turbo | 2.11.10 | |
+| typescript | 6.0.3 | 7.0.2 incompatible avec typescript-eslint (ADR-009) |
+| eslint / @eslint/js | 10.13.0 / 10.0.1 | config plate `eslint.config.mjs` |
+| typescript-eslint | 8.72.0 | |
+| prettier | 3.9.10 | |
+| vitest | 5.0.5 | |
+| @types/node | 24.19.2 | |
+| husky / lint-staged | 9.1.7 / 17.6.0 | |
+| supabase (CLI) | 2.122.0 | dépendance du dépôt |
+| gitleaks | 8.30.1 | outil système (winget) |
 
-Outils locaux constatés : Node 24, git 2.56, Docker 29.8 (requis pour `supabase start`).
+### 5.2 Relevées, à figer à leur étape
+
+| Paquet | Dernière stable (2026-10-24) | Étape |
+|---|---|---|
+| next / react | 16.4.3 / 19.3.1 | 3 |
+| tailwindcss | 4.3.3 | 3 |
+| next-intl | 4.14.9 | 3 |
+| @supabase/supabase-js / @supabase/ssr | 2.118.0 / 0.12.7 | 4 |
+| zod / react-hook-form | 4.6.7 / 7.91.0 | 3 à 5 |
+| @tanstack/react-query | 5.104.5 | Phase 2 |
+| expo / expo-router | 58.0.19 / 58.0.26 | 5 |
+| i18next | 26.5.10 | 5 |
+| resend / @react-pdf/renderer | 6.34.1 / 4.9.0 | Phases 2 et 3 |
+| maplibre-gl | 6.15.0 | Phase 4 |
+| @playwright/test | 1.64.1 | 5 |
 
 ## 6. Environnements
 
