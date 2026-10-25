@@ -1,0 +1,34 @@
+/* Generated from packages/ui/src/tokens.ts by `pnpm --filter @mtr/ui gen:css`. Do not edit. */
+:root {
+  --mtr-primary: #102A43;
+  --mtr-secondary: #087E8B;
+  --mtr-secondary-foreground: #FFFFFF;
+  --mtr-accent: #21B6A8;
+  --mtr-accent-foreground: #102A43;
+  --mtr-background: #F4F8FA;
+  --mtr-surface: #FFFFFF;
+  --mtr-foreground: #102A43;
+  --mtr-muted: #52667A;
+  --mtr-border: #D9E2EC;
+  --mtr-brand-navy: #102A43;
+  --mtr-brand-teal-deep: #087E8B;
+  --mtr-brand-teal: #21B6A8;
+  --mtr-brand-mist: #F4F8FA;
+  --mtr-brand-white: #FFFFFF;
+  --mtr-radius-control: 12px;
+  --mtr-radius-card: 12px;
+  --mtr-radius-app-icon: 24px;
+}
+
+:root.dark {
+  --mtr-primary: #E6EEF4;
+  --mtr-secondary: #3CC4D2;
+  --mtr-secondary-foreground: #0B1D2E;
+  --mtr-accent: #21B6A8;
+  --mtr-accent-foreground: #102A43;
+  --mtr-background: #0B1D2E;
+  --mtr-surface: #102A43;
+  --mtr-foreground: #F4F8FA;
+  --mtr-muted: #9FB3C8;
+  --mtr-border: #243B53;
+}
