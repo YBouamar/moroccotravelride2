@@ -1,6 +1,6 @@
 # Dossier de référence produit : MoroccoTravelRide
 
-> **Statut : PROVISOIRE.** Le fichier source `MoroccoTravelRide_Project_Overview.md` n'a pas été fourni lors de la Phase 0. Ce document est reconstitué à partir du prompt de cadrage et de la présentation de marque. Il sera remplacé par la copie du dossier officiel dès réception (voir question Q1 dans [PROGRESS.md](PROGRESS.md)).
+> **Statut : document de référence de travail.** Reconstitué à partir du prompt de cadrage, de la présentation de marque et des réponses de Yassine du 2026-10-25 (le fichier `MoroccoTravelRide_Project_Overview.md` mentionné dans le prompt n'existe pas). À relire par Yassine ; il fait foi une fois validé.
 
 ## 1. Vision
 
@@ -20,7 +20,7 @@ Réservation en ligne de transferts touristiques :
 - **intra-ville** (ex. aéroport Mohammed V vers un hôtel de Casablanca) ;
 - **inter-villes** (ex. Casablanca vers Marrakech).
 
-Le prix affiché est celui fixé par le transporteur (grille tarifaire). La plateforme prélève une commission (20 % par défaut) sur ce prix. Réservation au moins 24 h à l'avance.
+Le prix affiché est celui fixé par le transporteur (grille tarifaire). La plateforme prélève une commission (20 % par défaut) sur ce prix. Réservation au moins 24 h à l'avance, acceptée par le transporteur sous 2 h.
 
 ### Pilier B : SaaS de gestion
 
@@ -50,14 +50,15 @@ Chiffres de marché (taille, nombre de transporteurs agréés, flux touristiques
 
 ## 5. Contraintes
 
-- MVP porté par un fondateur solo : services managés, code simple, pas de microservices.
+- MVP porté par un fondateur solo : code simple, pas de microservices, briques open source éprouvées (Supabase, Coolify) pour limiter l'exploitation.
 - Trois langues dès le départ : français (défaut), anglais, arabe (RTL).
 - Conformité loi marocaine 09-08 (CNDP) pour les données personnelles.
-- Paiement en ligne via une passerelle marocaine (CMI visé), sans jamais manipuler de données de carte.
+- Paiement hors ligne au lancement : virement sur le compte du transporteur (qui doit 20 % à la plateforme) ou espèces à la plateforme (qui doit 80 % au transporteur), avec compensation périodique (ADR-012). Carte en ligne (CMI) reportée.
+- Hébergement sur un VPS Contabo, Supabase auto-hébergé (ADR-013).
 
 ## 6. Identité de marque
 
-Voir [UX.md, section Identité visuelle](UX.md#6-identité-visuelle). Logo : monogramme « M » formé de montagnes de l'Atlas, d'une route sinueuse, d'une kasbah et d'un palmier ; palette bleu nuit et turquoise.
+Voir [UX.md, section Identité visuelle](UX.md#6-identité-visuelle). Logo : monogramme « M » formé de montagnes de l'Atlas, d'une route sinueuse, d'une kasbah et d'un palmier ; palette bleu nuit et turquoise ; kit officiel dans `assets/brand/logos/`.
 
 ## 7. Plan de livraison
 

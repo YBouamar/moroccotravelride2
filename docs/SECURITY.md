@@ -46,17 +46,19 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ Buckets privés `company-documents`, `receipts`, chemins `{company_id}/...`, URL signées courtes (60 s à 5 min).
 - ⬜ Validation MIME réel (magic bytes), extension, taille max 10 Mo ; compression côté client.
 
-### 2.5 Paiements
-- ⬜ Page hébergée, aucune donnée carte.
-- ⬜ Vérification signature / hash de chaque callback, idempotence (`provider_ref` et `idempotency_key` uniques), montant recalculé côté serveur.
-- ⬜ Journal des transactions expurgé.
+### 2.5 Paiements (hors ligne, ADR-012)
+- ⬜ Aucune donnée de carte (pas de paiement en ligne au lancement).
+- ⬜ Confirmation d'un paiement réservée à l'encaisseur légitime (transporteur membre owner / accountant pour un virement, `platform_admin` pour les espèces), journalisée dans `audit_logs`.
+- ⬜ Montants dus (commission, part transporteur) calculés côté serveur depuis les valeurs figées de la réservation, jamais lus depuis le client.
+- ⬜ RIB des transporteurs : accès restreint, affiché au voyageur uniquement pour sa réservation confirmée.
+- ⬜ Le jour où la carte en ligne arrive : vérification de signature des callbacks, idempotence, montant recalculé (exigences d'origine conservées).
 
 ### 2.6 Données personnelles (loi 09-08, CNDP)
 - ⬜ Minimisation, consentement CGU / confidentialité, opt-in marketing séparé.
 - ⬜ Pages légales fr / en / ar marquées `À VALIDER` (juriste).
 - ⬜ Géolocalisation limitée aux trajets en cours, information du chauffeur, purge 90 jours.
 - ⬜ Export et anonymisation de compte.
-- ⬜ Déclaration CNDP du traitement et du transfert hors Maroc (ADR-008) : **À VÉRIFIER**.
+- ⬜ Déclaration CNDP du traitement et du transfert hors Maroc (VPS en UE, ADR-013) : reportée par Yassine, **à faire avant la mise en production**.
 
 ### 2.7 Secrets et chaîne d'approvisionnement
 - 🟡 `.gitignore` excluant `.env*` (hors `.env.example`) : en place (Phase 0).
@@ -64,10 +66,18 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ Hook pre-commit gitleaks, `pnpm audit` en CI, Dependabot.
 - ⬜ Logs sans PII ni jetons ; Sentry `beforeSend` filtrant.
 
-### 2.8 Sauvegarde et continuité
-- ⬜ Sauvegardes Supabase, PITR en production payante.
-- ⬜ Export pg_dump chiffré périodique vers stockage externe ; restauration testée (RUNBOOK).
-- ⬜ Environnements local / staging / production séparés.
+### 2.8 Sauvegarde et continuité (auto-hébergement, ADR-013)
+- ⬜ Pas de sauvegarde managée : `pg_dump` quotidien chiffré + sauvegarde des volumes Storage vers un stockage objet **hors du VPS**, rétention 30 jours.
+- ⬜ Instantané (snapshot) du VPS avant chaque mise à jour majeure.
+- ⬜ Restauration testée sur un environnement vierge, date du dernier test dans RUNBOOK.md.
+- ⬜ Environnements local / staging / production séparés (bases et secrets distincts).
+
+### 2.9 Serveur (VPS Contabo)
+- ⬜ Accès SSH par clé uniquement, connexion root et mot de passe désactivés, port non standard facultatif, fail2ban.
+- ⬜ Pare-feu (ufw) : seuls 80 / 443 (et SSH) ouverts ; Postgres, Studio Supabase et Coolify **jamais exposés publiquement** (accès par tunnel SSH ou VPN).
+- ⬜ Mises à jour de sécurité automatiques (unattended-upgrades) ; montée de version Supabase planifiée et testée en staging.
+- ⬜ Secrets Supabase auto-hébergé régénérés (JWT secret, clés anon et service_role, mot de passe Postgres, identifiants du tableau de bord) : **jamais les valeurs d'exemple du docker compose**.
+- ⬜ Supervision : disponibilité (healthcheck externe), espace disque, mémoire, expiration des certificats.
 
 ## 3. Audits
 

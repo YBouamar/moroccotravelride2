@@ -8,7 +8,7 @@
 - `src/lib/supabase.ts` : client anon, session dans `expo-secure-store`. **Jamais de service_role.**
 - `src/lib/offline-queue.ts` : file locale des actions (statuts, dépenses) rejouée au retour du réseau, idempotente (clé client).
 - `src/i18n/` : i18next, fr / en / ar avec `I18nManager` pour le RTL.
-- `assets/` : icône, adaptive icon et splash dérivés de `assets/brand/favicon.png` et `logo_vertical.png`.
+- `assets/` : icône (`MTR_icone_app_navy.png` 1024 px), adaptive icon (`MTR_symbole_couleur` sur fond bleu nuit), splash (`MTR_vertical_negatif` sur bleu nuit), copiés depuis `assets/brand/logos/`.
 
 ## Règles locales
 

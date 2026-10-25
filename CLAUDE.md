@@ -27,7 +27,7 @@ Stade : MVP, fondateur solo (Yassine). Priorité absolue : **simple à maintenir
 
 ## Stack
 
-pnpm workspaces + Turborepo · Next.js (App Router, TS strict) · Tailwind + shadcn/ui + lucide-react · React Hook Form + Zod · TanStack Query · Supabase (Postgres, Auth, Storage, Realtime, Edge Functions, pg_cron) · Expo + expo-router (app chauffeur) · next-intl / i18next (fr défaut, en, ar RTL) · MapLibre + OSM · Resend + React Email · @react-pdf/renderer · abstraction `PaymentProvider` (mock, CMI) · Turnstile · Upstash · Sentry · Vitest, Playwright, pgTAP · GitHub Actions · Vercel, EAS.
+pnpm workspaces + Turborepo · Next.js (App Router, TS strict) · Tailwind + shadcn/ui + lucide-react · React Hook Form + Zod · TanStack Query · Supabase (Postgres, Auth, Storage, Realtime, Edge Functions, pg_cron) · Expo + expo-router (app chauffeur) · next-intl / i18next (fr défaut, en, ar RTL) · MapLibre + OSM · Resend + React Email · @react-pdf/renderer · paiement hors ligne (virement au transporteur, espèces à la plateforme) + abstraction `PaymentProvider` pour une future carte en ligne · Turnstile · Upstash · Sentry · Vitest, Playwright, pgTAP · CI locale (`pnpm check`, hook pre-commit), workflow GitHub prêt · **Hébergement : VPS Contabo** (Docker, Supabase auto-hébergé, Next.js standalone, Coolify) · EAS pour les builds mobiles.
 
 ## Arborescence (cible)
 
@@ -39,7 +39,7 @@ packages/shared    Zod, constantes, calculs purs (commission, 24 h, TVA, états)
 packages/ui        tokens de design
 packages/payments  PaymentProvider + adaptateurs
 supabase/          migrations, functions, seed.sql, tests pgTAP
-assets/brand/      logos sources (ne pas modifier, dériver)
+assets/brand/logos/  kit officiel svg/ png/ favicon/ (ne pas modifier) ; v1/ archivé
 ```
 
 ## Commandes (disponibles à partir de la Phase 1)
@@ -84,4 +84,4 @@ Commandes de session : `/debut-session`, `/fin-session`, `/decision`, `/audit-se
 
 ## Identité visuelle (résumé, détail dans UX.md)
 
-Bleu nuit `#102A43` · Turquoise profond `#087E8B` · Turquoise clair `#21B6A8` · Fond `#F4F8FA` · Blanc `#FFFFFF`. Logos : `assets/brand/logo_horiz.png` (en-têtes), `logo_vertical.png` (auth, splash, e-mails), `favicon.png` (icônes, favicon, app mobile). Signature « Move smarter. Manage better. » dans les traductions.
+Bleu nuit `#102A43` · Turquoise profond `#087E8B` · Turquoise clair `#21B6A8` · Fond `#F4F8FA` · Blanc `#FFFFFF`. Logos dans `assets/brand/logos/` : `MTR_horizontal_couleur` (fond clair), `_negatif` (fond bleu nuit), `_blanc` (photo, dégradé), `MTR_vertical_*` (auth, splash, PDF), `MTR_symbole_*`, `MTR_icone_app_*`, `favicon/`. Polices : Montserrat (titres), Inter (texte), Noto Sans Arabic. Signature « Move smarter. Manage better. » dans les traductions.

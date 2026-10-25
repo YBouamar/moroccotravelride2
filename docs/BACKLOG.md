@@ -6,7 +6,9 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 
 | Prio | Sujet | Origine |
 |---|---|---|
+| P1 | Paiement par carte en ligne des réservations (CMI ou autre, adaptateur `PaymentProvider`) | ADR-012 |
 | P1 | Paiement récurrent en ligne des abonnements SaaS | ADR-005 |
+| P1 | Dossier CNDP (déclaration du traitement et du transfert vers le VPS en UE) avant production | ADR-013 |
 | P1 | Pénalités et règles d'annulation côté transporteur | BR-012 |
 | P2 | Suppléments tarifaires (nuit, siège enfant, bagage hors gabarit, attente) | ADR-003 |
 | P2 | Diffusion d'une réservation à plusieurs transporteurs (premier qui accepte) | ADR-002 |

@@ -15,23 +15,30 @@
 
 ## 2. Variables d'environnement
 
-Référence : [`.env.example`](../.env.example). Stockage : Vercel (web), secrets Supabase (edge functions), EAS (mobile). Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
+Référence : [`.env.example`](../.env.example). Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
 
-## 3. Déploiement ⬜
+## 3. Hébergement et déploiement ⬜ (ADR-013)
 
-- Web : push sur `main` puis déploiement Vercel automatique (préview par PR).
-- Base : `supabase db push` lancé par la CI sur staging, puis production après validation.
-- Edge functions : `supabase functions deploy`.
-- Mobile : `eas build` puis `eas submit`.
+Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify** (À CONFIRMER).
+
+- **Préparation du serveur** : Ubuntu LTS, utilisateur non root, SSH par clé, ufw, fail2ban, unattended-upgrades (voir SECURITY.md §2.9).
+- **Supabase auto-hébergé** : docker compose officiel, secrets régénérés, Studio accessible par tunnel SSH uniquement.
+- **Web** : image Docker Next.js `standalone`, déployée par Coolify depuis le dépôt git (ou image construite localement tant qu'il n'y a pas de dépôt distant).
+- **Base** : `supabase db push --db-url` à travers un tunnel SSH, staging puis production.
+- **Edge functions** : copiées dans le volume `functions` du conteneur Edge Runtime.
+- **Mobile** : `eas build` puis `eas submit` (service cloud d'Expo).
+- **Domaine** : aucun pour l'instant ; DNS (enregistrements A vers l'IP du VPS) et certificats Let's Encrypt à configurer quand il sera acheté.
 
 ## 4. Sauvegarde et restauration ⬜
 
-- Sauvegardes automatiques Supabase (quotidiennes), PITR en production payante.
-- Export hebdomadaire `pg_dump` chiffré (age / gpg) vers stockage externe.
-- Procédure de restauration sur un projet de test, chronométrée, à documenter ici avec la date du dernier test.
+- `pg_dump` quotidien chiffré (age) + archive des volumes Storage, envoyés vers un stockage objet externe au VPS ; rétention 30 jours.
+- Instantané du VPS avant toute mise à jour majeure.
+- Procédure de restauration sur un serveur vierge, chronométrée, à documenter ici avec la date du dernier test.
 
 ## 5. Incidents ⬜
 
-Contacts, accès d'urgence, désactivation de la marketplace (`platform_settings.marketplace_open = false`), rotation des clés, communication voyageurs.
+Contacts, accès d'urgence au VPS (console Contabo), désactivation de la marketplace (`platform_settings.marketplace_open = false`), rotation des clés, restauration, communication voyageurs.
 
 ## 6. Checklist de lancement ⬜ (Phase 7)
+
+Inclut : domaine et HTTPS, déclaration CNDP, pages légales validées, sauvegarde restaurée avec succès, supervision active.

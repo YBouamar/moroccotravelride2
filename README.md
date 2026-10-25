@@ -1,6 +1,6 @@
 # MoroccoTravelRide
 
-<img src="assets/brand/logo_horiz.png" alt="MoroccoTravelRide" width="360" />
+<img src="assets/brand/logos/svg/MTR_horizontal_couleur.svg" alt="MoroccoTravelRide" width="360" />
 
 Plateforme marocaine de transport touristique : **marketplace** de transferts intra-ville et inter-villes auprès de transporteurs agréés, et **SaaS de gestion** pour ces transporteurs (trajets, chauffeurs, véhicules, facturation, dépenses, application chauffeur, parc).
 
@@ -18,4 +18,4 @@ Prérequis : Node 24, pnpm (via corepack), Docker Desktop. Les commandes (`pnpm 
 
 ## Marque
 
-Sources des logos dans [assets/brand/](assets/brand/). Ne pas modifier : les dérivés sont générés par script.
+Kit officiel dans [assets/brand/logos/](assets/brand/logos/) (SVG, PNG transparents, favicons). Ne pas modifier : les apps en reçoivent des copies par script.

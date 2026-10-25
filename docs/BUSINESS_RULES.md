@@ -16,9 +16,11 @@ Toutes les valeurs « paramétrables » vivent dans `platform_settings` (global)
 | BR-006 | Délai minimal de réservation | 24 h avant l'heure de prise en charge, paramétrable ; contrôlé côté serveur (UI = confort) | ACTÉ | Prompt §3.1 |
 | BR-007 | Types de trajet | Intra-ville (départ et arrivée dans la même ville) et inter-villes | ACTÉ | Prompt §3.1 |
 | BR-008 | Prix des trajets | Grille par transporteur : ville départ, ville arrivée, type de véhicule, prix. Pas de calcul au km dans le MVP | À CONFIRMER | ADR-003 |
-| BR-009 | Flux de paiement | La plateforme encaisse 100 % puis reverse la part transporteur (relevés de reversement). Abstraction conservant l'option « paiement direct au transporteur + facture de commission » | À CONFIRMER, implications juridiques À VÉRIFIER | ADR-001 |
-| BR-010 | Acceptation | La réservation payée est adressée au transporteur choisi, qui accepte sous 2 h (paramétrable). Sans réponse ou refus : l'admin réaffecte ou rembourse | À CONFIRMER | ADR-002 |
-| BR-011 | Annulation voyageur | Gratuite jusqu'à 48 h avant ; 50 % remboursé entre 48 h et 24 h ; non remboursable à moins de 24 h. Paramétrable | À CONFIRMER | ADR-004 |
+| BR-009 | Modes de paiement | (a) **Virement** sur un compte bancaire du transporteur : il reçoit 100 % et doit la commission (20 %) à la plateforme ; (b) **Espèces** : la plateforme reçoit 100 % et doit la part transporteur (80 %). Pas de carte en ligne au lancement | ACTÉ (principe), modalités À CONFIRMER, juridique À VÉRIFIER | ADR-012 |
+| BR-009b | Compensation | Relevé périodique net par transporteur (80 % des espèces moins 20 % des virements) ; défaut mensuel | À CONFIRMER | ADR-012 |
+| BR-009c | Confirmation du paiement | Paiement déclaré puis confirmé par l'encaisseur : transporteur (virement), admin (espèces) | À CONFIRMER | ADR-012 |
+| BR-010 | Acceptation | La réservation est adressée au transporteur choisi, qui accepte sous 2 h (paramétrable). Sans réponse ou refus : l'admin réaffecte (ou rembourse si un paiement a été reçu) | ACTÉ | ADR-002 |
+| BR-011 | Annulation voyageur | Gratuite jusqu'à 48 h avant ; 50 % remboursé entre 48 h et 24 h ; non remboursable à moins de 24 h. Paramétrable. Somme retenue partagée au prorata du taux de commission. Remboursement seulement si un paiement a été reçu | ACTÉ | ADR-004 |
 | BR-012 | Annulation transporteur | Remboursement intégral du voyageur, réaffectation proposée par l'admin. Pénalités transporteur : à définir | À CONFIRMER | Backlog |
 | BR-013 | Référence publique | Aléatoire, non séquentielle, format `MTR-XXXXXX` (alphabet sans caractères ambigus) | ACTÉ | Prompt §6 |
 | BR-014 | Réservation invité | Autorisée sans compte ; accès ultérieur par référence + e-mail (lien magique) | ACTÉ | Prompt §8.2 |
@@ -27,19 +29,20 @@ Toutes les valeurs « paramétrables » vivent dans `platform_settings` (global)
 
 ### Machine à états : réservation
 
+Statut de réservation et statut de paiement sont **indépendants** (pas de prépaiement en ligne, ADR-012).
+
 ```
-pending_payment -> pending_carrier        (paiement confirmé par callback signé)
-pending_payment -> cancelled_by_traveler  (abandon / expiration du paiement)
-pending_carrier -> confirmed              (transporteur accepte)
-pending_carrier -> cancelled_by_carrier   (refus ou échéance dépassée, puis réaffectation ou remboursement)
+pending_carrier -> confirmed              (transporteur accepte avant l'échéance)
+pending_carrier -> cancelled_by_carrier   (refus ou échéance dépassée, puis réaffectation par l'admin)
 confirmed       -> assigned               (chauffeur et véhicule affectés)
 confirmed|assigned -> cancelled_by_traveler | cancelled_by_carrier
 assigned        -> completed
-cancelled_*     -> refunded               (remboursement effectué)
+cancelled_*     -> refunded               (seulement si un paiement avait été reçu)
 completed|assigned -> disputed            (litige ouvert par voyageur ou admin)
+pending_payment                           (réservé au futur paiement par carte en ligne)
 ```
 
-Chaque transition est journalisée dans `booking_events`. Liste exhaustive et acteurs autorisés : `packages/shared/src/state-machines/booking.ts` (Phase 3).
+Statut de paiement : `unpaid -> paid -> partially_refunded | refunded`. Chaque transition est journalisée dans `booking_events`. Liste exhaustive et acteurs autorisés : `packages/shared/src/state-machines/booking.ts` (Phase 3).
 
 ## 2. SaaS
 
@@ -49,16 +52,16 @@ Chaque transition est journalisée dans `booking_events`. Liste exhaustive et ac
 | BR-102 | Offre V2 | 400 MAD/mois : Standard + dépenses, app chauffeur, scan justificatifs, localisation | ACTÉ | Prompt §3.1 |
 | BR-103 | Offre V3 | Prix `null` (« sur devis ») : V2 + entretien, pièces, échéances, consommation | ACTÉ | Prompt §3.1 |
 | BR-104 | Feature gating | Fonctions hors offre visibles mais verrouillées, avec appel à monter en gamme ; contrôle réel côté serveur | ACTÉ | Prompt §5.2 |
-| BR-105 | Paiement abonnement | Facture + virement, activation manuelle par l'admin ; paiement récurrent en ligne plus tard | À CONFIRMER | ADR-005 |
-| BR-106 | Période d'essai | Durée à définir (défaut proposé : 14 jours, offre V2) | À CONFIRMER | ADR-005 |
+| BR-105 | Paiement abonnement | Facture + virement, activation manuelle par l'admin ; paiement récurrent en ligne plus tard | ACTÉ | ADR-005 |
+| BR-106 | Période d'essai | 14 jours sur l'offre V2 | ACTÉ | ADR-005 |
 | BR-107 | Numérotation des factures | Séquentielle, sans trou, par société et par année (ex. `2026-000123`), attribuée à l'émission et non à la création du brouillon | ACTÉ (principe), format À CONFIRMER | Prompt §6 |
 | BR-108 | Immutabilité | Une facture émise n'est plus modifiable ; correction par avoir (`credit_notes`) | ACTÉ | Prompt §6 |
 | BR-109 | Mentions légales facture | ICE émetteur et client (si B2B), IF, RC, taxe professionnelle, HT, TVA, TTC. Liste exhaustive : **À VÉRIFIER** auprès d'un comptable | À VÉRIFIER | Prompt §6 |
-| BR-110 | TVA | Taux paramétrable par société et par ligne, jamais codé en dur. Taux applicables au transport touristique : **À VÉRIFIER** | À CONFIRMER / À VÉRIFIER | ADR-007 |
+| BR-110 | TVA | Taux paramétrable par société et par ligne, jamais codé en dur. Taux applicables au transport touristique : **À VÉRIFIER** | ACTÉ (paramétrable sans valeur imposée), taux À VÉRIFIER | ADR-007 |
 | BR-111 | Calcul TVA | Calcul par ligne en centimes, arrondi par ligne, totaux = somme des lignes | À CONFIRMER | ADR-007 |
 | BR-112 | Statuts facture | `draft -> issued -> partially_paid -> paid` ; `issued -> cancelled` uniquement via avoir total | ACTÉ | Prompt §6 |
 | BR-113 | Statuts trajet | `planned -> assigned -> in_progress -> completed` ; `cancelled` depuis tout état non terminé | ACTÉ | Prompt §6 |
-| BR-114 | Conflits de planning | Alerte bloquante (dérogeable par manager) si chauffeur ou véhicule déjà occupé sur un créneau qui se chevauche, ou si passagers > places | À CONFIRMER (bloquant ou simple alerte) | Prompt §8.3 |
+| BR-114 | Conflits de planning | Blocage (dérogeable par owner ou manager) si chauffeur ou véhicule déjà occupé sur un créneau qui se chevauche, ou si passagers > places | ACTÉ : bloquant, dérogation par owner ou manager (journalisée) | Yassine 2026-10-25 |
 | BR-115 | Statuts dépense | `submitted -> approved | rejected` | ACTÉ | Prompt §6 |
 
 ## 3. App chauffeur et localisation

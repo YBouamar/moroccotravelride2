@@ -16,10 +16,11 @@
 2. **Résultats** : cartes véhicule + transporteur (photo, capacité, bagages, note, badge « Agréé vérifié », prix total). Filtres type / prix / note, tri prix ou note. Sur mobile, filtres dans une feuille modale.
 3. **Détail et options** : conditions d'annulation, inclus, informations transporteur.
 4. **Informations passager** : nom, e-mail, téléphone avec indicatif, numéro de vol (suggéré si départ aéroport), adresse précise, remarques. Sans compte.
-5. **Paiement** : redirection vers la page hébergée du prestataire.
-6. **Confirmation** : référence `MTR-XXXXXX`, récapitulatif, ajout au calendrier (.ics), e-mail + bon PDF (logo vertical).
-7. **Gérer ma réservation** : référence + e-mail, lien magique, annulation selon la politique avec montant remboursé affiché avant confirmation.
-8. **Après le trajet** : e-mail de demande d'avis.
+5. **Mode de paiement** (ADR-012) : choix entre virement au transporteur et espèces, avec une phrase claire sur le moment du paiement. Pas de paiement en ligne au lancement.
+6. **Demande envoyée** : référence `MTR-XXXXXX`, récapitulatif, compte à rebours « Le transporteur confirme sous 2 h ».
+7. **Confirmation** (après acceptation) : e-mail + bon PDF (logo vertical), instructions de paiement (RIB du transporteur ou modalités espèces), ajout au calendrier (.ics).
+8. **Gérer ma réservation** : référence + e-mail, lien magique, annulation selon la politique avec montant remboursé affiché avant confirmation.
+9. **Après le trajet** : e-mail de demande d'avis.
 
 ## 3. Parcours transporteur (SaaS)
 
@@ -32,7 +33,7 @@
 7. **Dépenses (V2)**, **Suivi en direct (V2)**, **Parc (V3)** : visibles mais verrouillés (cadenas + « Passer à V2 / V3 ») si hors offre.
 8. **Abonnement** : offre actuelle, comparatif, factures.
 
-Navigation SaaS : barre latérale bleu nuit (logo horizontal en version claire, voir §6.4), contenu sur fond `background`.
+Navigation SaaS : barre latérale bleu nuit avec `MTR_horizontal_negatif` (ou `MTR_symbole_negatif` en barre repliée), contenu sur fond `background`.
 
 ## 4. Parcours chauffeur (app mobile)
 
@@ -48,17 +49,24 @@ Source : `assets/brand/presentation-marque.png` (présentation de marque fournie
 
 ### 6.1 Le logo
 
-Monogramme « M » dont les deux arches forment des montagnes (Atlas) en dégradé turquoise, traversé par une **route sinueuse** bleu nuit / turquoise, avec une **kasbah** et un **palmier**. Mot-symbole « Morocco » en bleu nuit + « TravelRide » en turquoise, police sans empattement géométrique grasse ; signature en capitales espacées « MOVE SMARTER. MANAGE BETTER. ».
+Monogramme « M » dont les deux arches forment des montagnes (Atlas) en dégradé turquoise, traversé par une **route sinueuse**, avec une **kasbah** et un **palmier**. Mot-symbole « Morocco » en bleu nuit (blanc en négatif) + « TravelRide » en turquoise ; signature en capitales espacées « MOVE SMARTER. MANAGE BETTER. ».
 
-| Fichier | Format | Usage |
+Sources officielles : `assets/brand/logos/` (SVG vectoriels et PNG transparents, ADR-014). Les fichiers v1 à fond blanc sont archivés dans `assets/brand/v1/` et ne servent plus.
+
+| Variante | Fichier | Usage |
 |---|---|---|
-| `assets/brand/logo_horiz.png` | 2172 x 724, fond blanc | En-têtes web (marketplace, SaaS, admin), e-mails, factures PDF, pied de page |
-| `assets/brand/logo_vertical.png` | 1254 x 1254, fond blanc | Pages d'authentification, onboarding, splash de l'app chauffeur, bon de réservation PDF, page 404 |
-| `assets/brand/favicon.png` | 1536 x 1024 (icône centrée sur fond blanc) | Favicon, `apple-touch-icon`, icônes PWA, icône et adaptive icon Expo, avatar société par défaut, notifications |
+| Horizontal couleur | `svg/MTR_horizontal_couleur.svg` | En-tête marketplace (fond clair), e-mails, factures et relevés PDF |
+| Horizontal négatif | `svg/MTR_horizontal_negatif.svg` | Barre latérale SaaS et admin (bleu nuit), pied de page sombre, mode sombre |
+| Horizontal blanc | `svg/MTR_horizontal_blanc.svg` | Sur photo ou dégradé turquoise (hero, bannières) |
+| Vertical couleur / négatif / blanc | `svg/MTR_vertical_*.svg` | Pages d'authentification, onboarding, page 404, bon de réservation PDF, splash mobile |
+| Symbole couleur / négatif / blanc | `svg/MTR_symbole_*.svg` | En-tête mobile étroit, barre latérale repliée, filigrane, loader |
+| Icône d'app navy / blanc | `png/MTR_icone_app_*.png` (1024 px) | Icône de l'app chauffeur (iOS, Android adaptive icon), icône PWA |
+| Favicons | `favicon/favicon.ico`, `MTR_icone_navy_{32,180,192,512}.png` | Favicon, `apple-touch-icon` (180), manifeste PWA (192, 512), notifications |
 
-Contraintes constatées : PNG RGB **sans transparence** ; favicon non carré (à recadrer automatiquement sur l'icône en Phase 1). La présentation montre aussi des déclinaisons (logo blanc sur fond bleu nuit, icône monochrome) : à fournir en fichiers séparés pour l'en-tête sombre et le mode sombre (question Q8). En attendant, sur fond sombre, le logo est posé dans une pastille blanche arrondie (comme l'icône d'app de la présentation).
-
-Zone de protection : marge minimale égale à la hauteur de la lettre « o » autour du logo. Taille minimale du logo horizontal : 140 px de large (en dessous, utiliser l'icône seule).
+Règles :
+- Fond clair : version `couleur` ; fond bleu nuit : version `negatif` ; photo ou dégradé : version `blanc`.
+- Zone de protection : marge minimale égale à la hauteur de la lettre « o ». Taille minimale du logo horizontal : 140 px de large ; en dessous, utiliser le symbole seul.
+- Ne jamais recolorer, déformer ni ajouter d'effets au logo.
 
 ### 6.2 Palette et tokens
 
@@ -90,9 +98,15 @@ Dégradé de marque (bannières, hero, splash) : `linear-gradient(135deg, #087E8
 | Turquoise clair sur blanc | 2,52 | **Interdit pour du texte** |
 | Turquoise clair sur bleu nuit | 5,80 | AA (texte sur fond sombre) |
 
-### 6.4 Typographie
+### 6.4 Typographie (ADR-014)
 
-Le mot-symbole utilise une sans-serif géométrique grasse proche de **Montserrat** / **Lexend**. Proposition (À CONFIRMER) : **Montserrat** pour les titres, **Inter** pour le texte courant, **Noto Sans Arabic** (ou IBM Plex Sans Arabic) pour l'arabe. Polices auto-hébergées via `next/font`. Signature en capitales avec `letter-spacing: 0.3em`, comme sur le logo.
+Le texte des logos est vectorisé, le nom de la police n'est donc pas lisible dans les fichiers. La comparaison des formes indique **Montserrat** (mot-symbole en SemiBold / Bold, signature en Medium avec `letter-spacing: 0.3em`). Choix :
+
+- **Montserrat** (600 / 700) : titres, chiffres clés, boutons ;
+- **Inter** (400 / 500 / 600) : texte courant, tableaux du SaaS, formulaires ;
+- **Noto Sans Arabic** : interface en arabe.
+
+Toutes sous licence libre (SIL OFL), auto-hébergées via `next/font` (aucun appel à Google à l'exécution).
 
 ### 6.5 Composants clés (à construire en Phase 1)
 

@@ -10,42 +10,42 @@ flowchart LR
     A[Admin plateforme]
     D[Chauffeur<br/>app Expo]
   end
-  subgraph Vercel
-    W[apps/web<br/>Next.js App Router<br/>SSR + Server Actions]
-    API[Route handlers<br/>webhooks paiement]
+  subgraph VPS["VPS Contabo (Docker, géré par Coolify)"]
+    PX[Reverse proxy HTTPS]
+    W[apps/web<br/>Next.js standalone<br/>SSR + Server Actions]
+    subgraph SB[Supabase auto-hébergé]
+      PG[(PostgreSQL + RLS<br/>pg_cron)]
+      AU[Auth + MFA]
+      ST[Storage privé]
+      RT[Realtime]
+      EF[Edge Runtime]
+    end
   end
-  subgraph Supabase
-    PG[(PostgreSQL + RLS)]
-    AU[Auth + MFA]
-    ST[Storage privé]
-    RT[Realtime]
-    EF[Edge Functions + pg_cron]
-  end
-  PAY[CMI<br/>page hébergée]
+  BK[(Stockage objet externe<br/>sauvegardes chiffrées)]
   RS[Resend]
   SE[Sentry]
-  T & S & A --> W
-  D --> AU & PG & ST & RT
+  T & S & A --> PX --> W
+  D --> PX
+  PX --> AU & PG & ST & RT
   W --> PG & AU & ST
-  PAY -- callback signé --> API --> PG
-  W -- redirection --> PAY
   EF --> PG & RS
   W --> RS
+  PG -. pg_dump chiffré .-> BK
   W & D -.-> SE
 ```
 
-Principe : **un seul backend managé (Supabase)**, une seule application web qui sert les trois espaces (marketplace publique, SaaS, admin) via des groupes de routes, une application mobile pour les chauffeurs. Pas de serveur applicatif séparé.
+Principe : **un seul serveur (VPS Contabo)** qui héberge Supabase auto-hébergé et l'application web, une seule application web pour les trois espaces (marketplace publique, SaaS, admin) via des groupes de routes, une application mobile pour les chauffeurs. Pas de serveur applicatif séparé. Voir ADR-013.
 
 ## 2. Monorepo
 
 | Paquet | Rôle | Consommé par |
 |---|---|---|
-| `apps/web` | Marketplace, SaaS, admin, webhooks | Vercel |
+| `apps/web` | Marketplace, SaaS, admin, webhooks | VPS (Docker) |
 | `apps/driver` | App chauffeur Expo | EAS |
 | `packages/shared` | Schémas Zod, constantes métier, calculs purs, machines à états, matrice de permissions | web, driver, edge functions |
 | `packages/db` | Types générés Supabase, helpers de requêtes typés | web, driver |
 | `packages/ui` | Tokens de design (couleurs, typo, espacements, rayons) exportés en CSS variables et en objet TS | web, driver, e-mails, PDF |
-| `packages/payments` | Interface `PaymentProvider`, adaptateurs `mock` et `cmi` | web (route handlers) |
+| `packages/payments` | Interface `PaymentProvider` (adaptateur `mock`, carte en ligne reportée) et types des modes hors ligne | web |
 
 Règle de dépendance : `apps/*` dépendent de `packages/*` ; `packages/shared` ne dépend d'aucun autre paquet interne ; aucune dépendance d'un paquet vers une app.
 
@@ -55,34 +55,38 @@ Règle de dépendance : `apps/*` dépendent de `packages/*` ; `packages/shared` 
 - `src/app/[locale]/(auth)` : connexion, inscription transporteur, mot de passe, MFA.
 - `src/app/[locale]/(saas)/app` : espace transporteur (layout avec barre latérale, sélecteur de société si multi-appartenance).
 - `src/app/[locale]/(admin)/admin` : back-office (MFA exigé par le layout et par RLS via `aal2`).
-- `src/app/api` : webhooks (`/api/payments/[provider]/callback`), cron sécurisés si nécessaire.
+- `src/app/api` : route handlers (healthcheck pour la supervision, futurs webhooks de paiement en ligne).
 - `src/features/<domaine>` : `components/`, `actions.ts` (Server Actions), `queries.ts`, `schemas.ts` (réexport depuis shared).
 - `src/lib` : clients Supabase (`server`, `browser`, `admin` service_role serveur uniquement), `auth.ts` (session, rôle, société courante), `permissions.ts`, `rate-limit.ts`, `feature-gate.ts`.
 
 ## 4. Flux principaux
 
-### 4.1 Réservation marketplace
+### 4.1 Réservation marketplace (paiement hors ligne, ADR-012)
 
 ```mermaid
 sequenceDiagram
   participant V as Voyageur
   participant W as Next.js
   participant DB as Postgres
-  participant P as Prestataire paiement
   participant C as Transporteur
+  participant AD as Admin
   V->>W: recherche (villes, date, passagers)
   W->>DB: grilles actives des sociétés vérifiées
-  V->>W: choix + infos passager (Turnstile)
+  V->>W: choix + infos passager + mode de paiement (Turnstile)
   W->>W: contrôle 24 h, recalcul prix + commission (shared)
-  W->>DB: booking pending_payment (commission figée)
-  W->>P: création session de paiement (montant serveur, clé d'idempotence)
-  V->>P: paiement sur page hébergée
-  P->>W: callback signé
-  W->>W: vérification signature + montant + idempotence
-  W->>DB: payment_transaction + booking pending_carrier + échéance
-  W-->>V: e-mail de confirmation (Resend)
+  W->>DB: booking pending_carrier (commission figée, échéance 2 h)
+  W-->>V: e-mail de demande reçue
   C->>W: accepter / refuser
   W->>DB: booking confirmed + création trip (origin marketplace)
+  W-->>V: e-mail de confirmation + instructions de paiement (RIB transporteur ou espèces)
+  alt Virement au transporteur
+    C->>W: confirme la réception du virement
+    W->>DB: payment_status paid + ligne commission_ledger (transporteur doit 20 %)
+  else Espèces à la plateforme
+    AD->>W: confirme la réception des espèces
+    W->>DB: payment_status paid + ligne commission_ledger (plateforme doit 80 %)
+  end
+  Note over DB: relevé de compensation périodique par transporteur
 ```
 
 ### 4.2 Localisation chauffeur (V2)
@@ -129,7 +133,7 @@ Outils locaux constatés : Node 24, git 2.56, Docker 29.8 (requis pour `supabase
 | Environnement | Web | Backend | Données |
 |---|---|---|---|
 | local | `pnpm dev` | `supabase start` (Docker) | `seed.sql` fictif |
-| staging | Vercel preview | projet Supabase staging | fictives |
-| production | Vercel production | projet Supabase production | réelles |
+| staging | conteneur sur le VPS (sous-domaine) | Supabase auto-hébergé staging | fictives |
+| production | conteneur sur le VPS | Supabase auto-hébergé production | réelles |
 
-Jamais de données réelles en local. Migrations appliquées par CI (`supabase db push`) sur staging puis production.
+Jamais de données réelles en local. Migrations appliquées par `supabase db push` (via l'URL Postgres du VPS, par tunnel SSH) sur staging puis production, jamais de modification manuelle du schéma.
