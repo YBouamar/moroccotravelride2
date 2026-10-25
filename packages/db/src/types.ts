@@ -270,6 +270,63 @@ export type Database = {
           },
         ];
       };
+      drivers: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          full_name: string;
+          id: string;
+          languages: string[];
+          license_expires_on: string;
+          license_number: string;
+          phone: string;
+          professional_card_expires_on: string | null;
+          professional_card_number: string | null;
+          status: Database['public']['Enums']['driver_status'];
+          updated_at: string;
+          user_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          full_name: string;
+          id?: string;
+          languages?: string[];
+          license_expires_on: string;
+          license_number: string;
+          phone: string;
+          professional_card_expires_on?: string | null;
+          professional_card_number?: string | null;
+          status?: Database['public']['Enums']['driver_status'];
+          updated_at?: string;
+          user_id?: string | null;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          full_name?: string;
+          id?: string;
+          languages?: string[];
+          license_expires_on?: string;
+          license_number?: string;
+          phone?: string;
+          professional_card_expires_on?: string | null;
+          professional_card_number?: string | null;
+          status?: Database['public']['Enums']['driver_status'];
+          updated_at?: string;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'drivers_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       plan_features: {
         Row: {
           feature_key: string;
@@ -455,6 +512,67 @@ export type Database = {
         };
         Relationships: [];
       };
+      vehicles: {
+        Row: {
+          brand: string;
+          company_id: string;
+          created_at: string;
+          id: string;
+          luggage_capacity: number | null;
+          model: string;
+          registration: string;
+          seats: number;
+          status: Database['public']['Enums']['vehicle_status'];
+          updated_at: string;
+          vehicle_type_code: string;
+          year: number | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          brand: string;
+          company_id: string;
+          created_at?: string;
+          id?: string;
+          luggage_capacity?: number | null;
+          model: string;
+          registration: string;
+          seats: number;
+          status?: Database['public']['Enums']['vehicle_status'];
+          updated_at?: string;
+          vehicle_type_code: string;
+          year?: number | null;
+        };
+        Update: {
+          brand?: string;
+          company_id?: string;
+          created_at?: string;
+          id?: string;
+          luggage_capacity?: number | null;
+          model?: string;
+          registration?: string;
+          seats?: number;
+          status?: Database['public']['Enums']['vehicle_status'];
+          updated_at?: string;
+          vehicle_type_code?: string;
+          year?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'vehicles_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'vehicles_vehicle_type_code_fkey';
+            columns: ['vehicle_type_code'];
+            isOneToOne: false;
+            referencedRelation: 'vehicle_types';
+            referencedColumns: ['code'];
+          },
+        ];
+      };
     };
     Views: {
       [_ in never]: never;
@@ -472,8 +590,10 @@ export type Database = {
     Enums: {
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
+      driver_status: 'active' | 'inactive';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
       subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
+      vehicle_status: 'active' | 'maintenance' | 'inactive';
       verification_status: 'pending' | 'approved' | 'rejected';
     };
     CompositeTypes: {
@@ -588,8 +708,10 @@ export const Constants = {
     Enums: {
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
+      driver_status: ['active', 'inactive'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
       subscription_status: ['trial', 'active', 'past_due', 'cancelled'],
+      vehicle_status: ['active', 'maintenance', 'inactive'],
       verification_status: ['pending', 'approved', 'rejected'],
     },
   },
