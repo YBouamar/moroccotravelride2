@@ -32,4 +32,6 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Configuration EAS (profils de build, identifiants des magasins) : Phase 7 |
 | P3 | Lancer les E2E sur le serveur `standalone` réel plutôt que `next start` |
 | P3 | Réexaminer l'exception d'audit node-forge à chaque mise à jour d'Expo (ADR-020) |
+| P2 | Pagination de la liste des sociétés et de l'historique (quelques dizaines de lignes aujourd'hui) |
+| P2 | Factures d'abonnement générées automatiquement (PDF) et relances : avec la facturation (étape 10) |
 | P3 | Relecture des traductions arabes par un locuteur natif |

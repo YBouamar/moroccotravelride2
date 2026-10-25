@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : **Phase 1 terminée** (étape 5 faite), en attente de validation · **Prochaine étape** : Phase 2 (SaaS Standard), étape 6
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 6 terminée, en attente de validation · **Prochaine étape** : Étape 7 (onboarding transporteur et documents)
 
 ## 1. Plan d'exécution par étapes
 
@@ -40,20 +40,29 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 
 - 2026-10-26, étape 5 (fin de Phase 1) : Q19 (visibilité gérée par le transporteur, suspension admin) et limitation des tentatives en base ; authentification web côté serveur (inscription avec confirmation d'e-mail et création de la société en attente, connexion, déconnexion, mot de passe oublié, MFA admin), proxy (CSP à nonce, session, protection des espaces), Turnstile, e-mails trilingues, comptes de démonstration ; squelette de l'app chauffeur Expo (connexion réservée aux chauffeurs, session sécurisée, fr / en / ar avec RTL) ; hygiène des dépendances (ESLint 9, zod corrigé). 93 tests unitaires, 52 pgTAP, 30 E2E (ADR-020).
 
+- 2026-10-26 : correctif du sélecteur de langue (conservation de `?next=`, langue active visible), `pnpm dev` limité au web ; diagnostic d'un serveur de dev resté sur d'anciens modules après installation de dépendances.
+- 2026-10-26, étape 6 : offres et abonnements (essai V2 de 14 jours automatique), `has_feature`, journal d'audit par triggers, page Abonnement, sections verrouillées selon l'offre, back-office des sociétés (vérification, suspension marketplace, commission, abonnement, historique traduit). 120 tests unitaires, 69 pgTAP, 35 E2E (ADR-021).
+
 ## 3. En cours
 
-Rien. Attente de validation de la Phase 1.
+Rien. Attente de validation de l'étape 6.
 
 ## 4. Bloqué / points d'attention
 
-- **Dépôt GitHub non créé** : la création de `moroccotravelride2` échoue toujours (403, nouvelles tentatives aux étapes 3, 4 et 5) : le jeton n'a pas le droit de créer des dépôts. À corriger côté Yassine, puis création + push des commits.
+- **Dépôt GitHub non créé** : la création de `moroccotravelride2` échoue toujours (403, nouvelles tentatives aux étapes 3 à 6) : le jeton n'a pas le droit de créer des dépôts. À corriger côté Yassine, puis création + push des commits.
 - Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
 
 Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au chauffeur puis au dirigeant, commission réglée chaque mois en espèces ou virement instantané (ADR-016) ; virement avant le trajet ; carte en ligne reportée ; relevé mensuel ; Coolify ; dépôt privé.
 
-Q17 à Q20 réglées (Q19 : le transporteur gère sa visibilité, la suspension admin la bloque ; Q20 : capacités validées). **Aucune question ouverte.**
+Q17 à Q20 réglées.
+
+| # | Question | Défaut appliqué si pas de réponse |
+|---|---|---|
+| Q21 | À la fin de l'essai gratuit sans paiement : la société perd-elle l'accès à toutes les fonctions (données conservées), ou passe-t-elle en lecture seule, ou en offre Standard ? | Plus aucune fonction, données conservées |
+| Q22 | Abonnement « paiement en retard » : combien de temps l'accès reste-t-il ouvert avant blocage ? | Accès maintenu jusqu'à résiliation par l'admin |
+| Q23 | Quelles coordonnées afficher sur la page Abonnement pour payer (RIB de la plateforme, e-mail ou téléphone de contact) ? | Texte générique « contactez l'équipe » |
 
 | # | Question | Défaut appliqué si pas de réponse |
 |---|---|---|
@@ -66,7 +75,7 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 
 | Étape | Contenu |
 |---|---|
-| 6 | Abonnements et feature gating (`plans`, `plan_features`, `subscriptions`, essai 14 jours V2, `has_feature`, `<FeatureGate>`), journal d'audit, vérification des sociétés par l'admin (liste, documents, valider / suspendre) |
+| 6 ✅ | Abonnements et feature gating (`plans`, `plan_features`, `subscriptions`, essai 14 jours V2, `has_feature`, `<FeatureGate>`), journal d'audit, vérification des sociétés par l'admin (liste, documents, valider / suspendre) |
 | 7 | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
 | 8 | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
 | 9 | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |

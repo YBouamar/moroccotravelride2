@@ -31,6 +31,9 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - 🟡 Server Actions d'authentification : validation Zod côté serveur, langue et redirection validées (`safeNextPath`, anti redirection ouverte). Actions métier (rôle + appartenance) : Phase 2.
 - 🟡 UUID sur toutes les tables créées ; références publiques aléatoires en Phase 3.
 
+- ✅ Journal d'audit en ajout seul (triggers, aucune écriture directe possible, testé), sans donnée sensible ; lecture admin et propriétaire.
+- ✅ Modifications d'abonnement réservées à l'admin MFA (RLS, testé).
+
 ### 2.2 Authentification
 - 🟡 Configuration locale (`supabase/config.toml`) : mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail, ré-authentification pour changer de mot de passe. À reproduire sur le VPS. Écrans : étape 5.
 - ✅ MFA TOTP : `is_platform_admin()` exige `aal2` (pgTAP), le layout admin redirige vers `/mfa` sans aal2 (E2E), enrôlement et vérification par Server Actions. Proposition aux propriétaires : backlog.

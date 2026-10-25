@@ -67,7 +67,7 @@ Implémentation (étape 4) :
 
 ### Abonnements (Phase 2)
 
-`plans` (`code`, `monthly_price_cents` nullable), `plan_features` (`plan_code`, `feature_key`), `subscriptions` (`company_id`, `plan_code`, `status` `trial|active|past_due|cancelled`, `current_period_start/end`, `payment_method`), `subscription_invoices`.
+**Implémenté (étape 6)** : `plans` (`code`, `monthly_price_cents` nullable = sur devis, `sort_order`), `plan_features` (`plan_code`, `feature_key` : trips, vehicles, drivers, clients, invoicing, payments ; + expenses, driver_app, expense_receipts, live_tracking ; + fleet_maintenance, vehicle_deadlines, fuel_tracking), `subscriptions` (clé `company_id`, `plan_code`, `status` `trial|active|past_due|cancelled`, `trial_ends_at`, `current_period_start/end`, `payment_method`, `notes`), créé par le trigger `companies_start_trial`. Fonction `private.has_feature(company_id, feature)`. `subscription_invoices` : plus tard (factures d'abonnement).
 
 ### Référentiels (Phase 1 / 3)
 
@@ -93,7 +93,7 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 
 ### Transverse
 
-`notifications`, `audit_logs` (Phase 2 : insert via triggers / service, lecture admin et owner pour sa société), `platform_settings` (implémentée : clé / valeur JSON validée par Zod dans `@mtr/shared` : `default_commission_bps`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `statement_suspension_days`, `location_retention_days`, `saas_trial`, `marketplace_open` ; lecture publique, modification admin, clés créées par migration uniquement).
+`notifications`, `audit_logs` (**implémentée**, étape 6 : ajout seul par triggers `private.audit_changes`, colonnes modifiées uniquement, lecture admin et propriétaire), `platform_settings` (implémentée : clé / valeur JSON validée par Zod dans `@mtr/shared` : `default_commission_bps`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `statement_suspension_days`, `location_retention_days`, `saas_trial`, `marketplace_open` ; lecture publique, modification admin, clés créées par migration uniquement).
 
 ## 3. Migrations
 
@@ -104,5 +104,8 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261025210200_platform_settings.sql` | `platform_settings` + valeurs par défaut | 1 (étape 4) |
 | `20261026090000_marketplace_suspension.sql` | suspension marketplace réservée à l'admin, visibilité gérée par le transporteur (Q19) | 1 (étape 5) |
 | `20261026090100_rate_limits.sql` | `private.rate_limits` + `public.consume_rate_limit()` (rôle service uniquement) | 1 (étape 5) |
+| `20261026100000_subscriptions.sql` | offres, fonctions par offre, abonnements, essai automatique, `has_feature` | 2 (étape 6) |
+| `20261026100100_audit_logs.sql` | journal d'audit et triggers | 2 (étape 6) |
+| `20261026100200_audit_ignore_unchanged_nulls.sql` | correctif : colonnes restées vides ignorées à la création | 2 (étape 6) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (52 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (69 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

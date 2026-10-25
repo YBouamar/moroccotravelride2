@@ -54,7 +54,9 @@ Statut de paiement : `unpaid -> paid -> partially_refunded | refunded`. Chaque t
 | BR-103 | Offre V3 | Prix `null` (« sur devis ») : V2 + entretien, pièces, échéances, consommation | ACTÉ | Prompt §3.1 |
 | BR-104 | Feature gating | Fonctions hors offre visibles mais verrouillées, avec appel à monter en gamme ; contrôle réel côté serveur | ACTÉ | Prompt §5.2 |
 | BR-105 | Paiement abonnement | Facture + virement, activation manuelle par l'admin ; paiement récurrent en ligne plus tard | ACTÉ | ADR-005 |
-| BR-106 | Période d'essai | 14 jours sur l'offre V2 | ACTÉ | ADR-005 |
+| BR-106 | Période d'essai | 14 jours sur l'offre V2, créée automatiquement avec la société | ACTÉ | ADR-005, ADR-021 |
+| BR-106b | Fin d'essai sans paiement | Plus aucune fonction accessible, données conservées, bandeau d'invitation à activer une offre | À CONFIRMER (Q21) | ADR-021 |
+| BR-106c | Paiement en retard (`past_due`) | Accès maintenu jusqu'à résiliation par l'admin | À CONFIRMER (Q22) | ADR-021 |
 | BR-107 | Numérotation des factures | Séquentielle, sans trou, par société et par année (ex. `2026-000123`), attribuée à l'émission et non à la création du brouillon | ACTÉ (principe), format À CONFIRMER | Prompt §6 |
 | BR-108 | Immutabilité | Une facture émise n'est plus modifiable ; correction par avoir (`credit_notes`) | ACTÉ | Prompt §6 |
 | BR-109 | Mentions légales facture | ICE émetteur et client (si B2B), IF, RC, taxe professionnelle, HT, TVA, TTC. Liste exhaustive : **À VÉRIFIER** auprès d'un comptable | À VÉRIFIER | Prompt §6 |

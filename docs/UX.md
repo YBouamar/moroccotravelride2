@@ -126,7 +126,11 @@ Rayons : 12 px pour les cartes et boutons (cohérent avec les angles arrondis de
 | Bandeaux de statut société (en attente, suspendue) et état « aucune société » | `/[locale]/app` | Fait | 5 |
 | CGU (contenu à rédiger) | `/[locale]/legal/terms` | Emplacement, À VALIDER | 5 |
 | App chauffeur : connexion, « Aujourd'hui » (vide) | Expo | Squelette | 5 |
+| Abonnement : offre actuelle, comparaison des 3 offres, modalités de paiement ; sections verrouillées avec l'offre requise | `/[locale]/app/subscription` | Fait | 6 |
+| Admin : vue d'ensemble chiffrée, liste des sociétés (filtre statut), fiche société (vérification, marketplace, commission, abonnement, historique) | `/[locale]/admin`, `/admin/companies`, `/admin/companies/[id]` | Fait | 6 |
 
 Composants disponibles (`apps/web/src/components`) : `Button` (primary, secondary, outline, ghost ; 44 px minimum), `Card`, `Badge` (verified, neutral), `Input`, `Label`, `Skeleton`, `EmptyState`, `Logo` (horizontal / vertical / symbole × couleur / négatif / blanc), `LocaleSwitcher`, `SiteHeader`, `SiteFooter`, `AppShell`. En-tête mobile : logo et « Espace transporteur » sur la première ligne, langues sur la seconde (aucun débordement à 390 px, vérifié par Playwright).
 
 Formulaires (étape 5) : validation à la saisie avec les schémas Zod partagés, messages d'erreur traduits reliés aux champs (`aria-invalid`, `aria-describedby`), erreur serveur en `role="alert"`, succès en `role="status"`, mots de passe avec consigne visible. App chauffeur : cibles tactiles de 56 px, actions en bas d'écran, langue modifiable sans redémarrage.
+
+Étape 6 : confirmations explicites par `<dialog>` natif rappelant la conséquence (vérifier, suspendre, lever une suspension) ; navigation latérale avec lien actif calculé côté client ; historique avec libellés traduits (statuts, offres, rôles, dates).
