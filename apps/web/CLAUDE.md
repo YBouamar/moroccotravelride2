@@ -32,4 +32,6 @@
 - Formulaires publics : Turnstile + `consumeRateLimit` dans la Server Action ; le jeton Turnstile est à usage unique (remonter le widget après une erreur, `useAuthForm`).
 - `redirect()` dans une Server Action doit rester hors d'un `try` (il lève une exception de navigation).
 - `getByRole('alert')` en E2E : Next.js a son propre `role=alert` (annonceur de route), filtrer par texte.
+- Après un `pnpm install` / `pnpm add` qui change les dépendances, **redémarrer `pnpm dev`** (et vider `apps/web/.next` si besoin) puis recharger la page sans cache (Ctrl+Shift+R) : sinon Turbopack sert des modules à l'ancien chemin (« module factory is not available »).
+- Requêtes `/sw.js` en 404 dans les journaux : service worker d'un autre projet enregistré sur localhost:3000 dans le navigateur (l'app n'en a pas) ; le désinscrire dans les outils de développement.
 - `next start` avertit avec `output: 'standalone'` : sans effet en local ; en production, lancer `server.js` du dossier standalone (image Docker, Phase 7).

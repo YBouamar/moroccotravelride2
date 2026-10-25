@@ -40,6 +40,12 @@ test('keeps the current page when switching language', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('تسجيل شركة النقل الخاصة بي');
 });
 
+test('keeps the query string when switching language', async ({ page }) => {
+  await page.goto('/fr/login?next=%2Ffr%2Fapp');
+  await page.getByRole('link', { name: 'العربية' }).click();
+  await expect(page).toHaveURL(/\/ar\/login\?next=%2Ffr%2Fapp$/);
+});
+
 test('renders a localized 404 for unknown pages', async ({ page }) => {
   const response = await page.goto('/en/does-not-exist');
   expect(response?.status()).toBe(404);

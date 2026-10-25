@@ -1,5 +1,6 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import { routing } from '@/i18n/routing';
@@ -9,6 +10,8 @@ export function LocaleSwitcher() {
   const t = useTranslations('locale');
   const current = useLocale();
   const pathname = usePathname();
+  // Keep the query string (e.g. ?next= on the login page) when changing language.
+  const query = Object.fromEntries(useSearchParams());
 
   return (
     <nav aria-label={t('label')}>
@@ -18,14 +21,17 @@ export function LocaleSwitcher() {
           return (
             <li key={locale}>
               <Link
-                href={pathname}
+                href={{ pathname, query }}
                 locale={locale}
                 hrefLang={locale}
                 lang={locale}
                 aria-current={active ? 'true' : undefined}
                 className={cn(
-                  'inline-flex min-h-11 items-center rounded-control px-2.5 text-sm font-medium',
-                  active ? 'bg-background text-primary' : 'text-muted hover:text-primary',
+                  'inline-flex min-h-11 items-center rounded-control px-2.5 text-sm',
+                  // Border so the active language stays visible on any background.
+                  active
+                    ? 'border border-border bg-surface font-semibold text-primary'
+                    : 'font-medium text-muted hover:text-primary',
                 )}
               >
                 {t(`names.${locale}`)}

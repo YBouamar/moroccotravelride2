@@ -6,7 +6,7 @@
     "node": ">=24"
   },
   "scripts": {
-    "dev": "turbo run dev",
+    "dev": "turbo run dev --filter=@mtr/web",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
@@ -20,7 +20,8 @@
     "db:test": "supabase test db",
     "prepare": "husky",
     "e2e": "pnpm --filter @mtr/web e2e",
-    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/types.ts && prettier --write packages/db/src/types.ts"
+    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/types.ts && prettier --write packages/db/src/types.ts",
+    "dev:driver": "pnpm --filter @mtr/driver dev"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",
