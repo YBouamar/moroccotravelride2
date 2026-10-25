@@ -15,10 +15,15 @@
 pnpm check           # format + lint + typecheck + tests + build (avant tout commit important)
 pnpm test            # Vitest sur tous les paquets (turbo, avec cache)
 pnpm db:test         # pgTAP, nécessite pnpm db:start (à partir de l'étape 4)
-pnpm e2e             # Playwright (à partir de l'étape 5)
+pnpm e2e             # Playwright : build de production + tests ordinateur et mobile
 ```
 
-État au 2026-10-25 : 25 tests unitaires (`@mtr/shared` : commission et arrondis ; `@mtr/ui` : contrastes AA de chaque paire de tokens, clair et sombre).
+État au 2026-10-25 :
+
+- **38 tests unitaires** : `@mtr/shared` 7 (commission, arrondis) ; `@mtr/ui` 20 (contrastes AA de chaque paire de tokens, synchronisation de `theme.css`) ; `@mtr/web` 11 (mêmes clés dans fr / en / ar, aucun texte vide, aucun tiret cadratin, sens d'écriture).
+- **20 tests E2E** (Playwright, ordinateur + mobile Pixel 7) : redirection selon la langue du navigateur, bascule fr / ar / en avec RTL, conservation de la page au changement de langue, 404 localisée, absence de débordement horizontal, en-têtes de sécurité.
+
+`pnpm e2e` construit l'application de production puis lance les tests (Edge installé en local, Chromium en CI).
 
 ## 3. Données de démonstration (`supabase/seed.sql`, Phase 1 à 3)
 

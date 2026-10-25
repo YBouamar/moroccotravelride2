@@ -1,6 +1,6 @@
 # apps/web : spécificités
 
-> Application non encore initialisée (création en étape 3, Phase 1b). Ce fichier fixe les règles locales dès maintenant.
+> Créée à l'étape 3. Commandes : `pnpm --filter @mtr/web dev | build | test | e2e`.
 
 ## Structure
 
@@ -22,4 +22,10 @@
 
 ## Pièges connus
 
-(aucun pour l'instant)
+- Next.js 16 : le middleware s'appelle `src/proxy.ts` (plus `middleware.ts`).
+- ESLint : la config racine doit venir **après** `eslint-config-next`, sinon le parseur Next casse les règles typescript-eslint.
+- Les pages reçoivent `locale: string` : passer par `asLocale()` (`src/i18n/as-locale.ts`) avant `setRequestLocale`.
+- `X-Frame-Options: DENY` empêche d'afficher le site dans une iframe (voulu).
+- `packages/ui/theme.css` est généré : ne jamais l'éditer, lancer `pnpm --filter @mtr/ui gen:css`.
+- Les logos de `public/brand/` et les icônes de `src/app/` sont des copies ignorées par git (`pnpm brand`).
+- Nouvelle chaîne visible : l'ajouter dans les **trois** fichiers de `src/messages/` (un test le vérifie).

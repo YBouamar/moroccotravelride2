@@ -4,7 +4,7 @@
 
 - **Mobile first** pour la marketplace et l'app chauffeur ; **desktop first, responsive** pour le SaaS et l'admin.
 - **Trois langues** (fr défaut, en, ar) avec sélecteur visible dans l'en-tête ; **RTL complet** en arabe (`dir="rtl"`, propriétés logiques CSS, icônes directionnelles inversées).
-- **WCAG 2.1 AA** : contrastes (voir §6.3), navigation clavier, labels explicites, focus visibles (anneau `accent` 2 px + décalage), cibles tactiles ≥ 44 px.
+- **WCAG 2.1 AA** : contrastes (voir §6.3), navigation clavier, labels explicites, focus visibles (anneau `secondary` turquoise profond 2 px + décalage : le turquoise clair n'atteint que 2,52 sur blanc), cibles tactiles ≥ 44 px.
 - **États systématiques** : chargement (skeletons), vide (illustration + action suggérée), erreur (message clair + bouton « Réessayer »), succès (toast).
 - **Prix transparents** : prix tout compris affiché dès les résultats, identique au paiement.
 - **Confirmation explicite** avant toute action irréversible (émission de facture, annulation, refus de réservation) via boîte de dialogue qui rappelle la conséquence.
@@ -84,7 +84,7 @@ Répartition indicative : 60 % fonds clairs, 25 % bleu nuit, 15 % turquoise.
 | `border` | `#D9E2EC` | `#243B53` | Séparateurs |
 | `danger` / `warning` / `success` | à définir en Phase 1 avec contraste AA | | États |
 
-Dégradé de marque (bannières, hero, splash) : `linear-gradient(135deg, #087E8B, #21B6A8)` avec texte bleu nuit, ou fond bleu nuit avec motif de route turquoise.
+Dégradé de marque (`#087E8B` vers `#21B6A8`) : **décoratif uniquement**, jamais sous du texte (bleu nuit sur turquoise profond = 3,05, blanc sur turquoise clair = 2,52). Les bandeaux à texte sont sur fond bleu nuit avec texte blanc (ADR-018).
 
 ### 6.3 Règles de contraste (mesurées, voir ADR-010)
 
@@ -113,3 +113,14 @@ Toutes sous licence libre (SIL OFL), auto-hébergées via `next/font` (aucun app
 Bouton (primaire accent / texte bleu nuit, secondaire turquoise profond, fantôme, danger), champ, sélecteur, sélecteur de date avec règle des 24 h, carte, badge (« Agréé vérifié » turquoise profond), tableau, toast, dialogue de confirmation, skeleton, état vide, `<FeatureGate>`, sélecteur de langue, en-tête avec logo, barre latérale SaaS.
 
 Rayons : 12 px pour les cartes et boutons (cohérent avec les angles arrondis de l'icône), 24 px pour les icônes d'app.
+
+## 7. Écrans réalisés
+
+| Écran | Route | État | Étape |
+|---|---|---|---|
+| Accueil marketplace (bandeau, réassurance, en-tête, pied de page) | `/[locale]` | Statique, recherche « bientôt » | 3 |
+| Tableau de bord transporteur (état vide) + barre latérale | `/[locale]/app` | Coque, autres entrées « Bientôt » | 3 |
+| Vue d'ensemble admin (état vide) + barre latérale | `/[locale]/admin` | Coque | 3 |
+| Page 404 localisée (logo vertical) | toute URL inconnue | Fait | 3 |
+
+Composants disponibles (`apps/web/src/components`) : `Button` (primary, secondary, outline, ghost ; 44 px minimum), `Card`, `Badge` (verified, neutral), `Input`, `Label`, `Skeleton`, `EmptyState`, `Logo` (horizontal / vertical / symbole × couleur / négatif / blanc), `LocaleSwitcher`, `SiteHeader`, `SiteFooter`, `AppShell`. En-tête mobile : logo et « Espace transporteur » sur la première ligne, langues sur la seconde (aucun débordement à 390 px, vérifié par Playwright).

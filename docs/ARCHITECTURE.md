@@ -119,14 +119,19 @@ App chauffeur : démarrage du trajet (statut `in_progress`) puis envoi des posit
 | husky / lint-staged | 9.1.7 / 17.6.0 | |
 | supabase (CLI) | 2.122.0 | dépendance du dépôt |
 | gitleaks | 8.30.1 | outil système (winget) |
+| next / react / react-dom | 16.4.3 / 19.3.1 / 19.3.1 | étape 3 |
+| next-intl | 4.14.9 | étape 3 |
+| tailwindcss / @tailwindcss/postcss | 4.3.3 | étape 3 |
+| lucide-react | 1.61.0 | étape 3 |
+| class-variance-authority / clsx / tailwind-merge | 0.7.1 / 2.1.1 / 3.7.0 | étape 3 |
+| @radix-ui/react-slot | 1.5.0 | étape 3 |
+| eslint-config-next | 16.4.3 | étape 3 |
+| @playwright/test | 1.64.1 | étape 3 (avancé) |
 
 ### 5.2 Relevées, à figer à leur étape
 
 | Paquet | Dernière stable (2026-10-24) | Étape |
 |---|---|---|
-| next / react | 16.4.3 / 19.3.1 | 3 |
-| tailwindcss | 4.3.3 | 3 |
-| next-intl | 4.14.9 | 3 |
 | @supabase/supabase-js / @supabase/ssr | 2.118.0 / 0.12.7 | 4 |
 | zod / react-hook-form | 4.6.7 / 7.91.0 | 3 à 5 |
 | @tanstack/react-query | 5.104.5 | Phase 2 |
@@ -134,7 +139,6 @@ App chauffeur : démarrage du trajet (statut `in_progress`) puis envoi des posit
 | i18next | 26.5.10 | 5 |
 | resend / @react-pdf/renderer | 6.34.1 / 4.9.0 | Phases 2 et 3 |
 | maplibre-gl | 6.15.0 | Phase 4 |
-| @playwright/test | 1.64.1 | 5 |
 
 ## 6. Environnements
 

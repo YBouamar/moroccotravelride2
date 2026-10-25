@@ -38,7 +38,8 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ Cookies `HttpOnly`, `Secure`, `SameSite=Lax` ; `expo-secure-store` sur mobile.
 
 ### 2.3 Application web
-- ⬜ CSP stricte (nonces), HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` (géolocalisation et caméra désactivées sur le web).
+- ✅ HSTS, `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy` (géolocalisation, caméra, micro, paiement désactivés), en-tête `X-Powered-By` supprimé : `apps/web/next.config.ts`, testés par Playwright.
+- ⬜ CSP stricte à nonces (étape 5, avec l'authentification).
 - ⬜ Interdiction de `dangerouslySetInnerHTML` sur contenu utilisateur (règle ESLint).
 - ⬜ CSRF natif des Server Actions conservé ; contrôle `Origin` sur route handlers sensibles.
 

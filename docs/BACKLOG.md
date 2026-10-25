@@ -24,4 +24,7 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 
 | Prio | Sujet |
 |---|---|
-| | (aucune pour l'instant) |
+| P2 | Pages publiques rendues à la demande (ƒ) malgré `generateStaticParams` : viser le rendu statique de la marketplace pour les performances (Phase 7, SEO) |
+| P2 | TypeScript 7 dès que typescript-eslint le supporte (ADR-009) |
+| P2 | Tokens d'état `danger` / `warning` / `success` avec contraste AA (étape 5, formulaires) |
+| P3 | Relecture des traductions arabes par un locuteur natif |

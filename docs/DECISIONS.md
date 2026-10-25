@@ -63,7 +63,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 ## ADR-010 : Identité visuelle et accessibilité des couleurs
 
-- **Date** : 2026-10-24 · **Statut** : ACCEPTÉE ; partie logos REMPLACÉE PAR ADR-014
+- **Date** : 2026-10-24 · **Statut** : ACCEPTÉE ; partie logos REMPLACÉE PAR ADR-014 ; complétée par ADR-018 (bandeau, anneau de focus)
 - **Contexte** : palette de la présentation de marque. Mesures de contraste (WCAG 2.1) : bleu nuit sur blanc 14,64 ; turquoise profond sur blanc 4,81 ; turquoise profond sur fond clair 4,50 ; **turquoise clair sur blanc 2,52 (échec)** ; blanc sur turquoise clair 2,52 (échec) ; bleu nuit sur turquoise clair 5,80.
 - **Décision** :
   - Bouton d'action principal : fond `accent` #21B6A8 + **texte bleu nuit** #102A43 (5,80, AA).
@@ -166,3 +166,24 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
   - `supabase` (CLI) : base locale, migrations, tests pgTAP, génération de types ; installé dans le dépôt pour que la version soit la même partout.
 - **Outils système** : pnpm 12.15.0 (installé par `npm i -g`, corepack nécessitant des droits administrateur sur ce poste) ; gitleaks 8.30.1 (winget).
 - **Paquets internes** (`@mtr/shared`, `@mtr/db`, `@mtr/ui`, `@mtr/payments`) : exportent directement leurs sources TypeScript, sans étape de build ; Next.js (`transpilePackages`) et Metro les compileront. Moins de configuration pour un développeur seul.
+
+## ADR-018 : Application web (étape 3)
+
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE
+- **Dépendances ajoutées** (`apps/web`, versions exactes) :
+  - `next` 16.4.3, `react` / `react-dom` 19.3.1 : imposés par le cadrage ; `output: 'standalone'` pour l'image Docker du VPS.
+  - `next-intl` 4.14.9 : i18n fr / en / ar, préfixe de langue dans l'URL, détection de la langue du navigateur, clés typées depuis `fr.json`.
+  - `tailwindcss` / `@tailwindcss/postcss` 4.3.3 : styles, branchés sur les variables CSS générées par `@mtr/ui` (`theme.css`).
+  - `class-variance-authority`, `clsx`, `tailwind-merge`, `@radix-ui/react-slot` : socle des composants façon shadcn/ui (copiés dans `src/components/ui`, pas de dépendance à une bibliothèque de composants).
+  - `lucide-react` : icônes (imposé par le cadrage).
+  - `eslint-config-next` : règles Next.js, React, accessibilité (jsx-a11y).
+  - `@playwright/test` 1.64.1 : E2E, avancé de l'étape 5 pour vérifier le RTL et l'absence de débordement mobile ; utilise Edge installé en local, Chromium en CI.
+- **Choix techniques** :
+  - Thème : `packages/ui/theme.css` est généré depuis `tokens.ts` et vérifié par un instantané Vitest ; une seule source pour les couleurs (web, mobile, PDF, e-mails).
+  - Logos : copiés depuis `assets/brand/logos/` par `scripts/copy-brand.mjs` avant `dev` et `build` ; les copies sont ignorées par git.
+  - Polices auto-hébergées par `next/font` (téléchargées au build, aucun appel à Google à l'exécution) ; l'arabe bascule sur Noto Sans Arabic via `:root[dir='rtl']`.
+  - Scripts d'installation refusés (`allowBuilds` dans `pnpm-workspace.yaml`) pour `@parcel/watcher`, `@swc/core`, `unrs-resolver` : leurs binaires précompilés suffisent.
+  - Composants dialogue et toast reportés à l'étape 5 (premiers formulaires).
+- **Accessibilité, corrections issues des tests de contraste** (complète ADR-010) :
+  - Le texte bleu nuit sur le dégradé turquoise n'atteint que 3,05 : le bandeau d'accueil est sur fond bleu nuit, texte blanc (14,64), bouton turquoise clair à texte bleu nuit (5,80). Le dégradé reste décoratif.
+  - L'anneau de focus utilise le turquoise profond (4,81 sur blanc) et non le turquoise clair (2,52, sous le minimum de 3:1 des composants d'interface).

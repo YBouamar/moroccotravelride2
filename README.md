@@ -4,11 +4,19 @@
 
 Plateforme marocaine de transport touristique : **marketplace** de transferts intra-ville et inter-villes auprès de transporteurs agréés, et **SaaS de gestion** pour ces transporteurs (trajets, chauffeurs, véhicules, facturation, dépenses, application chauffeur, parc).
 
-> Statut : **Phase 0 (cadrage)**. Le code applicatif commence en Phase 1. Voir [docs/PROGRESS.md](docs/PROGRESS.md).
+> Statut : **Phase 1 en cours** (socle et application web). Voir [docs/PROGRESS.md](docs/PROGRESS.md).
 
 ## Démarrer
 
-Prérequis : Node 24, pnpm (via corepack), Docker Desktop. Les commandes (`pnpm install`, `pnpm dev`, `pnpm db:start`...) sont décrites dans [CLAUDE.md](CLAUDE.md) et seront actives à partir de la Phase 1.
+Prérequis : Node 24, pnpm 12, Docker Desktop (base locale à partir de l'étape 4), gitleaks.
+
+```
+pnpm install
+pnpm dev      # http://localhost:3000
+pnpm check    # contrôles complets
+```
+
+Toutes les commandes sont dans [CLAUDE.md](CLAUDE.md).
 
 ## Documentation
 
