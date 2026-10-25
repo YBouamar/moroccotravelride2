@@ -75,6 +75,8 @@ export type Database = {
           license_number: string | null;
           logo_path: string | null;
           marketplace_enabled: boolean;
+          marketplace_suspended_at: string | null;
+          marketplace_suspension_reason: string | null;
           rc_number: string | null;
           status: Database['public']['Enums']['company_status'];
           tp_number: string | null;
@@ -96,6 +98,8 @@ export type Database = {
           license_number?: string | null;
           logo_path?: string | null;
           marketplace_enabled?: boolean;
+          marketplace_suspended_at?: string | null;
+          marketplace_suspension_reason?: string | null;
           rc_number?: string | null;
           status?: Database['public']['Enums']['company_status'];
           tp_number?: string | null;
@@ -116,6 +120,8 @@ export type Database = {
           license_number?: string | null;
           logo_path?: string | null;
           marketplace_enabled?: boolean;
+          marketplace_suspended_at?: string | null;
+          marketplace_suspension_reason?: string | null;
           rc_number?: string | null;
           status?: Database['public']['Enums']['company_status'];
           tp_number?: string | null;
@@ -308,6 +314,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      consume_rate_limit: {
+        Args: { p_key: string; p_limit: number; p_window_seconds: number };
+        Returns: boolean;
+      };
       create_company: {
         Args: { p_city_id?: string; p_legal_name: string; p_trade_name?: string };
         Returns: string;
