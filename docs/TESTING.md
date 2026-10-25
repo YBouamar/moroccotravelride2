@@ -14,13 +14,16 @@
 ```
 pnpm check           # format + lint + typecheck + tests + build (avant tout commit important)
 pnpm test            # Vitest sur tous les paquets (turbo, avec cache)
-pnpm db:test         # pgTAP, nécessite pnpm db:start (à partir de l'étape 4)
+pnpm db:start        # Supabase local (Docker)
+pnpm db:reset        # réapplique migrations + seed
+pnpm db:test         # pgTAP
 pnpm e2e             # Playwright : build de production + tests ordinateur et mobile
 ```
 
 État au 2026-10-25 :
 
-- **38 tests unitaires** : `@mtr/shared` 7 (commission, arrondis) ; `@mtr/ui` 20 (contrastes AA de chaque paire de tokens, synchronisation de `theme.css`) ; `@mtr/web` 11 (mêmes clés dans fr / en / ar, aucun texte vide, aucun tiret cadratin, sens d'écriture).
+- **49 tests unitaires** : `@mtr/shared` 16 (commission, arrondis, permissions, paramètres plateforme) ; `@mtr/ui` 20 (contrastes AA, synchronisation de `theme.css`) ; `@mtr/db` 2 (énumérations base identiques aux constantes) ; `@mtr/web` 11 (mêmes clés fr / en / ar, aucun texte vide, aucun tiret cadratin, sens d'écriture).
+- **42 tests pgTAP** (`pnpm db:test`) : RLS partout, isolation entre sociétés, rôles, colonnes admin, MFA admin, profils, référentiels et paramètres. Un test volontairement faux a été lancé pour vérifier qu'ils savent échouer.
 - **20 tests E2E** (Playwright, ordinateur + mobile Pixel 7) : redirection selon la langue du navigateur, bascule fr / ar / en avec RTL, conservation de la page au changement de langue, 404 localisée, absence de débordement horizontal, en-têtes de sécurité.
 
 `pnpm e2e` construit l'application de production puis lance les tests (Edge installé en local, Chromium en CI).

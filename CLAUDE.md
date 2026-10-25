@@ -52,7 +52,7 @@ pnpm lint | typecheck | test | build | format
 pnpm db:start           # supabase start (Docker requis)
 pnpm db:reset           # migrations + seed
 pnpm db:test            # supabase test db (pgTAP)
-pnpm db:types           # régénère packages/db/src/types.ts (étape 4)
+pnpm db:types           # régénère packages/db/src/types.ts (après chaque migration)
 pnpm e2e                # Playwright (build prod + tests desktop et mobile)
 ```
 

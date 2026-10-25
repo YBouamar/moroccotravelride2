@@ -1,6 +1,6 @@
 # Modèle de données
 
-> **Statut : conception (Phase 0).** Aucune migration n'existe encore. Ce document décrit la cible ; il sera mis à jour à chaque migration avec le nom du fichier correspondant.
+> **Statut** : identité, sociétés, référentiels et paramètres **implémentés** (étape 4) ; le reste décrit la cible et sera mis à jour à chaque migration.
 
 Conventions : clés primaires `uuid` (`gen_random_uuid()`), `created_at` / `updated_at` `timestamptz` (UTC), montants `bigint` en centimes suffixés `_cents`, taux `numeric(5,4)`, énumérations en types Postgres `enum` ou `text` + `check`. **RLS activée sur toutes les tables**, aucune politique permissive par défaut.
 
@@ -55,7 +55,15 @@ erDiagram
 | `company_documents` | `company_id`, `type`, `storage_path`, `verification_status`, `expires_on` | Owner/manager + admin |
 | `company_bank_accounts` | `company_id`, `bank_name`, `rib` (24 chiffres), `holder_name`, `is_default` | Owner/accountant + admin ; RIB communiqué au voyageur seulement pour une réservation confirmée, via Server Action (ADR-016) |
 
-Fonctions SQL de sécurité (`security definer`, `search_path` fixé) : `is_member(company_id)`, `has_role(company_id, roles[])`, `is_platform_admin()` (exige `aal2`), `has_feature(company_id, key)`.
+Fonctions SQL de sécurité, schéma `private` (`security definer`, `search_path` vide, non exposé en RPC) : `is_member(company_id)`, `has_role(company_id, roles[])`, `is_platform_admin()` (exige `aal2`), `shares_company(user_id)` ; `has_feature(company_id, key)` en Phase 2.
+
+Implémentation (étape 4) :
+- Colonnes réservées à l'admin, protégées par triggers de garde : `companies.status`, `companies.marketplace_enabled`, `companies.commission_rate` ; `company_documents.verification_status`, `reviewed_by`, `reviewed_at`, `rejection_reason` ; `profiles.is_platform_admin` (modifiable seulement en accès direct à la base).
+- `public.create_company(legal_name, trade_name, city_id)` : seule façon de créer une société (statut `pending`, appelant propriétaire).
+- Trigger `on_auth_user_created` : crée le profil à l'inscription (nom et langue depuis les métadonnées).
+- Trigger `keep_one_owner` : impossible de retirer ou rétrograder le dernier propriétaire actif.
+- `companies.ice` : 15 chiffres ; `company_documents.storage_path` doit commencer par `{company_id}/`.
+- Accès anonyme révoqué sur les tables de tenant.
 
 ### Abonnements (Phase 2)
 
@@ -63,7 +71,7 @@ Fonctions SQL de sécurité (`security definer`, `search_path` fixé) : `is_memb
 
 ### Référentiels (Phase 1 / 3)
 
-`cities` (`name_fr`, `name_en`, `name_ar`, `region`, `lat`, `lng`, `is_airport`, `slug`), `vehicle_types` (`code`, libellés i18n, `indicative_capacity`). Lecture publique, écriture admin.
+`cities` (`slug`, `name_fr`, `name_en`, `name_ar`, `region`, `latitude`, `longitude`, `is_airport`, `iata_code`, `served_city_id` pour rattacher un aéroport à sa ville, `is_active`) : 6 villes + 6 aéroports (CMN, RAK, FEZ, AGA, TNG, RBA), coordonnées approximatives. `vehicle_types` (`code`, libellés fr / en / ar, `indicative_seats`, `sort_order`) : sedan, suv_4x4, van, minibus, coach. Lecture publique, écriture admin (MFA).
 
 ### SaaS Standard (Phase 2)
 
@@ -85,10 +93,14 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 
 ### Transverse
 
-`notifications`, `audit_logs` (insert via triggers / service, lecture admin et owner pour sa société), `platform_settings` (clé / valeur JSON typée par Zod : `default_commission_rate`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `location_retention_days`).
+`notifications`, `audit_logs` (Phase 2 : insert via triggers / service, lecture admin et owner pour sa société), `platform_settings` (implémentée : clé / valeur JSON validée par Zod dans `@mtr/shared` : `default_commission_bps`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `statement_suspension_days`, `location_retention_days`, `saas_trial`, `marketplace_open` ; lecture publique, modification admin, clés créées par migration uniquement).
 
 ## 3. Migrations
 
 | Fichier | Contenu | Phase |
 |---|---|---|
-| (aucune) | | |
+| `20261025210000_reference_data.sql` | `cities` (villes + aéroports), `vehicle_types`, lecture publique | 1 (étape 4) |
+| `20261025210100_identity_and_companies.sql` | schéma `private`, énumérations, `profiles`, `companies`, `company_members`, `company_documents`, fonctions de sécurité, triggers de garde, `create_company`, RLS | 1 (étape 4) |
+| `20261025210200_platform_settings.sql` | `platform_settings` + valeurs par défaut | 1 (étape 4) |
+
+Tests pgTAP : `supabase/tests/database/*.test.sql` (42 assertions). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

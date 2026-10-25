@@ -25,15 +25,15 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 ## 2. État des mesures
 
 ### 2.1 Accès aux données
-- ⬜ RLS sur toutes les tables, aucune politique permissive par défaut (Phase 1, puis chaque migration).
-- ⬜ Tests pgTAP par politique : isolation société A / B, chauffeur limité à ses trajets, voyageur à ses réservations (Phase 1+).
+- ✅ RLS sur toutes les tables existantes (testé : aucune table publique sans RLS ni sans politique) ; à maintenir à chaque migration.
+- 🟡 Tests pgTAP : isolation société A / B, rôles internes (gérant, chauffeur), colonnes admin, dernier propriétaire, profils, référentiels, admin sans MFA refusé (42 assertions, étape 4). Chauffeur / trajets et voyageur / réservations : Phases 2 et 3.
 - ⬜ `service_role` uniquement côté serveur (`src/lib/supabase/admin.ts` avec `import 'server-only'`).
 - ⬜ Server Actions : session + rôle + appartenance + Zod ; `company_id` toujours déduit de la session / de l'appartenance, jamais du client.
-- ⬜ UUID partout, références publiques aléatoires (anti-IDOR).
+- 🟡 UUID sur toutes les tables créées ; références publiques aléatoires en Phase 3.
 
 ### 2.2 Authentification
-- ⬜ Supabase Auth, politique de mot de passe forte, vérification e-mail.
-- ⬜ MFA TOTP obligatoire `platform_admin` (contrôle `aal2` dans le layout admin et dans `is_platform_admin()`), proposée aux owners.
+- 🟡 Configuration locale (`supabase/config.toml`) : mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail, ré-authentification pour changer de mot de passe. À reproduire sur le VPS. Écrans : étape 5.
+- 🟡 MFA TOTP activée ; `is_platform_admin()` exige `aal2` (testé). Contrôle dans le layout admin et écrans d'enrôlement : étape 5.
 - ⬜ Rate limiting (connexion, inscription, réinitialisation, recherche, réservation) ; Turnstile sur formulaires publics.
 - ⬜ Cookies `HttpOnly`, `Secure`, `SameSite=Lax` ; `expo-secure-store` sur mobile.
 

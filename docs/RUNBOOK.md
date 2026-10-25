@@ -13,6 +13,10 @@
 | Git | récent | ✅ 2.56 |
 | gitleaks | 8.30.1 | ✅ `winget install Gitleaks.Gitleaks` (redémarrer le terminal pour le PATH) |
 
+### Supabase local
+
+`pnpm db:start` puis : API `http://127.0.0.1:54321`, Studio `http://127.0.0.1:54323`, e-mails de test (Mailpit) `http://127.0.0.1:54324`, Postgres `postgresql://postgres:postgres@127.0.0.1:54322/postgres`. Clés locales affichées par `pnpm exec supabase status` (clés de démonstration publiques, jamais utilisées ailleurs). Arrêt : `pnpm db:stop`.
+
 ## 2. Variables d'environnement
 
 Référence : [`.env.example`](../.env.example). Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.

@@ -187,3 +187,19 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Accessibilité, corrections issues des tests de contraste** (complète ADR-010) :
   - Le texte bleu nuit sur le dégradé turquoise n'atteint que 3,05 : le bandeau d'accueil est sur fond bleu nuit, texte blanc (14,64), bouton turquoise clair à texte bleu nuit (5,80). Le dégradé reste décoratif.
   - L'anneau de focus utilise le turquoise profond (4,81 sur blanc) et non le turquoise clair (2,52, sous le minimum de 3:1 des composants d'interface).
+
+## ADR-019 : Socle base de données et RLS (étape 4)
+
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (sauf points À CONFIRMER ci-dessous)
+- **Décisions** :
+  - Fonctions de sécurité (`is_member`, `has_role`, `is_platform_admin`, `shares_company`) dans un schéma `private` non exposé par l'API, en `security definer` avec `search_path` vide : elles lisent les appartenances sans récursion RLS et ne sont pas appelables en RPC.
+  - `is_platform_admin()` exige `aal2` (MFA validée dans la session) : un admin connecté sans MFA n'a aucun droit d'admin.
+  - Règles par colonne impossibles en RLS (statut, visibilité marketplace et commission d'une société ; validation des documents ; drapeau admin d'un profil) : **triggers de garde** qui refusent la modification par les rôles API non admin.
+  - Une société se crée uniquement par la fonction `create_company`, qui crée la société (`pending`) et son propriétaire en une transaction ; aucune insertion directe.
+  - Une société garde toujours au moins un propriétaire actif (trigger).
+  - Données de référence (villes, aéroports, types de véhicules) et paramètres plateforme dans les **migrations** (nécessaires en production), `seed.sql` réservé aux données de démonstration.
+  - Paramètres en points de base (`default_commission_bps` = 2000), validés par Zod (`@mtr/shared`, nouvelle dépendance `zod` 4.6.7, imposée par le cadrage).
+  - Auth locale durcie : MFA TOTP activée, mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail obligatoire, ré-authentification pour changer de mot de passe.
+- **À CONFIRMER** :
+  - `marketplace_enabled` modifiable par l'admin uniquement (le transporteur ne peut pas réapparaître seul après une suspension pour relevé impayé) : question Q19.
+  - Capacités indicatives des types de véhicules (berline 3, 4x4 4, van 7, minibus 17, autocar 50) : question Q20.
