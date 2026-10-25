@@ -18,7 +18,8 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",
-    "prepare": "husky"
+    "prepare": "husky",
+    "e2e": "pnpm --filter @mtr/web e2e"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

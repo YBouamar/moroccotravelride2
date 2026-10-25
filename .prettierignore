@@ -8,3 +8,7 @@ coverage
 assets
 docs
 *.md
+
+# generated
+packages/ui/theme.css
+apps/web/public/brand

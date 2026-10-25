@@ -1,0 +1,52 @@
+@import 'tailwindcss';
+@import '@mtr/ui/theme.css';
+
+/* Tailwind utilities mapped to the brand tokens generated in @mtr/ui (docs/UX.md section 6). */
+@theme inline {
+  --color-primary: var(--mtr-primary);
+  --color-secondary: var(--mtr-secondary);
+  --color-secondary-foreground: var(--mtr-secondary-foreground);
+  --color-accent: var(--mtr-accent);
+  --color-accent-foreground: var(--mtr-accent-foreground);
+  --color-background: var(--mtr-background);
+  --color-surface: var(--mtr-surface);
+  --color-foreground: var(--mtr-foreground);
+  --color-muted: var(--mtr-muted);
+  --color-border: var(--mtr-border);
+  --color-navy: var(--mtr-brand-navy);
+  --color-teal: var(--mtr-brand-teal);
+  --color-teal-deep: var(--mtr-brand-teal-deep);
+  --radius-control: var(--mtr-radius-control);
+  --radius-card: var(--mtr-radius-card);
+  --font-sans: var(--font-body);
+  --font-heading: var(--font-display);
+}
+
+:root {
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;
+}
+
+/* Arabic: Inter and Montserrat have no Arabic glyphs. */
+:root[dir='rtl'] {
+  --font-body: var(--font-arabic), system-ui, sans-serif;
+  --font-display: var(--font-arabic), system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-heading text-primary;
+  }
+
+  /* Focus ring in deep teal: light teal only reaches 2.5:1 on white (WCAG 1.4.11 needs 3:1). */
+  :focus-visible {
+    outline: 2px solid var(--mtr-secondary);
+    outline-offset: 2px;
+  }
+}

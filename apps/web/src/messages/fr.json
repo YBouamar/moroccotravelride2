@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "title": "MoroccoTravelRide : transferts touristiques au Maroc",
+    "description": "Réservez vos transferts intra-ville et inter-villes auprès de transporteurs touristiques agréés au Maroc, à prix fixe."
+  },
+  "brand": {
+    "name": "MoroccoTravelRide",
+    "tagline": "Move smarter. Manage better.",
+    "logoAlt": "MoroccoTravelRide, accueil"
+  },
+  "locale": {
+    "label": "Langue",
+    "names": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "nav": {
+    "skipToContent": "Aller au contenu principal",
+    "main": "Navigation principale",
+    "forCarriers": "Espace transporteur"
+  },
+  "home": {
+    "hero": {
+      "title": "Vos transferts au Maroc, réservés en toute confiance",
+      "subtitle": "Aéroports, hôtels, villes : des transporteurs touristiques agréés, des prix fixes connus à l'avance.",
+      "cta": "Rechercher un trajet",
+      "comingSoon": "La recherche de trajets arrive bientôt."
+    },
+    "reassurance": {
+      "title": "Pourquoi réserver avec nous",
+      "licensed": {
+        "title": "Transporteurs agréés",
+        "text": "Chaque société est vérifiée avant d'apparaître sur la plateforme."
+      },
+      "fixedPrice": {
+        "title": "Prix fixes",
+        "text": "Le prix affiché est le prix payé, sans frais cachés."
+      },
+      "cancellation": {
+        "title": "Annulation flexible",
+        "text": "Annulation gratuite jusqu'à 48 h avant la prise en charge."
+      },
+      "payment": {
+        "title": "Paiement simple",
+        "text": "Par virement avant le trajet ou en espèces au chauffeur."
+      }
+    }
+  },
+  "footer": {
+    "rights": "Tous droits réservés.",
+    "legalPending": "Mentions légales en préparation."
+  },
+  "saas": {
+    "title": "Espace transporteur",
+    "soon": "Bientôt",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "planning": "Planning",
+      "trips": "Trajets",
+      "bookings": "Réservations",
+      "fleet": "Flotte",
+      "drivers": "Chauffeurs",
+      "clients": "Clients",
+      "invoices": "Facturation",
+      "subscription": "Abonnement"
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "empty": {
+        "title": "Votre espace est prêt",
+        "text": "Les trajets du jour, les réservations à accepter et vos alertes s'afficheront ici."
+      }
+    }
+  },
+  "admin": {
+    "title": "Administration",
+    "nav": {
+      "overview": "Vue d'ensemble",
+      "companies": "Sociétés",
+      "bookings": "Réservations",
+      "commissions": "Commissions",
+      "settings": "Paramètres"
+    },
+    "overview": {
+      "title": "Vue d'ensemble",
+      "empty": {
+        "title": "Aucun indicateur pour l'instant",
+        "text": "Les indicateurs de la plateforme s'afficheront ici."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page introuvable",
+    "text": "La page demandée n'existe pas ou a été déplacée.",
+    "back": "Retour à l'accueil"
+  }
+}

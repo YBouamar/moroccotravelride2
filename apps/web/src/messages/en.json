@@ -1,0 +1,99 @@
+{
+  "metadata": {
+    "title": "MoroccoTravelRide: tourist transfers in Morocco",
+    "description": "Book city and intercity transfers with licensed tourist transport companies in Morocco, at a fixed price."
+  },
+  "brand": {
+    "name": "MoroccoTravelRide",
+    "tagline": "Move smarter. Manage better.",
+    "logoAlt": "MoroccoTravelRide, home"
+  },
+  "locale": {
+    "label": "Language",
+    "names": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "nav": {
+    "skipToContent": "Skip to main content",
+    "main": "Main navigation",
+    "forCarriers": "Carrier area"
+  },
+  "home": {
+    "hero": {
+      "title": "Your transfers in Morocco, booked with confidence",
+      "subtitle": "Airports, hotels, cities: licensed tourist transport companies and fixed prices known in advance.",
+      "cta": "Search a ride",
+      "comingSoon": "Ride search is coming soon."
+    },
+    "reassurance": {
+      "title": "Why book with us",
+      "licensed": {
+        "title": "Licensed carriers",
+        "text": "Every company is verified before it appears on the platform."
+      },
+      "fixedPrice": {
+        "title": "Fixed prices",
+        "text": "The price you see is the price you pay, with no hidden fees."
+      },
+      "cancellation": {
+        "title": "Flexible cancellation",
+        "text": "Free cancellation up to 48 hours before pickup."
+      },
+      "payment": {
+        "title": "Easy payment",
+        "text": "By bank transfer before the ride or in cash to the driver."
+      }
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "legalPending": "Legal notice in preparation."
+  },
+  "saas": {
+    "title": "Carrier area",
+    "soon": "Soon",
+    "nav": {
+      "dashboard": "Dashboard",
+      "planning": "Planning",
+      "trips": "Trips",
+      "bookings": "Bookings",
+      "fleet": "Fleet",
+      "drivers": "Drivers",
+      "clients": "Clients",
+      "invoices": "Invoicing",
+      "subscription": "Subscription"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "empty": {
+        "title": "Your workspace is ready",
+        "text": "Today's trips, bookings to accept and your alerts will appear here."
+      }
+    }
+  },
+  "admin": {
+    "title": "Administration",
+    "nav": {
+      "overview": "Overview",
+      "companies": "Companies",
+      "bookings": "Bookings",
+      "commissions": "Commissions",
+      "settings": "Settings"
+    },
+    "overview": {
+      "title": "Overview",
+      "empty": {
+        "title": "No metrics yet",
+        "text": "Platform metrics will appear here."
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "The page you are looking for does not exist or has moved.",
+    "back": "Back to home"
+  }
+}
