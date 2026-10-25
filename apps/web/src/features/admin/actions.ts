@@ -1,6 +1,12 @@
 'use server';
 
-import { bpsToRate, percentToBps, PLAN_CODES, SUBSCRIPTION_STATUSES } from '@mtr/shared';
+import {
+  bpsToRate,
+  paymentInfoSchema,
+  percentToBps,
+  PLAN_CODES,
+  SUBSCRIPTION_STATUSES,
+} from '@mtr/shared';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { createClient } from '@/lib/supabase/server';
@@ -123,5 +129,32 @@ export async function updateSubscriptionAction(input: z.input<typeof subscriptio
       })
       .eq('company_id', value.companyId)
       .select('company_id'),
+  );
+}
+
+const settingsSchema = z.object({
+  paymentInfo: paymentInfoSchema,
+  graceDays: z.number().int().min(1).max(90),
+});
+
+/** Platform settings edited in the admin Settings page (Q22 grace period, Q23 payment details). */
+export async function updatePlatformSettingsAction(input: z.input<typeof settingsSchema>) {
+  const parsed = settingsSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: 'invalid' } as const;
+
+  const payment = await adminUpdate((supabase) =>
+    supabase
+      .from('platform_settings')
+      .update({ value: parsed.data.paymentInfo })
+      .eq('key', 'subscription_payment_info')
+      .select('key'),
+  );
+  if (!payment.ok) return payment;
+  return adminUpdate((supabase) =>
+    supabase
+      .from('platform_settings')
+      .update({ value: parsed.data.graceDays })
+      .eq('key', 'subscription_grace_days')
+      .select('key'),
   );
 }

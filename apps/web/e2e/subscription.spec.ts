@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { signIn } from './helpers';
+import { signIn, sql } from './helpers';
 
 test('a Standard carrier sees locked V2 features and the offers comparison', async ({ page }) => {
   await signIn(page, 'owner.sahara@moroccotravelride.test');
@@ -30,4 +30,36 @@ test('a company on trial sees how many days are left', async ({ page }) => {
   // V2 trial: V2 sections are included (soon), V3 ones are locked.
   await expect(page.getByRole('link', { name: /Parc/ })).toContainText('V3');
   await expect(page.getByRole('link', { name: /Dépenses/ })).toHaveCount(0);
+});
+
+// These tests temporarily change demo subscriptions: run this file serially and restore them.
+test.describe.configure({ mode: 'serial' });
+
+const OASIS = '00000000-0000-4000-b000-000000000003';
+const SAHARA = '00000000-0000-4000-b000-000000000002';
+
+test('an ended trial makes the workspace read-only (Q21)', async ({ page }) => {
+  sql(
+    `update public.subscriptions set trial_ends_at = now() - interval '1 day' where company_id = '${OASIS}'`,
+  );
+  try {
+    await signIn(page, 'owner.oasis@moroccotravelride.test');
+    await expect(page.getByText(/Votre espace est en lecture seule/)).toBeVisible();
+  } finally {
+    sql(
+      `update public.subscriptions set trial_ends_at = now() + interval '14 days' where company_id = '${OASIS}'`,
+    );
+  }
+});
+
+test('an overdue payment shows the days left before cancellation (Q22)', async ({ page }) => {
+  sql(`update public.subscriptions set status = 'past_due' where company_id = '${SAHARA}'`);
+  try {
+    await signIn(page, 'owner.sahara@moroccotravelride.test');
+    await expect(
+      page.getByText('Paiement en retard : 15 jours avant la résiliation.', { exact: false }),
+    ).toBeVisible();
+  } finally {
+    sql(`update public.subscriptions set status = 'active' where company_id = '${SAHARA}'`);
+  }
 });

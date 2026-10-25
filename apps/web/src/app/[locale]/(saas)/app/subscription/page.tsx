@@ -5,6 +5,8 @@ import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardTitle } from '@/components/ui/card';
 import { getCompanyContext } from '@/features/companies/context';
+import { getPlatformSettings } from '@/features/settings/queries';
+import { PaymentDetails } from '@/features/subscriptions/payment-details';
 import { getPlans } from '@/features/subscriptions/plans';
 import { asLocale } from '@/i18n/as-locale';
 import { cn } from '@/lib/utils';
@@ -21,11 +23,12 @@ export default async function SubscriptionPage({
 }) {
   const locale = asLocale((await params).locale);
   setRequestLocale(locale);
-  const [t, format, context, plans] = await Promise.all([
+  const [t, format, context, plans, settings] = await Promise.all([
     getTranslations(),
     getFormatter(),
     getCompanyContext(),
     getPlans(),
+    getPlatformSettings(),
   ]);
   const subscription = context?.subscription;
 
@@ -44,7 +47,7 @@ export default async function SubscriptionPage({
             <div>
               <dt className="text-sm text-muted">{t('subscription.status')}</dt>
               <dd className="mt-1">
-                <Badge variant={subscription.usable ? 'verified' : 'neutral'}>
+                <Badge variant={context?.canWrite ? 'verified' : 'neutral'}>
                   {t(`subscriptionStatus.${subscription.status}`)}
                 </Badge>
               </dd>
@@ -112,6 +115,7 @@ export default async function SubscriptionPage({
       </section>
 
       <Alert title={t('subscription.howToTitle')}>{t('subscription.howToText')}</Alert>
+      <PaymentDetails info={settings.subscription_payment_info} />
     </div>
   );
 }

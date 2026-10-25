@@ -94,13 +94,23 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
       </Alert>,
     );
   }
-  if (subscription && !subscription.usable) {
+  const offersLink = (
+    <Link href="/app/subscription" className="font-semibold underline">
+      {t('subscription.seeOffers')}
+    </Link>
+  );
+  if (context && !context.canWrite) {
+    // Q21: ended trial or subscription = read-only.
     banners.push(
-      <Alert key="expired" tone="danger">
-        {t('subscription.expiredBanner')}{' '}
-        <Link href="/app/subscription" className="font-semibold underline">
-          {t('subscription.seeOffers')}
-        </Link>
+      <Alert key="read-only" tone="danger">
+        {t('subscription.readOnlyBanner')} {offersLink}
+      </Alert>,
+    );
+  } else if (subscription?.status === 'past_due') {
+    // Q22: full access during the grace period, then cancellation.
+    banners.push(
+      <Alert key="past-due" tone="danger">
+        {t('subscription.pastDueBanner', { days: subscription.graceDaysLeft })} {offersLink}
       </Alert>,
     );
   } else if (subscription?.status === 'trial' && subscription.trialEndsAt) {

@@ -1,28 +1,50 @@
 import { describe, expect, it } from 'vitest';
 import {
   bpsToRate,
-  isSubscriptionUsable,
+  graceDaysLeft,
+  hasWriteAccess,
   percentToBps,
   rateToBps,
   trialDaysLeft,
+  type SubscriptionState,
 } from './subscriptions';
 
 const now = new Date('2026-10-26T10:00:00Z');
 const inHours = (hours: number) => new Date(now.getTime() + hours * 3_600_000);
 
-describe('isSubscriptionUsable', () => {
-  it('accepts active and past_due subscriptions', () => {
-    expect(isSubscriptionUsable({ status: 'active', trialEndsAt: null }, now)).toBe(true);
-    expect(isSubscriptionUsable({ status: 'past_due', trialEndsAt: null }, now)).toBe(true);
+describe('hasWriteAccess', () => {
+  const state = (status: SubscriptionState['status'], extra: Partial<SubscriptionState> = {}) => ({
+    status,
+    trialEndsAt: null,
+    pastDueSince: null,
+    ...extra,
   });
 
-  it('accepts a trial only before its end', () => {
-    expect(isSubscriptionUsable({ status: 'trial', trialEndsAt: inHours(1) }, now)).toBe(true);
-    expect(isSubscriptionUsable({ status: 'trial', trialEndsAt: inHours(-1) }, now)).toBe(false);
+  it('grants writes to active subscriptions and running trials', () => {
+    expect(hasWriteAccess(state('active'), now, 15)).toBe(true);
+    expect(hasWriteAccess(state('trial', { trialEndsAt: inHours(1) }), now, 15)).toBe(true);
   });
 
-  it('refuses cancelled subscriptions', () => {
-    expect(isSubscriptionUsable({ status: 'cancelled', trialEndsAt: null }, now)).toBe(false);
+  it('makes ended trials and cancelled subscriptions read-only (Q21)', () => {
+    expect(hasWriteAccess(state('trial', { trialEndsAt: inHours(-1) }), now, 15)).toBe(false);
+    expect(hasWriteAccess(state('cancelled'), now, 15)).toBe(false);
+  });
+
+  it('keeps writes for 15 days after a missed payment (Q22)', () => {
+    expect(hasWriteAccess(state('past_due', { pastDueSince: inHours(-14 * 24) }), now, 15)).toBe(
+      true,
+    );
+    expect(hasWriteAccess(state('past_due', { pastDueSince: inHours(-15 * 24) }), now, 15)).toBe(
+      false,
+    );
+  });
+});
+
+describe('graceDaysLeft', () => {
+  it('counts down the grace period', () => {
+    expect(graceDaysLeft(now, 15, now)).toBe(15);
+    expect(graceDaysLeft(inHours(-24 * 10 - 1), 15, now)).toBe(5);
+    expect(graceDaysLeft(null, 15, now)).toBe(0);
   });
 });
 

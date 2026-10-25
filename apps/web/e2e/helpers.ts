@@ -81,13 +81,29 @@ export function sql(query: string): string {
   ).trim();
 }
 
-/** Signs the demo admin in and completes TOTP enrollment (factors are reset by global-setup). */
+// TOTP secret of the demo admin, known once enrolled in this worker (factors reset by global-setup).
+let adminSecret: string | undefined;
+let lastTotpWindow = -1;
+
+/** A code for a 30 s window not used yet (an authenticator code is accepted only once). */
+async function freshCode(secret: string): Promise<string> {
+  const window = Math.floor(Date.now() / 30_000);
+  if (window === lastTotpWindow) {
+    await new Promise((resolve) => setTimeout(resolve, 30_000 - (Date.now() % 30_000) + 500));
+  }
+  lastTotpWindow = Math.floor(Date.now() / 30_000);
+  return totp(secret);
+}
+
+/** Signs the demo admin in: TOTP enrollment the first time, then the code challenge. */
 export async function signInAsAdmin(page: Page) {
   await signIn(page, 'admin@moroccotravelride.test');
   await expect(page).toHaveURL(/\/fr\/mfa$/);
-  await page.getByRole('button', { name: "Configurer l'application" }).click();
-  const secret = (await page.locator('code').textContent())?.trim() ?? '';
-  await page.getByLabel('Code à 6 chiffres').fill(totp(secret));
+  if (!adminSecret) {
+    await page.getByRole('button', { name: "Configurer l'application" }).click();
+    adminSecret = (await page.locator('code').textContent())?.trim() ?? '';
+  }
+  await page.getByLabel('Code à 6 chiffres').fill(await freshCode(adminSecret));
   await page.getByRole('button', { name: 'Vérifier' }).click();
   await expect(page).toHaveURL(/\/fr\/admin$/);
 }

@@ -51,7 +51,7 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       key: 'settings',
       label: t('admin.nav.settings'),
       icon: icon(Settings),
-      badge: t('saas.soon'),
+      href: '/admin/settings',
     },
   ];
 

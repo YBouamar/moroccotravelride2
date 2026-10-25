@@ -376,6 +376,7 @@ export type Database = {
           current_period_end: string | null;
           current_period_start: string | null;
           notes: string | null;
+          past_due_since: string | null;
           payment_method: string;
           plan_code: string;
           status: Database['public']['Enums']['subscription_status'];
@@ -389,6 +390,7 @@ export type Database = {
           current_period_end?: string | null;
           current_period_start?: string | null;
           notes?: string | null;
+          past_due_since?: string | null;
           payment_method?: string;
           plan_code: string;
           status: Database['public']['Enums']['subscription_status'];
@@ -401,6 +403,7 @@ export type Database = {
           current_period_end?: string | null;
           current_period_start?: string | null;
           notes?: string | null;
+          past_due_since?: string | null;
           payment_method?: string;
           plan_code?: string;
           status?: Database['public']['Enums']['subscription_status'];

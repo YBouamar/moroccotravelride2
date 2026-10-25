@@ -163,6 +163,19 @@
       "invalid": "Invalid value.",
       "forbidden": "Action not allowed.",
       "unknown": "Something went wrong."
+    },
+    "settings": {
+      "title": "Settings",
+      "paymentTitle": "Subscription payment details",
+      "paymentHint": "Shown to carriers on their subscription page.",
+      "bank": "Bank",
+      "holder": "Account holder",
+      "rib": "RIB (24 digits)",
+      "email": "Contact e-mail",
+      "phone": "Contact phone",
+      "graceTitle": "Overdue payment",
+      "graceDays": "Days before cancellation",
+      "save": "Save"
     }
   },
   "notFound": {
@@ -247,7 +260,9 @@
     "nameTooShort": "At least 2 characters.",
     "tooLong": "Text too long.",
     "acceptTerms": "You must accept the terms of use.",
-    "mfaCode": "Enter the 6 digits."
+    "mfaCode": "Enter the 6 digits.",
+    "rib": "The RIB must have 24 digits.",
+    "phone": "Invalid phone number."
   },
   "company": {
     "pending": {
@@ -314,10 +329,17 @@
     "howToTitle": "Change plan or activate your subscription",
     "howToText": "Payment is made by bank transfer. Contact the MoroccoTravelRide team: we send you the invoice and activate the plan as soon as the transfer is received.",
     "trialBanner": "{days, plural, one {Free trial: # day left.} other {Free trial: # days left.}}",
-    "expiredBanner": "Your trial or subscription has ended. Your data is kept; activate a plan to continue.",
     "seeOffers": "See plans",
     "lockedTitle": "Feature included in a higher plan",
-    "lockedText": "This feature is part of the {plan} plan."
+    "lockedText": "This feature is part of the {plan} plan.",
+    "readOnlyBanner": "Your workspace is read-only: your trial or subscription has ended. Your data remains available; activate a plan to edit it.",
+    "pastDueBanner": "{days, plural, one {Payment overdue: # day before cancellation.} other {Payment overdue: # days before cancellation.}} Your workspace will then become read-only.",
+    "paymentTitle": "Payment details",
+    "bank": "Bank",
+    "holder": "Account holder",
+    "rib": "RIB",
+    "email": "E-mail",
+    "phone": "Phone"
   },
   "audit": {
     "company": {

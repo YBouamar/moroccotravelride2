@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { signInAsAdmin, sql } from './helpers';
+import { signIn, signInAsAdmin, sql } from './helpers';
 
 // One serial journey: the admin TOTP factor is enrolled once per run (secret shown only once).
 test.describe.configure({ mode: 'serial' });
@@ -62,4 +62,42 @@ test('a platform admin enrolls MFA, verifies a company and manages its subscript
   await page.getByLabel('Taux spécifique (%)').fill('150');
   await page.getByRole('button', { name: 'Enregistrer' }).first().click();
   await expect(page.getByText('Valeur invalide.')).toBeVisible();
+});
+
+test('the admin fills in the payment details shown to carriers (Q23)', async ({ browser }) => {
+  test.setTimeout(90_000); // may wait for the next TOTP window
+  const admin = await browser.newPage();
+  try {
+    await signInAsAdmin(admin);
+    await admin.getByRole('link', { name: 'Paramètres' }).click();
+    await expect(admin.getByRole('heading', { name: 'Paramètres', level: 1 })).toBeVisible();
+
+    await admin.getByLabel('RIB (24 chiffres)').fill('12345');
+    await admin.getByRole('button', { name: 'Enregistrer' }).click();
+    await expect(admin.getByText('Le RIB doit comporter 24 chiffres.')).toBeVisible();
+
+    await admin.getByLabel('Banque').fill('Banque Test E2E');
+    await admin.getByLabel('Titulaire du compte').fill('MoroccoTravelRide SARL');
+    await admin.getByLabel('RIB (24 chiffres)').fill('0117 8000 0012 3456 7890 1234');
+    await admin.getByLabel('E-mail de contact').fill('facturation@moroccotravelride.test');
+    await admin.getByLabel('Téléphone de contact').fill('+212 5 22 00 00 00');
+    await admin.getByRole('button', { name: 'Enregistrer' }).click();
+    await expect(admin.getByText('Modifications enregistrées.')).toBeVisible();
+
+    const carrier = await browser.newPage();
+    await signIn(carrier, 'owner.sahara@moroccotravelride.test');
+    await expect(carrier).toHaveURL(/\/fr\/app$/);
+    await carrier.goto('/fr/app/subscription');
+    await expect(carrier.getByText('Coordonnées de paiement')).toBeVisible();
+    await expect(carrier.getByText('0117 8000 0012 3456 7890 1234')).toBeVisible();
+    await expect(
+      carrier.getByRole('link', { name: 'facturation@moroccotravelride.test' }),
+    ).toHaveAttribute('href', 'mailto:facturation@moroccotravelride.test');
+    await carrier.close();
+  } finally {
+    sql(
+      `update public.platform_settings set value = '{"bank_name": "", "account_holder": "", "rib": "", "email": "", "phone": ""}' where key = 'subscription_payment_info'`,
+    );
+    await admin.close();
+  }
 });

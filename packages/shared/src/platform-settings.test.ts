@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parsePlatformSettings } from './platform-settings';
+import { parsePlatformSettings, paymentInfoSchema } from './platform-settings';
 
 // Same values as the seed migration.
 const rows = [
@@ -20,6 +20,11 @@ const rows = [
   { key: 'location_retention_days', value: 90 },
   { key: 'saas_trial', value: { days: 14, plan: 'v2' } },
   { key: 'marketplace_open', value: true },
+  { key: 'subscription_grace_days', value: 15 },
+  {
+    key: 'subscription_payment_info',
+    value: { bank_name: '', account_holder: '', rib: '', email: '', phone: '' },
+  },
 ];
 
 describe('parsePlatformSettings', () => {
@@ -47,5 +52,30 @@ describe('parsePlatformSettings', () => {
         : r,
     );
     expect(() => parsePlatformSettings(bad)).toThrow();
+  });
+});
+
+describe('paymentInfoSchema', () => {
+  const base = {
+    bank_name: 'Banque',
+    account_holder: 'MoroccoTravelRide SARL',
+    email: '',
+    phone: '',
+  };
+
+  it('accepts a 24-digit RIB written with spaces', () => {
+    const parsed = paymentInfoSchema.parse({ ...base, rib: '011 780 0000123456789012 34' });
+    expect(parsed.rib).toBe('011780000012345678901234');
+  });
+
+  it('rejects a RIB that is not 24 digits', () => {
+    expect(paymentInfoSchema.safeParse({ ...base, rib: '12345' }).success).toBe(false);
+  });
+
+  it('checks the contact e-mail and phone', () => {
+    expect(paymentInfoSchema.safeParse({ ...base, rib: '', email: 'nope' }).success).toBe(false);
+    expect(
+      paymentInfoSchema.safeParse({ ...base, rib: '', phone: '+212 6 00 00 00 00' }).success,
+    ).toBe(true);
   });
 });

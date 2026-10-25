@@ -27,15 +27,39 @@ export type Feature = (typeof FEATURES)[number];
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-/** Same rule as private.has_feature(): a trial only counts until its end date. */
-export function isSubscriptionUsable(
-  subscription: { status: SubscriptionStatus; trialEndsAt: Date | null },
+export interface SubscriptionState {
+  status: SubscriptionStatus;
+  trialEndsAt: Date | null;
+  /** When the subscription became past_due (null otherwise). */
+  pastDueSince: Date | null;
+}
+
+/**
+ * Write access, same rule as private.has_feature() (ADR-022): active, trial before its end, or
+ * past_due within the grace period. Without write access the company is read-only (Q21).
+ */
+export function hasWriteAccess(
+  subscription: SubscriptionState,
   now: Date,
+  graceDays: number,
 ): boolean {
-  if (subscription.status === 'active' || subscription.status === 'past_due') return true;
-  return (
-    subscription.status === 'trial' && !!subscription.trialEndsAt && subscription.trialEndsAt > now
-  );
+  switch (subscription.status) {
+    case 'active':
+      return true;
+    case 'trial':
+      return !!subscription.trialEndsAt && subscription.trialEndsAt > now;
+    case 'past_due':
+      return graceDaysLeft(subscription.pastDueSince, graceDays, now) > 0;
+    default:
+      return false;
+  }
+}
+
+/** Whole days left before a past_due subscription is cancelled (Q22). */
+export function graceDaysLeft(pastDueSince: Date | null, graceDays: number, now: Date): number {
+  if (!pastDueSince) return 0;
+  const end = pastDueSince.getTime() + graceDays * DAY_MS;
+  return Math.max(0, Math.ceil((end - now.getTime()) / DAY_MS));
 }
 
 /** Whole days left in a trial, rounded up (a trial ending in 3 h shows "1 day"). */

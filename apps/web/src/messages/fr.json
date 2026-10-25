@@ -163,6 +163,19 @@
       "invalid": "Valeur invalide.",
       "forbidden": "Action non autorisée.",
       "unknown": "Une erreur est survenue."
+    },
+    "settings": {
+      "title": "Paramètres",
+      "paymentTitle": "Coordonnées de paiement des abonnements",
+      "paymentHint": "Affichées aux transporteurs sur leur page Abonnement.",
+      "bank": "Banque",
+      "holder": "Titulaire du compte",
+      "rib": "RIB (24 chiffres)",
+      "email": "E-mail de contact",
+      "phone": "Téléphone de contact",
+      "graceTitle": "Paiement en retard",
+      "graceDays": "Jours avant résiliation",
+      "save": "Enregistrer"
     }
   },
   "notFound": {
@@ -247,7 +260,9 @@
     "nameTooShort": "2 caractères minimum.",
     "tooLong": "Texte trop long.",
     "acceptTerms": "Vous devez accepter les conditions générales.",
-    "mfaCode": "Saisissez les 6 chiffres."
+    "mfaCode": "Saisissez les 6 chiffres.",
+    "rib": "Le RIB doit comporter 24 chiffres.",
+    "phone": "Numéro de téléphone invalide."
   },
   "company": {
     "pending": {
@@ -314,10 +329,17 @@
     "howToTitle": "Changer d'offre ou activer votre abonnement",
     "howToText": "Le paiement se fait par virement. Contactez l'équipe MoroccoTravelRide : nous vous envoyons la facture et activons l'offre dès réception du virement.",
     "trialBanner": "{days, plural, one {Essai gratuit : # jour restant.} other {Essai gratuit : # jours restants.}}",
-    "expiredBanner": "Votre essai ou votre abonnement est terminé. Vos données sont conservées ; activez une offre pour continuer.",
     "seeOffers": "Voir les offres",
     "lockedTitle": "Fonction incluse dans une offre supérieure",
-    "lockedText": "Cette fonction fait partie de l'offre {plan}."
+    "lockedText": "Cette fonction fait partie de l'offre {plan}.",
+    "readOnlyBanner": "Votre espace est en lecture seule : votre essai ou votre abonnement est terminé. Vos données restent consultables ; activez une offre pour les modifier.",
+    "pastDueBanner": "{days, plural, one {Paiement en retard : # jour avant la résiliation.} other {Paiement en retard : # jours avant la résiliation.}} Votre espace passera ensuite en lecture seule.",
+    "paymentTitle": "Coordonnées de paiement",
+    "bank": "Banque",
+    "holder": "Titulaire du compte",
+    "rib": "RIB",
+    "email": "E-mail",
+    "phone": "Téléphone"
   },
   "audit": {
     "company": {
