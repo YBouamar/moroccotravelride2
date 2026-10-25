@@ -7,6 +7,12 @@ import {
 } from './company-schemas';
 import { detectDocumentType } from './documents';
 import { isCompanyProfileComplete, onboardingProgress } from './onboarding';
+import {
+  canDriverPerformTrip,
+  casablancaDate,
+  casablancaEndOfDay,
+  isDocumentValidOn,
+} from './validity';
 
 const firstError = (result: { error?: { issues: { message: string }[] } }) =>
   result.error?.issues[0]?.message;
@@ -33,10 +39,13 @@ describe('companyProfileSchema', () => {
     expect(firstError(companyProfileSchema.safeParse({ ...valid, ice: '12345' }))).toBe('ice');
   });
 
-  it('refuses an expired tourism license', () => {
+  it('accepts an expired tourism license (warned, not refused: Q24)', () => {
     expect(
-      firstError(companyProfileSchema.safeParse({ ...valid, licenseExpiresOn: '2020-01-01' })),
-    ).toBe('expired');
+      companyProfileSchema.safeParse({ ...valid, licenseExpiresOn: '2020-01-01' }).success,
+    ).toBe(true);
+    expect(
+      firstError(companyProfileSchema.safeParse({ ...valid, licenseExpiresOn: '31/12/2030' })),
+    ).toBe('date');
   });
 });
 
@@ -83,11 +92,43 @@ describe('driverSchema', () => {
     expect(driverSchema.safeParse(valid).success).toBe(true);
   });
 
-  it('refuses an expired driving license and unknown languages', () => {
-    expect(firstError(driverSchema.safeParse({ ...valid, licenseExpiresOn: '2001-01-01' }))).toBe(
-      'expired',
-    );
+  it('accepts an expired driving license but refuses unknown languages', () => {
+    expect(driverSchema.safeParse({ ...valid, licenseExpiresOn: '2001-01-01' }).success).toBe(true);
     expect(driverSchema.safeParse({ ...valid, languages: ['xx'] }).success).toBe(false);
+  });
+});
+
+describe('isDocumentValidOn', () => {
+  it('is valid up to and including the expiry day (Casablanca date)', () => {
+    expect(isDocumentValidOn('2026-10-26', '2026-10-26')).toBe(true);
+    expect(isDocumentValidOn('2026-10-25', '2026-10-26')).toBe(false);
+    expect(isDocumentValidOn(null, '2026-10-26')).toBe(false);
+  });
+
+  it('tells whether a driver may perform a trip on a given day (Q24)', () => {
+    expect(
+      canDriverPerformTrip({ licenseExpiresOn: '2027-01-01', status: 'active' }, '2026-12-31'),
+    ).toBe(true);
+    expect(
+      canDriverPerformTrip({ licenseExpiresOn: '2026-12-30', status: 'active' }, '2026-12-31'),
+    ).toBe(false);
+    expect(
+      canDriverPerformTrip({ licenseExpiresOn: '2027-01-01', status: 'inactive' }, '2026-12-31'),
+    ).toBe(false);
+  });
+
+  it('gives the calendar date in Morocco, not in UTC', () => {
+    // Summer: Morocco is ahead of UTC (tz database), so 23:30 UTC is already the next day.
+    expect(casablancaDate(new Date('2026-07-01T23:30:00Z'))).toBe('2026-07-02');
+    expect(casablancaDate(new Date('2026-07-01T10:00:00Z'))).toBe('2026-07-01');
+  });
+
+  it('computes the end of a Moroccan day whatever the current offset', () => {
+    for (const day of ['2026-03-01', '2026-07-01', '2026-10-26']) {
+      const end = casablancaEndOfDay(day);
+      expect(casablancaDate(end)).toBe(day);
+      expect(casablancaDate(new Date(end.getTime() + 1000))).not.toBe(day);
+    }
   });
 });
 

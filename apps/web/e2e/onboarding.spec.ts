@@ -90,3 +90,22 @@ test('a duplicate vehicle registration is refused', async ({ page, baseURL }) =>
   }
   await expect(page.getByText('Ce véhicule est déjà enregistré.')).toBeVisible();
 });
+
+test('a driver with an expired license is accepted with a warning (Q24)', async ({
+  page,
+  baseURL,
+}) => {
+  test.setTimeout(60_000);
+  await signUpAndConfirm(page, baseURL!, `Expired ${Date.now()} SARL`);
+  await page.goto('/fr/app/onboarding/driver');
+  await page.getByLabel('Nom complet').fill('Hamid Benali');
+  await page.getByLabel('Téléphone').fill('+212 6 98 76 54 32');
+  await page.getByLabel('Numéro de permis de conduire').fill('D-654321');
+  await page.getByLabel("Date d'expiration du permis").fill('2020-01-31');
+  await page.getByRole('button', { name: 'Enregistrer et continuer' }).click();
+  await expect(page).toHaveURL(/\/fr\/app\/onboarding$/);
+
+  await page.goto('/fr/app/onboarding/driver');
+  await expect(page.getByText('Permis expiré', { exact: true })).toBeVisible();
+  await expect(page.getByText('ne pourra pas être affecté à une prestation')).toBeVisible();
+});

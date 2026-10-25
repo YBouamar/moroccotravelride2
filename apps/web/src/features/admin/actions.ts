@@ -2,6 +2,7 @@
 
 import {
   bpsToRate,
+  casablancaEndOfDay,
   paymentInfoSchema,
   percentToBps,
   PLAN_CODES,
@@ -122,8 +123,10 @@ export async function updateSubscriptionAction(input: z.input<typeof subscriptio
       .update({
         plan_code: value.planCode,
         status: value.status,
-        // A trial ends at the end of the chosen day in Morocco (UTC+1 outside Ramadan).
-        trial_ends_at: value.trialEndsAt ? `${value.trialEndsAt}T23:59:59+01:00` : null,
+        // A trial ends at the end of the chosen day in Morocco (offset from the tz database).
+        trial_ends_at: value.trialEndsAt
+          ? casablancaEndOfDay(value.trialEndsAt).toISOString()
+          : null,
         current_period_start: value.periodStart,
         current_period_end: value.periodEnd,
       })

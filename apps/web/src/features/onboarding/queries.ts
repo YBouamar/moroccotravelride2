@@ -26,7 +26,7 @@ export const getOnboardingData = cache(async (companyId: string) => {
       .order('created_at'),
     supabase
       .from('drivers')
-      .select('id, full_name')
+      .select('id, full_name, license_expires_on')
       .eq('company_id', companyId)
       .order('created_at'),
   ]);

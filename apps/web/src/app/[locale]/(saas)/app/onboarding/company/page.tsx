@@ -1,3 +1,4 @@
+import { casablancaDate, isDocumentValidOn } from '@mtr/shared';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
 import { CompanyProfileForm } from '@/features/onboarding/components/company-profile-form';
@@ -20,6 +21,13 @@ export default async function CompanyStepPage({ params }: { params: Promise<{ lo
 
   return (
     <StepShell step="company">
+      {/* Q24: an expired license is accepted; it only blocks marketplace visibility (BR-016). */}
+      {company.license_expires_on &&
+      !isDocumentValidOn(company.license_expires_on, casablancaDate()) ? (
+        <Alert tone="danger" className="mb-4">
+          {(await getTranslations('companyForm'))('licenseExpiredWarning')}
+        </Alert>
+      ) : null}
       <CompanyProfileForm
         cities={cities}
         initial={{

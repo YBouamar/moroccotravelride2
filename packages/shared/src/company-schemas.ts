@@ -4,14 +4,13 @@ import { z } from 'zod';
  * Carrier data schemas shared by forms and Server Actions (step 7). Error messages are i18n keys
  * under `validation.*`. Legal identifiers follow the Moroccan formats; the full list of mandatory
  * invoice mentions remains À VÉRIFIER with an accountant (BR-109).
+ * Expiry dates in the past are accepted and only warned about (Q24, see validity.ts).
  */
 
-const today = () => new Date().toISOString().slice(0, 10);
 const optionalText = (max: number) => z.string().trim().max(max, { error: 'tooLong' });
 const requiredText = (max: number) =>
   z.string().trim().min(1, { error: 'required' }).max(max, { error: 'tooLong' });
 const isoDate = z.iso.date({ error: 'date' });
-const futureDate = isoDate.refine((value) => value > today(), { error: 'expired' });
 
 export const phoneSchema = z
   .string()
@@ -32,7 +31,7 @@ export const companyProfileSchema = z.object({
   address: requiredText(300),
   cityId: z.uuid({ error: 'required' }),
   licenseNumber: requiredText(64),
-  licenseExpiresOn: futureDate,
+  licenseExpiresOn: isoDate,
 });
 
 /** Upper case, single spaces: "12345 - a - 6 " becomes "12345 - A - 6". */
@@ -72,9 +71,9 @@ export const driverSchema = z.object({
   fullName: z.string().trim().min(2, { error: 'nameTooShort' }).max(120, { error: 'tooLong' }),
   phone: phoneSchema,
   licenseNumber: requiredText(40),
-  licenseExpiresOn: futureDate,
+  licenseExpiresOn: isoDate,
   professionalCardNumber: optionalText(40),
-  professionalCardExpiresOn: z.union([z.literal(''), futureDate]),
+  professionalCardExpiresOn: z.union([z.literal(''), isoDate]),
   languages: z.array(z.enum(DRIVER_LANGUAGES)),
 });
 

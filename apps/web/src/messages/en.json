@@ -271,7 +271,6 @@
     "phone": "Invalid phone number.",
     "ice": "The ICE has 15 digits.",
     "date": "Invalid date.",
-    "expired": "This date has already passed.",
     "registration": "Invalid registration.",
     "seats": "Between 1 and 80 seats.",
     "year": "Invalid year."
@@ -469,7 +468,8 @@
     "city": "City",
     "cityPlaceholder": "Choose a city",
     "licenseNumber": "Tourist transport license number",
-    "licenseExpiresOn": "License expiry date"
+    "licenseExpiresOn": "License expiry date",
+    "licenseExpiredWarning": "License expired: your company cannot appear on the marketplace until it is renewed."
   },
   "documentsForm": {
     "type": "Document type",
@@ -506,7 +506,9 @@
     "cardNumber": "Professional card (optional)",
     "cardExpiresOn": "Professional card expiry (optional)",
     "languages": "Languages spoken",
-    "existing": "Registered drivers"
+    "existing": "Registered drivers",
+    "licenseExpiredWarning": "License expired: this driver cannot be assigned to a trip until the license is valid again.",
+    "licenseExpired": "License expired"
   },
   "languages": {
     "fr": "French",

@@ -271,7 +271,6 @@
     "phone": "Numéro de téléphone invalide.",
     "ice": "L'ICE comporte 15 chiffres.",
     "date": "Date invalide.",
-    "expired": "Cette date est déjà passée.",
     "registration": "Immatriculation invalide.",
     "seats": "Entre 1 et 80 places.",
     "year": "Année invalide."
@@ -469,7 +468,8 @@
     "city": "Ville",
     "cityPlaceholder": "Choisissez une ville",
     "licenseNumber": "Numéro d'agrément de transport touristique",
-    "licenseExpiresOn": "Date d'expiration de l'agrément"
+    "licenseExpiresOn": "Date d'expiration de l'agrément",
+    "licenseExpiredWarning": "Agrément expiré : votre société ne pourra pas apparaître sur la marketplace tant qu'il n'est pas renouvelé."
   },
   "documentsForm": {
     "type": "Type de document",
@@ -506,7 +506,9 @@
     "cardNumber": "Carte professionnelle (facultatif)",
     "cardExpiresOn": "Expiration de la carte professionnelle (facultatif)",
     "languages": "Langues parlées",
-    "existing": "Chauffeurs enregistrés"
+    "existing": "Chauffeurs enregistrés",
+    "licenseExpiredWarning": "Permis expiré : ce chauffeur ne pourra pas être affecté à une prestation tant que son permis n'est pas valide.",
+    "licenseExpired": "Permis expiré"
   },
   "languages": {
     "fr": "Français",

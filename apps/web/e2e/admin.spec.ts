@@ -37,20 +37,21 @@ test('a platform admin enrolls MFA, verifies a company and manages its subscript
   // Specific commission rate, then subscription activation.
   await page.getByLabel('Taux spécifique (%)').fill('15');
   await page.getByRole('button', { name: 'Enregistrer' }).first().click();
-  await expect(page.getByText('Modifications enregistrées.').first()).toBeVisible();
-  expect(sql(`select commission_rate from public.companies where id = '${companyId}'`)).toBe(
-    '0.1500',
-  );
+  // Several forms show the same "saved" message: wait for the database value itself.
+  await expect
+    .poll(() => sql(`select commission_rate from public.companies where id = '${companyId}'`))
+    .toBe('0.1500');
 
   await page.getByLabel('Offre').selectOption('standard');
   await page.getByLabel('Statut').selectOption('active');
   await page.getByRole('button', { name: 'Enregistrer' }).last().click();
-  await expect(page.getByText('Modifications enregistrées.').last()).toBeVisible();
-  expect(
-    sql(
-      `select plan_code || ':' || status from public.subscriptions where company_id = '${companyId}'`,
-    ),
-  ).toBe('standard:active');
+  await expect
+    .poll(() =>
+      sql(
+        `select plan_code || ':' || status from public.subscriptions where company_id = '${companyId}'`,
+      ),
+    )
+    .toBe('standard:active');
 
   // Every change is in the audit trail, with the admin as actor.
   await page.reload();
