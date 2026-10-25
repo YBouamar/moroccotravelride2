@@ -69,7 +69,7 @@ Commandes de session : `/debut-session`, `/fin-session`, `/decision`, `/audit-se
 6. **Jamais de tiret cadratin** dans textes, docs, libellés : deux-points, virgules, parenthèses.
 7. Pas de logique métier uniquement côté client ; la logique pure vit dans `packages/shared` et est testée.
 8. **RLS sur toutes les tables**, chaque politique couverte par un test pgTAP. L'UI n'est jamais un contrôle d'accès.
-9. Montants en **centimes (bigint)**, jamais de float. Dates en `timestamptz` UTC, affichage `Africa/Casablanca`.
+9. Montants en **centimes (bigint)**, jamais de float. Dates en `timestamptz` UTC, affichage `Africa/Casablanca` ; jamais de décalage horaire écrit en dur (le Maroc alterne UTC+0 / UTC+1) : `casablancaDate`, `casablancaEndOfDay`.
 10. Aucun taux de commission codé en dur dans un composant ; commission figée sur la réservation à sa création.
 11. Clé `service_role` uniquement côté serveur. Aucun secret commité. Aucun `company_id` reçu du client n'est cru.
 12. Factures émises immuables (corrections par avoir) ; pas de suppression physique de factures émises ni de réservations payées.

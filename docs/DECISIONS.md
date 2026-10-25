@@ -245,6 +245,10 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Lecture seule (Q21)** : les informations de la société et les documents restent modifiables même en lecture seule (indispensables pour être vérifié et souscrire) ; véhicules et chauffeurs exigent un abonnement valide.
 - **Documents** : bucket privé `company-documents`, un dossier par société (`{company_id}/...`), 10 Mo maximum, PDF / JPEG / PNG / WEBP. Dépôt par Server Action : **type réel détecté par les premiers octets** (jamais l'extension ni le type annoncé par le navigateur), taille vérifiée, 20 dépôts par heure et par utilisateur, fichier supprimé si l'enregistrement en base échoue. Seuls les documents en attente peuvent être supprimés. L'admin consulte un document par **lien signé valable 5 minutes**, puis l'approuve ou le refuse avec un motif (visible par le transporteur) ; dépôts et décisions sont audités.
 - **Configuration Next.js** : `experimental.serverActions.bodySizeLimit` et `experimental.proxyClientMaxBodySize` à 11 Mo (le proxy met aussi le corps des requêtes en tampon).
-- **À CONFIRMER** (Q24) :
-  - champs obligatoires pour la vérification : raison sociale, ICE, IF, RC, adresse, ville, numéro et date d'expiration de l'agrément ; taxe professionnelle facultative ;
-  - refus d'un agrément ou d'un permis de conduire déjà expiré à la saisie.
+- **Q24 tranchée** (Yassine, 2026-10-26) : champs obligatoires confirmés ; les dates expirées **ne sont plus refusées** à la saisie, voir ADR-024.
+
+## ADR-024 : Documents expirés et dates au fuseau marocain
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (Yassine pour la règle métier)
+- **Règle (Q24)** : un agrément ou un permis de conduire expiré est **accepté à la saisie** et signalé par un avertissement. **Un chauffeur ne peut pas effectuer de prestation sans permis valide** le jour du trajet : `canDriverPerformTrip` (`@mtr/shared`, testé) sera appliqué à l'affectation des trajets (étape 9), côté serveur et en base. Une société à l'agrément expiré n'apparaît pas sur la marketplace (BR-016).
+- **Fuseau horaire** : les données de fuseau (tz database, 2026e) montrent que le Maroc **alterne entre UTC+0 et UTC+1** selon la période (le 26 octobre 2026 est en UTC+0, juillet 2026 en UTC+1). Aucun décalage n'est donc écrit en dur : `casablancaDate()` (date du jour au Maroc) et `casablancaEndOfDay()` (fin de journée marocaine en UTC) s'appuient sur `Africa/Casablanca`. Corrigé au passage : la fin d'essai saisie par l'admin utilisait `+01:00` en dur. Les serveurs et les images Docker doivent garder des données de fuseau à jour (Node et Postgres embarquent les leurs).

@@ -22,6 +22,13 @@ ADR-023. Question Q24.
 - Délais E2E trop courts sous charge (11 workers + serveur de dev) : délai d'assertion à 10 s et délais allongés pour les parcours longs.
 - Une commande bash trop longue a échoué à l'analyse : fichiers écrits avec les outils d'édition.
 
+## Complément : Q24
+
+- Dates expirées acceptées avec avertissements (liste des chauffeurs, étape Société) ; `canDriverPerformTrip` prêt pour l'affectation des trajets.
+- Découverte : le Maroc alterne UTC+0 / UTC+1 selon tzdata ; `casablancaDate` / `casablancaEndOfDay` remplacent un `+01:00` écrit en dur (fin d'essai admin). ADR-024.
+- `pnpm check` échouait par intermittence : `next typegen` et `next build` en parallèle sur `.next/types` ; `build` dépend désormais de `typecheck`. Un commit a été fait alors que le contrôle venait d'échouer : corrigé juste après par `fix(build)`.
+- Une assertion E2E lisait la base avant la fin d'une sauvegarde (message identique déjà visible) : attente active de la valeur.
+
 ## Prochaine étape
 
 Étape 8 (listes véhicules, chauffeurs, clients avec recherche, filtres, pagination, export CSV) après validation.
