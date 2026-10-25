@@ -17,8 +17,12 @@ export default defineConfig({
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], channel } },
-    // Auth flows run once (desktop): they create accounts and send e-mails.
-    { name: 'mobile', use: { ...devices['Pixel 7'], channel }, testIgnore: /auth.spec.ts/ },
+    // Signed-in flows run once (desktop): they create accounts, send e-mails, change data.
+    {
+      name: 'mobile',
+      use: { ...devices['Pixel 7'], channel },
+      testIgnore: /(auth|admin|subscription)\.spec\.ts$/,
+    },
   ],
   // Tests run against the production build, like on the VPS.
   webServer: {

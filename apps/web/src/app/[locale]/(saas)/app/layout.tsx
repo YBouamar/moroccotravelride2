@@ -1,3 +1,4 @@
+import { trialDaysLeft, type Feature } from '@mtr/shared';
 import {
   CalendarDays,
   CarFront,
@@ -5,9 +6,12 @@ import {
   CreditCard,
   FileText,
   LayoutDashboard,
+  MapPinned,
+  Receipt,
   Route,
-  Users,
   UserRound,
+  Users,
+  Wrench,
 } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import type { ReactNode } from 'react';
@@ -16,68 +20,111 @@ import { Alert } from '@/components/ui/alert';
 import { EmptyState } from '@/components/ui/empty-state';
 import { UserMenu } from '@/features/auth/components/user-menu';
 import { requireUser } from '@/features/auth/session';
-import { finalizePendingCompany, getMemberships } from '@/features/companies/memberships';
+import { getCompanyContext } from '@/features/companies/context';
+import { getPlans, lowestPlanWith } from '@/features/subscriptions/plans';
 import { asLocale } from '@/i18n/as-locale';
-import { createClient } from '@/lib/supabase/server';
+import { Link } from '@/i18n/navigation';
 
 interface SaasLayoutProps {
   children: ReactNode;
   params: Promise<{ locale: string }>;
 }
 
+const icon = (Icon: typeof LayoutDashboard) => <Icon className="size-4 shrink-0" />;
+
 // Signed-in carrier area. RLS remains the real guard on every query.
 export default async function SaasLayout({ children, params }: SaasLayoutProps) {
   const locale = asLocale((await params).locale);
-  const t = await getTranslations();
   const user = await requireUser(locale);
+  const [t, context, plans] = await Promise.all([
+    getTranslations(),
+    getCompanyContext(),
+    getPlans(),
+  ]);
 
-  const supabase = await createClient();
-  let memberships = await getMemberships(supabase, user.id);
-  if (memberships.length === 0) {
-    // First visit after e-mail confirmation in another browser: create the pending company now.
-    await finalizePendingCompany(supabase);
-    memberships = await getMemberships(supabase, user.id);
-  }
-  // Multi-company selection comes later; the oldest membership is the current company.
-  const company = memberships[0];
+  // Upcoming sections: locked with the offer that unlocks them when not in the current offer.
+  const section = (key: string, label: string, Icon: typeof LayoutDashboard, feature: Feature) => {
+    if (context?.features.has(feature)) {
+      return { key, label, icon: icon(Icon), badge: t('saas.soon') } satisfies ShellNavItem;
+    }
+    const plan = lowestPlanWith(plans, feature);
+    return {
+      key,
+      label,
+      icon: icon(Icon),
+      href: '/app/subscription',
+      locked: true,
+      badge: plan ? t(`plans.${plan}`) : undefined,
+    } satisfies ShellNavItem;
+  };
 
   const items: ShellNavItem[] = [
+    { key: 'dashboard', label: t('saas.nav.dashboard'), icon: icon(LayoutDashboard), href: '/app' },
+    section('planning', t('saas.nav.planning'), CalendarDays, 'trips'),
+    section('trips', t('saas.nav.trips'), Route, 'trips'),
+    section('bookings', t('saas.nav.bookings'), ClipboardList, 'trips'),
+    section('fleet', t('saas.nav.fleet'), CarFront, 'vehicles'),
+    section('drivers', t('saas.nav.drivers'), UserRound, 'drivers'),
+    section('clients', t('saas.nav.clients'), Users, 'clients'),
+    section('invoices', t('saas.nav.invoices'), FileText, 'invoicing'),
+    section('expenses', t('saas.nav.expenses'), Receipt, 'expenses'),
+    section('tracking', t('saas.nav.tracking'), MapPinned, 'live_tracking'),
+    section('maintenance', t('saas.nav.maintenance'), Wrench, 'fleet_maintenance'),
     {
-      key: 'dashboard',
-      label: t('saas.nav.dashboard'),
-      icon: LayoutDashboard,
-      href: '/app',
-      active: true,
+      key: 'subscription',
+      label: t('saas.nav.subscription'),
+      icon: icon(CreditCard),
+      href: '/app/subscription',
     },
-    { key: 'planning', label: t('saas.nav.planning'), icon: CalendarDays },
-    { key: 'trips', label: t('saas.nav.trips'), icon: Route },
-    { key: 'bookings', label: t('saas.nav.bookings'), icon: ClipboardList },
-    { key: 'fleet', label: t('saas.nav.fleet'), icon: CarFront },
-    { key: 'drivers', label: t('saas.nav.drivers'), icon: UserRound },
-    { key: 'clients', label: t('saas.nav.clients'), icon: Users },
-    { key: 'invoices', label: t('saas.nav.invoices'), icon: FileText },
-    { key: 'subscription', label: t('saas.nav.subscription'), icon: CreditCard },
   ];
 
-  const banner =
-    company?.status === 'pending' ? (
-      <Alert title={t('company.pending.title')}>{t('company.pending.text')}</Alert>
-    ) : company?.status === 'suspended' ? (
-      <Alert tone="danger" title={t('company.suspended.title')}>
+  const company = context?.membership;
+  const subscription = context?.subscription;
+  const banners: ReactNode[] = [];
+  if (company?.status === 'pending') {
+    banners.push(
+      <Alert key="pending" title={t('company.pending.title')}>
+        {t('company.pending.text')}
+      </Alert>,
+    );
+  } else if (company?.status === 'suspended') {
+    banners.push(
+      <Alert key="suspended" tone="danger" title={t('company.suspended.title')}>
         {t('company.suspended.text')}
-      </Alert>
-    ) : undefined;
+      </Alert>,
+    );
+  }
+  if (subscription && !subscription.usable) {
+    banners.push(
+      <Alert key="expired" tone="danger">
+        {t('subscription.expiredBanner')}{' '}
+        <Link href="/app/subscription" className="font-semibold underline">
+          {t('subscription.seeOffers')}
+        </Link>
+      </Alert>,
+    );
+  } else if (subscription?.status === 'trial' && subscription.trialEndsAt) {
+    banners.push(
+      <Alert key="trial">
+        {t('subscription.trialBanner', {
+          days: trialDaysLeft(subscription.trialEndsAt, new Date()),
+        })}{' '}
+        <Link href="/app/subscription" className="font-semibold underline">
+          {t('subscription.seeOffers')}
+        </Link>
+      </Alert>,
+    );
+  }
 
   return (
     <AppShell
       title={t('saas.title')}
       navLabel={t('nav.main')}
-      soonLabel={t('saas.soon')}
       logoAlt={t('brand.logoAlt')}
       items={company ? items : []}
       context={company?.legalName}
       topbar={<UserMenu name={user.fullName} />}
-      banner={banner}
+      banner={banners.length > 0 ? banners : undefined}
     >
       {company ? (
         children

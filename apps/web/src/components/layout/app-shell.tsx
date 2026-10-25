@@ -1,30 +1,21 @@
-import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Logo } from '@/components/brand/logo';
 import { Link } from '@/i18n/navigation';
-import { cn } from '@/lib/utils';
 import { LocaleSwitcher } from './locale-switcher';
+import { ShellNav, type ShellNavItem } from './shell-nav';
 
-export interface ShellNavItem {
-  key: string;
-  label: string;
-  icon: LucideIcon;
-  /** Items without href are shown as upcoming (not yet built). */
-  href?: string;
-  active?: boolean;
-}
+export type { ShellNavItem };
 
 interface AppShellProps {
   title: string;
   navLabel: string;
-  soonLabel: string;
   logoAlt: string;
   items: ShellNavItem[];
   /** Shown under the area title, e.g. the current company. */
   context?: string;
   /** Right side of the top bar (user name, sign out). */
   topbar?: ReactNode;
-  /** Status message above the page (e.g. company awaiting verification). */
+  /** Status messages above the page (company verification, trial...). */
   banner?: ReactNode;
   children: ReactNode;
 }
@@ -33,7 +24,6 @@ interface AppShellProps {
 export function AppShell({
   title,
   navLabel,
-  soonLabel,
   logoAlt,
   items,
   context,
@@ -43,7 +33,7 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
-      <aside className="bg-navy text-white md:sticky md:top-0 md:h-screen md:w-64 md:shrink-0">
+      <aside className="bg-navy text-white md:sticky md:top-0 md:h-screen md:w-64 md:shrink-0 md:overflow-y-auto">
         <div className="flex items-center justify-between gap-2 px-4 py-4 md:block">
           <Link href="/" className="inline-block rounded-control">
             <Logo tone="negatif" height={32} alt={logoAlt} />
@@ -55,40 +45,7 @@ export function AppShell({
             <p className="hidden truncate text-sm text-white/85 md:mt-1 md:block">{context}</p>
           ) : null}
         </div>
-        <nav aria-label={navLabel} className="overflow-x-auto px-2 pb-3 md:pb-0">
-          <ul className="flex gap-1 md:flex-col">
-            {items.map(({ key, label, icon: Icon, href, active }) => {
-              const itemClass =
-                'flex min-h-11 items-center gap-3 rounded-control px-3 text-sm whitespace-nowrap';
-              return (
-                <li key={key}>
-                  {href ? (
-                    <Link
-                      href={href}
-                      aria-current={active ? 'page' : undefined}
-                      className={cn(
-                        itemClass,
-                        active ? 'bg-white/10 font-semibold text-white' : 'text-white/85',
-                        'hover:bg-white/10',
-                      )}
-                    >
-                      <Icon aria-hidden="true" className="size-4 shrink-0" />
-                      {label}
-                    </Link>
-                  ) : (
-                    <span aria-disabled="true" className={cn(itemClass, 'text-white/60')}>
-                      <Icon aria-hidden="true" className="size-4 shrink-0" />
-                      {label}
-                      <span className="ms-auto rounded-full bg-white/10 px-2 text-[11px]">
-                        {soonLabel}
-                      </span>
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
+        <ShellNav label={navLabel} items={items} />
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex flex-wrap items-center justify-end gap-2 border-b border-border bg-surface px-4 py-2">
@@ -96,7 +53,7 @@ export function AppShell({
           {topbar}
         </div>
         <main id="main" className="flex-1 p-4 md:p-8">
-          {banner ? <div className="mb-6">{banner}</div> : null}
+          {banner ? <div className="mb-6 flex flex-col gap-3">{banner}</div> : null}
           {children}
         </main>
       </div>

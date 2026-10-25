@@ -13,6 +13,8 @@ interface AdminLayoutProps {
   params: Promise<{ locale: string }>;
 }
 
+const icon = (Icon: typeof Gauge) => <Icon className="size-4 shrink-0" />;
+
 // Platform admins only, with MFA validated in this session (aal2). RLS enforces the same rule.
 export default async function AdminLayout({ children, params }: AdminLayoutProps) {
   const locale = asLocale((await params).locale);
@@ -26,18 +28,37 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
 
   const t = await getTranslations();
   const items: ShellNavItem[] = [
-    { key: 'overview', label: t('admin.nav.overview'), icon: Gauge, href: '/admin', active: true },
-    { key: 'companies', label: t('admin.nav.companies'), icon: Building2 },
-    { key: 'bookings', label: t('admin.nav.bookings'), icon: ClipboardList },
-    { key: 'commissions', label: t('admin.nav.commissions'), icon: Percent },
-    { key: 'settings', label: t('admin.nav.settings'), icon: Settings },
+    { key: 'overview', label: t('admin.nav.overview'), icon: icon(Gauge), href: '/admin' },
+    {
+      key: 'companies',
+      label: t('admin.nav.companies'),
+      icon: icon(Building2),
+      href: '/admin/companies',
+    },
+    {
+      key: 'bookings',
+      label: t('admin.nav.bookings'),
+      icon: icon(ClipboardList),
+      badge: t('saas.soon'),
+    },
+    {
+      key: 'commissions',
+      label: t('admin.nav.commissions'),
+      icon: icon(Percent),
+      badge: t('saas.soon'),
+    },
+    {
+      key: 'settings',
+      label: t('admin.nav.settings'),
+      icon: icon(Settings),
+      badge: t('saas.soon'),
+    },
   ];
 
   return (
     <AppShell
       title={t('admin.title')}
       navLabel={t('nav.main')}
-      soonLabel={t('saas.soon')}
       logoAlt={t('brand.logoAlt')}
       items={items}
       topbar={<UserMenu name={user.fullName} />}

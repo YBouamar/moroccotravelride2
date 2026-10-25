@@ -66,7 +66,10 @@
       "drivers": "Chauffeurs",
       "clients": "Clients",
       "invoices": "Facturation",
-      "subscription": "Abonnement"
+      "subscription": "Abonnement",
+      "expenses": "Dépenses",
+      "tracking": "Suivi en direct",
+      "maintenance": "Parc"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -90,7 +93,76 @@
       "empty": {
         "title": "Aucun indicateur pour l'instant",
         "text": "Les indicateurs de la plateforme s'afficheront ici."
-      }
+      },
+      "companiesTitle": "Sociétés",
+      "subscriptionsTitle": "Abonnements",
+      "toVerifyTitle": "Sociétés à vérifier",
+      "noneToVerify": "Aucune société en attente de vérification."
+    },
+    "companies": {
+      "title": "Sociétés",
+      "filterAll": "Toutes",
+      "empty": "Aucune société pour ce filtre.",
+      "columns": {
+        "name": "Société",
+        "city": "Ville",
+        "status": "Statut",
+        "plan": "Abonnement",
+        "createdAt": "Inscrite le"
+      },
+      "back": "Retour aux sociétés",
+      "details": "Informations",
+      "fields": {
+        "legalName": "Raison sociale",
+        "ice": "ICE",
+        "license": "Agrément",
+        "licenseExpires": "Expiration de l'agrément",
+        "city": "Ville",
+        "createdAt": "Inscrite le",
+        "notProvided": "Non renseigné"
+      },
+      "members": "Membres",
+      "documents": "Documents",
+      "noDocuments": "Aucun document déposé pour l'instant (l'onboarding arrive à l'étape suivante).",
+      "statusTitle": "Vérification",
+      "verify": "Vérifier la société",
+      "suspend": "Suspendre la société",
+      "reopen": "Remettre en attente",
+      "marketplaceTitle": "Marketplace",
+      "marketplaceEnabled": "Visible si vérifiée (choix du transporteur)",
+      "marketplaceDisabled": "Masquée par le transporteur",
+      "suspended": "Suspendue le {date} : {reason}",
+      "suspendReason": "Motif de la suspension",
+      "suspendMarketplace": "Suspendre de la marketplace",
+      "liftSuspension": "Lever la suspension",
+      "commissionTitle": "Commission",
+      "commissionLabel": "Taux spécifique (%)",
+      "commissionHint": "Laisser vide pour appliquer le taux par défaut de la plateforme ({rate} %).",
+      "save": "Enregistrer",
+      "subscriptionTitle": "Abonnement",
+      "trialEndsAt": "Fin de l'essai",
+      "periodStart": "Début de période",
+      "periodEnd": "Fin de période",
+      "auditTitle": "Historique",
+      "noAudit": "Aucune modification enregistrée.",
+      "system": "Système",
+      "saved": "Modifications enregistrées.",
+      "verifyConfirm": "La société pourra apparaître sur la marketplace si elle a activé sa visibilité.",
+      "suspendConfirm": "La société verra un bandeau de suspension et n'apparaîtra plus sur la marketplace.",
+      "reopenConfirm": "La société repassera en attente de vérification.",
+      "liftConfirm": "La société pourra de nouveau apparaître sur la marketplace.",
+      "suspendMarketplaceConfirm": "La société sera masquée de la marketplace jusqu'à la levée de la suspension. Motif : {reason}",
+      "memberInactive": "inactif"
+    },
+    "confirm": {
+      "title": "Confirmer cette action ?",
+      "confirm": "Confirmer",
+      "cancel": "Annuler"
+    },
+    "errors": {
+      "invalid": "Valeur invalide.",
+      "forbidden": "Action non autorisée.",
+      "unknown": "Une erreur est survenue."
     }
   },
   "notFound": {
@@ -196,5 +268,111 @@
       "title": "Conditions générales d'utilisation",
       "pending": "Ce document est en cours de rédaction et sera validé par un juriste avant le lancement."
     }
+  },
+  "plans": {
+    "standard": "Standard",
+    "v2": "V2",
+    "v3": "V3",
+    "perMonth": "/ mois",
+    "onQuote": "Sur devis",
+    "current": "Votre offre"
+  },
+  "features": {
+    "trips": "Trajets et planning",
+    "vehicles": "Véhicules",
+    "drivers": "Chauffeurs",
+    "clients": "Clients",
+    "invoicing": "Facturation",
+    "payments": "Suivi des paiements",
+    "expenses": "Dépenses de l'établissement",
+    "driver_app": "Application chauffeur",
+    "expense_receipts": "Scan des justificatifs",
+    "live_tracking": "Localisation pendant le trajet",
+    "fleet_maintenance": "Entretien et pièces",
+    "vehicle_deadlines": "Échéances (vignette, visite technique, assurance...)",
+    "fuel_tracking": "Suivi de consommation"
+  },
+  "subscriptionStatus": {
+    "trial": "Essai gratuit",
+    "active": "Actif",
+    "past_due": "Paiement en retard",
+    "cancelled": "Résilié"
+  },
+  "companyStatus": {
+    "pending": "En attente",
+    "verified": "Vérifiée",
+    "suspended": "Suspendue"
+  },
+  "subscription": {
+    "title": "Abonnement",
+    "currentTitle": "Votre abonnement",
+    "plan": "Offre",
+    "status": "Statut",
+    "trialLeft": "{days, plural, =0 {Essai terminé} one {# jour d'essai restant} other {# jours d'essai restants}}",
+    "periodEnd": "Période en cours jusqu'au {date}",
+    "compareTitle": "Comparer les offres",
+    "howToTitle": "Changer d'offre ou activer votre abonnement",
+    "howToText": "Le paiement se fait par virement. Contactez l'équipe MoroccoTravelRide : nous vous envoyons la facture et activons l'offre dès réception du virement.",
+    "trialBanner": "{days, plural, one {Essai gratuit : # jour restant.} other {Essai gratuit : # jours restants.}}",
+    "expiredBanner": "Votre essai ou votre abonnement est terminé. Vos données sont conservées ; activez une offre pour continuer.",
+    "seeOffers": "Voir les offres",
+    "lockedTitle": "Fonction incluse dans une offre supérieure",
+    "lockedText": "Cette fonction fait partie de l'offre {plan}."
+  },
+  "audit": {
+    "company": {
+      "update": "Société modifiée"
+    },
+    "subscription": {
+      "insert": "Abonnement créé",
+      "update": "Abonnement modifié"
+    },
+    "member": {
+      "insert": "Membre ajouté",
+      "update": "Membre modifié",
+      "delete": "Membre retiré"
+    },
+    "document": {
+      "update": "Document vérifié"
+    },
+    "fields": {
+      "status": "Statut",
+      "plan_code": "Offre",
+      "trial_ends_at": "Fin d'essai",
+      "current_period_start": "Début de période",
+      "current_period_end": "Fin de période",
+      "marketplace_enabled": "Visibilité marketplace",
+      "marketplace_suspended_at": "Suspension marketplace",
+      "marketplace_suspension_reason": "Motif de suspension",
+      "commission_rate": "Commission",
+      "legal_name": "Raison sociale",
+      "ice": "ICE",
+      "role": "Rôle",
+      "is_active": "Actif",
+      "verification_status": "Vérification",
+      "rejection_reason": "Motif de refus"
+    }
+  },
+  "roles": {
+    "owner": "Propriétaire",
+    "manager": "Gérant",
+    "dispatcher": "Dispatcheur",
+    "accountant": "Comptable",
+    "driver": "Chauffeur"
+  },
+  "documentType": {
+    "tourism_license": "Agrément transport touristique",
+    "insurance": "Assurance",
+    "trade_register": "Registre de commerce",
+    "other": "Autre"
+  },
+  "verificationStatus": {
+    "pending": "À vérifier",
+    "approved": "Approuvé",
+    "rejected": "Refusé"
+  },
+  "common": {
+    "yes": "Oui",
+    "no": "Non"
   }
 }

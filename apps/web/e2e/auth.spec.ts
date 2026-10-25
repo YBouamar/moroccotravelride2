@@ -42,7 +42,8 @@ test('signing in from a protected page returns to it', async ({ page }) => {
 test('a platform admin must complete MFA before reaching the admin area', async ({ page }) => {
   await signIn(page, 'admin@moroccotravelride.test');
   await expect(page).toHaveURL(/\/fr\/mfa$/);
-  await expect(page.getByRole('button', { name: "Configurer l'application" })).toBeVisible();
+  // Enrollment or challenge depending on admin.spec.ts having already enrolled a factor.
+  await expect(page.getByRole('heading', { name: 'Double authentification' })).toBeVisible();
   await page.goto('/fr/admin');
   await expect(page).toHaveURL(/\/fr\/mfa$/);
 });

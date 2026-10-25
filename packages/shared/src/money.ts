@@ -30,3 +30,17 @@ export function applyRate(amount: Cents, rate: BasisPoints): Cents {
   const scaled = BigInt(amount) * BigInt(rate) + BigInt(BPS_PER_UNIT / 2);
   return Number(scaled / BigInt(BPS_PER_UNIT));
 }
+
+const INTL_LOCALES: Record<string, string> = { fr: 'fr-MA', en: 'en-MA', ar: 'ar-MA' };
+
+/** Display only: formats integer cents as MAD for the UI language (Latin digits everywhere). */
+export function formatMoney(amount: Cents, locale: string): string {
+  assertCents(amount);
+  return new Intl.NumberFormat(INTL_LOCALES[locale] ?? 'fr-MA', {
+    style: 'currency',
+    currency: 'MAD',
+    numberingSystem: 'latn',
+    minimumFractionDigits: amount % 100 === 0 ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(amount / 100);
+}

@@ -66,7 +66,10 @@
       "drivers": "Drivers",
       "clients": "Clients",
       "invoices": "Invoicing",
-      "subscription": "Subscription"
+      "subscription": "Subscription",
+      "expenses": "Expenses",
+      "tracking": "Live tracking",
+      "maintenance": "Fleet care"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -90,7 +93,76 @@
       "empty": {
         "title": "No metrics yet",
         "text": "Platform metrics will appear here."
-      }
+      },
+      "companiesTitle": "Companies",
+      "subscriptionsTitle": "Subscriptions",
+      "toVerifyTitle": "Companies to verify",
+      "noneToVerify": "No company awaiting verification."
+    },
+    "companies": {
+      "title": "Companies",
+      "filterAll": "All",
+      "empty": "No company for this filter.",
+      "columns": {
+        "name": "Company",
+        "city": "City",
+        "status": "Status",
+        "plan": "Subscription",
+        "createdAt": "Registered on"
+      },
+      "back": "Back to companies",
+      "details": "Details",
+      "fields": {
+        "legalName": "Legal name",
+        "ice": "ICE",
+        "license": "License",
+        "licenseExpires": "License expiry",
+        "city": "City",
+        "createdAt": "Registered on",
+        "notProvided": "Not provided"
+      },
+      "members": "Members",
+      "documents": "Documents",
+      "noDocuments": "No document uploaded yet (onboarding comes in the next step).",
+      "statusTitle": "Verification",
+      "verify": "Verify the company",
+      "suspend": "Suspend the company",
+      "reopen": "Set back to pending",
+      "marketplaceTitle": "Marketplace",
+      "marketplaceEnabled": "Visible when verified (carrier choice)",
+      "marketplaceDisabled": "Hidden by the carrier",
+      "suspended": "Suspended on {date}: {reason}",
+      "suspendReason": "Suspension reason",
+      "suspendMarketplace": "Suspend from the marketplace",
+      "liftSuspension": "Lift the suspension",
+      "commissionTitle": "Commission",
+      "commissionLabel": "Specific rate (%)",
+      "commissionHint": "Leave empty to apply the platform default rate ({rate} %).",
+      "save": "Save",
+      "subscriptionTitle": "Subscription",
+      "trialEndsAt": "Trial end",
+      "periodStart": "Period start",
+      "periodEnd": "Period end",
+      "auditTitle": "History",
+      "noAudit": "No change recorded.",
+      "system": "System",
+      "saved": "Changes saved.",
+      "verifyConfirm": "The company can appear on the marketplace if it has turned its visibility on.",
+      "suspendConfirm": "The company will see a suspension banner and disappear from the marketplace.",
+      "reopenConfirm": "The company goes back to awaiting verification.",
+      "liftConfirm": "The company can appear on the marketplace again.",
+      "suspendMarketplaceConfirm": "The company will be hidden from the marketplace until the suspension is lifted. Reason: {reason}",
+      "memberInactive": "inactive"
+    },
+    "confirm": {
+      "title": "Confirm this action?",
+      "confirm": "Confirm",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "invalid": "Invalid value.",
+      "forbidden": "Action not allowed.",
+      "unknown": "Something went wrong."
     }
   },
   "notFound": {
@@ -196,5 +268,111 @@
       "title": "Terms of use",
       "pending": "This document is being drafted and will be reviewed by a lawyer before launch."
     }
+  },
+  "plans": {
+    "standard": "Standard",
+    "v2": "V2",
+    "v3": "V3",
+    "perMonth": "/ month",
+    "onQuote": "On quote",
+    "current": "Your plan"
+  },
+  "features": {
+    "trips": "Trips and planning",
+    "vehicles": "Vehicles",
+    "drivers": "Drivers",
+    "clients": "Clients",
+    "invoicing": "Invoicing",
+    "payments": "Payment tracking",
+    "expenses": "Company expenses",
+    "driver_app": "Driver app",
+    "expense_receipts": "Receipt scanning",
+    "live_tracking": "Location during trips",
+    "fleet_maintenance": "Maintenance and parts",
+    "vehicle_deadlines": "Deadlines (tax sticker, inspection, insurance...)",
+    "fuel_tracking": "Fuel consumption"
+  },
+  "subscriptionStatus": {
+    "trial": "Free trial",
+    "active": "Active",
+    "past_due": "Payment overdue",
+    "cancelled": "Cancelled"
+  },
+  "companyStatus": {
+    "pending": "Pending",
+    "verified": "Verified",
+    "suspended": "Suspended"
+  },
+  "subscription": {
+    "title": "Subscription",
+    "currentTitle": "Your subscription",
+    "plan": "Plan",
+    "status": "Status",
+    "trialLeft": "{days, plural, =0 {Trial ended} one {# trial day left} other {# trial days left}}",
+    "periodEnd": "Current period until {date}",
+    "compareTitle": "Compare plans",
+    "howToTitle": "Change plan or activate your subscription",
+    "howToText": "Payment is made by bank transfer. Contact the MoroccoTravelRide team: we send you the invoice and activate the plan as soon as the transfer is received.",
+    "trialBanner": "{days, plural, one {Free trial: # day left.} other {Free trial: # days left.}}",
+    "expiredBanner": "Your trial or subscription has ended. Your data is kept; activate a plan to continue.",
+    "seeOffers": "See plans",
+    "lockedTitle": "Feature included in a higher plan",
+    "lockedText": "This feature is part of the {plan} plan."
+  },
+  "audit": {
+    "company": {
+      "update": "Company updated"
+    },
+    "subscription": {
+      "insert": "Subscription created",
+      "update": "Subscription updated"
+    },
+    "member": {
+      "insert": "Member added",
+      "update": "Member updated",
+      "delete": "Member removed"
+    },
+    "document": {
+      "update": "Document reviewed"
+    },
+    "fields": {
+      "status": "Status",
+      "plan_code": "Plan",
+      "trial_ends_at": "Trial end",
+      "current_period_start": "Period start",
+      "current_period_end": "Period end",
+      "marketplace_enabled": "Marketplace visibility",
+      "marketplace_suspended_at": "Marketplace suspension",
+      "marketplace_suspension_reason": "Suspension reason",
+      "commission_rate": "Commission",
+      "legal_name": "Legal name",
+      "ice": "ICE",
+      "role": "Role",
+      "is_active": "Active",
+      "verification_status": "Verification",
+      "rejection_reason": "Rejection reason"
+    }
+  },
+  "roles": {
+    "owner": "Owner",
+    "manager": "Manager",
+    "dispatcher": "Dispatcher",
+    "accountant": "Accountant",
+    "driver": "Driver"
+  },
+  "documentType": {
+    "tourism_license": "Tourist transport license",
+    "insurance": "Insurance",
+    "trade_register": "Trade register",
+    "other": "Other"
+  },
+  "verificationStatus": {
+    "pending": "To review",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "common": {
+    "yes": "Yes",
+    "no": "No"
   }
 }

@@ -66,7 +66,10 @@
       "drivers": "السائقون",
       "clients": "العملاء",
       "invoices": "الفوترة",
-      "subscription": "الاشتراك"
+      "subscription": "الاشتراك",
+      "expenses": "المصاريف",
+      "tracking": "التتبع المباشر",
+      "maintenance": "الأسطول"
     },
     "dashboard": {
       "title": "لوحة القيادة",
@@ -90,7 +93,76 @@
       "empty": {
         "title": "لا توجد مؤشرات حاليا",
         "text": "ستظهر هنا مؤشرات المنصة."
-      }
+      },
+      "companiesTitle": "الشركات",
+      "subscriptionsTitle": "الاشتراكات",
+      "toVerifyTitle": "شركات للتحقق",
+      "noneToVerify": "لا توجد شركة في انتظار التحقق."
+    },
+    "companies": {
+      "title": "الشركات",
+      "filterAll": "الكل",
+      "empty": "لا توجد شركة لهذا التصفية.",
+      "columns": {
+        "name": "الشركة",
+        "city": "المدينة",
+        "status": "الحالة",
+        "plan": "الاشتراك",
+        "createdAt": "تاريخ التسجيل"
+      },
+      "back": "العودة إلى الشركات",
+      "details": "المعلومات",
+      "fields": {
+        "legalName": "الاسم القانوني",
+        "ice": "التعريف الموحد للمقاولة",
+        "license": "الرخصة",
+        "licenseExpires": "انتهاء الرخصة",
+        "city": "المدينة",
+        "createdAt": "تاريخ التسجيل",
+        "notProvided": "غير متوفر"
+      },
+      "members": "الأعضاء",
+      "documents": "الوثائق",
+      "noDocuments": "لم يتم إيداع أي وثيقة بعد (يأتي الإعداد الأولي في المرحلة التالية).",
+      "statusTitle": "التحقق",
+      "verify": "التحقق من الشركة",
+      "suspend": "إيقاف الشركة",
+      "reopen": "إعادتها إلى الانتظار",
+      "marketplaceTitle": "المنصة",
+      "marketplaceEnabled": "ظاهرة بعد التحقق (اختيار الناقل)",
+      "marketplaceDisabled": "مخفية من طرف الناقل",
+      "suspended": "موقوفة منذ {date}: {reason}",
+      "suspendReason": "سبب الإيقاف",
+      "suspendMarketplace": "إيقاف من المنصة",
+      "liftSuspension": "رفع الإيقاف",
+      "commissionTitle": "العمولة",
+      "commissionLabel": "نسبة خاصة (%)",
+      "commissionHint": "اتركه فارغا لتطبيق النسبة الافتراضية للمنصة ({rate} %).",
+      "save": "حفظ",
+      "subscriptionTitle": "الاشتراك",
+      "trialEndsAt": "نهاية التجربة",
+      "periodStart": "بداية الفترة",
+      "periodEnd": "نهاية الفترة",
+      "auditTitle": "السجل",
+      "noAudit": "لا توجد تعديلات مسجلة.",
+      "system": "النظام",
+      "saved": "تم حفظ التعديلات.",
+      "verifyConfirm": "يمكن للشركة الظهور على المنصة إذا فعلت ظهورها.",
+      "suspendConfirm": "سترى الشركة شريط إيقاف ولن تظهر بعد الآن على المنصة.",
+      "reopenConfirm": "ستعود الشركة إلى انتظار التحقق.",
+      "liftConfirm": "يمكن للشركة الظهور مجددا على المنصة.",
+      "suspendMarketplaceConfirm": "ستُخفى الشركة من المنصة حتى رفع الإيقاف. السبب: {reason}",
+      "memberInactive": "غير نشط"
+    },
+    "confirm": {
+      "title": "تأكيد هذا الإجراء؟",
+      "confirm": "تأكيد",
+      "cancel": "إلغاء"
+    },
+    "errors": {
+      "invalid": "قيمة غير صالحة.",
+      "forbidden": "إجراء غير مسموح به.",
+      "unknown": "حدث خطأ."
     }
   },
   "notFound": {
@@ -196,5 +268,111 @@
       "title": "شروط الاستخدام",
       "pending": "هذه الوثيقة قيد الإعداد وسيراجعها محام قبل الإطلاق."
     }
+  },
+  "plans": {
+    "standard": "العادية",
+    "v2": "V2",
+    "v3": "V3",
+    "perMonth": "/ شهر",
+    "onQuote": "حسب الطلب",
+    "current": "عرضك"
+  },
+  "features": {
+    "trips": "الرحلات والتخطيط",
+    "vehicles": "المركبات",
+    "drivers": "السائقون",
+    "clients": "العملاء",
+    "invoicing": "الفوترة",
+    "payments": "تتبع المدفوعات",
+    "expenses": "مصاريف المؤسسة",
+    "driver_app": "تطبيق السائق",
+    "expense_receipts": "مسح الوصولات",
+    "live_tracking": "تحديد الموقع أثناء الرحلة",
+    "fleet_maintenance": "الصيانة وقطع الغيار",
+    "vehicle_deadlines": "المواعيد (الضريبة، الفحص التقني، التأمين...)",
+    "fuel_tracking": "تتبع الاستهلاك"
+  },
+  "subscriptionStatus": {
+    "trial": "تجربة مجانية",
+    "active": "نشط",
+    "past_due": "دفع متأخر",
+    "cancelled": "ملغى"
+  },
+  "companyStatus": {
+    "pending": "في الانتظار",
+    "verified": "تم التحقق",
+    "suspended": "موقوفة"
+  },
+  "subscription": {
+    "title": "الاشتراك",
+    "currentTitle": "اشتراكك",
+    "plan": "العرض",
+    "status": "الحالة",
+    "trialLeft": "{days, plural, =0 {انتهت التجربة} one {يوم تجربة واحد متبق} two {يوما تجربة متبقيان} few {# أيام تجربة متبقية} many {# يوما تجربة متبقيا} other {# يوم تجربة متبق}}",
+    "periodEnd": "الفترة الحالية حتى {date}",
+    "compareTitle": "مقارنة العروض",
+    "howToTitle": "تغيير العرض أو تفعيل اشتراكك",
+    "howToText": "يتم الدفع عبر تحويل بنكي. تواصل مع فريق MoroccoTravelRide: نرسل لك الفاتورة ونفعل العرض فور استلام التحويل.",
+    "trialBanner": "{days, plural, one {تجربة مجانية: يوم واحد متبق.} two {تجربة مجانية: يومان متبقيان.} few {تجربة مجانية: # أيام متبقية.} many {تجربة مجانية: # يوما متبقيا.} other {تجربة مجانية: # يوم متبق.}}",
+    "expiredBanner": "انتهت تجربتك أو اشتراكك. بياناتك محفوظة؛ فعل عرضا للمتابعة.",
+    "seeOffers": "عرض العروض",
+    "lockedTitle": "ميزة مضمنة في عرض أعلى",
+    "lockedText": "هذه الميزة جزء من عرض {plan}."
+  },
+  "audit": {
+    "company": {
+      "update": "تعديل الشركة"
+    },
+    "subscription": {
+      "insert": "إنشاء الاشتراك",
+      "update": "تعديل الاشتراك"
+    },
+    "member": {
+      "insert": "إضافة عضو",
+      "update": "تعديل عضو",
+      "delete": "حذف عضو"
+    },
+    "document": {
+      "update": "التحقق من وثيقة"
+    },
+    "fields": {
+      "status": "الحالة",
+      "plan_code": "العرض",
+      "trial_ends_at": "نهاية التجربة",
+      "current_period_start": "بداية الفترة",
+      "current_period_end": "نهاية الفترة",
+      "marketplace_enabled": "الظهور على المنصة",
+      "marketplace_suspended_at": "الإيقاف من المنصة",
+      "marketplace_suspension_reason": "سبب الإيقاف",
+      "commission_rate": "العمولة",
+      "legal_name": "الاسم القانوني",
+      "ice": "التعريف الموحد للمقاولة",
+      "role": "الدور",
+      "is_active": "نشط",
+      "verification_status": "التحقق",
+      "rejection_reason": "سبب الرفض"
+    }
+  },
+  "roles": {
+    "owner": "المالك",
+    "manager": "المسير",
+    "dispatcher": "منسق الرحلات",
+    "accountant": "المحاسب",
+    "driver": "السائق"
+  },
+  "documentType": {
+    "tourism_license": "رخصة النقل السياحي",
+    "insurance": "التأمين",
+    "trade_register": "السجل التجاري",
+    "other": "أخرى"
+  },
+  "verificationStatus": {
+    "pending": "للمراجعة",
+    "approved": "مقبول",
+    "rejected": "مرفوض"
+  },
+  "common": {
+    "yes": "نعم",
+    "no": "لا"
   }
 }
