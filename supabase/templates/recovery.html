@@ -1,0 +1,25 @@
+<!-- Password reset. Language from the locale stored in the user metadata. -->
+<!doctype html>
+<html lang="{{ if .Data.locale }}{{ .Data.locale }}{{ else }}fr{{ end }}" dir="{{ if eq .Data.locale "ar" }}rtl{{ else }}ltr{{ end }}">
+  <body style="margin:0;padding:24px;background:#F4F8FA;font-family:Arial,sans-serif;color:#102A43">
+    <div style="max-width:520px;margin:0 auto;background:#FFFFFF;border-radius:12px;padding:32px">
+      <p style="font-size:20px;font-weight:bold;margin:0 0 24px">Morocco<span style="color:#087E8B">TravelRide</span></p>
+      {{ if eq .Data.locale "ar" }}
+      <h1 style="font-size:20px">إعادة تعيين كلمة المرور</h1>
+      <p>انقر على الزر أدناه لاختيار كلمة مرور جديدة. هذا الرابط صالح لمدة محدودة.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&locale=ar" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">اختيار كلمة مرور جديدة</a></p>
+      <p style="color:#52667A;font-size:13px">إذا لم تطلب ذلك، يمكنك تجاهل هذه الرسالة.</p>
+      {{ else if eq .Data.locale "en" }}
+      <h1 style="font-size:20px">Reset your password</h1>
+      <p>Click the button below to choose a new password. This link expires soon.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&locale=en" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">Choose a new password</a></p>
+      <p style="color:#52667A;font-size:13px">If you did not ask for this, you can ignore this e-mail.</p>
+      {{ else }}
+      <h1 style="font-size:20px">Réinitialisez votre mot de passe</h1>
+      <p>Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe. Ce lien expire rapidement.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&locale=fr" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">Choisir un nouveau mot de passe</a></p>
+      <p style="color:#52667A;font-size:13px">Si vous n'êtes pas à l'origine de cette demande, ignorez ce message.</p>
+      {{ end }}
+    </div>
+  </body>
+</html>

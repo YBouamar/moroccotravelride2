@@ -34,10 +34,10 @@ test('switches language and flips to RTL for Arabic', async ({ page }) => {
 });
 
 test('keeps the current page when switching language', async ({ page }) => {
-  await page.goto('/fr/app');
+  await page.goto('/fr/signup');
   await page.getByRole('link', { name: 'العربية' }).click();
-  await expect(page).toHaveURL(/\/ar\/app$/);
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('لوحة القيادة');
+  await expect(page).toHaveURL(/\/ar\/signup$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('تسجيل شركة النقل الخاصة بي');
 });
 
 test('renders a localized 404 for unknown pages', async ({ page }) => {
@@ -46,7 +46,8 @@ test('renders a localized 404 for unknown pages', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Page not found');
 });
 
-for (const path of ['/fr', '/ar', '/fr/app', '/ar/app']) {
+// Public pages; signed-in pages are covered by auth.spec.ts and the mobile screenshots.
+for (const path of ['/fr', '/ar', '/fr/signup', '/ar/login']) {
   test(`has no horizontal overflow on ${path}`, async ({ page }) => {
     await page.goto(path);
     const overflow = await page.evaluate(

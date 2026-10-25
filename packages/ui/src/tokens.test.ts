@@ -12,6 +12,10 @@ const textPairs: [keyof ThemeColors, keyof ThemeColors][] = [
   ['secondary', 'surface'],
   ['secondaryForeground', 'secondary'],
   ['accentForeground', 'accent'],
+  ['danger', 'surface'],
+  ['danger', 'dangerSurface'],
+  ['success', 'surface'],
+  ['success', 'successSurface'],
 ];
 
 describe.each([

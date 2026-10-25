@@ -19,7 +19,9 @@
   "nav": {
     "skipToContent": "Skip to main content",
     "main": "Main navigation",
-    "forCarriers": "Carrier area"
+    "forCarriers": "Carrier area",
+    "login": "Sign in",
+    "logout": "Sign out"
   },
   "home": {
     "hero": {
@@ -95,5 +97,104 @@
     "title": "Page not found",
     "text": "The page you are looking for does not exist or has moved.",
     "back": "Back to home"
+  },
+  "auth": {
+    "back": "Back to home",
+    "fields": {
+      "email": "E-mail address",
+      "password": "Password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "fullName": "Your full name",
+      "legalName": "Company legal name",
+      "city": "Head office city",
+      "cityPlaceholder": "Choose a city",
+      "code": "6-digit code"
+    },
+    "passwordHint": "At least 10 characters, with an uppercase letter, a lowercase letter and a digit.",
+    "login": {
+      "title": "Sign in",
+      "subtitle": "Access your carrier area.",
+      "submit": "Sign in",
+      "forgot": "Forgot your password?",
+      "noAccount": "No account yet?",
+      "signupLink": "Register my company"
+    },
+    "signup": {
+      "title": "Register my transport company",
+      "subtitle": "Create your account. Our team will verify your company and license before it appears on the marketplace.",
+      "submit": "Create my account",
+      "acceptTerms": "I accept the terms of use",
+      "termsLink": "Read the terms of use",
+      "hasAccount": "Already registered?",
+      "loginLink": "Sign in",
+      "successTitle": "Check your inbox",
+      "successText": "If this address can be used, you will receive a link to confirm your account."
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "subtitle": "Enter your e-mail address: we will send you a reset link.",
+      "submit": "Send the link",
+      "successText": "If an account exists for this address, a reset link has just been sent.",
+      "backToLogin": "Back to sign in"
+    },
+    "reset": {
+      "title": "New password",
+      "submit": "Save the password"
+    },
+    "mfa": {
+      "title": "Two-factor authentication",
+      "enrollIntro": "Access to the administration requires an authenticator app (Google Authenticator, Microsoft Authenticator, 1Password...).",
+      "enrollStart": "Set up the app",
+      "scan": "Scan this QR code with your app, then enter the code it shows.",
+      "secret": "Or enter this key manually:",
+      "qrAlt": "Two-factor authentication setup QR code",
+      "challengeIntro": "Enter the code shown by your authenticator app.",
+      "submit": "Verify"
+    },
+    "errors": {
+      "credentials": "Incorrect e-mail address or password.",
+      "emailNotConfirmed": "Please confirm your e-mail address with the link you received first.",
+      "rateLimited": "Too many attempts. Try again in a few minutes.",
+      "captcha": "The anti-bot check failed. Try again.",
+      "invalid": "Some fields are invalid.",
+      "mfaCode": "Incorrect or expired code.",
+      "link": "This link is invalid or has expired. Request a new one.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Invalid e-mail address.",
+    "passwordTooShort": "At least 10 characters.",
+    "passwordTooLong": "72 characters maximum.",
+    "passwordLower": "Add at least one lowercase letter.",
+    "passwordUpper": "Add at least one uppercase letter.",
+    "passwordDigit": "Add at least one digit.",
+    "passwordMismatch": "Passwords do not match.",
+    "nameTooShort": "At least 2 characters.",
+    "tooLong": "Text too long.",
+    "acceptTerms": "You must accept the terms of use.",
+    "mfaCode": "Enter the 6 digits."
+  },
+  "company": {
+    "pending": {
+      "title": "Company awaiting verification",
+      "text": "Our team is checking your details and license. You can already set up your workspace; the marketplace opens after approval."
+    },
+    "suspended": {
+      "title": "Company suspended",
+      "text": "Your account is suspended. Please contact the MoroccoTravelRide team."
+    },
+    "none": {
+      "title": "No company linked",
+      "text": "Your account is not linked to any active company. Contact your company owner."
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of use",
+      "pending": "This document is being drafted and will be reviewed by a lawyer before launch."
+    }
   }
 }

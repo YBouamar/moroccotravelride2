@@ -21,6 +21,10 @@ export interface ThemeColors {
   foreground: string;
   muted: string;
   border: string;
+  danger: string;
+  dangerSurface: string;
+  success: string;
+  successSurface: string;
 }
 
 export const lightTheme: ThemeColors = {
@@ -35,6 +39,10 @@ export const lightTheme: ThemeColors = {
   foreground: brand.navy,
   muted: '#52667A',
   border: '#D9E2EC',
+  danger: '#B42318',
+  dangerSurface: '#FEF3F2',
+  success: '#067647',
+  successSurface: '#ECFDF3',
 };
 
 export const darkTheme: ThemeColors = {
@@ -48,6 +56,10 @@ export const darkTheme: ThemeColors = {
   foreground: brand.mist,
   muted: '#9FB3C8',
   border: '#243B53',
+  danger: '#FDA29B',
+  dangerSurface: '#3B1418',
+  success: '#75E0A7',
+  successSurface: '#0B2E1F',
 };
 
 export const radii = {

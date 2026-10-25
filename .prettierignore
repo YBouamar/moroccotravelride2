@@ -12,3 +12,4 @@ docs
 # generated
 packages/ui/theme.css
 apps/web/public/brand
+supabase/templates

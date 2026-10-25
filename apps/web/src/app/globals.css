@@ -13,6 +13,10 @@
   --color-foreground: var(--mtr-foreground);
   --color-muted: var(--mtr-muted);
   --color-border: var(--mtr-border);
+  --color-danger: var(--mtr-danger);
+  --color-danger-surface: var(--mtr-danger-surface);
+  --color-success: var(--mtr-success);
+  --color-success-surface: var(--mtr-success-surface);
   --color-navy: var(--mtr-brand-navy);
   --color-teal: var(--mtr-brand-teal);
   --color-teal-deep: var(--mtr-brand-teal-deep);

@@ -6,6 +6,7 @@ const channel = process.env.CI ? undefined : 'msedge';
 
 export default defineConfig({
   testDir: './e2e',
+  globalSetup: './e2e/global-setup.ts',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -16,7 +17,8 @@ export default defineConfig({
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], channel } },
-    { name: 'mobile', use: { ...devices['Pixel 7'], channel } },
+    // Auth flows run once (desktop): they create accounts and send e-mails.
+    { name: 'mobile', use: { ...devices['Pixel 7'], channel }, testIgnore: /auth.spec.ts/ },
   ],
   // Tests run against the production build, like on the VPS.
   webServer: {

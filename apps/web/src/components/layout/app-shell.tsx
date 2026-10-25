@@ -20,11 +20,27 @@ interface AppShellProps {
   soonLabel: string;
   logoAlt: string;
   items: ShellNavItem[];
+  /** Shown under the area title, e.g. the current company. */
+  context?: string;
+  /** Right side of the top bar (user name, sign out). */
+  topbar?: ReactNode;
+  /** Status message above the page (e.g. company awaiting verification). */
+  banner?: ReactNode;
   children: ReactNode;
 }
 
 /** Desktop-first layout shared by the carrier SaaS and the platform admin (docs/UX.md section 3). */
-export function AppShell({ title, navLabel, soonLabel, logoAlt, items, children }: AppShellProps) {
+export function AppShell({
+  title,
+  navLabel,
+  soonLabel,
+  logoAlt,
+  items,
+  context,
+  topbar,
+  banner,
+  children,
+}: AppShellProps) {
   return (
     <div className="flex min-h-screen flex-col md:flex-row">
       <aside className="bg-navy text-white md:sticky md:top-0 md:h-screen md:w-64 md:shrink-0">
@@ -35,6 +51,9 @@ export function AppShell({ title, navLabel, soonLabel, logoAlt, items, children 
           <p className="text-xs font-semibold tracking-widest text-teal uppercase md:mt-3">
             {title}
           </p>
+          {context ? (
+            <p className="hidden truncate text-sm text-white/85 md:mt-1 md:block">{context}</p>
+          ) : null}
         </div>
         <nav aria-label={navLabel} className="overflow-x-auto px-2 pb-3 md:pb-0">
           <ul className="flex gap-1 md:flex-col">
@@ -72,10 +91,12 @@ export function AppShell({ title, navLabel, soonLabel, logoAlt, items, children 
         </nav>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <div className="flex justify-end border-b border-border bg-surface px-4 py-2">
+        <div className="flex flex-wrap items-center justify-end gap-2 border-b border-border bg-surface px-4 py-2">
           <LocaleSwitcher />
+          {topbar}
         </div>
         <main id="main" className="flex-1 p-4 md:p-8">
+          {banner ? <div className="mb-6">{banner}</div> : null}
           {children}
         </main>
       </div>

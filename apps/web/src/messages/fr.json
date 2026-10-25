@@ -19,7 +19,9 @@
   "nav": {
     "skipToContent": "Aller au contenu principal",
     "main": "Navigation principale",
-    "forCarriers": "Espace transporteur"
+    "forCarriers": "Espace transporteur",
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
   },
   "home": {
     "hero": {
@@ -95,5 +97,104 @@
     "title": "Page introuvable",
     "text": "La page demandée n'existe pas ou a été déplacée.",
     "back": "Retour à l'accueil"
+  },
+  "auth": {
+    "back": "Retour à l'accueil",
+    "fields": {
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "fullName": "Votre nom complet",
+      "legalName": "Raison sociale de la société",
+      "city": "Ville du siège",
+      "cityPlaceholder": "Choisissez une ville",
+      "code": "Code à 6 chiffres"
+    },
+    "passwordHint": "10 caractères minimum, avec une majuscule, une minuscule et un chiffre.",
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Accédez à votre espace transporteur.",
+      "submit": "Se connecter",
+      "forgot": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "signupLink": "Inscrire ma société"
+    },
+    "signup": {
+      "title": "Inscrire ma société de transport",
+      "subtitle": "Créez votre compte. Notre équipe vérifiera votre société et votre agrément avant son apparition sur la marketplace.",
+      "submit": "Créer mon compte",
+      "acceptTerms": "J'accepte les conditions générales d'utilisation",
+      "termsLink": "Lire les conditions générales",
+      "hasAccount": "Déjà inscrit ?",
+      "loginLink": "Se connecter",
+      "successTitle": "Vérifiez votre boîte mail",
+      "successText": "Si cette adresse peut être utilisée, vous allez recevoir un lien pour confirmer votre compte."
+    },
+    "forgot": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Indiquez votre adresse e-mail : nous vous enverrons un lien de réinitialisation.",
+      "submit": "Envoyer le lien",
+      "successText": "Si un compte existe pour cette adresse, un lien de réinitialisation vient d'être envoyé.",
+      "backToLogin": "Retour à la connexion"
+    },
+    "reset": {
+      "title": "Nouveau mot de passe",
+      "submit": "Enregistrer le mot de passe"
+    },
+    "mfa": {
+      "title": "Double authentification",
+      "enrollIntro": "L'accès à l'administration exige une application d'authentification (Google Authenticator, Microsoft Authenticator, 1Password...).",
+      "enrollStart": "Configurer l'application",
+      "scan": "Scannez ce QR code avec votre application, puis saisissez le code affiché.",
+      "secret": "Ou saisissez cette clé manuellement :",
+      "qrAlt": "QR code de configuration de la double authentification",
+      "challengeIntro": "Saisissez le code affiché par votre application d'authentification.",
+      "submit": "Vérifier"
+    },
+    "errors": {
+      "credentials": "Adresse e-mail ou mot de passe incorrect.",
+      "emailNotConfirmed": "Confirmez d'abord votre adresse e-mail grâce au lien reçu.",
+      "rateLimited": "Trop de tentatives. Réessayez dans quelques minutes.",
+      "captcha": "La vérification anti-robot a échoué. Réessayez.",
+      "invalid": "Certains champs sont invalides.",
+      "mfaCode": "Code incorrect ou expiré.",
+      "link": "Ce lien est invalide ou a expiré. Demandez-en un nouveau.",
+      "unknown": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "validation": {
+    "required": "Ce champ est obligatoire.",
+    "email": "Adresse e-mail invalide.",
+    "passwordTooShort": "10 caractères minimum.",
+    "passwordTooLong": "72 caractères maximum.",
+    "passwordLower": "Ajoutez au moins une minuscule.",
+    "passwordUpper": "Ajoutez au moins une majuscule.",
+    "passwordDigit": "Ajoutez au moins un chiffre.",
+    "passwordMismatch": "Les mots de passe ne correspondent pas.",
+    "nameTooShort": "2 caractères minimum.",
+    "tooLong": "Texte trop long.",
+    "acceptTerms": "Vous devez accepter les conditions générales.",
+    "mfaCode": "Saisissez les 6 chiffres."
+  },
+  "company": {
+    "pending": {
+      "title": "Société en attente de vérification",
+      "text": "Notre équipe vérifie vos informations et votre agrément. Vous pouvez déjà préparer votre espace ; la marketplace sera accessible après validation."
+    },
+    "suspended": {
+      "title": "Société suspendue",
+      "text": "Votre compte est suspendu. Contactez l'équipe MoroccoTravelRide."
+    },
+    "none": {
+      "title": "Aucune société associée",
+      "text": "Votre compte n'est rattaché à aucune société active. Contactez le propriétaire de votre société."
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Conditions générales d'utilisation",
+      "pending": "Ce document est en cours de rédaction et sera validé par un juriste avant le lancement."
+    }
   }
 }

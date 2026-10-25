@@ -149,7 +149,13 @@ select is((select count(*) from public.companies), 0::bigint, 'an admin without 
 
 select set_config('request.jwt.claims',
   '{"sub": "d0000000-0000-0000-0000-000000000001", "role": "authenticated", "aal": "aal2"}', true);
-select is((select count(*) from public.companies), 3::bigint, 'an admin with MFA (aal2) sees all companies');
+-- Scoped to the fixtures: the local seed adds demo companies.
+select is(
+  (select count(*) from public.companies
+   where id in ('aaaaaaaa-0000-0000-0000-000000000000', 'bbbbbbbb-0000-0000-0000-000000000000')),
+  2::bigint,
+  'an admin with MFA (aal2) sees every company'
+);
 select lives_ok(
   $$ update public.companies set status = 'verified' where id = 'bbbbbbbb-0000-0000-0000-000000000000' $$,
   'an admin with MFA can verify a company'

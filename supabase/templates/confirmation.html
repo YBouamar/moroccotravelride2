@@ -1,0 +1,25 @@
+<!-- Sign-up confirmation. Language from the locale chosen at sign-up (user metadata). -->
+<!doctype html>
+<html lang="{{ if .Data.locale }}{{ .Data.locale }}{{ else }}fr{{ end }}" dir="{{ if eq .Data.locale "ar" }}rtl{{ else }}ltr{{ end }}">
+  <body style="margin:0;padding:24px;background:#F4F8FA;font-family:Arial,sans-serif;color:#102A43">
+    <div style="max-width:520px;margin:0 auto;background:#FFFFFF;border-radius:12px;padding:32px">
+      <p style="font-size:20px;font-weight:bold;margin:0 0 24px">Morocco<span style="color:#087E8B">TravelRide</span></p>
+      {{ if eq .Data.locale "ar" }}
+      <h1 style="font-size:20px">تأكيد عنوان بريدك الإلكتروني</h1>
+      <p>مرحبا {{ .Data.full_name }}، انقر على الزر أدناه لتأكيد حسابك.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=email&locale=ar" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">تأكيد حسابي</a></p>
+      <p style="color:#52667A;font-size:13px">إذا لم تقم بإنشاء حساب، يمكنك تجاهل هذه الرسالة.</p>
+      {{ else if eq .Data.locale "en" }}
+      <h1 style="font-size:20px">Confirm your e-mail address</h1>
+      <p>Hello {{ .Data.full_name }}, click the button below to confirm your account.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=email&locale=en" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">Confirm my account</a></p>
+      <p style="color:#52667A;font-size:13px">If you did not create an account, you can ignore this e-mail.</p>
+      {{ else }}
+      <h1 style="font-size:20px">Confirmez votre adresse e-mail</h1>
+      <p>Bonjour {{ .Data.full_name }}, cliquez sur le bouton ci-dessous pour confirmer votre compte.</p>
+      <p><a href="{{ .SiteURL }}/api/auth/confirm?token_hash={{ .TokenHash }}&type=email&locale=fr" style="display:inline-block;background:#21B6A8;color:#102A43;padding:12px 20px;border-radius:12px;font-weight:bold;text-decoration:none">Confirmer mon compte</a></p>
+      <p style="color:#52667A;font-size:13px">Si vous n'avez pas créé de compte, ignorez ce message.</p>
+      {{ end }}
+    </div>
+  </body>
+</html>
