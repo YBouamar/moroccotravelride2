@@ -53,3 +53,17 @@ insert into public.company_members (company_id, user_id, role) values
   ('00000000-0000-4000-b000-000000000001', '00000000-0000-4000-a000-000000000013', 'driver'),
   ('00000000-0000-4000-b000-000000000002', '00000000-0000-4000-a000-000000000021', 'owner'),
   ('00000000-0000-4000-b000-000000000003', '00000000-0000-4000-a000-000000000031', 'owner');
+
+-- Subscriptions (a V2 trial is created by trigger for every company): one of each situation.
+update public.subscriptions
+set plan_code = 'v2', status = 'active', trial_ends_at = null,
+    current_period_start = date_trunc('month', now())::date,
+    current_period_end = (date_trunc('month', now()) + interval '1 month - 1 day')::date
+where company_id = '00000000-0000-4000-b000-000000000001';
+
+update public.subscriptions
+set plan_code = 'standard', status = 'active', trial_ends_at = null,
+    current_period_start = date_trunc('month', now())::date,
+    current_period_end = (date_trunc('month', now()) + interval '1 month - 1 day')::date
+where company_id = '00000000-0000-4000-b000-000000000002';
+-- Oasis Mobility (pending) keeps its 14-day V2 trial.

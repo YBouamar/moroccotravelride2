@@ -3,6 +3,51 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string;
+          actor_id: string | null;
+          after: Json | null;
+          before: Json | null;
+          company_id: string | null;
+          entity_id: string;
+          entity_type: string;
+          id: number;
+          occurred_at: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          action: string;
+          actor_id?: string | null;
+          after?: Json | null;
+          before?: Json | null;
+          company_id?: string | null;
+          entity_id: string;
+          entity_type: string;
+          id?: never;
+          occurred_at?: string;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string | null;
+          after?: Json | null;
+          before?: Json | null;
+          company_id?: string | null;
+          entity_id?: string;
+          entity_type?: string;
+          id?: never;
+          occurred_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'audit_logs_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       cities: {
         Row: {
           created_at: string;
@@ -225,6 +270,49 @@ export type Database = {
           },
         ];
       };
+      plan_features: {
+        Row: {
+          feature_key: string;
+          plan_code: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          feature_key: string;
+          plan_code: string;
+        };
+        Update: {
+          feature_key?: string;
+          plan_code?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'plan_features_plan_code_fkey';
+            columns: ['plan_code'];
+            isOneToOne: false;
+            referencedRelation: 'plans';
+            referencedColumns: ['code'];
+          },
+        ];
+      };
+      plans: {
+        Row: {
+          code: string;
+          monthly_price_cents: number | null;
+          sort_order: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          code: string;
+          monthly_price_cents?: number | null;
+          sort_order?: number;
+        };
+        Update: {
+          code?: string;
+          monthly_price_cents?: number | null;
+          sort_order?: number;
+        };
+        Relationships: [];
+      };
       platform_settings: {
         Row: {
           description: string | null;
@@ -281,6 +369,61 @@ export type Database = {
         };
         Relationships: [];
       };
+      subscriptions: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          current_period_end: string | null;
+          current_period_start: string | null;
+          notes: string | null;
+          payment_method: string;
+          plan_code: string;
+          status: Database['public']['Enums']['subscription_status'];
+          trial_ends_at: string | null;
+          updated_at: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          current_period_end?: string | null;
+          current_period_start?: string | null;
+          notes?: string | null;
+          payment_method?: string;
+          plan_code: string;
+          status: Database['public']['Enums']['subscription_status'];
+          trial_ends_at?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          current_period_end?: string | null;
+          current_period_start?: string | null;
+          notes?: string | null;
+          payment_method?: string;
+          plan_code?: string;
+          status?: Database['public']['Enums']['subscription_status'];
+          trial_ends_at?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'subscriptions_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: true;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'subscriptions_plan_code_fkey';
+            columns: ['plan_code'];
+            isOneToOne: false;
+            referencedRelation: 'plans';
+            referencedColumns: ['code'];
+          },
+        ];
+      };
       vehicle_types: {
         Row: {
           code: string;
@@ -327,6 +470,7 @@ export type Database = {
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
+      subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
       verification_status: 'pending' | 'approved' | 'rejected';
     };
     CompositeTypes: {
@@ -442,6 +586,7 @@ export const Constants = {
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
+      subscription_status: ['trial', 'active', 'past_due', 'cancelled'],
       verification_status: ['pending', 'approved', 'rejected'],
     },
   },
