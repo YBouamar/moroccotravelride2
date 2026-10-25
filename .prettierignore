@@ -1,0 +1,10 @@
+node_modules
+pnpm-lock.yaml
+dist
+.next
+.expo
+.turbo
+coverage
+assets
+docs
+*.md
