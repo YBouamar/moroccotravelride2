@@ -53,7 +53,8 @@ pnpm db:start           # supabase start (Docker requis)
 pnpm db:reset           # migrations + seed
 pnpm db:test            # supabase test db (pgTAP)
 pnpm db:types           # régénère packages/db/src/types.ts (après chaque migration)
-pnpm e2e                # Playwright (build prod + tests desktop et mobile)
+pnpm e2e                # Playwright (build prod + tests desktop et mobile ; db:start + db:reset avant)
+pnpm --filter @mtr/driver dev   # app chauffeur (Expo)
 ```
 
 Commandes de session : `/debut-session`, `/fin-session`, `/decision`, `/audit-securite`.

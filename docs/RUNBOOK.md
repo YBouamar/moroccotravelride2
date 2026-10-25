@@ -19,7 +19,13 @@
 
 ## 2. Variables d'environnement
 
-Référence : [`.env.example`](../.env.example). Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
+Référence : [`.env.example`](../.env.example). Les variables `NEXT_PUBLIC_*` sont **intégrées au build** de Next.js : l'image Docker doit être construite avec les valeurs de l'environnement visé. En production : vraies clés Turnstile, `RATE_LIMIT_SALT` aléatoire (32 octets ou plus), SMTP de Supabase Auth configuré (Resend), modèles `supabase/templates` repris dans la configuration du Supabase auto-hébergé.
+
+### App chauffeur en local
+
+`pnpm --filter @mtr/driver dev` puis Expo Go (téléphone) ou un émulateur. L'app ne peut pas joindre `127.0.0.1` : dans `apps/driver/.env.local`, mettre `http://10.0.2.2:54321` (émulateur Android) ou l'IP du PC sur le réseau local (téléphone). Compte de test : driver.atlas@moroccotravelride.test.
+
+Référence initiale : Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
 
 ## 3. Hébergement et déploiement ⬜ (ADR-013)
 

@@ -7,7 +7,7 @@
 - `src/app/[locale]/(public)` marketplace · `(auth)` · `(saas)/app` transporteur · `(admin)/admin` back-office (MFA `aal2`).
 - `src/app/api` : healthcheck et futurs webhooks de paiement en ligne (vérification de signature, idempotence).
 - `src/features/<domaine>` : `components/`, `actions.ts`, `queries.ts`, `schemas.ts`.
-- `src/lib/supabase/{server,browser,admin}.ts` : `admin.ts` (service_role) commence par `import 'server-only'`.
+- `src/lib/supabase/{server,admin}.ts` : `admin.ts` (service role) commence par `import 'server-only'`. Pas de client navigateur : toute l'authentification passe par le serveur (cookies HttpOnly).
 - `src/messages/{fr,en,ar}.json` : toutes les chaînes visibles. Clés hiérarchiques.
 - `public/brand/` : copies des logos depuis `assets/brand/logos/` par script (ne pas éditer à la main).
 
@@ -29,3 +29,7 @@
 - `packages/ui/theme.css` est généré : ne jamais l'éditer, lancer `pnpm --filter @mtr/ui gen:css`.
 - Les logos de `public/brand/` et les icônes de `src/app/` sont des copies ignorées par git (`pnpm brand`).
 - Nouvelle chaîne visible : l'ajouter dans les **trois** fichiers de `src/messages/` (un test le vérifie).
+- Formulaires publics : Turnstile + `consumeRateLimit` dans la Server Action ; le jeton Turnstile est à usage unique (remonter le widget après une erreur, `useAuthForm`).
+- `redirect()` dans une Server Action doit rester hors d'un `try` (il lève une exception de navigation).
+- `getByRole('alert')` en E2E : Next.js a son propre `role=alert` (annonceur de route), filtrer par texte.
+- `next start` avertit avec `output: 'standalone'` : sans effet en local ; en production, lancer `server.js` du dossier standalone (image Docker, Phase 7).

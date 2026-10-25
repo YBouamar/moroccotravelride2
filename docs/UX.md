@@ -122,5 +122,11 @@ Rayons : 12 px pour les cartes et boutons (cohérent avec les angles arrondis de
 | Tableau de bord transporteur (état vide) + barre latérale | `/[locale]/app` | Coque, autres entrées « Bientôt » | 3 |
 | Vue d'ensemble admin (état vide) + barre latérale | `/[locale]/admin` | Coque | 3 |
 | Page 404 localisée (logo vertical) | toute URL inconnue | Fait | 3 |
+| Connexion, inscription transporteur, mot de passe oublié, nouveau mot de passe, double authentification | `/[locale]/login`, `/signup`, `/forgot-password`, `/reset-password`, `/mfa` | Fait (carte centrée, logo vertical, Turnstile) | 5 |
+| Bandeaux de statut société (en attente, suspendue) et état « aucune société » | `/[locale]/app` | Fait | 5 |
+| CGU (contenu à rédiger) | `/[locale]/legal/terms` | Emplacement, À VALIDER | 5 |
+| App chauffeur : connexion, « Aujourd'hui » (vide) | Expo | Squelette | 5 |
 
 Composants disponibles (`apps/web/src/components`) : `Button` (primary, secondary, outline, ghost ; 44 px minimum), `Card`, `Badge` (verified, neutral), `Input`, `Label`, `Skeleton`, `EmptyState`, `Logo` (horizontal / vertical / symbole × couleur / négatif / blanc), `LocaleSwitcher`, `SiteHeader`, `SiteFooter`, `AppShell`. En-tête mobile : logo et « Espace transporteur » sur la première ligne, langues sur la seconde (aucun débordement à 390 px, vérifié par Playwright).
+
+Formulaires (étape 5) : validation à la saisie avec les schémas Zod partagés, messages d'erreur traduits reliés aux champs (`aria-invalid`, `aria-describedby`), erreur serveur en `role="alert"`, succès en `role="status"`, mots de passe avec consigne visible. App chauffeur : cibles tactiles de 56 px, actions en bas d'écran, langue modifiable sans redémarrage.

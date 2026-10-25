@@ -26,5 +26,10 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 |---|---|
 | P2 | Pages publiques rendues à la demande (ƒ) malgré `generateStaticParams` : viser le rendu statique de la marketplace pour les performances (Phase 7, SEO) |
 | P2 | TypeScript 7 dès que typescript-eslint le supporte (ADR-009) |
-| P2 | Tokens d'état `danger` / `warning` / `success` avec contraste AA (étape 5, formulaires) |
+| P2 | Proposer la MFA aux propriétaires de société (page `/mfa` réservée aux admins pour l'instant) |
+| P2 | Sélecteur de société pour un utilisateur membre de plusieurs sociétés (aujourd'hui : la plus ancienne) |
+| P2 | Polices de marque (Montserrat, Inter, Noto Sans Arabic) dans l'app chauffeur (police système aujourd'hui) |
+| P2 | Configuration EAS (profils de build, identifiants des magasins) : Phase 7 |
+| P3 | Lancer les E2E sur le serveur `standalone` réel plutôt que `next start` |
+| P3 | Réexaminer l'exception d'audit node-forge à chaque mise à jour d'Expo (ADR-020) |
 | P3 | Relecture des traductions arabes par un locuteur natif |

@@ -26,7 +26,7 @@ Toutes les valeurs « paramétrables » vivent dans `platform_settings` (global)
 | BR-013 | Référence publique | Aléatoire, non séquentielle, format `MTR-XXXXXX` (alphabet sans caractères ambigus) | ACTÉ | Prompt §6 |
 | BR-014 | Réservation invité | Autorisée sans compte ; accès ultérieur par référence + e-mail (lien magique) | ACTÉ | Prompt §8.2 |
 | BR-015 | Conversion | Une réservation acceptée crée automatiquement un trajet SaaS (`origin = marketplace`) chez le transporteur | ACTÉ | Prompt §13 Phase 3 |
-| BR-016 | Visibilité marketplace | Seules les sociétés `verified` avec `marketplace_enabled = true`, un agrément non expiré et une grille active apparaissent ; `marketplace_enabled` est réservé à l'admin (Q19) | À CONFIRMER | Déduit du prompt, ADR-019 |
+| BR-016 | Visibilité marketplace | Seules les sociétés `verified` avec `marketplace_enabled = true`, un agrément non expiré et une grille active apparaissent  et non suspendues. Le transporteur active ou désactive lui-même sa visibilité ; une suspension par l'admin la bloque et seul l'admin la lève | ACTÉ | Q19, ADR-020 |
 
 ### Machine à états : réservation
 

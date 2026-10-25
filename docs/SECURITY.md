@@ -27,19 +27,19 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 ### 2.1 Accès aux données
 - ✅ RLS sur toutes les tables existantes (testé : aucune table publique sans RLS ni sans politique) ; à maintenir à chaque migration.
 - 🟡 Tests pgTAP : isolation société A / B, rôles internes (gérant, chauffeur), colonnes admin, dernier propriétaire, profils, référentiels, admin sans MFA refusé (42 assertions, étape 4). Chauffeur / trajets et voyageur / réservations : Phases 2 et 3.
-- ⬜ `service_role` uniquement côté serveur (`src/lib/supabase/admin.ts` avec `import 'server-only'`).
-- ⬜ Server Actions : session + rôle + appartenance + Zod ; `company_id` toujours déduit de la session / de l'appartenance, jamais du client.
+- ✅ Clé service role (`SUPABASE_SECRET_KEY`) uniquement côté serveur (`src/lib/supabase/admin.ts`, `server-only`), utilisée seulement pour la limitation des tentatives ; jamais dans l'app chauffeur ni dans une variable `NEXT_PUBLIC_` / `EXPO_PUBLIC_`.
+- 🟡 Server Actions d'authentification : validation Zod côté serveur, langue et redirection validées (`safeNextPath`, anti redirection ouverte). Actions métier (rôle + appartenance) : Phase 2.
 - 🟡 UUID sur toutes les tables créées ; références publiques aléatoires en Phase 3.
 
 ### 2.2 Authentification
 - 🟡 Configuration locale (`supabase/config.toml`) : mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail, ré-authentification pour changer de mot de passe. À reproduire sur le VPS. Écrans : étape 5.
-- 🟡 MFA TOTP activée ; `is_platform_admin()` exige `aal2` (testé). Contrôle dans le layout admin et écrans d'enrôlement : étape 5.
-- ⬜ Rate limiting (connexion, inscription, réinitialisation, recherche, réservation) ; Turnstile sur formulaires publics.
-- ⬜ Cookies `HttpOnly`, `Secure`, `SameSite=Lax` ; `expo-secure-store` sur mobile.
+- ✅ MFA TOTP : `is_platform_admin()` exige `aal2` (pgTAP), le layout admin redirige vers `/mfa` sans aal2 (E2E), enrôlement et vérification par Server Actions. Proposition aux propriétaires : backlog.
+- ✅ Limitation des tentatives (Postgres, ADR-020) et Turnstile vérifié côté serveur sur connexion, inscription, mot de passe oublié. Recherche et réservation : Phase 3.
+- ✅ Cookies de session `HttpOnly`, `SameSite=Lax`, `Secure` en production (aucun jeton lisible par le navigateur) ; session mobile dans SecureStore (trousseau iOS / keystore Android).
 
 ### 2.3 Application web
 - ✅ HSTS, `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy` (géolocalisation, caméra, micro, paiement désactivés), en-tête `X-Powered-By` supprimé : `apps/web/next.config.ts`, testés par Playwright.
-- ⬜ CSP stricte à nonces (étape 5, avec l'authentification).
+- ✅ CSP stricte à nonce par requête (`src/proxy.ts`, `src/lib/security/csp.ts`), testée (unitaire + E2E).
 - ⬜ Interdiction de `dangerouslySetInnerHTML` sur contenu utilisateur (règle ESLint).
 - ⬜ CSRF natif des Server Actions conservé ; contrôle `Origin` sur route handlers sensibles.
 
@@ -65,7 +65,7 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - 🟡 `.gitignore` excluant `.env*` (hors `.env.example`) : en place (Phase 0).
 - 🟡 `.env.example` documenté : version initiale (Phase 0).
 - ✅ Hook pre-commit gitleaks (fichiers indexés) ; historique analysé le 2026-10-25 : aucune fuite.
-- 🟡 `pnpm audit` (0 vulnérabilité au 2026-10-25) et Dependabot : configurés dans `.github/`, actifs dès que le dépôt GitHub existe.
+- 🟡 `pnpm audit` : 0 vulnérabilité non traitée au 2026-10-26 (zod forcé en version corrigée ; exception documentée pour node-forge, outil de dev Expo, ADR-020). Dependabot configuré, actif dès que le dépôt GitHub existe.
 - ⬜ Logs sans PII ni jetons ; Sentry `beforeSend` filtrant.
 
 ### 2.8 Sauvegarde et continuité (auto-hébergement, ADR-013)

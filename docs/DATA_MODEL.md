@@ -58,7 +58,7 @@ erDiagram
 Fonctions SQL de sécurité, schéma `private` (`security definer`, `search_path` vide, non exposé en RPC) : `is_member(company_id)`, `has_role(company_id, roles[])`, `is_platform_admin()` (exige `aal2`), `shares_company(user_id)` ; `has_feature(company_id, key)` en Phase 2.
 
 Implémentation (étape 4) :
-- Colonnes réservées à l'admin, protégées par triggers de garde : `companies.status`, `companies.marketplace_enabled`, `companies.commission_rate` ; `company_documents.verification_status`, `reviewed_by`, `reviewed_at`, `rejection_reason` ; `profiles.is_platform_admin` (modifiable seulement en accès direct à la base).
+- Colonnes réservées à l'admin, protégées par triggers de garde : `companies.status`, `companies.commission_rate`, `companies.marketplace_suspended_at`, `companies.marketplace_suspension_reason` (`marketplace_enabled` est modifiable par propriétaire et gérant, Q19) ; `company_documents.verification_status`, `reviewed_by`, `reviewed_at`, `rejection_reason` ; `profiles.is_platform_admin` (modifiable seulement en accès direct à la base).
 - `public.create_company(legal_name, trade_name, city_id)` : seule façon de créer une société (statut `pending`, appelant propriétaire).
 - Trigger `on_auth_user_created` : crée le profil à l'inscription (nom et langue depuis les métadonnées).
 - Trigger `keep_one_owner` : impossible de retirer ou rétrograder le dernier propriétaire actif.
@@ -102,5 +102,7 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261025210000_reference_data.sql` | `cities` (villes + aéroports), `vehicle_types`, lecture publique | 1 (étape 4) |
 | `20261025210100_identity_and_companies.sql` | schéma `private`, énumérations, `profiles`, `companies`, `company_members`, `company_documents`, fonctions de sécurité, triggers de garde, `create_company`, RLS | 1 (étape 4) |
 | `20261025210200_platform_settings.sql` | `platform_settings` + valeurs par défaut | 1 (étape 4) |
+| `20261026090000_marketplace_suspension.sql` | suspension marketplace réservée à l'admin, visibilité gérée par le transporteur (Q19) | 1 (étape 5) |
+| `20261026090100_rate_limits.sql` | `private.rate_limits` + `public.consume_rate_limit()` (rôle service uniquement) | 1 (étape 5) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (42 assertions). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (52 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

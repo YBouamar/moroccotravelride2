@@ -158,7 +158,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Décision** : dépendances de développement à la racine, versions exactes (pas de `^`) pour des builds reproductibles, mises à jour proposées par Dependabot :
   - `turbo` : orchestration et cache des tâches lint / typecheck / test / build (imposé par le cadrage).
   - `typescript` 6.0.3 : voir ADR-009.
-  - `eslint`, `@eslint/js`, `typescript-eslint`, `globals`, `eslint-config-prettier` : lint (interdiction de `any`, imports de types cohérents) sans conflit avec Prettier.
+  - `eslint`, `@eslint/js`, `typescript-eslint`, `globals`, `eslint-config-prettier` : lint (interdiction de `any`, imports de types cohérents) sans conflit avec Prettier. ESLint ramené de 10.13 à **9.39.5** le 2026-10-26 (ADR-020).
   - `prettier` : formatage unique.
   - `vitest` : tests unitaires (imposé par le cadrage).
   - `@types/node` 24 : types de la version de Node utilisée.
@@ -201,5 +201,20 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
   - Paramètres en points de base (`default_commission_bps` = 2000), validés par Zod (`@mtr/shared`, nouvelle dépendance `zod` 4.6.7, imposée par le cadrage).
   - Auth locale durcie : MFA TOTP activée, mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail obligatoire, ré-authentification pour changer de mot de passe.
 - **À CONFIRMER** :
-  - `marketplace_enabled` modifiable par l'admin uniquement (le transporteur ne peut pas réapparaître seul après une suspension pour relevé impayé) : question Q19.
-  - Capacités indicatives des types de véhicules (berline 3, 4x4 4, van 7, minibus 17, autocar 50) : question Q20.
+  - ~~`marketplace_enabled` réservé à l'admin~~ : tranché par Yassine (Q19, 2026-10-25), voir ADR-020.
+  - Capacités indicatives des types de véhicules (berline 3, 4x4 4, van 7, minibus 17, autocar 50) : **validées** par Yassine (Q20, 2026-10-25).
+
+## ADR-020 : Authentification, sécurité web et squelette de l'app chauffeur (étape 5)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Visibilité marketplace (Q19)** : le transporteur (propriétaire ou gérant) active ou désactive lui-même `marketplace_enabled` ; la suspension (`marketplace_suspended_at`, `marketplace_suspension_reason`) est réservée à l'admin et seul l'admin peut la lever. Visible sur la marketplace = `verified` + `marketplace_enabled` + non suspendu.
+- **Authentification web entièrement côté serveur** : Server Actions et route handler, cookies de session `HttpOnly`, `SameSite=Lax`, `Secure` en production ; aucun client Supabase dans le navigateur. Conséquence : le futur suivi en direct (Phase 4) passera par un jeton transmis par le serveur ou un client navigateur dédié (à décider alors).
+- **`src/proxy.ts`** (Next.js 16) : nonce CSP par requête, rafraîchissement de session, redirection vers la connexion pour `/app`, `/admin`, `/mfa`, `/reset-password` ; contrôles fins (appartenance, admin + MFA) dans les layouts, RLS comme garde réelle.
+- **CSP stricte** : scripts uniquement avec nonce (`strict-dynamic`), `frame-ancestors 'none'`, `object-src 'none'` ; `style-src 'unsafe-inline'` accepté (styles injectés par Next.js et next/font, sans exécution de code).
+- **Anti-abus** : Cloudflare Turnstile vérifié côté serveur sur connexion, inscription et mot de passe oublié (clés de test en local, refus systématique en production sans clé) ; **limitation des tentatives dans Postgres** (`consume_rate_limit`, fenêtres fixes, sujets salés et hachés, refus si la vérification échoue) plutôt qu'Upstash : pas de service externe de plus sur le VPS. Limites : connexion 20 / 15 min par IP et 8 / 15 min par e-mail, inscription 5 / h par IP, mot de passe oublié 5 / h par IP, MFA 10 / 15 min par utilisateur. Supabase Auth garde ses propres limites.
+- **Inscription transporteur** : compte créé avec la société en métadonnées ; la société est créée par `create_company` (statut `pending`) à la première requête connectée après confirmation de l'e-mail. Réponses identiques que l'adresse existe ou non (pas d'énumération de comptes).
+- **E-mails d'authentification** : modèles trilingues (`supabase/templates`, langue des métadonnées) pointant vers `/api/auth/confirm` (jeton à usage unique). Ils seront remplacés par Resend + React Email (crochet d'envoi Supabase) en Phase 3. Le texte de ces modèles est hors des fichiers i18n (exception documentée à la règle 5).
+- **MFA admin** : enrôlement TOTP et vérification par Server Actions ; la page `/mfa` est réservée aux admins pour l'instant (proposition aux propriétaires : backlog).
+- **App chauffeur** : Expo SDK 58 (React 19.3.0, React Native 0.88), expo-router ; session dans SecureStore découpée en morceaux (limite Android d'environ 2 Ko par entrée) ; accès réservé aux membres actifs de rôle `driver` ; i18next + react-i18next, RTL appliqué par le style `direction` de la vue racine (bascule en arabe sans redémarrage) ; icône, écran de démarrage et logos lus directement dans le kit officiel.
+- **Dépendances ajoutées** : web : `@supabase/supabase-js`, `@supabase/ssr`, `react-hook-form`, `@hookform/resolvers`, `zod`, `server-only` ; chauffeur : `expo` et modules Expo (router, secure-store, localization, splash-screen, constants, linking, status-bar, system-ui), `react-native`, `react-native-safe-area-context`, `react-native-screens`, `@supabase/supabase-js`, `i18next`, `react-i18next` ; partagé : `zod`. Toutes imposées ou induites par le cadrage.
+- **Hygiène des dépendances** : ESLint 9.39.5 (les plugins de `eslint-config-next` ne déclarent pas encore ESLint 10) ; `react-dom` aligné sur React 19.3.0 dans l'app chauffeur ; zod forcé en 4.6.7 partout (version corrigée ; `@expo/cli` tirait une 3.x vulnérable) ; exception d'audit documentée pour **node-forge** (GHSA-86w9-cpqp-85rv) : outil de développement Expo uniquement (signature de code d'Expo Updates, non utilisée), jamais embarqué dans l'app, aucune version corrigée publiée. À réexaminer à chaque mise à jour d'Expo.

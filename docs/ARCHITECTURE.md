@@ -111,7 +111,7 @@ App chauffeur : démarrage du trajet (statut `in_progress`) puis envoi des posit
 | pnpm | 12.15.0 | champ `packageManager` |
 | turbo | 2.11.10 | |
 | typescript | 6.0.3 | 7.0.2 incompatible avec typescript-eslint (ADR-009) |
-| eslint / @eslint/js | 10.13.0 / 10.0.1 | config plate `eslint.config.mjs` |
+| eslint / @eslint/js | 9.39.5 / 9.39.5 | config plate ; ESLint 10 en attente des plugins Next.js (ADR-020) |
 | typescript-eslint | 8.72.0 | |
 | prettier | 3.9.10 | |
 | vitest | 5.0.5 | |
@@ -127,16 +127,18 @@ App chauffeur : démarrage du trajet (statut `in_progress`) puis envoi des posit
 | @radix-ui/react-slot | 1.5.0 | étape 3 |
 | eslint-config-next | 16.4.3 | étape 3 |
 | @playwright/test | 1.64.1 | étape 3 (avancé) |
+| @supabase/supabase-js / @supabase/ssr | 2.118.0 / 0.12.7 | étape 5 |
+| zod | 4.6.7 (forcé partout) | étape 4 |
+| react-hook-form / @hookform/resolvers | 7.91.0 / 6.0.0 | étape 5 |
+| expo / expo-router | 58.0.19 / ~58.0.26 | étape 5 (app chauffeur) |
+| react / react-native (chauffeur) | 19.3.0 / 0.88.0 | imposés par Expo SDK 58 |
+| i18next / react-i18next | 26.5.11 / 17.1.9 | étape 5 |
 
 ### 5.2 Relevées, à figer à leur étape
 
 | Paquet | Dernière stable (2026-10-24) | Étape |
 |---|---|---|
-| @supabase/supabase-js / @supabase/ssr | 2.118.0 / 0.12.7 | 4 |
-| zod / react-hook-form | 4.6.7 / 7.91.0 | 3 à 5 |
 | @tanstack/react-query | 5.104.5 | Phase 2 |
-| expo / expo-router | 58.0.19 / 58.0.26 | 5 |
-| i18next | 26.5.10 | 5 |
 | resend / @react-pdf/renderer | 6.34.1 / 4.9.0 | Phases 2 et 3 |
 | maplibre-gl | 6.15.0 | Phase 4 |
 
