@@ -23,6 +23,14 @@ ADR-021. Questions Q21 à Q23.
 - Texte en dur repéré dans la fiche société (rôles, documents) : remplacé par des traductions.
 - Dépôt GitHub : toujours 403.
 
+## Complément : réponses Q21 à Q23
+
+- Lecture seule après expiration (convention RLS SELECT / écriture), délai de grâce de 15 jours avec `past_due_since` et résiliation quotidienne par pg_cron, page Paramètres admin (RIB, e-mail, téléphone, délai de grâce), coordonnées affichées sur la page Abonnement. ADR-022.
+- Pièges rencontrés en écrivant les tests : séquences d'échappement perdues dans des scripts de remplacement, `
+
+Étape 7 (onboarding transporteur, documents en stockage privé) après validation.
+` interprété par `String.replace` ; corrigés à l'outil d'édition.
+
 ## Prochaine étape
 
 Étape 7 (onboarding transporteur, documents en stockage privé) après validation.

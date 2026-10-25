@@ -228,7 +228,11 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Interface** : sections hors offre visibles mais verrouillées (cadenas + offre requise, lien vers la page Abonnement, BR-104) ; composant `<FeatureGate>` pour les pages ; bandeaux « essai : X jours restants » et « essai ou abonnement terminé ».
 - **Journal d'audit** (`audit_logs`) : en ajout seul, alimenté uniquement par triggers (`private.audit_changes`) sur sociétés (statut, visibilité, suspension, commission, raison sociale, ICE), abonnements, membres et validation des documents ; seules les colonnes réellement modifiées sont stockées, sans donnée sensible. Lecture : admin (tout), propriétaire (sa société).
 - **Back-office** : vue d'ensemble chiffrée, liste des sociétés filtrable par statut, fiche société (vérifier / suspendre / remettre en attente, suspension marketplace avec motif, commission spécifique en %, abonnement, historique traduit). Actions sensibles derrière une confirmation explicite (`<dialog>` natif).
-- **À CONFIRMER** :
-  - Q21 : fin d'essai sans paiement = plus aucune fonction (données conservées) ;
-  - Q22 : statut « paiement en retard » = accès maintenu tant que l'admin ne résilie pas ;
-  - Q23 : coordonnées de paiement des abonnements (RIB de la plateforme, contact) à afficher sur la page Abonnement.
+- **Points tranchés** par Yassine le 2026-10-26 (Q21 à Q23) : voir ADR-022, qui remplace les défauts initialement appliqués.
+
+## ADR-022 : Lecture seule, délai de grâce et coordonnées de paiement (Q21 à Q23)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (Yassine)
+- **Q21, lecture seule** : un essai ou un abonnement terminé (essai expiré, `cancelled`) rend la société **en lecture seule** : ses données restent consultables, rien ne peut être créé ni modifié. Convention pour toutes les tables du SaaS : politiques **SELECT** = appartenance seule ; **INSERT / UPDATE / DELETE** = appartenance + `private.has_feature()` (qui signifie désormais « accès en écriture »). Interface : bandeau « lecture seule », `canWrite` dans le contexte société pour désactiver les actions.
+- **Q22, paiement en retard** : un abonnement `past_due` garde l'accès complet pendant **15 jours** (`platform_settings.subscription_grace_days`, modifiable par l'admin) à partir de `past_due_since` (renseigné par trigger). Ensuite `has_feature` refuse l'écriture et une tâche **pg_cron quotidienne** (02:15 UTC) passe l'abonnement en `cancelled`. Bandeau « Paiement en retard : X jours avant la résiliation ».
+- **Q23, coordonnées de paiement** : banque, titulaire, RIB (24 chiffres), e-mail et téléphone de la plateforme dans `platform_settings.subscription_payment_info`, saisis par l'admin dans la nouvelle page **Paramètres** (qui règle aussi le délai de grâce) et affichés sur la page Abonnement des transporteurs. Ces données sont destinées aux clients : lisibles publiquement comme les autres paramètres.

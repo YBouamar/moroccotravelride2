@@ -43,9 +43,11 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26 : correctif du sélecteur de langue (conservation de `?next=`, langue active visible), `pnpm dev` limité au web ; diagnostic d'un serveur de dev resté sur d'anciens modules après installation de dépendances.
 - 2026-10-26, étape 6 : offres et abonnements (essai V2 de 14 jours automatique), `has_feature`, journal d'audit par triggers, page Abonnement, sections verrouillées selon l'offre, back-office des sociétés (vérification, suspension marketplace, commission, abonnement, historique traduit). 120 tests unitaires, 69 pgTAP, 35 E2E (ADR-021).
 
+- 2026-10-26 : réponses Q21 à Q23 intégrées : lecture seule après expiration, 15 jours de grâce puis résiliation automatique (pg_cron), page Paramètres admin pour les coordonnées de paiement affichées aux transporteurs (ADR-022). 124 tests unitaires, 77 pgTAP, 38 E2E.
+
 ## 3. En cours
 
-Rien. Attente de validation de l'étape 6.
+Rien. Attente du feu vert pour l'étape 7.
 
 ## 4. Bloqué / points d'attention
 
@@ -56,13 +58,10 @@ Rien. Attente de validation de l'étape 6.
 
 Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au chauffeur puis au dirigeant, commission réglée chaque mois en espèces ou virement instantané (ADR-016) ; virement avant le trajet ; carte en ligne reportée ; relevé mensuel ; Coolify ; dépôt privé.
 
-Q17 à Q20 réglées.
+Q17 à Q23 réglées. **Aucune question ouverte.**
 
-| # | Question | Défaut appliqué si pas de réponse |
-|---|---|---|
-| Q21 | À la fin de l'essai gratuit sans paiement : la société perd-elle l'accès à toutes les fonctions (données conservées), ou passe-t-elle en lecture seule, ou en offre Standard ? | Plus aucune fonction, données conservées |
-| Q22 | Abonnement « paiement en retard » : combien de temps l'accès reste-t-il ouvert avant blocage ? | Accès maintenu jusqu'à résiliation par l'admin |
-| Q23 | Quelles coordonnées afficher sur la page Abonnement pour payer (RIB de la plateforme, e-mail ou téléphone de contact) ? | Texte générique « contactez l'équipe » |
+Action côté Yassine : saisir les vraies coordonnées de paiement (RIB, e-mail, téléphone) dans Admin > Paramètres.
+
 
 | # | Question | Défaut appliqué si pas de réponse |
 |---|---|---|
