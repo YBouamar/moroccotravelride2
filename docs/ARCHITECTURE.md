@@ -61,7 +61,7 @@ Règle de dépendance : `apps/*` dépendent de `packages/*` ; `packages/shared` 
 
 ## 4. Flux principaux
 
-### 4.1 Réservation marketplace (paiement hors ligne, ADR-012)
+### 4.1 Réservation marketplace (paiement hors ligne, ADR-016)
 
 ```mermaid
 sequenceDiagram
@@ -69,6 +69,7 @@ sequenceDiagram
   participant W as Next.js
   participant DB as Postgres
   participant C as Transporteur
+  participant CH as Chauffeur
   participant AD as Admin
   V->>W: recherche (villes, date, passagers)
   W->>DB: grilles actives des sociétés vérifiées
@@ -78,15 +79,18 @@ sequenceDiagram
   W-->>V: e-mail de demande reçue
   C->>W: accepter / refuser
   W->>DB: booking confirmed + création trip (origin marketplace)
-  W-->>V: e-mail de confirmation + instructions de paiement (RIB transporteur ou espèces)
-  alt Virement au transporteur
-    C->>W: confirme la réception du virement
-    W->>DB: payment_status paid + ligne commission_ledger (transporteur doit 20 %)
-  else Espèces à la plateforme
-    AD->>W: confirme la réception des espèces
-    W->>DB: payment_status paid + ligne commission_ledger (plateforme doit 80 %)
+  W-->>V: e-mail de confirmation + instructions (RIB du transporteur ou paiement au chauffeur)
+  alt Virement avant le trajet
+    V->>C: virement bancaire
+  else Espèces pendant le trajet
+    V->>CH: espèces
+    CH->>C: remise au dirigeant
   end
-  Note over DB: relevé de compensation périodique par transporteur
+  C->>W: confirme le paiement reçu
+  W->>DB: payment_status paid + commission_ledger (transporteur doit 20 %)
+  Note over DB,AD: fin de mois : relevé de commissions par transporteur
+  C->>AD: règlement en espèces ou virement instantané
+  AD->>W: enregistre le règlement du relevé
 ```
 
 ### 4.2 Localisation chauffeur (V2)

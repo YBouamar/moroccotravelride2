@@ -16,9 +16,9 @@
 2. **Résultats** : cartes véhicule + transporteur (photo, capacité, bagages, note, badge « Agréé vérifié », prix total). Filtres type / prix / note, tri prix ou note. Sur mobile, filtres dans une feuille modale.
 3. **Détail et options** : conditions d'annulation, inclus, informations transporteur.
 4. **Informations passager** : nom, e-mail, téléphone avec indicatif, numéro de vol (suggéré si départ aéroport), adresse précise, remarques. Sans compte.
-5. **Mode de paiement** (ADR-012) : choix entre virement au transporteur et espèces, avec une phrase claire sur le moment du paiement. Pas de paiement en ligne au lancement.
+5. **Mode de paiement** (ADR-016) : « Virement bancaire avant le trajet » ou « Espèces au chauffeur », avec une phrase claire sur le moment du paiement. Pas de paiement en ligne au lancement.
 6. **Demande envoyée** : référence `MTR-XXXXXX`, récapitulatif, compte à rebours « Le transporteur confirme sous 2 h ».
-7. **Confirmation** (après acceptation) : e-mail + bon PDF (logo vertical), instructions de paiement (RIB du transporteur ou modalités espèces), ajout au calendrier (.ics).
+7. **Confirmation** (après acceptation) : e-mail + bon PDF (logo vertical), instructions de paiement (RIB du transporteur et date limite, ou montant exact à remettre au chauffeur), ajout au calendrier (.ics).
 8. **Gérer ma réservation** : référence + e-mail, lien magique, annulation selon la politique avec montant remboursé affiché avant confirmation.
 9. **Après le trajet** : e-mail de demande d'avis.
 
@@ -27,7 +27,7 @@
 1. **Inscription et onboarding** en étapes avec barre de progression : société, agrément, premier véhicule, premier chauffeur, grille tarifaire (optionnelle). Bandeau « En attente de vérification » tant que l'admin n'a pas validé.
 2. **Tableau de bord du jour** : trajets du jour, non affectés, réservations à accepter (compte à rebours), alertes, CA du mois.
 3. **Planning** : calendrier jour / semaine + liste ; affectation avec détection de conflits.
-4. **Réservations marketplace** : accepter / refuser avec motif, puis affecter.
+4. **Réservations marketplace** : accepter / refuser avec motif, puis affecter ; confirmer le paiement reçu (virement ou espèces) ; consulter et régler le relevé mensuel de commissions.
 5. **Flotte, chauffeurs, clients** : tables avec recherche, filtres, tri, pagination serveur, export CSV.
 6. **Facturation** : depuis un ou plusieurs trajets, aperçu PDF avant émission, envoi e-mail, suivi des paiements.
 7. **Dépenses (V2)**, **Suivi en direct (V2)**, **Parc (V3)** : visibles mais verrouillés (cadenas + « Passer à V2 / V3 ») si hors offre.

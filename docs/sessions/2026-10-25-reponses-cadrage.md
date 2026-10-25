@@ -20,6 +20,12 @@ Voir ADR-012 à ADR-015.
 - Le dossier source des logos était verrouillé par Windows pendant le déplacement : contourné par copie, vérification puis suppression.
 - Ambiguïté sur le paiement en espèces (qui reçoit l'argent et comment) : questions Q11 à Q14.
 
+## Complément (réponses Q11 à Q16)
+
+- Espèces remises au chauffeur puis au dirigeant ; virement avant le trajet : le transporteur encaisse toujours 100 % et règle la commission chaque mois en espèces ou virement instantané. ADR-016 remplace ADR-012 ; modèle de données, flux, UX, sécurité et règles mis à jour.
+- Carte en ligne reportée (formalités), relevé mensuel, Coolify et dépôt privé actés.
+- Nouvelles questions mineures : Q17 (délai de suspension pour relevé impayé), Q18 (GitHub ou GitLab).
+
 ## Prochaine étape
 
 Étape 2 (Phase 1a, socle monorepo), sur feu vert de Yassine.

@@ -79,7 +79,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 ## ADR-012 : Modes de paiement marketplace (hors ligne) et compensation
 
-- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE sur le principe (Yassine) ; détails opérationnels À CONFIRMER ; implications juridiques et fiscales À VÉRIFIER
+- **Date** : 2026-10-25 · **Statut** : REMPLACÉE PAR ADR-016
 - **Contexte** : Yassine retient deux modes de paiement pour le voyageur, sans carte bancaire en ligne au lancement.
 - **Décision** :
   1. **Virement bancaire** sur l'un des comptes bancaires **du transporteur** : le transporteur reçoit 100 % et **doit 20 %** (commission figée) à la plateforme.
@@ -100,7 +100,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 ## ADR-013 : Hébergement sur un VPS Contabo (auto-hébergement)
 
-- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE sur le principe (Yassine) ; architecture de déploiement proposée À CONFIRMER ; dossier CNDP reporté par Yassine
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (Yassine, 2026-10-25), y compris Coolify ; dossier CNDP reporté par Yassine
 - **Contexte** : Yassine héberge sur un VPS Contabo au lieu de Vercel et de Supabase managé.
 - **Décision proposée** : tout sur le VPS en conteneurs Docker :
   - **Supabase auto-hébergé** (docker compose officiel : Postgres, Auth, Storage, Realtime, Edge Runtime, Studio). Le code applicatif ne change pas : mêmes clients, mêmes migrations, même CLI en local.
@@ -125,7 +125,28 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 ## ADR-015 : Contrôles qualité sans dépôt GitHub distant
 
-- **Date** : 2026-10-25 · **Statut** : À CONFIRMER
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (Yassine, 2026-10-25) : dépôt privé créé avant la Phase 2 (GitHub par défaut, le workflow CI étant écrit pour GitHub Actions)
 - **Contexte** : pas de dépôt GitHub pour l'instant, donc pas de GitHub Actions.
 - **Décision par défaut** : le workflow CI est écrit dès l'étape 2 (prêt à servir), et les mêmes contrôles tournent en local : script `pnpm check` (lint, typecheck, tests, build) et hook pre-commit (gitleaks, lint des fichiers modifiés).
 - **Recommandation** : créer un dépôt **privé** (GitHub ou GitLab, gratuit) avant la Phase 2. Il sert aussi de **sauvegarde hors site du code**, aujourd'hui présent sur un seul poste, et Coolify peut déployer directement depuis ce dépôt.
+
+## ADR-016 : Le transporteur encaisse dans les deux modes de paiement
+
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (Yassine, 2026-10-25) ; remplace ADR-012
+- **Contexte** : précisions de Yassine sur le paiement en espèces et le virement.
+- **Décision** :
+  1. **Virement** : le voyageur vire sur un compte bancaire du transporteur, **avant le trajet**.
+  2. **Espèces** : le voyageur paie **le chauffeur** pendant le trajet ; le chauffeur remet l'argent au dirigeant de la société de transport.
+  3. Dans les deux cas, **le transporteur encaisse 100 %** et doit la commission figée (20 % par défaut) à la plateforme.
+  4. **Fin de mois** : un relevé de commissions par transporteur ; le dirigeant règle la plateforme **en espèces ou par virement instantané**. L'admin enregistre le règlement.
+  5. Paiement par carte en ligne **reporté** (formalités administratives) ; l'abstraction `PaymentProvider` reste en place avec l'adaptateur mock.
+- **Modélisation** :
+  - `bookings.payment_method` : `bank_transfer` | `cash_to_driver` (+ `online_card` réservé pour plus tard) ; `payment_status` : `unpaid | paid | partially_refunded | refunded`, indépendant du statut de réservation.
+  - `booking_payments` : paiement **confirmé par le transporteur** (owner, manager ou accountant ; pour les espèces, le chauffeur peut déclarer l'encaissement depuis l'app V2, le transporteur valide).
+  - `commission_ledger` : une ligne `carrier_owes_platform` par réservation payée (le sens `platform_owes_carrier` est conservé pour le futur paiement en ligne).
+  - `commission_statements` (remplace `carrier_settlements`) : relevé mensuel par transporteur, statut `draft | issued | paid | overdue`, règlements enregistrés (`cash | instant_transfer | bank_transfer`, référence, date).
+  - Une réservation terminée dont le paiement n'a pas été confirmé apparaît en alerte chez le transporteur et chez l'admin (risque de commission non déclarée).
+- **Conséquences** :
+  - La plateforme ne reçoit jamais l'argent du voyageur : la question de l'**encaissement pour compte de tiers disparaît** au lancement. Restent À VÉRIFIER : facturation de la commission au transporteur (facture mensuelle de la plateforme, TVA) et plafonds légaux de paiement en espèces.
+  - La politique d'annulation (ADR-004) s'applique au remboursement par le transporteur s'il a déjà reçu un virement ; la commission due suit le prorata.
+  - Risque principal : **commissions non déclarées** ou impayées. Mesures : rapprochement réservations terminées / paiements confirmés, relances automatiques du relevé, suspension marketplace (`marketplace_enabled = false`) si relevé impayé (délai À CONFIRMER, défaut 15 jours).

@@ -39,7 +39,7 @@ erDiagram
   bookings ||--o{ booking_payments : paiements
   bookings ||--o| reviews : avis
   companies ||--o{ company_bank_accounts : RIB
-  companies ||--o{ carrier_settlements : compensations
+  companies ||--o{ commission_statements : relevés
   bookings ||--o{ commission_ledger : dettes
 ```
 
@@ -53,7 +53,7 @@ erDiagram
 | `companies` | `legal_name`, `trade_name`, `ice`, `if_number`, `rc_number`, `tp_number`, `license_number`, `license_expires_on`, `city_id`, `address`, `logo_path`, `status` (`pending|verified|suspended`), `marketplace_enabled`, `commission_rate` nullable, `default_vat_rate` | Membres actifs lisent ; owner/manager modifient (sauf `status`, `commission_rate` : admin uniquement). Vue publique restreinte pour la marketplace |
 | `company_members` | `company_id`, `user_id`, `role` (`owner|manager|dispatcher|accountant|driver`), `is_active` | Membres lisent les membres de leur société ; owner gère |
 | `company_documents` | `company_id`, `type`, `storage_path`, `verification_status`, `expires_on` | Owner/manager + admin |
-| `company_bank_accounts` | `company_id`, `bank_name`, `rib` (24 chiffres), `holder_name`, `is_default` | Owner/accountant + admin ; RIB communiqué au voyageur seulement pour une réservation confirmée, via Server Action (ADR-012) |
+| `company_bank_accounts` | `company_id`, `bank_name`, `rib` (24 chiffres), `holder_name`, `is_default` | Owner/accountant + admin ; RIB communiqué au voyageur seulement pour une réservation confirmée, via Server Action (ADR-016) |
 
 Fonctions SQL de sécurité (`security definer`, `search_path` fixé) : `is_member(company_id)`, `has_role(company_id, roles[])`, `is_platform_admin()` (exige `aal2`), `has_feature(company_id, key)`.
 
@@ -79,7 +79,7 @@ Fonctions SQL de sécurité (`security definer`, `search_path` fixé) : `is_memb
 
 ### Marketplace (Phase 3)
 
-`price_grids`, `bookings` (`public_ref` unique, `traveler_id` nullable, `traveler_email`, `traveler_phone`, `total_cents`, `commission_rate`, `commission_cents`, `carrier_cents`, `cancellation_policy` figée, `status`, `payment_method` `bank_transfer_to_carrier | cash_to_platform | online_card`, `payment_status` `unpaid | paid | partially_refunded | refunded`, `accept_deadline`), `booking_events`, `booking_payments` (`booking_id`, `method`, `amount_cents`, `received_by` transporteur ou plateforme, `confirmed_by`, `confirmed_at`, `reference`, justificatif facultatif ; mouvements négatifs pour les remboursements), `commission_ledger` (`booking_id`, `company_id`, `direction` `carrier_owes_platform | platform_owes_carrier`, `amount_cents`, `settlement_id` nullable), `carrier_settlements` (`company_id`, période, total dû par chaque partie, `net_cents` signé, statut `draft | issued | settled`, référence de virement), `reviews`. Table `payment_transactions` (paiement par carte en ligne) reportée avec CMI.
+`price_grids`, `bookings` (`public_ref` unique, `traveler_id` nullable, `traveler_email`, `traveler_phone`, `total_cents`, `commission_rate`, `commission_cents`, `carrier_cents`, `cancellation_policy` figée, `status`, `payment_method` `bank_transfer | cash_to_driver | online_card`, `payment_status` `unpaid | paid | partially_refunded | refunded`, `accept_deadline`), `booking_events`, `booking_payments` (`booking_id`, `method`, `amount_cents`, `declared_by` (chauffeur ou membre), `confirmed_by`, `confirmed_at`, `reference`, justificatif facultatif ; mouvements négatifs pour les remboursements), `commission_ledger` (`booking_id`, `company_id`, `direction` `carrier_owes_platform | platform_owes_carrier`, `amount_cents`, `statement_id` nullable), `commission_statements` (`company_id`, mois, `total_due_cents`, statut `draft | issued | paid | overdue`, `due_date`), `commission_statement_payments` (`statement_id`, `method` `cash | instant_transfer | bank_transfer`, `amount_cents`, `received_at`, `reference`, `recorded_by` admin), `reviews`. Table `payment_transactions` (carte en ligne) reportée. Voir ADR-016.
 
 Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation par référence + e-mail passe par une Server Action qui vérifie un jeton de lien magique signé et à durée limitée.
 

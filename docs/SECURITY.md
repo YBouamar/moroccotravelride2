@@ -46,9 +46,9 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ Buckets privés `company-documents`, `receipts`, chemins `{company_id}/...`, URL signées courtes (60 s à 5 min).
 - ⬜ Validation MIME réel (magic bytes), extension, taille max 10 Mo ; compression côté client.
 
-### 2.5 Paiements (hors ligne, ADR-012)
+### 2.5 Paiements (hors ligne, ADR-016)
 - ⬜ Aucune donnée de carte (pas de paiement en ligne au lancement).
-- ⬜ Confirmation d'un paiement réservée à l'encaisseur légitime (transporteur membre owner / accountant pour un virement, `platform_admin` pour les espèces), journalisée dans `audit_logs`.
+- ⬜ Confirmation d'un paiement voyageur réservée au transporteur (owner, manager, accountant) ; déclaration d'encaissement espèces par le chauffeur affecté uniquement ; enregistrement des règlements de relevés réservé à `platform_admin` ; tout est journalisé dans `audit_logs`.
 - ⬜ Montants dus (commission, part transporteur) calculés côté serveur depuis les valeurs figées de la réservation, jamais lus depuis le client.
 - ⬜ RIB des transporteurs : accès restreint, affiché au voyageur uniquement pour sa réservation confirmée.
 - ⬜ Le jour où la carte en ligne arrive : vérification de signature des callbacks, idempotence, montant recalculé (exigences d'origine conservées).

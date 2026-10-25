@@ -27,7 +27,7 @@ Stade : MVP, fondateur solo (Yassine). Priorité absolue : **simple à maintenir
 
 ## Stack
 
-pnpm workspaces + Turborepo · Next.js (App Router, TS strict) · Tailwind + shadcn/ui + lucide-react · React Hook Form + Zod · TanStack Query · Supabase (Postgres, Auth, Storage, Realtime, Edge Functions, pg_cron) · Expo + expo-router (app chauffeur) · next-intl / i18next (fr défaut, en, ar RTL) · MapLibre + OSM · Resend + React Email · @react-pdf/renderer · paiement hors ligne (virement au transporteur, espèces à la plateforme) + abstraction `PaymentProvider` pour une future carte en ligne · Turnstile · Upstash · Sentry · Vitest, Playwright, pgTAP · CI locale (`pnpm check`, hook pre-commit), workflow GitHub prêt · **Hébergement : VPS Contabo** (Docker, Supabase auto-hébergé, Next.js standalone, Coolify) · EAS pour les builds mobiles.
+pnpm workspaces + Turborepo · Next.js (App Router, TS strict) · Tailwind + shadcn/ui + lucide-react · React Hook Form + Zod · TanStack Query · Supabase (Postgres, Auth, Storage, Realtime, Edge Functions, pg_cron) · Expo + expo-router (app chauffeur) · next-intl / i18next (fr défaut, en, ar RTL) · MapLibre + OSM · Resend + React Email · @react-pdf/renderer · paiement hors ligne (virement au transporteur ou espèces au chauffeur ; le transporteur reverse la commission chaque mois) + abstraction `PaymentProvider` pour une future carte en ligne · Turnstile · Upstash · Sentry · Vitest, Playwright, pgTAP · CI locale (`pnpm check`, hook pre-commit), workflow GitHub prêt · **Hébergement : VPS Contabo** (Docker, Supabase auto-hébergé, Next.js standalone, Coolify) · EAS pour les builds mobiles.
 
 ## Arborescence (cible)
 

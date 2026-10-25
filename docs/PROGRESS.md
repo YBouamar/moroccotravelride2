@@ -14,7 +14,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | 4 | 1c | Supabase local : migrations identité (profiles, companies, company_members, company_documents, platform_settings, cities, vehicle_types), fonctions de sécurité, RLS + pgTAP, seed de base, types générés | `pnpm db:test` au vert, isolation société A / B prouvée | ⬜ |
 | 5 | 1d | Auth : inscription transporteur (crée société `pending` + owner), connexion, mot de passe oublié, MFA admin, rate limiting, Turnstile, en-têtes de sécurité, sélection de société ; Expo initialisé (écran de connexion, i18n, icône) | **Critère Phase 1** : inscription, connexion, changement de langue avec RTL, isolation prouvée | ⬜ |
 | 6 à 11 | 2 | SaaS Standard en sous-étapes : onboarding + vérification admin ; véhicules / chauffeurs / clients ; trajets + planning + conflits ; facturation (PDF, numérotation, avoirs) + paiements ; abonnements + feature gating | Une semaine d'activité gérée de bout en bout, facture conforme | ⬜ |
-| 12 à 17 | 3 | Marketplace : villes + grilles ; recherche + résultats ; tunnel invité + 24 h ; acceptation + conversion en trajet ; paiement hors ligne (virement, espèces) + registre des commissions + compensation ; e-mails, lien magique, annulation, supervision admin | Casablanca vers Marrakech 800 MAD : 160 / 640 enregistrés, trajet au planning | ⬜ |
+| 12 à 17 | 3 | Marketplace : villes + grilles ; recherche + résultats ; tunnel invité + 24 h ; acceptation + conversion en trajet ; paiement hors ligne (virement, espèces au chauffeur) + registre des commissions + relevé mensuel ; e-mails, lien magique, annulation, supervision admin | Casablanca vers Marrakech 800 MAD : 160 / 640 enregistrés, trajet au planning | ⬜ |
 | 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ⬜ |
 | 22 à 24 | 5 | V3 : entretien et pièces ; échéances + rappels planifiés ; consommation | Rappels J-30, J-7, J-1 sur une assurance | ⬜ |
 | 25 à 27 | 6 | Pilotage : indicateurs ; reversements + exports ; audit consultable, avis et modération | Tableau de bord admin chiffré | ⬜ |
@@ -29,6 +29,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
   - ACTÉ : acceptation sous 2 h (ADR-002), annulation 100 / 50 / 0 % avec partage au prorata (ADR-004), essai 14 jours V2 (ADR-005), TVA paramétrable (ADR-007), conflits de planning bloquants avec dérogation owner / manager (BR-114).
   - Nouveau : paiement hors ligne virement / espèces avec compensation (ADR-012), hébergement VPS Contabo (ADR-013), kit de logos officiel + Montserrat (ADR-014), contrôles qualité sans dépôt distant (ADR-015).
   - Kit de logos rangé dans `assets/brand/logos/` ; fichiers v1 archivés dans `assets/brand/v1/`.
+  - Précisions : le transporteur encaisse dans les deux modes et règle la commission chaque mois (ADR-016, remplace ADR-012) ; Coolify et dépôt privé actés.
   - Docs mises à jour : BUSINESS_RULES (nouvelle machine à états), ARCHITECTURE, DATA_MODEL, UX, SECURITY (§2.9 serveur), RUNBOOK, TESTING, BACKLOG, PROJECT_OVERVIEW, CLAUDE.md.
 
 ## 3. En cours
@@ -38,21 +39,17 @@ Rien. Attente du feu vert pour l'étape 2.
 ## 4. Bloqué / points d'attention
 
 - `pnpm` et le CLI Supabase ne sont pas installés sur le poste (installés au début de l'étape 2, avec ton accord).
-- Pas de dépôt distant : le code n'existe que sur ce poste (ADR-015).
-- Juridique À VÉRIFIER : encaissement d'espèces pour le compte des transporteurs, mentions de facture, TVA, CNDP.
+- Pas encore de dépôt distant : création d'un dépôt privé GitHub prévue à la fin de la Phase 1 (ADR-015).
+- Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
 
-Réglées le 2026-10-25 : Q1 (dossier produit : document reconstitué, à relire), Q2 (paiement, précisions en Q11 à Q14), Q3, Q4, Q5 (VPS Contabo), Q6 (pas de domaine), Q7 (pas de dépôt), Q8 (kit fourni ; police identifiée : Montserrat), Q9, Q10.
+Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au chauffeur puis au dirigeant, commission réglée chaque mois en espèces ou virement instantané (ADR-016) ; virement avant le trajet ; carte en ligne reportée ; relevé mensuel ; Coolify ; dépôt privé.
 
 | # | Question | Défaut appliqué si pas de réponse |
 |---|---|---|
-| Q11 | **Espèces** : concrètement, à qui le voyageur remet-il l'argent ? Au chauffeur (qui le reverse ensuite à la plateforme ?), à un agent de la plateforme, ou en agence ? | Remis le jour du trajet, confirmé par l'admin à réception |
-| Q12 | **Virement** : doit-il être reçu avant le trajet (si oui, combien de temps avant), ou peut-il être fait après ? Que se passe-t-il s'il n'arrive pas ? | Avant la prise en charge ; sinon le transporteur peut annuler |
-| Q13 | **Carte bancaire en ligne** : abandonnée, ou seulement reportée ? | Reportée (abstraction conservée, CMI au backlog P1) |
-| Q14 | **Compensation** : relevé net mensuel par transporteur (80 % des espèces moins 20 % des virements), avec virement ou facture du solde ? | Mensuelle |
-| Q15 | **Déploiement sur le VPS** : d'accord pour Coolify (interface web, HTTPS et sauvegardes automatiques), ou préfères-tu docker compose géré à la main ? | Coolify |
-| Q16 | **Dépôt git distant** : d'accord pour créer un dépôt privé (GitHub ou GitLab) avant la Phase 2 ? Il sert aussi de sauvegarde du code. | Rappel à la fin de la Phase 1 |
+| Q17 | Relevé de commissions impayé : au bout de combien de jours suspendre la visibilité du transporteur sur la marketplace ? | 15 jours après l'échéance (BR-009d) |
+| Q18 | Dépôt privé : GitHub ou GitLab ? Il faudra un compte (je ne peux pas le créer à ta place) ; ensuite je configure le dépôt et le premier push. | GitHub, à la fin de la Phase 1 |
 
 ## 6. Prochaine étape précise
 

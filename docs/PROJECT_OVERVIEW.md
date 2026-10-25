@@ -53,7 +53,7 @@ Chiffres de marché (taille, nombre de transporteurs agréés, flux touristiques
 - MVP porté par un fondateur solo : code simple, pas de microservices, briques open source éprouvées (Supabase, Coolify) pour limiter l'exploitation.
 - Trois langues dès le départ : français (défaut), anglais, arabe (RTL).
 - Conformité loi marocaine 09-08 (CNDP) pour les données personnelles.
-- Paiement hors ligne au lancement : virement sur le compte du transporteur (qui doit 20 % à la plateforme) ou espèces à la plateforme (qui doit 80 % au transporteur), avec compensation périodique (ADR-012). Carte en ligne (CMI) reportée.
+- Paiement hors ligne au lancement : virement au transporteur avant le trajet ou espèces au chauffeur ; le transporteur encaisse 100 % et règle chaque mois la commission de la plateforme en espèces ou par virement instantané (ADR-016). Carte en ligne reportée (formalités administratives).
 - Hébergement sur un VPS Contabo, Supabase auto-hébergé (ADR-013).
 
 ## 6. Identité de marque
