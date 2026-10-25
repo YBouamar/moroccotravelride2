@@ -35,3 +35,6 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Pagination de la liste des sociétés et de l'historique (quelques dizaines de lignes aujourd'hui) |
 | P2 | Factures d'abonnement générées automatiquement (PDF) et relances : avec la facturation (étape 10) |
 | P3 | Relecture des traductions arabes par un locuteur natif |
+| P2 | Compression des photos de documents côté client avant envoi (SECURITY 2.4) |
+| P2 | Rappels d'expiration de l'agrément et des documents de la société (avec les échéances, Phase 5) |
+| P3 | Données de test E2E qui s'accumulent en local : `pnpm db:reset` de temps en temps |

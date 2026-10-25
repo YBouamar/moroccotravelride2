@@ -68,6 +68,15 @@ Statut de paiement : `unpaid -> paid -> partially_refunded | refunded`. Chaque t
 | BR-114 | Conflits de planning | Blocage (dérogeable par owner ou manager) si chauffeur ou véhicule déjà occupé sur un créneau qui se chevauche, ou si passagers > places | ACTÉ : bloquant, dérogation par owner ou manager (journalisée) | Yassine 2026-10-25 |
 | BR-115 | Statuts dépense | `submitted -> approved | rejected` | ACTÉ | Prompt §6 |
 
+### Onboarding et flotte (étape 7)
+
+| ID | Règle | Valeur | Statut | Source |
+|---|---|---|---|---|
+| BR-120 | Dossier de vérification | Raison sociale, ICE (15 chiffres), IF, RC, adresse, ville, n° et expiration de l'agrément, agrément déposé ; TP facultative | À CONFIRMER (Q24) | ADR-023 |
+| BR-121 | Dates expirées | Agrément et permis de conduire déjà expirés refusés à la saisie | À CONFIRMER (Q24) | ADR-023 |
+| BR-122 | Immatriculation | Unique par société, normalisée (majuscules, espaces simples) | ACTÉ | ADR-023 |
+| BR-123 | Documents refusés | Motif obligatoire, visible par le transporteur qui dépose un nouveau document | ACTÉ | ADR-023 |
+
 ## 3. App chauffeur et localisation
 
 | ID | Règle | Valeur | Statut |

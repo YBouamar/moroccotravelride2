@@ -127,6 +127,8 @@ Rayons : 12 px pour les cartes et boutons (cohérent avec les angles arrondis de
 | CGU (contenu à rédiger) | `/[locale]/legal/terms` | Emplacement, À VALIDER | 5 |
 | App chauffeur : connexion, « Aujourd'hui » (vide) | Expo | Squelette | 5 |
 | Abonnement : offre actuelle, comparaison des 3 offres, modalités de paiement ; sections verrouillées avec l'offre requise | `/[locale]/app/subscription` | Fait | 6 |
+| Onboarding : vue d'ensemble (4 étapes, avancement), profil société, documents (dépôt, statut, motif de refus), premier véhicule (capacité suggérée selon le type), premier chauffeur (langues) ; carte de rappel sur le tableau de bord | `/[locale]/app/onboarding/*` | Fait | 7 |
+| Admin : documents d'une société (consulter, approuver, refuser avec motif) | `/[locale]/admin/companies/[id]` | Fait | 7 |
 | Admin : paramètres (coordonnées de paiement des abonnements, délai de grâce) | `/[locale]/admin/settings` | Fait | 6 |
 | Admin : vue d'ensemble chiffrée, liste des sociétés (filtre statut), fiche société (vérification, marketplace, commission, abonnement, historique) | `/[locale]/admin`, `/admin/companies`, `/admin/companies/[id]` | Fait | 6 |
 

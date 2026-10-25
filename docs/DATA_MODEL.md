@@ -75,7 +75,7 @@ Implémentation (étape 4) :
 
 ### SaaS Standard (Phase 2)
 
-`vehicles`, `drivers`, `clients`, `trips`, `invoices`, `invoice_lines`, `credit_notes`, `invoice_sequences` (`company_id`, `year`, `last_number`, verrouillage `for update` pour la numérotation sans trou), `payments`. Toutes portent `company_id` ; politiques par rôle selon la matrice de [SECURITY.md](SECURITY.md). Factures `issued` : trigger interdisant `update` des champs financiers et tout `delete`.
+**Implémentés (étape 7)** : `vehicles` (`registration` normalisée et unique par société, `brand`, `model`, `vehicle_type_code`, `seats`, `luggage_capacity`, `year`, `status` `active|maintenance|inactive`), `drivers` (`user_id` facultatif, `full_name`, `phone`, permis et carte professionnelle avec dates d'expiration, `languages`, `status`). À venir : `clients`, `trips`, `invoices`, `invoice_lines`, `credit_notes`, `invoice_sequences` (`company_id`, `year`, `last_number`, verrouillage `for update` pour la numérotation sans trou), `payments`. Toutes portent `company_id` ; politiques par rôle selon la matrice de [SECURITY.md](SECURITY.md). Factures `issued` : trigger interdisant `update` des champs financiers et tout `delete`.
 
 ### SaaS V2 (Phase 4)
 
@@ -107,6 +107,7 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261026100000_subscriptions.sql` | offres, fonctions par offre, abonnements, essai automatique, `has_feature` | 2 (étape 6) |
 | `20261026100100_audit_logs.sql` | journal d'audit et triggers | 2 (étape 6) |
 | `20261026100200_audit_ignore_unchanged_nulls.sql` | correctif : colonnes restées vides ignorées à la création | 2 (étape 6) |
+| `20261026120000_fleet_drivers_documents.sql` | véhicules, chauffeurs, bucket privé `company-documents` et ses politiques, audit des dépôts | 2 (étape 7) |
 | `20261026110000_subscription_access_rules.sql` | lecture seule (Q21), délai de grâce et résiliation planifiée (Q22, pg_cron), coordonnées de paiement (Q23) | 2 (étape 6) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (77 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (92 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

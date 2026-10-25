@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 6 terminée, en attente de validation · **Prochaine étape** : Étape 7 (onboarding transporteur et documents)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 7 terminée, en attente de validation · **Prochaine étape** : Étape 8 (véhicules, chauffeurs, clients)
 
 ## 1. Plan d'exécution par étapes
 
@@ -45,9 +45,11 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 
 - 2026-10-26 : réponses Q21 à Q23 intégrées : lecture seule après expiration, 15 jours de grâce puis résiliation automatique (pg_cron), page Paramètres admin pour les coordonnées de paiement affichées aux transporteurs (ADR-022). 124 tests unitaires, 77 pgTAP, 38 E2E.
 
+- 2026-10-26, étape 7 : véhicules et chauffeurs (RLS lecture / écriture), bucket privé des documents, assistant d'onboarding en 4 étapes, détection du type réel des fichiers, validation des documents par l'admin (lien signé, refus motivé). 140 tests unitaires, 92 pgTAP, 41 E2E (ADR-023).
+
 ## 3. En cours
 
-Rien. Attente du feu vert pour l'étape 7.
+Rien. Attente de validation de l'étape 7.
 
 ## 4. Bloqué / points d'attention
 
@@ -58,7 +60,11 @@ Rien. Attente du feu vert pour l'étape 7.
 
 Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au chauffeur puis au dirigeant, commission réglée chaque mois en espèces ou virement instantané (ADR-016) ; virement avant le trajet ; carte en ligne reportée ; relevé mensuel ; Coolify ; dépôt privé.
 
-Q17 à Q23 réglées. **Aucune question ouverte.**
+Q17 à Q23 réglées.
+
+| # | Question | Défaut appliqué si pas de réponse |
+|---|---|---|
+| Q24 | Pour la vérification d'une société : ICE, IF, RC, adresse, ville et agrément (numéro, date, document) sont obligatoires, la taxe professionnelle facultative. Est-ce correct ? Et refuse-t-on un agrément ou un permis de conduire déjà expiré à la saisie ? | Oui aux deux |
 
 Action côté Yassine : saisir les vraies coordonnées de paiement (RIB, e-mail, téléphone) dans Admin > Paramètres.
 
@@ -75,7 +81,7 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 | Étape | Contenu |
 |---|---|
 | 6 ✅ | Abonnements et feature gating (`plans`, `plan_features`, `subscriptions`, essai 14 jours V2, `has_feature`, `<FeatureGate>`), journal d'audit, vérification des sociétés par l'admin (liste, documents, valider / suspendre) |
-| 7 | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
+| 7 ✅ | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
 | 8 | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
 | 9 | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
 | 10 | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |

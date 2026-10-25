@@ -47,8 +47,8 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ CSRF natif des Server Actions conservé ; contrôle `Origin` sur route handlers sensibles.
 
 ### 2.4 Fichiers
-- ⬜ Buckets privés `company-documents`, `receipts`, chemins `{company_id}/...`, URL signées courtes (60 s à 5 min).
-- ⬜ Validation MIME réel (magic bytes), extension, taille max 10 Mo ; compression côté client.
+- ✅ Bucket privé `company-documents`, chemins `{company_id}/...` imposés par les politiques Storage (testé), liens signés de 5 minutes pour l'admin. Bucket `receipts` : Phase 4.
+- ✅ Type réel détecté par les premiers octets, taille 10 Mo vérifiée côté serveur (et par le bucket), 20 dépôts par heure et par utilisateur. ⬜ Compression des images côté client (backlog).
 
 ### 2.5 Paiements (hors ligne, ADR-016)
 - ⬜ Aucune donnée de carte (pas de paiement en ligne au lancement).

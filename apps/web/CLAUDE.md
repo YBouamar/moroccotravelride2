@@ -29,6 +29,8 @@
 - `packages/ui/theme.css` est généré : ne jamais l'éditer, lancer `pnpm --filter @mtr/ui gen:css`.
 - Les logos de `public/brand/` et les icônes de `src/app/` sont des copies ignorées par git (`pnpm brand`).
 - Nouvelle chaîne visible : l'ajouter dans les **trois** fichiers de `src/messages/` (un test le vérifie).
+- Écritures SaaS : passer par `getCompanyContext()` / `getOfficeContext()` (société déduite de l'appartenance), vérifier `canWrite` pour un message clair ; la RLS reste la garde.
+- Fichiers : Server Action + `detectDocumentType` (premiers octets) ; limites `serverActions.bodySizeLimit` et `proxyClientMaxBodySize` dans `next.config.ts`.
 - Formulaires publics : Turnstile + `consumeRateLimit` dans la Server Action ; le jeton Turnstile est à usage unique (remonter le widget après une erreur, `useAuthForm`).
 - `redirect()` dans une Server Action doit rester hors d'un `try` (il lève une exception de navigation).
 - `getByRole('alert')` en E2E : Next.js a son propre `role=alert` (annonceur de route), filtrer par texte.
