@@ -26,6 +26,11 @@ Voir ADR-012 à ADR-015.
 - Carte en ligne reportée (formalités), relevé mensuel, Coolify et dépôt privé actés.
 - Nouvelles questions mineures : Q17 (délai de suspension pour relevé impayé), Q18 (GitHub ou GitLab).
 
+## Complément (Q17, Q18)
+
+- Q17 : suspension marketplace 15 jours après l'échéance d'un relevé impayé (BR-009d ACTÉ).
+- Q18 : GitHub. Aucun MCP GitHub n'était installé. Le serveur officiel (`https://api.githubcopilot.com/mcp/`) refuse l'OAuth automatique de Claude Code (pas d'enregistrement dynamique de client) : il faut un jeton personnel, saisi par Yassine lui-même. Commande : `claude mcp add --transport http --scope user github https://api.githubcopilot.com/mcp/ --header "Authorization: Bearer <JETON>"`. Le push utilisera Git Credential Manager (déjà installé).
+
 ## Prochaine étape
 
 Étape 2 (Phase 1a, socle monorepo), sur feu vert de Yassine.

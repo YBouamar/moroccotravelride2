@@ -39,17 +39,16 @@ Rien. Attente du feu vert pour l'étape 2.
 ## 4. Bloqué / points d'attention
 
 - `pnpm` et le CLI Supabase ne sont pas installés sur le poste (installés au début de l'étape 2, avec ton accord).
-- Pas encore de dépôt distant : création d'un dépôt privé GitHub prévue à la fin de la Phase 1 (ADR-015).
+- Pas encore de dépôt distant : dépôt privé GitHub à créer dès que le MCP GitHub est connecté (ADR-015).
 - Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
 
 Réglées le 2026-10-25 : Q1 à Q16. Dernières réponses : espèces remises au chauffeur puis au dirigeant, commission réglée chaque mois en espèces ou virement instantané (ADR-016) ; virement avant le trajet ; carte en ligne reportée ; relevé mensuel ; Coolify ; dépôt privé.
 
-| # | Question | Défaut appliqué si pas de réponse |
-|---|---|---|
-| Q17 | Relevé de commissions impayé : au bout de combien de jours suspendre la visibilité du transporteur sur la marketplace ? | 15 jours après l'échéance (BR-009d) |
-| Q18 | Dépôt privé : GitHub ou GitLab ? Il faudra un compte (je ne peux pas le créer à ta place) ; ensuite je configure le dépôt et le premier push. | GitHub, à la fin de la Phase 1 |
+Q17 (suspension 15 jours après l'échéance) et Q18 (GitHub) réglées. **Aucune question ouverte.**
+
+Action en attente côté Yassine : créer un jeton GitHub et enregistrer le serveur MCP GitHub (commande dans le journal du 2026-10-25), puis redémarrer Claude Code.
 
 ## 6. Prochaine étape précise
 

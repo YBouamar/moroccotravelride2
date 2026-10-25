@@ -125,7 +125,7 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 
 ## ADR-015 : Contrôles qualité sans dépôt GitHub distant
 
-- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (Yassine, 2026-10-25) : dépôt privé créé avant la Phase 2 (GitHub par défaut, le workflow CI étant écrit pour GitHub Actions)
+- **Date** : 2026-10-25 · **Statut** : ACCEPTÉE (Yassine, 2026-10-25) : dépôt privé **GitHub** (confirmé), créé avant la Phase 2 ; accès de Claude via le serveur MCP GitHub (jeton personnel saisi par Yassine) et push via Git Credential Manager
 - **Contexte** : pas de dépôt GitHub pour l'instant, donc pas de GitHub Actions.
 - **Décision par défaut** : le workflow CI est écrit dès l'étape 2 (prêt à servir), et les mêmes contrôles tournent en local : script `pnpm check` (lint, typecheck, tests, build) et hook pre-commit (gitleaks, lint des fichiers modifiés).
 - **Recommandation** : créer un dépôt **privé** (GitHub ou GitLab, gratuit) avant la Phase 2. Il sert aussi de **sauvegarde hors site du code**, aujourd'hui présent sur un seul poste, et Coolify peut déployer directement depuis ce dépôt.
@@ -149,4 +149,4 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Conséquences** :
   - La plateforme ne reçoit jamais l'argent du voyageur : la question de l'**encaissement pour compte de tiers disparaît** au lancement. Restent À VÉRIFIER : facturation de la commission au transporteur (facture mensuelle de la plateforme, TVA) et plafonds légaux de paiement en espèces.
   - La politique d'annulation (ADR-004) s'applique au remboursement par le transporteur s'il a déjà reçu un virement ; la commission due suit le prorata.
-  - Risque principal : **commissions non déclarées** ou impayées. Mesures : rapprochement réservations terminées / paiements confirmés, relances automatiques du relevé, suspension marketplace (`marketplace_enabled = false`) si relevé impayé (délai À CONFIRMER, défaut 15 jours).
+  - Risque principal : **commissions non déclarées** ou impayées. Mesures : rapprochement réservations terminées / paiements confirmés, relances automatiques du relevé, suspension marketplace (`marketplace_enabled = false`) si relevé impayé (15 jours après l'échéance, paramétrable, validé par Yassine le 2026-10-25).
