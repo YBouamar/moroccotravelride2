@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "name": "MoroccoTravelRide",
+    "tagline": "Move smarter. Manage better."
+  },
+  "language": {
+    "label": "Language",
+    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+  },
+  "login": {
+    "title": "Driver area",
+    "subtitle": "Sign in with the account created by your company.",
+    "email": "E-mail address",
+    "password": "Password",
+    "submit": "Sign in",
+    "errors": {
+      "invalid": "Enter your e-mail address and password.",
+      "credentials": "Incorrect e-mail address or password.",
+      "notDriver": "This account is not an active driver account.",
+      "rateLimited": "Too many attempts. Try again in a few minutes.",
+      "unknown": "Something went wrong. Check your connection and try again."
+    }
+  },
+  "today": {
+    "title": "Today",
+    "greeting": "Hello {{name}}",
+    "empty": "Your trips for today will appear here.",
+    "signOut": "Sign out"
+  }
+}

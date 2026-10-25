@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "name": "MoroccoTravelRide",
+    "tagline": "Move smarter. Manage better."
+  },
+  "language": {
+    "label": "اللغة",
+    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+  },
+  "login": {
+    "title": "فضاء السائق",
+    "subtitle": "سجل الدخول بالحساب الذي أنشأته شركتك.",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "errors": {
+      "invalid": "أدخل بريدك الإلكتروني وكلمة المرور.",
+      "credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+      "notDriver": "هذا الحساب ليس حساب سائق نشط.",
+      "rateLimited": "محاولات كثيرة جدا. حاول مرة أخرى بعد بضع دقائق.",
+      "unknown": "حدث خطأ. تحقق من اتصالك وحاول مرة أخرى."
+    }
+  },
+  "today": {
+    "title": "اليوم",
+    "greeting": "مرحبا {{name}}",
+    "empty": "ستظهر هنا رحلاتك لهذا اليوم.",
+    "signOut": "تسجيل الخروج"
+  }
+}

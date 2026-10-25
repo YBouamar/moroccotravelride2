@@ -5,3 +5,13 @@ allowBuilds:
   '@parcel/watcher': false
   '@swc/core': false
   unrs-resolver: false
+minimumReleaseAgeExclude:
+  - i18next@26.5.11
+  - react-i18next@17.1.9
+# Security (ADR-020): one patched zod everywhere (@expo/cli otherwise pulls a vulnerable 3.x).
+overrides:
+  zod: 4.6.7
+auditConfig:
+  # node-forge (dev-only, via @expo/cli code signing, unused): no patched version exists yet.
+  ignoreGhsas:
+    - GHSA-86w9-cpqp-85rv

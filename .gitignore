@@ -46,3 +46,7 @@ apps/web/public/brand/
 apps/web/src/app/favicon.ico
 apps/web/src/app/icon.png
 apps/web/src/app/apple-icon.png
+
+# expo generated
+apps/driver/expo-env.d.ts
+apps/driver/dist/

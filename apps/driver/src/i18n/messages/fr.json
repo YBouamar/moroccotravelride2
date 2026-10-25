@@ -1,0 +1,30 @@
+{
+  "brand": {
+    "name": "MoroccoTravelRide",
+    "tagline": "Move smarter. Manage better."
+  },
+  "language": {
+    "label": "Langue",
+    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+  },
+  "login": {
+    "title": "Espace chauffeur",
+    "subtitle": "Connectez-vous avec le compte créé par votre société.",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "errors": {
+      "invalid": "Saisissez votre adresse e-mail et votre mot de passe.",
+      "credentials": "Adresse e-mail ou mot de passe incorrect.",
+      "notDriver": "Ce compte n'est pas un compte chauffeur actif.",
+      "rateLimited": "Trop de tentatives. Réessayez dans quelques minutes.",
+      "unknown": "Une erreur est survenue. Vérifiez votre connexion et réessayez."
+    }
+  },
+  "today": {
+    "title": "Aujourd'hui",
+    "greeting": "Bonjour {{name}}",
+    "empty": "Vos trajets du jour apparaîtront ici.",
+    "signOut": "Se déconnecter"
+  }
+}
