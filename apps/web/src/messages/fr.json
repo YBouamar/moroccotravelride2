@@ -152,7 +152,13 @@
       "reopenConfirm": "La société repassera en attente de vérification.",
       "liftConfirm": "La société pourra de nouveau apparaître sur la marketplace.",
       "suspendMarketplaceConfirm": "La société sera masquée de la marketplace jusqu'à la levée de la suspension. Motif : {reason}",
-      "memberInactive": "inactif"
+      "memberInactive": "inactif",
+      "view": "Voir",
+      "approve": "Approuver",
+      "reject": "Refuser",
+      "rejectReason": "Motif du refus",
+      "approveConfirm": "Le document sera marqué comme approuvé.",
+      "rejectConfirm": "Le transporteur verra le motif du refus et pourra déposer un nouveau document."
     },
     "confirm": {
       "title": "Confirmer cette action ?",
@@ -262,7 +268,13 @@
     "acceptTerms": "Vous devez accepter les conditions générales.",
     "mfaCode": "Saisissez les 6 chiffres.",
     "rib": "Le RIB doit comporter 24 chiffres.",
-    "phone": "Numéro de téléphone invalide."
+    "phone": "Numéro de téléphone invalide.",
+    "ice": "L'ICE comporte 15 chiffres.",
+    "date": "Date invalide.",
+    "expired": "Cette date est déjà passée.",
+    "registration": "Immatriculation invalide.",
+    "seats": "Entre 1 et 80 places.",
+    "year": "Année invalide."
   },
   "company": {
     "pending": {
@@ -355,7 +367,8 @@
       "delete": "Membre retiré"
     },
     "document": {
-      "update": "Document vérifié"
+      "update": "Document vérifié",
+      "insert": "Document déposé"
     },
     "fields": {
       "status": "Statut",
@@ -372,7 +385,8 @@
       "role": "Rôle",
       "is_active": "Actif",
       "verification_status": "Vérification",
-      "rejection_reason": "Motif de refus"
+      "rejection_reason": "Motif de refus",
+      "type": "Type"
     }
   },
   "roles": {
@@ -396,5 +410,111 @@
   "common": {
     "yes": "Oui",
     "no": "Non"
+  },
+  "onboarding": {
+    "title": "Configurer votre espace",
+    "intro": "Quatre étapes pour que notre équipe puisse vérifier votre société.",
+    "progress": "{done} sur {total} étapes terminées",
+    "steps": {
+      "company": {
+        "title": "Informations de la société",
+        "text": "Identifiants légaux, adresse et agrément de transport touristique."
+      },
+      "documents": {
+        "title": "Agrément et documents",
+        "text": "Déposez votre agrément (obligatoire) et votre attestation d'assurance."
+      },
+      "vehicle": {
+        "title": "Premier véhicule",
+        "text": "Ajoutez un véhicule de votre flotte."
+      },
+      "driver": {
+        "title": "Premier chauffeur",
+        "text": "Ajoutez un chauffeur de votre équipe."
+      }
+    },
+    "stepOf": "Étape {current} sur {total}",
+    "done": "Terminé",
+    "todo": "À faire",
+    "start": "Commencer",
+    "edit": "Modifier",
+    "save": "Enregistrer et continuer",
+    "back": "Retour à la configuration",
+    "completedTitle": "Configuration terminée",
+    "completedText": "Votre dossier est complet. Notre équipe va le vérifier ; le statut de votre société s'affichera dans votre espace.",
+    "dashboardTitle": "Terminez la configuration de votre espace",
+    "dashboardAction": "Continuer la configuration",
+    "officeOnly": "Seuls le propriétaire et le gérant peuvent configurer l'espace.",
+    "errors": {
+      "invalid": "Certains champs sont invalides.",
+      "forbidden": "Action réservée au propriétaire et au gérant.",
+      "readOnly": "Votre espace est en lecture seule : activez une offre pour continuer.",
+      "duplicate": "Ce véhicule est déjà enregistré.",
+      "fileMissing": "Choisissez un fichier.",
+      "fileType": "Format non accepté : PDF, JPEG, PNG ou WEBP uniquement.",
+      "fileSize": "Le fichier dépasse 10 Mo.",
+      "rateLimited": "Trop de dépôts. Réessayez dans quelques minutes.",
+      "unknown": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "companyForm": {
+    "legalName": "Raison sociale",
+    "tradeName": "Nom commercial (facultatif)",
+    "ice": "ICE",
+    "iceHint": "Identifiant Commun de l'Entreprise, 15 chiffres.",
+    "ifNumber": "Identifiant fiscal (IF)",
+    "rcNumber": "Registre de commerce (RC)",
+    "tpNumber": "Taxe professionnelle (facultatif)",
+    "address": "Adresse du siège",
+    "city": "Ville",
+    "cityPlaceholder": "Choisissez une ville",
+    "licenseNumber": "Numéro d'agrément de transport touristique",
+    "licenseExpiresOn": "Date d'expiration de l'agrément"
+  },
+  "documentsForm": {
+    "type": "Type de document",
+    "file": "Fichier",
+    "fileHint": "PDF, JPEG, PNG ou WEBP, 10 Mo maximum.",
+    "expiresOn": "Date d'expiration (facultatif)",
+    "upload": "Déposer le document",
+    "uploaded": "Documents déposés",
+    "none": "Aucun document déposé.",
+    "licenseRequired": "L'agrément de transport touristique est obligatoire pour la vérification.",
+    "rejected": "Refusé : {reason}",
+    "uploadedOn": "Déposé le {date}",
+    "expires": "Expire le {date}",
+    "delete": "Supprimer",
+    "deleteConfirm": "Le document et son fichier seront supprimés définitivement."
+  },
+  "vehicleForm": {
+    "registration": "Immatriculation",
+    "registrationHint": "Par exemple 12345-A-6.",
+    "brand": "Marque",
+    "model": "Modèle",
+    "type": "Type de véhicule",
+    "typePlaceholder": "Choisissez un type",
+    "seats": "Places passagers",
+    "luggage": "Bagages (nombre de valises, facultatif)",
+    "year": "Année (facultatif)",
+    "existing": "Véhicules enregistrés"
+  },
+  "driverForm": {
+    "fullName": "Nom complet",
+    "phone": "Téléphone",
+    "licenseNumber": "Numéro de permis de conduire",
+    "licenseExpiresOn": "Date d'expiration du permis",
+    "cardNumber": "Carte professionnelle (facultatif)",
+    "cardExpiresOn": "Expiration de la carte professionnelle (facultatif)",
+    "languages": "Langues parlées",
+    "existing": "Chauffeurs enregistrés"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais",
+    "ar": "Arabe",
+    "es": "Espagnol",
+    "de": "Allemand",
+    "it": "Italien",
+    "zgh": "Amazigh"
   }
 }

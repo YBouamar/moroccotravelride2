@@ -5,3 +5,6 @@ export * from './permissions';
 export * from './platform-settings';
 export * from './auth-schemas';
 export * from './subscriptions';
+export * from './company-schemas';
+export * from './documents';
+export * from './onboarding';

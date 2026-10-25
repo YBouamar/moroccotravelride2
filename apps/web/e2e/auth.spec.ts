@@ -87,6 +87,7 @@ test('the sign-up form explains what is wrong', async ({ page }) => {
 });
 
 test('a user resets a forgotten password from the e-mail link', async ({ page, baseURL }) => {
+  test.setTimeout(90_000); // sign-up, two e-mails, reset and sign-in again
   // Fresh account so the demo passwords never change.
   const email = `reset-${Date.now()}@moroccotravelride.test`;
   await page.goto('/fr/signup');

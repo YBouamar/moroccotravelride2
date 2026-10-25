@@ -7,6 +7,7 @@ test.describe.configure({ mode: 'serial' });
 test('a platform admin enrolls MFA, verifies a company and manages its subscription', async ({
   page,
 }) => {
+  test.setTimeout(90_000); // long journey: MFA, verification, commission, subscription, history
   // Dedicated company so the demo data is never modified by tests.
   const name = `E2E Admin ${Date.now()} SARL`;
   const companyId = sql(
@@ -15,7 +16,7 @@ test('a platform admin enrolls MFA, verifies a company and manages its subscript
 
   await signInAsAdmin(page);
   await expect(page.getByRole('heading', { name: "Vue d'ensemble" })).toBeVisible();
-  await expect(page.getByRole('link', { name })).toBeVisible();
+  // (The overview lists the 5 oldest pending companies; test runs leave many behind.)
 
   // Company list filtered on pending companies.
   await page.getByRole('link', { name: 'Sociétés', exact: true }).click();
@@ -100,4 +101,37 @@ test('the admin fills in the payment details shown to carriers (Q23)', async ({ 
     );
     await admin.close();
   }
+});
+
+test('the admin approves and rejects company documents', async ({ page }) => {
+  test.setTimeout(90_000); // may wait for the next TOTP window
+  const name = `E2E Documents ${Date.now()} SARL`;
+  const companyId = sql(
+    `insert into public.companies (legal_name) values ('${name}') returning id`,
+  ).split('\n')[0]!;
+  // Fixtures: two pending documents (database rows; the files are not needed to review them).
+  for (const type of ['tourism_license', 'insurance']) {
+    sql(
+      `insert into public.company_documents (company_id, type, storage_path) values ('${companyId}', '${type}', '${companyId}/${type}.pdf')`,
+    );
+  }
+
+  await signInAsAdmin(page);
+  await page.goto(`/fr/admin/companies/${companyId}`);
+
+  await page.getByRole('button', { name: 'Approuver' }).first().click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirmer' }).click();
+  await expect(page.getByText('Modifications enregistrées.')).toBeVisible();
+
+  await page.getByLabel('Motif du refus').last().fill('Attestation illisible');
+  await page.getByRole('button', { name: 'Refuser' }).last().click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirmer' }).click();
+  await expect(page.getByText('Modifications enregistrées.').last()).toBeVisible();
+
+  expect(
+    sql(
+      `select string_agg(type || ':' || verification_status || ':' || coalesce(rejection_reason, ''), ',' order by type) from public.company_documents where company_id = '${companyId}'`,
+    ),
+    // Newest first in the list: the insurance (approved) comes before the license (rejected).
+  ).toBe('tourism_license:rejected:Attestation illisible,insurance:approved:');
 });

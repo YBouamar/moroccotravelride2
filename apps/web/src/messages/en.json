@@ -152,7 +152,13 @@
       "reopenConfirm": "The company goes back to awaiting verification.",
       "liftConfirm": "The company can appear on the marketplace again.",
       "suspendMarketplaceConfirm": "The company will be hidden from the marketplace until the suspension is lifted. Reason: {reason}",
-      "memberInactive": "inactive"
+      "memberInactive": "inactive",
+      "view": "View",
+      "approve": "Approve",
+      "reject": "Reject",
+      "rejectReason": "Rejection reason",
+      "approveConfirm": "The document will be marked as approved.",
+      "rejectConfirm": "The carrier will see the reason and can upload a new document."
     },
     "confirm": {
       "title": "Confirm this action?",
@@ -262,7 +268,13 @@
     "acceptTerms": "You must accept the terms of use.",
     "mfaCode": "Enter the 6 digits.",
     "rib": "The RIB must have 24 digits.",
-    "phone": "Invalid phone number."
+    "phone": "Invalid phone number.",
+    "ice": "The ICE has 15 digits.",
+    "date": "Invalid date.",
+    "expired": "This date has already passed.",
+    "registration": "Invalid registration.",
+    "seats": "Between 1 and 80 seats.",
+    "year": "Invalid year."
   },
   "company": {
     "pending": {
@@ -355,7 +367,8 @@
       "delete": "Member removed"
     },
     "document": {
-      "update": "Document reviewed"
+      "update": "Document reviewed",
+      "insert": "Document uploaded"
     },
     "fields": {
       "status": "Status",
@@ -372,7 +385,8 @@
       "role": "Role",
       "is_active": "Active",
       "verification_status": "Verification",
-      "rejection_reason": "Rejection reason"
+      "rejection_reason": "Rejection reason",
+      "type": "Type"
     }
   },
   "roles": {
@@ -396,5 +410,111 @@
   "common": {
     "yes": "Yes",
     "no": "No"
+  },
+  "onboarding": {
+    "title": "Set up your workspace",
+    "intro": "Four steps so our team can verify your company.",
+    "progress": "{done} of {total} steps done",
+    "steps": {
+      "company": {
+        "title": "Company details",
+        "text": "Legal identifiers, address and tourist transport license."
+      },
+      "documents": {
+        "title": "License and documents",
+        "text": "Upload your license (required) and your insurance certificate."
+      },
+      "vehicle": {
+        "title": "First vehicle",
+        "text": "Add a vehicle of your fleet."
+      },
+      "driver": {
+        "title": "First driver",
+        "text": "Add a driver of your team."
+      }
+    },
+    "stepOf": "Step {current} of {total}",
+    "done": "Done",
+    "todo": "To do",
+    "start": "Start",
+    "edit": "Edit",
+    "save": "Save and continue",
+    "back": "Back to setup",
+    "completedTitle": "Setup complete",
+    "completedText": "Your file is complete. Our team will verify it; your company status will show in your workspace.",
+    "dashboardTitle": "Finish setting up your workspace",
+    "dashboardAction": "Continue setup",
+    "officeOnly": "Only the owner and the manager can set up the workspace.",
+    "errors": {
+      "invalid": "Some fields are invalid.",
+      "forbidden": "Only the owner and the manager can do this.",
+      "readOnly": "Your workspace is read-only: activate a plan to continue.",
+      "duplicate": "This vehicle is already registered.",
+      "fileMissing": "Choose a file.",
+      "fileType": "Format not accepted: PDF, JPEG, PNG or WEBP only.",
+      "fileSize": "The file is larger than 10 MB.",
+      "rateLimited": "Too many uploads. Try again in a few minutes.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "companyForm": {
+    "legalName": "Legal name",
+    "tradeName": "Trade name (optional)",
+    "ice": "ICE",
+    "iceHint": "Common Company Identifier, 15 digits.",
+    "ifNumber": "Tax ID (IF)",
+    "rcNumber": "Trade register (RC)",
+    "tpNumber": "Business tax (optional)",
+    "address": "Head office address",
+    "city": "City",
+    "cityPlaceholder": "Choose a city",
+    "licenseNumber": "Tourist transport license number",
+    "licenseExpiresOn": "License expiry date"
+  },
+  "documentsForm": {
+    "type": "Document type",
+    "file": "File",
+    "fileHint": "PDF, JPEG, PNG or WEBP, 10 MB maximum.",
+    "expiresOn": "Expiry date (optional)",
+    "upload": "Upload the document",
+    "uploaded": "Uploaded documents",
+    "none": "No document uploaded.",
+    "licenseRequired": "The tourist transport license is required for verification.",
+    "rejected": "Rejected: {reason}",
+    "uploadedOn": "Uploaded on {date}",
+    "expires": "Expires on {date}",
+    "delete": "Delete",
+    "deleteConfirm": "The document and its file will be permanently deleted."
+  },
+  "vehicleForm": {
+    "registration": "Registration",
+    "registrationHint": "For example 12345-A-6.",
+    "brand": "Brand",
+    "model": "Model",
+    "type": "Vehicle type",
+    "typePlaceholder": "Choose a type",
+    "seats": "Passenger seats",
+    "luggage": "Luggage (number of suitcases, optional)",
+    "year": "Year (optional)",
+    "existing": "Registered vehicles"
+  },
+  "driverForm": {
+    "fullName": "Full name",
+    "phone": "Phone",
+    "licenseNumber": "Driving license number",
+    "licenseExpiresOn": "License expiry date",
+    "cardNumber": "Professional card (optional)",
+    "cardExpiresOn": "Professional card expiry (optional)",
+    "languages": "Languages spoken",
+    "existing": "Registered drivers"
+  },
+  "languages": {
+    "fr": "French",
+    "en": "English",
+    "ar": "Arabic",
+    "es": "Spanish",
+    "de": "German",
+    "it": "Italian",
+    "zgh": "Amazigh"
   }
 }

@@ -25,6 +25,24 @@ export async function signIn(
   await page.getByRole('button', { name: 'Se connecter' }).click();
 }
 
+/** Signs a new carrier up through the form and confirms the e-mail; lands on /fr/app. */
+export async function signUpAndConfirm(page: Page, baseURL: string, legalName: string) {
+  const email = `carrier-${Date.now()}-${Math.floor(Math.random() * 1000)}@moroccotravelride.test`;
+  await page.goto('/fr/signup');
+  await page.getByLabel('Votre nom complet').fill('Test Transporteur');
+  await page.getByLabel('Raison sociale de la société').fill(legalName);
+  await page.getByLabel('Ville du siège').selectOption({ label: 'Casablanca' });
+  await page.getByLabel('Adresse e-mail').fill(email);
+  await page.getByLabel('Mot de passe').fill('Test-Ride-2026');
+  await page.getByLabel("J'accepte les conditions générales d'utilisation").check();
+  await waitForCaptcha(page);
+  await page.getByRole('button', { name: 'Créer mon compte' }).click();
+  await expect(page.getByText('Vérifiez votre boîte mail')).toBeVisible();
+  await page.goto(await confirmLinkFor(email, baseURL));
+  await expect(page).toHaveURL(/\/fr\/app$/);
+  return email;
+}
+
 /**
  * Reads the latest auth e-mail sent to `email` by the local Supabase (Mailpit) and returns the
  * /api/auth/confirm link, pointed at the server under test.

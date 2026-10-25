@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   transpilePackages: ['@mtr/ui', '@mtr/shared'],
+  experimental: {
+    // Company documents up to 10 MB go through a Server Action (and the proxy) as multipart data.
+    serverActions: { bodySizeLimit: '11mb' },
+    proxyClientMaxBodySize: '11mb',
+  },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },

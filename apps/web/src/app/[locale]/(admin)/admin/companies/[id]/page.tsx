@@ -8,6 +8,7 @@ import { AuditList } from '@/features/admin/components/audit-list';
 import { CommissionForm } from '@/features/admin/components/commission-form';
 import { CompanyStatusActions } from '@/features/admin/components/company-status-actions';
 import { MarketplaceSuspension } from '@/features/admin/components/marketplace-suspension';
+import { DocumentReview } from '@/features/admin/components/document-review';
 import { CompanyStatusBadge } from '@/features/admin/components/status-badge';
 import { SubscriptionForm } from '@/features/admin/components/subscription-form';
 import { getCompanyDetail } from '@/features/admin/queries';
@@ -90,11 +91,18 @@ export default async function AdminCompanyPage({ params }: CompanyPageProps) {
           {documents.length === 0 ? (
             <p className="mt-2 text-sm text-muted">{t('admin.companies.noDocuments')}</p>
           ) : (
-            <ul className="mt-2 flex flex-col gap-1 text-sm">
+            <ul className="mt-2 flex flex-col divide-y divide-border text-sm">
               {documents.map((document) => (
-                <li key={document.id}>
-                  {t(`documentType.${document.type}`)} ·{' '}
-                  {t(`verificationStatus.${document.verification_status}`)}
+                <li key={document.id} className="flex flex-col gap-2 py-3">
+                  <p>
+                    <span className="font-medium">{t(`documentType.${document.type}`)}</span> ·{' '}
+                    {t(`verificationStatus.${document.verification_status}`)} ·{' '}
+                    {date(document.created_at)}
+                  </p>
+                  <DocumentReview
+                    documentId={document.id}
+                    pending={document.verification_status === 'pending'}
+                  />
                 </li>
               ))}
             </ul>

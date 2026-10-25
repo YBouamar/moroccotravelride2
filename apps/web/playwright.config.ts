@@ -11,6 +11,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
+  // Server Actions + redirect chains on a production build under parallel load.
+  expect: { timeout: 10_000 },
   use: {
     baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
@@ -21,7 +23,7 @@ export default defineConfig({
     {
       name: 'mobile',
       use: { ...devices['Pixel 7'], channel },
-      testIgnore: /(auth|admin|subscription)\.spec\.ts$/,
+      testIgnore: /(auth|admin|subscription|onboarding)\.spec\.ts$/,
     },
   ],
   // Tests run against the production build, like on the VPS.
