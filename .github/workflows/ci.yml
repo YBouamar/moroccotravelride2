@@ -56,3 +56,19 @@ jobs:
         with:
           name: playwright-report
           path: apps/web/test-results
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Postgres + Auth are enough for migrations and RLS tests.
+      - run: pnpm exec supabase start -x studio,imgproxy,mailpit,realtime,storage-api,edge-runtime,logflare,vector,supavisor,postgres-meta
+      - run: pnpm db:test
+      - name: Generated types are up to date
+        run: pnpm db:types && git diff --exit-code packages/db/src/types.ts

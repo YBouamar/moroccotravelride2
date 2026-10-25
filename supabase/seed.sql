@@ -1,0 +1,2 @@
+-- Local demo data only (never real data). Reference data (cities, vehicle types, settings) lives in
+-- migrations because production needs it too. Demo companies and accounts arrive in step 5 with auth.

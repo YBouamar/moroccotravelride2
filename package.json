@@ -19,7 +19,8 @@
     "db:reset": "supabase db reset",
     "db:test": "supabase test db",
     "prepare": "husky",
-    "e2e": "pnpm --filter @mtr/web e2e"
+    "e2e": "pnpm --filter @mtr/web e2e",
+    "db:types": "supabase gen types typescript --local --schema public > packages/db/src/types.ts && prettier --write packages/db/src/types.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
