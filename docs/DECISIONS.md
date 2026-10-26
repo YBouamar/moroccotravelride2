@@ -389,3 +389,15 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Sauvegarde** : `scripts/backup.sh` et `scripts/restore.sh` (age, rclone, rétention 30 jours, restauration sur environnement vierge avec garde-fous).
 - **Mobile** : `apps/driver/eas.json` (profils développement, aperçu, production) avec des URL à remplacer.
 - **Reste hors de portée sans accès externes** : VPS, domaine, clés réelles, comptes des magasins d'applications, CNDP, validation juridique et comptable, dépôt GitHub (voir la checklist de lancement, RUNBOOK §6).
+
+## ADR-039 : Un seul VPS au lancement, Supabase conservé en auto-hébergement
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (Yassine)
+- **Supabase conservé**, installé sur le VPS Contabo (logiciel open source, aucun frais de licence ni d'abonnement, aucun service supabase.com) : base PostgreSQL, authentification et MFA, stockage, API. Seule incidence : la mémoire du serveur (environ 1,3 Go mesurés en local pour Supabase seul) ; VPS conseillé : 8 Go de RAM, 4 cœurs.
+- **Un seul VPS cloud jusqu'à la première mise en production** : production uniquement. Le serveur de **staging** sera créé après le lancement de la première version.
+- **Conséquences tant qu'il n'y a pas de staging** :
+  - les migrations sont testées sur le poste de développement (`pnpm db:reset`, `pnpm db:test`, `pnpm e2e`) avant d'être appliquées en production, avec une sauvegarde juste avant ;
+  - le test de restauration se fait sur le poste de développement (Docker), à partir d'une vraie sauvegarde du VPS ;
+  - les mises à jour de Supabase et de Coolify suivent la même règle : essai en local, sauvegarde, instantané du VPS, puis mise à jour ;
+  - l'image du site peut être construite hors du serveur pour ne pas surcharger le VPS unique.
+- Remplace la mention « staging puis production » de RUNBOOK §3 jusqu'à la création du second serveur.

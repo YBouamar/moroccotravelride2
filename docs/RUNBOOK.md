@@ -29,12 +29,12 @@ Référence initiale : Stockage : variables d'environnement Coolify (web et Supa
 
 ## 3. Hébergement et déploiement 🟡 (ADR-013, ADR-038)
 
-Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify**. Fichiers prêts dans le dépôt, déploiement réel en attente du VPS, du domaine et des clés.
+Cible : **un seul VPS Contabo** (datacenter UE) pour la production, Docker, géré par **Coolify** ; staging sur un second serveur après le lancement de la première version (ADR-039). Fichiers prêts dans le dépôt, déploiement réel en attente du VPS, du domaine et des clés.
 
 1. **Serveur** : Ubuntu LTS, utilisateur non root, SSH par clé uniquement (root et mot de passe désactivés), ufw (80, 443, SSH), fail2ban, unattended-upgrades (SECURITY.md §2.9).
 2. **Coolify** installé sur le VPS ; tableau de bord accessible par tunnel SSH ou VPN, jamais exposé publiquement.
 3. **Supabase auto-hébergé** : modèle Supabase de Coolify ; **tous les secrets régénérés** (JWT, clés anon et service role, mot de passe Postgres, identifiants du tableau de bord) ; Studio et Postgres non exposés ; reprendre la configuration Auth de `supabase/config.toml` (mot de passe 10 caractères avec minuscules, majuscules, chiffres, confirmation d'e-mail, modèles d'e-mails de `supabase/templates`, URL du site).
-4. **Migrations** : `supabase db push --db-url <url>` à travers un tunnel SSH, d'abord sur staging, puis production ; ne jamais lancer le seed de démonstration en production.
+4. **Migrations** : vérifiées d'abord en local (`pnpm db:reset`, `pnpm db:test`, `pnpm e2e`), puis sauvegarde de la production, puis `supabase db push --db-url <url>` à travers un tunnel SSH ; ne jamais lancer le seed de démonstration en production. Avec un staging (après le lancement) : staging d'abord.
 5. **Web** : Coolify déploie `docker-compose.prod.yml` (image `apps/web/Dockerfile`, Next.js standalone, utilisateur non root, système de fichiers en lecture seule, contrôle de santé). Variables : `NEXT_PUBLIC_*` en arguments de build, secrets serveur (`SUPABASE_SECRET_KEY`, `RATE_LIMIT_SALT`, `TURNSTILE_SECRET_KEY`, `CRON_SECRET`, `BOOKING_LINK_SECRET`, `RESEND_API_KEY`, `EMAIL_FROM`) dans les secrets Coolify. Le service `outbox-cron` vide la file d'e-mails toutes les 2 minutes.
 6. **Journaux du proxy** : garder la rotation et une durée courte ; aucune donnée sensible attendue dans les URL (jeton de réservation dans le fragment, ADR-037).
 7. **Mobile** : `eas build --profile production` puis `eas submit` (renseigner les vraies URL dans `apps/driver/eas.json`, comptes Google Play et App Store).
@@ -47,7 +47,7 @@ Construction locale vérifiée le 2026-10-26 : image construite, conteneur en le
 - `scripts/backup.sh` (cron quotidien 02:15 UTC) : `pg_dump` + archive du volume Storage, chiffrés avec age (clé publique seule sur le serveur), envoyés par rclone vers un stockage objet **hors du VPS**, rétention 30 jours, sommes de contrôle.
 - `scripts/restore.sh <horodatage>` : restauration sur un environnement **vierge** (refuse une base non vide sauf `FORCE=1`, demande une confirmation), vérification des sommes de contrôle.
 - Instantané du VPS avant toute mise à jour majeure.
-- **Date du dernier test de restauration : aucun pour l'instant** (à faire sur le VPS de staging, chronométré, puis noter la date ici).
+- **Date du dernier test de restauration : aucun pour l'instant** (à faire sur le poste de développement sous Docker à partir d'une vraie sauvegarde du VPS, tant qu'il n'y a pas de staging ; chronométrer et noter la date ici).
 
 ## 5. Incidents
 
@@ -61,8 +61,8 @@ Construction locale vérifiée le 2026-10-26 : image construite, conteneur en le
 | Point | Statut |
 |---|---|
 | Domaine acheté, DNS et HTTPS | ⬜ Yassine |
-| VPS de production et de staging préparés (§3), secrets Supabase régénérés | ⬜ Yassine |
-| Migrations appliquées sur staging puis production, sans seed de démonstration | ⬜ |
+| VPS de production préparé (§3, 8 Go de RAM conseillés), secrets Supabase régénérés ; staging après le lancement (ADR-039) | ⬜ Yassine |
+| Migrations vérifiées en local puis appliquées en production après sauvegarde, sans seed de démonstration | ⬜ |
 | Compte administrateur créé, MFA activée, coordonnées de paiement saisies (Admin > Paramètres) | ⬜ Yassine |
 | Clés réelles : Turnstile, Resend (domaine d'envoi vérifié), Sentry (DSN), `CRON_SECRET`, `BOOKING_LINK_SECRET` | ⬜ Yassine |
 | Serveur de tuiles ou fournisseur de cartes (politique OpenStreetMap) | ⬜ |

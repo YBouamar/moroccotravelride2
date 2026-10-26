@@ -18,7 +18,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ✅ fait |
 | 22 à 24 | 5 | V3 : entretien et pièces ; échéances + rappels planifiés ; consommation | Rappels J-30, J-7, J-1 sur une assurance | ✅ fait |
 | 25 à 27 | 6 | Pilotage : indicateurs ; reversements + exports ; audit consultable, avis et modération | Tableau de bord admin chiffré | ✅ fait |
-| 28 à 30 | 7 | Durcissement : audit sécurité, charge, SEO, pages légales, VPS Contabo (Coolify, Supabase auto-hébergé, staging), sauvegarde testée, EAS, CNDP, checklist | Checklist de lancement verte | ✅ code fait, actions externes en attente |
+| 28 à 30 | 7 | Durcissement : audit sécurité, charge, SEO, pages légales, VPS Contabo unique (Coolify, Supabase auto-hébergé ; staging après le lancement, ADR-039), sauvegarde testée, EAS, CNDP, checklist | Checklist de lancement verte | ✅ code fait, actions externes en attente |
 
 Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phase.
 
@@ -58,6 +58,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étapes 19 à 21 (fin de Phase 4) : app chauffeur (trajets à venir, démarrer et terminer, appel du passager, dépense avec photo, file hors ligne idempotente), positions limitées aux trajets en cours et contrôlées en base, carte en direct côté bureau (MapLibre, rafraîchie toutes les 15 s), purge à 90 jours. 190 tests unitaires, 202 pgTAP, 61 E2E (ADR-034).
 - 2026-10-26, étapes 22 à 24 (Phase 5) : entretien avec pièces, échéances avec rappels J-30 / J-7 / J-1 (critère vérifié), consommation par véhicule ; Atlas de démonstration en V3 ; deux instabilités E2E corrigées. 194 tests unitaires, 214 pgTAP, 62 E2E (ADR-035).
 - 2026-10-26, étapes 25 à 27 (Phase 6) : indicateurs admin du mois, exports comptables CSV, journal d'audit consultable, avis voyageurs modérés et note publique dans la recherche. 194 tests unitaires, 223 pgTAP, 63 E2E (ADR-036).
+- 2026-10-26 : décision de Yassine : un seul VPS au lancement, staging plus tard, Supabase conservé en auto-hébergement (ADR-039).
 - 2026-10-26, Phase 7 : audit de sécurité (0 critique, 0 haut, 5 moyens, 8 bas) et corrections des constats 1 à 6, 8 et 13 (ADR-037) ; SEO (métadonnées, plan du site, robots, pages villes), pages légales à valider, test de charge local, Dockerfile et docker compose de production testés, scripts de sauvegarde et restauration, configuration EAS, checklist de lancement (ADR-038). 196 tests unitaires, 240 pgTAP, 72 E2E (4 workers en local pour la stabilité).
 
 ## 3. En cours

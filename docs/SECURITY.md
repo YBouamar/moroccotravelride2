@@ -75,12 +75,12 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ⬜ Pas de sauvegarde managée : `pg_dump` quotidien chiffré + sauvegarde des volumes Storage vers un stockage objet **hors du VPS**, rétention 30 jours.
 - ⬜ Instantané (snapshot) du VPS avant chaque mise à jour majeure.
 - ⬜ Restauration testée sur un environnement vierge, date du dernier test dans RUNBOOK.md.
-- ⬜ Environnements local / staging / production séparés (bases et secrets distincts).
+- 🟡 Environnements local et production séparés (bases et secrets distincts) ; ⬜ staging sur un second serveur après le lancement (ADR-039).
 
 ### 2.9 Serveur (VPS Contabo)
 - ⬜ Accès SSH par clé uniquement, connexion root et mot de passe désactivés, port non standard facultatif, fail2ban.
 - ⬜ Pare-feu (ufw) : seuls 80 / 443 (et SSH) ouverts ; Postgres, Studio Supabase et Coolify **jamais exposés publiquement** (accès par tunnel SSH ou VPN).
-- ⬜ Mises à jour de sécurité automatiques (unattended-upgrades) ; montée de version Supabase planifiée et testée en staging.
+- ⬜ Mises à jour de sécurité automatiques (unattended-upgrades) ; montée de version Supabase planifiée, testée en local tant qu'il n'y a pas de staging (ADR-039), précédée d'une sauvegarde et d'un instantané du VPS.
 - ⬜ Secrets Supabase auto-hébergé régénérés (JWT secret, clés anon et service_role, mot de passe Postgres, identifiants du tableau de bord) : **jamais les valeurs d'exemple du docker compose**.
 - ⬜ Supervision : disponibilité (healthcheck externe), espace disque, mémoire, expiration des certificats.
 
