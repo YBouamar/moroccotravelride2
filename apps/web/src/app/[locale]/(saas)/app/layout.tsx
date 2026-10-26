@@ -1,4 +1,4 @@
-import { trialDaysLeft, type Feature } from '@mtr/shared';
+import { can, trialDaysLeft, type Feature } from '@mtr/shared';
 import {
   CalendarDays,
   CarFront,
@@ -9,6 +9,7 @@ import {
   MapPinned,
   Receipt,
   Route,
+  Store,
   UserRound,
   Users,
   Wrench,
@@ -72,6 +73,17 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     section('planning', t('saas.nav.planning'), CalendarDays, 'trips', '/app/planning'),
     section('trips', t('saas.nav.trips'), Route, 'trips', '/app/trips'),
     section('bookings', t('saas.nav.bookings'), ClipboardList, 'trips'),
+    // Marketplace (Pillar A): not part of the SaaS offers, owners and managers only.
+    ...(can(context?.membership.role, 'marketplace.manage')
+      ? [
+          {
+            key: 'marketplace',
+            label: t('saas.nav.marketplace'),
+            icon: icon(Store),
+            href: '/app/marketplace',
+          } satisfies ShellNavItem,
+        ]
+      : []),
     section('fleet', t('saas.nav.fleet'), CarFront, 'vehicles', '/app/fleet'),
     section('drivers', t('saas.nav.drivers'), UserRound, 'drivers', '/app/drivers'),
     section('clients', t('saas.nav.clients'), Users, 'clients', '/app/clients'),

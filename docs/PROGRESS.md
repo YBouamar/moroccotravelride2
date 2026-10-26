@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2 terminée (étapes 6 à 11) · **Prochaine étape** : Phase 3, marketplace (étapes 12 à 17)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 3, étapes 12 et 13 terminées · **Prochaine étape** : Étape 14 (tunnel de réservation invité)
 
 ## 1. Plan d'exécution par étapes
 
@@ -51,6 +51,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étape 9 : trajets (création, modification, démarrage, fin, annulation motivée), planning jour et semaine, contrôles en base (permis valide le jour du trajet, véhicule disponible, capacité, chevauchements bloquants avec dérogation propriétaire ou gérant auditée), heures au fuseau marocain, trajets de démonstration. 159 tests unitaires, 115 pgTAP, 47 E2E (ADR-026).
 - 2026-10-26, étape 10 : facturation (brouillons, lignes libres ou issues de trajets terminés, TVA par ligne avec taux par défaut de la société, émission avec numéro sans trou et mentions figées, PDF, avoir total), paiements (statuts partiellement payée / payée), ports locaux 553xx. 166 tests unitaires, 135 pgTAP, 49 E2E (ADR-027, ADR-028).
 - 2026-10-26, étape 11 (fin de Phase 2) : tableau de bord du jour (trajets du jour, à affecter sur 7 jours, reste à encaisser, factures en retard, alertes permis, agrément et véhicules en maintenance, selon le rôle), recette Phase 2 automatisée (trajet planifié, démarré, terminé, facturé, émis, payé), heures en 24 h dans les cartes de trajet, vue semaine responsive. 167 tests unitaires, 135 pgTAP, 51 E2E (ADR-029).
+- 2026-10-26, étapes 12 et 13 : grilles tarifaires et visibilité marketplace côté transporteur (liste des conditions BR-016), recherche publique par lieu, date, heure et passagers, règle des 24 h, grilles de démonstration. 172 tests unitaires, 146 pgTAP, 54 E2E (ADR-030).
 
 ## 3. En cours
 

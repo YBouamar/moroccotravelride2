@@ -127,3 +127,23 @@ from places
 join public.clients c on c.name = 'Agence Découverte Maroc';
 update public.trips set status = 'in_progress' where id = '00000000-0000-4000-9000-000000000301';
 update public.trips set status = 'completed' where id = '00000000-0000-4000-9000-000000000301';
+
+-- Marketplace: price grids (all-inclusive MAD prices) and a Sahara vehicle.
+insert into public.vehicles (id, company_id, registration, brand, model, vehicle_type_code, seats, luggage_capacity, year) values
+  ('00000000-0000-4000-9000-000000000111', '00000000-0000-4000-b000-000000000002', '45678-D-40', 'Hyundai', 'H1', 'van', 8, 8, 2022);
+insert into public.price_grids (company_id, from_city_id, to_city_id, vehicle_type_code, price_cents)
+select v.company::uuid, f.id, t.id, v.vehicle_type, v.price
+from (values
+  ('00000000-0000-4000-b000-000000000001', 'casablanca', 'marrakech', 'sedan', 80000),
+  ('00000000-0000-4000-b000-000000000001', 'casablanca', 'marrakech', 'van', 120000),
+  ('00000000-0000-4000-b000-000000000001', 'casablanca', 'marrakech', 'suv_4x4', 100000),
+  ('00000000-0000-4000-b000-000000000001', 'marrakech', 'casablanca', 'sedan', 80000),
+  ('00000000-0000-4000-b000-000000000001', 'aeroport-casablanca-mohammed-v', 'casablanca', 'sedan', 30000),
+  ('00000000-0000-4000-b000-000000000001', 'aeroport-casablanca-mohammed-v', 'casablanca', 'van', 45000),
+  ('00000000-0000-4000-b000-000000000001', 'casablanca', 'aeroport-casablanca-mohammed-v', 'sedan', 30000),
+  ('00000000-0000-4000-b000-000000000002', 'casablanca', 'marrakech', 'van', 110000),
+  ('00000000-0000-4000-b000-000000000002', 'aeroport-marrakech-menara', 'marrakech', 'van', 25000),
+  ('00000000-0000-4000-b000-000000000002', 'marrakech', 'aeroport-marrakech-menara', 'van', 25000)
+) as v(company, from_slug, to_slug, vehicle_type, price)
+join public.cities f on f.slug = v.from_slug
+join public.cities t on t.slug = v.to_slug;

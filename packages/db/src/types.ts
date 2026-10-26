@@ -691,6 +691,72 @@ export type Database = {
         };
         Relationships: [];
       };
+      price_grids: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          from_city_id: string;
+          id: string;
+          is_active: boolean;
+          price_cents: number;
+          to_city_id: string;
+          updated_at: string;
+          vehicle_type_code: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          from_city_id: string;
+          id?: string;
+          is_active?: boolean;
+          price_cents: number;
+          to_city_id: string;
+          updated_at?: string;
+          vehicle_type_code: string;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          from_city_id?: string;
+          id?: string;
+          is_active?: boolean;
+          price_cents?: number;
+          to_city_id?: string;
+          updated_at?: string;
+          vehicle_type_code?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'price_grids_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'price_grids_from_city_id_fkey';
+            columns: ['from_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'price_grids_to_city_id_fkey';
+            columns: ['to_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'price_grids_vehicle_type_code_fkey';
+            columns: ['vehicle_type_code'];
+            isOneToOne: false;
+            referencedRelation: 'vehicle_types';
+            referencedColumns: ['code'];
+          },
+        ];
+      };
       profiles: {
         Row: {
           created_at: string;
@@ -1015,6 +1081,18 @@ export type Database = {
       };
       create_credit_note: { Args: { p_invoice_id: string; p_reason: string }; Returns: string };
       issue_invoice: { Args: { p_due_date?: string; p_invoice_id: string }; Returns: string };
+      search_offers: {
+        Args: { p_from: string; p_passengers: number; p_pickup_at: string; p_to: string };
+        Returns: {
+          carrier_city_id: string;
+          carrier_name: string;
+          company_id: string;
+          max_seats: number;
+          offer_id: string;
+          price_cents: number;
+          vehicle_type_code: string;
+        }[];
+      };
     };
     Enums: {
       client_type: 'b2b' | 'b2c';

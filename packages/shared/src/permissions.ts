@@ -29,6 +29,10 @@ const MATRIX = {
   'trips.overrideConflicts': ['owner', 'manager'],
   'invoices.read': ['owner', 'manager', 'accountant'],
   'invoices.manage': ['owner', 'manager', 'accountant'],
+  // Marketplace (Pillar A): price grids, visibility, booking acceptance.
+  'marketplace.manage': ['owner', 'manager'],
+  'bookings.read': ['owner', 'manager', 'dispatcher', 'accountant'],
+  'bookings.respond': ['owner', 'manager', 'dispatcher'],
 } as const satisfies Record<string, readonly MemberRole[]>;
 
 export type Permission = keyof typeof MATRIX;

@@ -304,3 +304,12 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Seuils** : 30 jours pour les permis, 60 jours pour l'agrément (À CONFIRMER ; ils deviendront des réglages avec les échéances de la Phase 5).
 - **Recette Phase 2** : scénario E2E de bout en bout (trajet planifié et affecté, démarré, terminé, facturé avec la TVA choisie, émis avec numéro, payé) en plus des scénarios par domaine.
 - **Affichage** : heures au format 24 h dans les cartes de trajet (en arabe, les marqueurs matin et soir se mélangeaient aux chiffres latins).
+
+## ADR-030 : Grilles tarifaires et recherche publique (étapes 12 et 13)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (BR-008 reste À CONFIRMER)
+- **Grille** : un prix tout compris par transporteur, départ, arrivée et type de véhicule (villes et aéroports traités comme des lieux). Option « créer aussi le retour au même prix ». Un prix est désactivé, jamais supprimé ; les réservations gardent leur prix figé.
+- **Indépendance du SaaS** : la marketplace (pilier A) ne dépend pas de l'abonnement SaaS : un transporteur en lecture seule côté SaaS reste visible s'il remplit BR-016.
+- **Éligibilité BR-016** en base (`private.is_marketplace_eligible`) : société vérifiée, visibilité activée, aucune suspension, agrément valide à la date marocaine, interrupteur global `marketplace_open`. Page « Marketplace » du transporteur : liste des conditions remplies ou manquantes et interrupteur de visibilité (Q19).
+- **Recherche** : `public.search_offers` (security definer, autorisée aux anonymes, jamais d'accès direct aux tables) : offres actives des transporteurs éligibles qui ont un véhicule actif du type avec assez de places ; rien si la prise en charge est à moins de `min_booking_lead_hours` (BR-006, vérifié aussi côté page et à la réservation). 50 résultats au plus, triés par prix. Formulaire GET sans JavaScript, recherche partageable par l'URL ; même ville au départ et à l'arrivée autorisée (BR-007).
+- **Accueil** : la page devient dynamique (lecture des lieux et des réglages) ; rendu statique : BACKLOG (Phase 7, SEO).

@@ -28,7 +28,8 @@
       "title": "Vos transferts au Maroc, réservés en toute confiance",
       "subtitle": "Aéroports, hôtels, villes : des transporteurs touristiques agréés, des prix fixes connus à l'avance.",
       "cta": "Rechercher un trajet",
-      "comingSoon": "La recherche de trajets arrive bientôt."
+      "comingSoon": "La recherche de trajets arrive bientôt.",
+      "closed": "Les réservations sont momentanément fermées. Réessayez un peu plus tard."
     },
     "reassurance": {
       "title": "Pourquoi réserver avec nous",
@@ -69,7 +70,8 @@
       "subscription": "Abonnement",
       "expenses": "Dépenses",
       "tracking": "Suivi en direct",
-      "maintenance": "Parc"
+      "maintenance": "Parc",
+      "marketplace": "Marketplace"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -301,7 +303,9 @@
     "endBeforeStart": "L'arrivée doit être après le départ.",
     "amount": "Montant invalide (par exemple 800 ou 800,50).",
     "vatRate": "Taux de TVA entre 0 et 100 (par exemple 20 ou 5,5).",
-    "quantity": "Quantité entre 1 et 10 000."
+    "quantity": "Quantité entre 1 et 10 000.",
+    "gridPrice": "Prix entre 10 et 100 000 MAD.",
+    "time": "Indiquez une heure."
   },
   "company": {
     "pending": {
@@ -843,5 +847,67 @@
     "paid": "Déjà payé",
     "due": "Reste à payer",
     "footer": "Document établi avec MoroccoTravelRide"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "visible": "Votre société apparaît sur la marketplace",
+    "hidden": "Votre société n'apparaît pas sur la marketplace",
+    "visibleBadge": "Visible",
+    "hiddenBadge": "Non visible",
+    "ok": "Condition remplie :",
+    "missing": "Condition manquante :",
+    "checks": {
+      "verified": "Société vérifiée par MoroccoTravelRide",
+      "license": "Agrément de transport touristique en cours de validité",
+      "notSuspended": "Aucune suspension par la plateforme",
+      "grid": "Au moins un prix actif dans la grille",
+      "enabled": "Visibilité activée par vous"
+    },
+    "suspended": "Visibilité suspendue par la plateforme : {reason}. Seule la plateforme peut lever la suspension.",
+    "enable": "Activer ma visibilité",
+    "enableHelp": "Vos offres apparaîtront aux voyageurs dès que toutes les conditions sont remplies.",
+    "disable": "Masquer ma société",
+    "disableHelp": "Vos offres n'apparaîtront plus dans les recherches. Les réservations en cours ne sont pas modifiées.",
+    "grid": {
+      "title": "Grille tarifaire",
+      "help": "Prix tout compris affiché aux voyageurs, par trajet et type de véhicule. La commission de la plateforme est prélevée sur ce prix.",
+      "from": "Départ",
+      "to": "Arrivée",
+      "price": "Prix tout compris (MAD)",
+      "priceShort": "Prix",
+      "priceHint": "Par exemple 800. Un trajet déjà présent prend le nouveau prix.",
+      "withReturn": "Créer aussi le trajet retour au même prix",
+      "save": "Enregistrer le prix",
+      "route": "Trajet",
+      "action": "Action",
+      "empty": "Aucun prix pour l'instant.",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "toggleHelp": "Le prix est retiré ou remis dans les résultats de recherche. Les réservations existantes gardent leur prix."
+    }
+  },
+  "search": {
+    "title": "Rechercher un transfert",
+    "from": "Départ",
+    "to": "Arrivée",
+    "date": "Date",
+    "time": "Heure de prise en charge",
+    "passengers": "Passagers",
+    "submit": "Rechercher",
+    "placePlaceholder": "Ville ou aéroport",
+    "cities": "Villes",
+    "airports": "Aéroports",
+    "closed": "Les réservations sont momentanément fermées.",
+    "tooSoon": "Les réservations se font au moins {hours} h avant la prise en charge. Choisissez une heure plus tardive.",
+    "resultsTitle": "{from} vers {to}",
+    "resultsSummary": "{date} · {passengers, plural, one {# passager} other {# passagers}}",
+    "noResult": {
+      "title": "Aucune offre pour ce trajet",
+      "text": "Essayez une autre date, un autre aéroport ou moins de passagers."
+    },
+    "carrier": "Transporteur agréé : {name}",
+    "seatsUpTo": "Jusqu'à {seats} passagers",
+    "allInclusive": "Prix tout compris",
+    "book": "Réserver"
   }
 }

@@ -1,10 +1,11 @@
+import { earliestBookableDay } from '@mtr/shared';
 import { BadgeCheck, Banknote, CalendarX2, Tag } from 'lucide-react';
-import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
-import { use } from 'react';
-import { asLocale } from '@/i18n/as-locale';
-import { Button } from '@/components/ui/button';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Card, CardDescription, CardTitle } from '@/components/ui/card';
+import { SearchForm } from '@/features/search/components/search-form';
+import { getPublicPlaces } from '@/features/search/queries';
+import { getPlatformSettings } from '@/features/settings/queries';
+import { asLocale } from '@/i18n/as-locale';
 
 const REASSURANCE = [
   { key: 'licensed', icon: BadgeCheck },
@@ -13,9 +14,14 @@ const REASSURANCE = [
   { key: 'payment', icon: Banknote },
 ] as const;
 
-export default function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  setRequestLocale(asLocale(use(params).locale));
-  const t = useTranslations('home');
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const locale = asLocale((await params).locale);
+  setRequestLocale(locale);
+  const [t, places, settings] = await Promise.all([
+    getTranslations('home'),
+    getPublicPlaces(locale),
+    getPlatformSettings(),
+  ]);
 
   return (
     <>
@@ -25,18 +31,22 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
           aria-hidden="true"
           className="absolute inset-y-0 end-0 w-1/3 bg-linear-to-br from-teal-deep to-teal opacity-25 [clip-path:polygon(30%_0,100%_0,100%_100%,0_100%)]"
         />
-        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-24">
+        <div className="relative mx-auto max-w-6xl px-4 py-12 md:py-20">
           <h1 className="max-w-3xl text-3xl leading-tight font-bold text-white md:text-5xl">
             {t('hero.title')}
           </h1>
           <p className="mt-4 max-w-2xl text-lg text-white/90">{t('hero.subtitle')}</p>
-          <div className="mt-8 flex flex-col items-start gap-2">
-            <Button size="lg" disabled aria-describedby="search-soon">
-              {t('hero.cta')}
-            </Button>
-            <p id="search-soon" className="text-sm text-teal">
-              {t('hero.comingSoon')}
-            </p>
+          <div className="mt-8">
+            {settings.marketplace_open ? (
+              <SearchForm
+                places={places}
+                minDay={earliestBookableDay(new Date(), settings.min_booking_lead_hours)}
+                tone="dark"
+                action={`/${locale}/search`}
+              />
+            ) : (
+              <p className="text-teal">{t('hero.closed')}</p>
+            )}
           </div>
         </div>
       </section>

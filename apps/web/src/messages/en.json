@@ -28,7 +28,8 @@
       "title": "Your transfers in Morocco, booked with confidence",
       "subtitle": "Airports, hotels, cities: licensed tourist transport companies and fixed prices known in advance.",
       "cta": "Search a ride",
-      "comingSoon": "Ride search is coming soon."
+      "comingSoon": "Ride search is coming soon.",
+      "closed": "Bookings are temporarily closed. Please try again later."
     },
     "reassurance": {
       "title": "Why book with us",
@@ -69,7 +70,8 @@
       "subscription": "Subscription",
       "expenses": "Expenses",
       "tracking": "Live tracking",
-      "maintenance": "Fleet care"
+      "maintenance": "Fleet care",
+      "marketplace": "Marketplace"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -301,7 +303,9 @@
     "endBeforeStart": "The arrival must be after the departure.",
     "amount": "Invalid amount (for example 800 or 800.50).",
     "vatRate": "VAT rate between 0 and 100 (for example 20 or 5.5).",
-    "quantity": "Quantity between 1 and 10,000."
+    "quantity": "Quantity between 1 and 10,000.",
+    "gridPrice": "Price between 10 and 100,000 MAD.",
+    "time": "Enter a time."
   },
   "company": {
     "pending": {
@@ -843,5 +847,67 @@
     "paid": "Already paid",
     "due": "Amount due",
     "footer": "Document created with MoroccoTravelRide"
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "visible": "Your company appears on the marketplace",
+    "hidden": "Your company does not appear on the marketplace",
+    "visibleBadge": "Visible",
+    "hiddenBadge": "Not visible",
+    "ok": "Condition met:",
+    "missing": "Missing condition:",
+    "checks": {
+      "verified": "Company verified by MoroccoTravelRide",
+      "license": "Valid tourism transport license",
+      "notSuspended": "No suspension by the platform",
+      "grid": "At least one active price in the grid",
+      "enabled": "Visibility turned on by you"
+    },
+    "suspended": "Visibility suspended by the platform: {reason}. Only the platform can lift the suspension.",
+    "enable": "Turn my visibility on",
+    "enableHelp": "Your offers will appear to travelers as soon as every condition is met.",
+    "disable": "Hide my company",
+    "disableHelp": "Your offers will no longer appear in searches. Ongoing bookings are not changed.",
+    "grid": {
+      "title": "Price grid",
+      "help": "All-inclusive price shown to travelers, per route and vehicle type. The platform commission is taken from this price.",
+      "from": "Departure",
+      "to": "Arrival",
+      "price": "All-inclusive price (MAD)",
+      "priceShort": "Price",
+      "priceHint": "For example 800. An existing route gets the new price.",
+      "withReturn": "Also create the return route at the same price",
+      "save": "Save the price",
+      "route": "Route",
+      "action": "Action",
+      "empty": "No price yet.",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "toggleHelp": "The price is removed from or put back in search results. Existing bookings keep their price."
+    }
+  },
+  "search": {
+    "title": "Search for a transfer",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "time": "Pickup time",
+    "passengers": "Passengers",
+    "submit": "Search",
+    "placePlaceholder": "City or airport",
+    "cities": "Cities",
+    "airports": "Airports",
+    "closed": "Bookings are temporarily closed.",
+    "tooSoon": "Bookings must be made at least {hours} hours before pickup. Choose a later time.",
+    "resultsTitle": "{from} to {to}",
+    "resultsSummary": "{date} · {passengers, plural, one {# passenger} other {# passengers}}",
+    "noResult": {
+      "title": "No offer for this route",
+      "text": "Try another date, another airport or fewer passengers."
+    },
+    "carrier": "Licensed carrier: {name}",
+    "seatsUpTo": "Up to {seats} passengers",
+    "allInclusive": "All-inclusive price",
+    "book": "Book"
   }
 }
