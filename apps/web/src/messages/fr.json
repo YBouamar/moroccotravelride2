@@ -1122,5 +1122,37 @@
       "instant_transfer": "Virement instantané",
       "bank_transfer": "Virement"
     }
+  },
+  "expenseCategory": {
+    "fuel": "Carburant",
+    "toll": "Péage",
+    "parking": "Stationnement",
+    "maintenance": "Entretien",
+    "meal": "Repas",
+    "other": "Autre"
+  },
+  "expenseStatus": {
+    "submitted": "À valider",
+    "approved": "Validée",
+    "rejected": "Refusée"
+  },
+  "expenses": {
+    "title": "Dépenses",
+    "new": "Nouvelle dépense",
+    "category": "Catégorie",
+    "amount": "Montant (MAD)",
+    "date": "Date",
+    "description": "Description (facultatif)",
+    "receipt": "Justificatif (photo ou PDF, facultatif)",
+    "none": "Aucun",
+    "add": "Enregistrer la dépense",
+    "who": "Chauffeur · véhicule",
+    "actions": "Actions",
+    "viewReceipt": "Voir le justificatif",
+    "approve": "Valider",
+    "reject": "Refuser",
+    "rejectTitle": "Refuser la dépense ?",
+    "rejectHelp": "Le motif est visible par l'auteur de la dépense. Une dépense refusée ne peut plus être modifiée.",
+    "rejectReason": "Motif du refus"
   }
 }

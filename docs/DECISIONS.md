@@ -333,3 +333,11 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Règlement** : en espèces ou par virement instantané à la plateforme (coordonnées de la page Paramètres admin, Q23, montrées au transporteur dans « Commissions ») ; l'admin enregistre le paiement, partiel ou total, jamais au-delà du dû.
 - **Retard et suspension (BR-009d, Q17)** : relevé non réglé après l'échéance : « en retard » ; `statement_suspension_days` (15 jours) plus tard, la visibilité marketplace est suspendue avec le motif ; seul l'admin la lève depuis la fiche société (Q19).
 - **Supervision des réservations (étape 17)** : liste admin de toutes les réservations, filtrable par statut, avec le contact du voyageur pour proposer un autre transporteur après un refus ou une expiration. Réaffectation assistée (nouvelle réservation chez un autre transporteur en un clic) : BACKLOG.
+
+## ADR-033 : Dépenses (étape 18, V2)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Qui dépose** : les rôles de bureau (pour n'importe quel chauffeur ou véhicule) et les chauffeurs (en leur propre nom, imposé en base). **Qui décide (BR-115)** : propriétaire, gérant, comptable ; refus avec motif obligatoire ; une dépense validée ou refusée est définitive (pas de suppression : on refuse).
+- **Justificatifs** : bucket privé `expense-receipts`, dossier de la société, 10 Mo, JPEG / PNG / WEBP / PDF, type réel lu dans les premiers octets, consultation par lien signé de 5 minutes (RLS sur le stockage : rôles de bureau et auteur du dépôt).
+- **Hors ligne** : `client_ref` unique généré par l'app chauffeur : rejouer la file après une coupure ne crée jamais de doublon (étape 19).
+- **Offre** : écriture avec la V2 (`has_feature('expenses')`), lecture conservée en lecture seule (Q21).

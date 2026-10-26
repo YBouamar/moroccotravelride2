@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 3 terminée (étapes 12 à 17) · **Prochaine étape** : Phase 4 (V2 : dépenses, app chauffeur, localisation)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 4, étape 18 terminée · **Prochaine étape** : Étape 19 (app chauffeur)
 
 ## 1. Plan d'exécution par étapes
 
@@ -54,6 +54,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étapes 12 et 13 : grilles tarifaires et visibilité marketplace côté transporteur (liste des conditions BR-016), recherche publique par lieu, date, heure et passagers, règle des 24 h, grilles de démonstration. 172 tests unitaires, 146 pgTAP, 54 E2E (ADR-030).
 - 2026-10-26, étapes 14 et 15 : tunnel de réservation invité (Turnstile, limite, prix et commission figés), lien magique signé (suivi, coordonnées de virement, annulation selon les paliers), réservations côté transporteur (acceptation sous 2 h avec conversion en trajet, refus motivé, expiration automatique, confirmation du paiement et du remboursement), registre des commissions, file d'e-mails trilingues. Critère Phase 3 vérifié (800 MAD : 160 / 640). 183 tests unitaires, 172 pgTAP, 57 E2E (ADR-031).
 - 2026-10-26, étapes 16 et 17 (fin de Phase 3) : relevés mensuels de commissions (génération automatique ou manuelle, paiements enregistrés par l'admin, retard puis suspension marketplace), page Commissions du transporteur, supervision admin des réservations. 183 tests unitaires, 182 pgTAP, 59 E2E (ADR-032).
+- 2026-10-26, étape 18 : dépenses (dépôt par le bureau ou le chauffeur, justificatif privé, validation ou refus motivé, décision définitive, offre V2). 186 tests unitaires, 191 pgTAP, 60 E2E (ADR-033).
 
 ## 3. En cours
 

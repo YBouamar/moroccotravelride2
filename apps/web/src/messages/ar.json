@@ -1122,5 +1122,37 @@
       "instant_transfer": "تحويل فوري",
       "bank_transfer": "تحويل بنكي"
     }
+  },
+  "expenseCategory": {
+    "fuel": "الوقود",
+    "toll": "الطريق السيار",
+    "parking": "الوقوف",
+    "maintenance": "الصيانة",
+    "meal": "الأكل",
+    "other": "أخرى"
+  },
+  "expenseStatus": {
+    "submitted": "للمصادقة",
+    "approved": "مصادق عليها",
+    "rejected": "مرفوضة"
+  },
+  "expenses": {
+    "title": "المصاريف",
+    "new": "مصروف جديد",
+    "category": "الفئة",
+    "amount": "المبلغ (درهم)",
+    "date": "التاريخ",
+    "description": "الوصف (اختياري)",
+    "receipt": "الإثبات (صورة أو PDF، اختياري)",
+    "none": "لا شيء",
+    "add": "حفظ المصروف",
+    "who": "السائق · المركبة",
+    "actions": "إجراءات",
+    "viewReceipt": "عرض الإثبات",
+    "approve": "مصادقة",
+    "reject": "رفض",
+    "rejectTitle": "رفض المصروف؟",
+    "rejectHelp": "السبب مرئي لصاحب المصروف. لا يمكن تعديل مصروف مرفوض.",
+    "rejectReason": "سبب الرفض"
   }
 }

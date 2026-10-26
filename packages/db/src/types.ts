@@ -833,6 +833,99 @@ export type Database = {
           },
         ];
       };
+      expenses: {
+        Row: {
+          amount_cents: number;
+          category: Database['public']['Enums']['expense_category'];
+          client_ref: string | null;
+          company_id: string;
+          created_at: string;
+          description: string | null;
+          driver_id: string | null;
+          id: string;
+          receipt_path: string | null;
+          rejection_reason: string | null;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          spent_on: string;
+          status: Database['public']['Enums']['expense_status'];
+          submitted_by: string | null;
+          trip_id: string | null;
+          updated_at: string;
+          vehicle_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          amount_cents: number;
+          category: Database['public']['Enums']['expense_category'];
+          client_ref?: string | null;
+          company_id: string;
+          created_at?: string;
+          description?: string | null;
+          driver_id?: string | null;
+          id?: string;
+          receipt_path?: string | null;
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          spent_on: string;
+          status?: Database['public']['Enums']['expense_status'];
+          submitted_by?: string | null;
+          trip_id?: string | null;
+          updated_at?: string;
+          vehicle_id?: string | null;
+        };
+        Update: {
+          amount_cents?: number;
+          category?: Database['public']['Enums']['expense_category'];
+          client_ref?: string | null;
+          company_id?: string;
+          created_at?: string;
+          description?: string | null;
+          driver_id?: string | null;
+          id?: string;
+          receipt_path?: string | null;
+          rejection_reason?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          spent_on?: string;
+          status?: Database['public']['Enums']['expense_status'];
+          submitted_by?: string | null;
+          trip_id?: string | null;
+          updated_at?: string;
+          vehicle_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'expenses_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'expenses_driver_id_company_id_fkey';
+            columns: ['driver_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'drivers';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'expenses_trip_id_company_id_fkey';
+            columns: ['trip_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'trips';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'expenses_vehicle_id_company_id_fkey';
+            columns: ['vehicle_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'vehicles';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       invoice_lines: {
         Row: {
           company_id: string;
@@ -1571,6 +1664,8 @@ export type Database = {
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
       driver_status: 'active' | 'inactive';
+      expense_category: 'fuel' | 'toll' | 'parking' | 'maintenance' | 'meal' | 'other';
+      expense_status: 'submitted' | 'approved' | 'rejected';
       invoice_payment_method: 'bank_transfer' | 'cash' | 'cheque' | 'other';
       invoice_status: 'draft' | 'issued' | 'partially_paid' | 'paid' | 'cancelled';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
@@ -1707,6 +1802,8 @@ export const Constants = {
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
       driver_status: ['active', 'inactive'],
+      expense_category: ['fuel', 'toll', 'parking', 'maintenance', 'meal', 'other'],
+      expense_status: ['submitted', 'approved', 'rejected'],
       invoice_payment_method: ['bank_transfer', 'cash', 'cheque', 'other'],
       invoice_status: ['draft', 'issued', 'partially_paid', 'paid', 'cancelled'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],

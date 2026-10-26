@@ -27,6 +27,8 @@ const MATRIX = {
   'trips.manage': ['owner', 'manager', 'dispatcher'],
   // BR-114: only owners and managers override a planning conflict (checked again in the database).
   'trips.overrideConflicts': ['owner', 'manager'],
+  'expenses.read': ['owner', 'manager', 'dispatcher', 'accountant'],
+  'expenses.review': ['owner', 'manager', 'accountant'],
   'invoices.read': ['owner', 'manager', 'accountant'],
   'invoices.manage': ['owner', 'manager', 'accountant'],
   // Marketplace (Pillar A): price grids, visibility, booking acceptance.

@@ -1122,5 +1122,37 @@
       "instant_transfer": "Instant transfer",
       "bank_transfer": "Bank transfer"
     }
+  },
+  "expenseCategory": {
+    "fuel": "Fuel",
+    "toll": "Toll",
+    "parking": "Parking",
+    "maintenance": "Maintenance",
+    "meal": "Meal",
+    "other": "Other"
+  },
+  "expenseStatus": {
+    "submitted": "To review",
+    "approved": "Approved",
+    "rejected": "Rejected"
+  },
+  "expenses": {
+    "title": "Expenses",
+    "new": "New expense",
+    "category": "Category",
+    "amount": "Amount (MAD)",
+    "date": "Date",
+    "description": "Description (optional)",
+    "receipt": "Receipt (photo or PDF, optional)",
+    "none": "None",
+    "add": "Save the expense",
+    "who": "Driver · vehicle",
+    "actions": "Actions",
+    "viewReceipt": "See the receipt",
+    "approve": "Approve",
+    "reject": "Reject",
+    "rejectTitle": "Reject the expense?",
+    "rejectHelp": "The reason is visible to the author. A rejected expense can no longer be changed.",
+    "rejectReason": "Reason for rejecting"
   }
 }

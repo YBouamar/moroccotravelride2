@@ -14,3 +14,4 @@ export * from './trips';
 export * from './invoices';
 export * from './marketplace';
 export * from './bookings';
+export * from './expenses';
