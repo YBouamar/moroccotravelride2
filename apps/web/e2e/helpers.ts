@@ -8,7 +8,8 @@ const MAILPIT = 'http://127.0.0.1:55324/api/v1';
 /** Turnstile test keys pass automatically, but the token arrives asynchronously. */
 export async function waitForCaptcha(page: Page) {
   await expect(page.locator('input[name="cf-turnstile-response"]')).toHaveValue(/.+/, {
-    timeout: 20_000,
+    // The widget loads from Cloudflare: allow for a slow network under parallel load.
+    timeout: 40_000,
   });
 }
 

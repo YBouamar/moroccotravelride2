@@ -12,10 +12,13 @@ export function buildCsp({
   nonce,
   supabaseUrl,
   isDev,
+  sentryDsn,
 }: {
   nonce: string;
   supabaseUrl: string;
   isDev: boolean;
+  /** When set, the browser may send error reports to the Sentry ingest host. */
+  sentryDsn?: string;
 }): string {
   const supabase = new URL(supabaseUrl);
   const realtime = `${supabase.protocol === 'https:' ? 'wss' : 'ws'}://${supabase.host}`;
@@ -32,7 +35,14 @@ export function buildCsp({
     'style-src': ["'self'", "'unsafe-inline'"],
     'img-src': ["'self'", 'data:', 'blob:', MAP_TILES_ORIGIN],
     'font-src': ["'self'"],
-    'connect-src': ["'self'", supabase.origin, realtime, TURNSTILE, MAP_TILES_ORIGIN],
+    'connect-src': [
+      "'self'",
+      supabase.origin,
+      realtime,
+      TURNSTILE,
+      MAP_TILES_ORIGIN,
+      ...(sentryDsn ? [new URL(sentryDsn).origin] : []),
+    ],
     // MapLibre renders in a web worker created from a blob URL.
     'worker-src': ["'self'", 'blob:'],
     'frame-src': [TURNSTILE],

@@ -8,9 +8,10 @@ import { getBookableOffer } from '@/features/booking/queries';
 import { getPublicPlaces, parseSearch, type SearchParams } from '@/features/search/queries';
 import { getPlatformSettings } from '@/features/settings/queries';
 import { asLocale } from '@/i18n/as-locale';
+import { consumeRateLimit } from '@/lib/security/rate-limit';
 import { Link } from '@/i18n/navigation';
 import { getPublicEnv } from '@/lib/env';
-import { getNonce } from '@/lib/security/request-context';
+import { getClientIp, getNonce } from '@/lib/security/request-context';
 
 export async function generateMetadata() {
   const t = await getTranslations('book');
@@ -40,8 +41,12 @@ export default async function BookPage({
   const tooSoon = search
     ? !isBookableAt(searchPickupAt(search), new Date(), settings.min_booking_lead_hours)
     : false;
+  // Same limit as the search (security audit 2026-10-26, finding 3).
+  const allowed = await consumeRateLimit('search-ip', await getClientIp(), 60, 60);
   const offer =
-    search && !tooSoon && offerId ? await getBookableOffer(offerId, search, locale) : null;
+    allowed && search && !tooSoon && offerId
+      ? await getBookableOffer(offerId, search, locale)
+      : null;
   const places = offer ? await getPublicPlaces(locale) : [];
   const placeName = (id: string) => places.find((place) => place.id === id)?.name ?? '';
 

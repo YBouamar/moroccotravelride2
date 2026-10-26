@@ -26,7 +26,7 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 
 ### 2.1 Accès aux données
 - ✅ RLS sur toutes les tables existantes (testé : aucune table publique sans RLS ni sans politique) ; à maintenir à chaque migration.
-- 🟡 Tests pgTAP : 223 assertions (isolation, rôles, offres, trajets, factures, réservations, relevés, dépenses, positions, V3, avis). Manquent des tests dédiés pour `booking_events`, `credit_notes`, `commission_statement_payments`, `plan_features`, et deux fichiers dépendent de l'état de la base (audit 2026-10-26, constats 2 et 8).
+- ✅ Tests pgTAP : 237 assertions (isolation, rôles, offres, trajets, factures, réservations, relevés, dépenses, positions, V3, avis). Tests dédiés ajoutés pour `booking_events`, `credit_notes`, `commission_statement_payments`, `plan_features`, fichiers isolés des données des autres suites (corrections de l'audit 2026-10-26).
 - ✅ Clé service role (`SUPABASE_SECRET_KEY`) uniquement côté serveur (modules `server-only` / `'use server'`) : limitation des tentatives, parcours invité vérifié par Turnstile ou lien magique signé, file d'e-mails ; jamais dans l'app chauffeur ni dans une variable `NEXT_PUBLIC_` / `EXPO_PUBLIC_` (audit 2026-10-26).
 - ✅ Server Actions et route handlers : validation Zod, identifiants `z.uuid()`, société lue dans la session (jamais dans l'entrée), rôle vérifié puis revérifié par la RLS ; redirections validées (`safeNextPath`). Seul `company_id` venant d'un client : l'app chauffeur, couverte par la RLS et le trigger des dépenses.
 - ✅ UUID sur toutes les tables ; références publiques aléatoires `MTR-XXXXXX` sans caractères ambigus (BR-013).
@@ -37,7 +37,7 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 ### 2.2 Authentification
 - 🟡 Configuration locale (`supabase/config.toml`) : mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail, ré-authentification pour changer de mot de passe. À reproduire sur le VPS. Écrans : étape 5.
 - ✅ MFA TOTP : `is_platform_admin()` exige `aal2` (pgTAP), le layout admin redirige vers `/mfa` sans aal2 (E2E), enrôlement et vérification par Server Actions. Proposition aux propriétaires : backlog.
-- 🟡 Limitation des tentatives (Postgres, ADR-020) et Turnstile vérifié côté serveur sur connexion, inscription, mot de passe oublié, réservation ; limites aussi sur annulation, avis, dépôts. ⬜ Recherche publique non limitée (audit 2026-10-26, constat 3).
+- ✅ Limitation des tentatives (Postgres, ADR-020) et Turnstile vérifié côté serveur sur connexion, inscription, mot de passe oublié, réservation ; limites aussi sur annulation, avis, dépôts, ouverture de lien de réservation et recherche publique (60 par minute et par IP).
 - ✅ Cookies de session `HttpOnly`, `SameSite=Lax`, `Secure` en production (aucun jeton lisible par le navigateur) ; session mobile dans SecureStore (trousseau iOS / keystore Android).
 
 ### 2.3 Application web
@@ -48,7 +48,7 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 
 ### 2.4 Fichiers
 - ✅ Buckets privés `company-documents` et `expense-receipts`, chemins `{company_id}/...` imposés par les politiques Storage (testé), liens signés de 5 minutes.
-- 🟡 Type réel détecté par les premiers octets, taille 10 Mo vérifiée côté serveur (et par le bucket), 20 dépôts par heure et par utilisateur pour les dépôts web ; ⬜ justificatifs envoyés par l'app chauffeur sans contrôle du contenu (audit 2026-10-26, constat 1) ; ⬜ compression des images côté client (backlog).
+- ✅ Type réel détecté par les premiers octets, taille 10 Mo vérifiée côté serveur (et par le bucket), 20 dépôts par heure et par utilisateur, pour le web comme pour l'app chauffeur (route `/api/driver/receipts`, le chauffeur n'écrit plus directement dans le bucket et ne rattache que son propre fichier). ⬜ Compression des images côté client (backlog).
 
 ### 2.5 Paiements (hors ligne, ADR-016)
 - ✅ Aucune donnée de carte (pas de paiement en ligne au lancement).
@@ -69,7 +69,7 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 - ✅ `.env.example` documenté (Supabase, Turnstile, Resend, Sentry, lien magique, cron).
 - ✅ Hook pre-commit gitleaks (fichiers indexés) ; historique complet analysé le 2026-10-26 : aucune fuite.
 - 🟡 `pnpm audit` : 0 vulnérabilité non traitée au 2026-10-26 (zod forcé en version corrigée ; exception documentée pour node-forge, outil de dev Expo, ADR-020). Dependabot configuré, actif dès que le dépôt GitHub existe.
-- 🟡 Journaux applicatifs limités à des codes d'erreur (une exception : constat 13) ; ⬜ Sentry et son `beforeSend` filtrant à brancher ; ⬜ jeton du lien magique à masquer dans les journaux du proxy (audit 2026-10-26, constats 4 et 5).
+- 🟡 Journaux applicatifs limités à des codes d'erreur ; Sentry branché avec `beforeSend` filtrant (`src/lib/monitoring/scrub.ts`, testé), ⬜ DSN à fournir ; jeton du lien de réservation hors des URL vues par le serveur (fragment puis cookie HttpOnly).
 
 ### 2.8 Sauvegarde et continuité (auto-hébergement, ADR-013)
 - ⬜ Pas de sauvegarde managée : `pg_dump` quotidien chiffré + sauvegarde des volumes Storage vers un stockage objet **hors du VPS**, rétention 30 jours.
@@ -88,6 +88,6 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 
 | Date | Portée | Rapport |
 |---|---|---|
-| 2026-10-26 | Base (RLS, fonctions), web (actions, routes, en-têtes, CSP), app chauffeur, secrets, dépendances, après les étapes 8 à 27 : 0 critique, 0 haut, 5 moyens, 8 bas | [2026-10-26-audit-securite.md](sessions/2026-10-26-audit-securite.md) |
+| 2026-10-26 | Base (RLS, fonctions), web (actions, routes, en-têtes, CSP), app chauffeur, secrets, dépendances, après les étapes 8 à 27 : 0 critique, 0 haut, 5 moyens, 8 bas ; constats 1 à 6, 8 et 13 corrigés le même jour | [2026-10-26-audit-securite.md](sessions/2026-10-26-audit-securite.md) |
 
 Lancer `/audit-securite` pour produire un rapport dans `docs/sessions/`.

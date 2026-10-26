@@ -51,3 +51,5 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P1 | Serveur de tuiles ou fournisseur de cartes avant le lancement (politique d'usage OpenStreetMap, ADR-034) |
 | P2 | Suivi de position en arrière-plan (consentement explicite, autonomie de la batterie) |
 | P2 | Test de l'app chauffeur sur appareils réels (Android d'entrée de gamme, iPhone) avec EAS |
+| P2 | RIB du transporteur lisible seulement par propriétaire, gérant et comptable (audit 2026-10-26, constat 7) |
+| P3 | Règle ESLint `react/no-danger` et contrôle `Sec-Fetch-Site` sur les exports CSV (audit 2026-10-26, constats 9 et 10) |

@@ -10,11 +10,13 @@ import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/serve
 import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardTitle } from '@/components/ui/card';
+import { BookingLinkOpener } from '@/features/booking/components/booking-link-opener';
 import { CancelBooking } from '@/features/booking/components/cancel-booking';
 import { ReviewForm } from '@/features/reviews/components/review-form';
 import { getGuestBooking } from '@/features/booking/queries';
 import { asLocale } from '@/i18n/as-locale';
 import { getBookingLinkSecret } from '@/lib/env.server';
+import { readBookingCookie } from '@/lib/security/booking-cookie';
 import { verifyBookingToken } from '@/lib/security/booking-link';
 
 export async function generateMetadata() {
@@ -25,18 +27,18 @@ export async function generateMetadata() {
 
 export default async function GuestBookingPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string; ref: string }>;
-  searchParams: Promise<{ t?: string }>;
 }) {
   const { locale: rawLocale, ref } = await params;
   const locale = asLocale(rawLocale);
   setRequestLocale(locale);
-  const token = (await searchParams).t ?? '';
   const [t, format] = await Promise.all([getTranslations('booking'), getFormatter()]);
 
-  const booking = PUBLIC_REF_PATTERN.test(ref) ? await getGuestBooking(ref) : null;
+  const valid = PUBLIC_REF_PATTERN.test(ref);
+  // The access token is in an HttpOnly cookie (set after booking or by the e-mail link opener).
+  const token = valid ? await readBookingCookie(ref) : '';
+  const booking = valid ? await getGuestBooking(ref) : null;
   // Same answer for an unknown reference and a bad link: no way to probe references.
   if (
     !booking ||
@@ -49,7 +51,11 @@ export default async function GuestBookingPage({
   ) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-12">
-        <Alert tone="danger">{t('errors.link')}</Alert>
+        {valid ? (
+          <BookingLinkOpener bookingRef={ref} />
+        ) : (
+          <Alert tone="danger">{t('errors.link')}</Alert>
+        )}
       </div>
     );
   }
@@ -132,7 +138,7 @@ export default async function GuestBookingPage({
       {status === 'completed' ? (
         <Card className="flex flex-col gap-3">
           <CardTitle>{t('review.title')}</CardTitle>
-          <ReviewForm bookingRef={booking.public_ref} token={token} />
+          <ReviewForm bookingRef={booking.public_ref} />
         </Card>
       ) : null}
 
@@ -140,7 +146,7 @@ export default async function GuestBookingPage({
         <Card className="flex flex-col gap-3">
           <CardTitle>{t('cancel.title')}</CardTitle>
           <p className="text-sm text-muted">{policyText}</p>
-          <CancelBooking bookingRef={booking.public_ref} token={token} policyText={policyText} />
+          <CancelBooking bookingRef={booking.public_ref} policyText={policyText} />
         </Card>
       ) : null}
     </div>

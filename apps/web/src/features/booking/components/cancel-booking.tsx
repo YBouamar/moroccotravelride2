@@ -10,11 +10,9 @@ import { cancelGuestBookingAction, type BookingError } from '../actions';
 /** Traveler cancellation from the magic link page (BR-011). The refund is computed server side. */
 export function CancelBooking({
   bookingRef,
-  token,
   policyText,
 }: {
   bookingRef: string;
-  token: string;
   policyText: string;
 }) {
   const t = useTranslations('booking');
@@ -35,7 +33,7 @@ export function CancelBooking({
         reasonRequired={false}
         onConfirm={(reason) =>
           startTransition(async () => {
-            const result = await cancelGuestBookingAction(bookingRef, token, reason);
+            const result = await cancelGuestBookingAction(bookingRef, reason);
             if (!result.ok) setError(result.error);
             else router.refresh();
           })

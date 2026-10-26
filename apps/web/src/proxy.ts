@@ -25,6 +25,7 @@ export default async function proxy(request: NextRequest) {
     nonce,
     supabaseUrl: env.NEXT_PUBLIC_SUPABASE_URL,
     isDev: process.env.NODE_ENV === 'development',
+    sentryDsn: env.NEXT_PUBLIC_SENTRY_DSN,
   });
   request.headers.set('x-nonce', nonce);
   request.headers.set('content-security-policy', csp);

@@ -7,6 +7,8 @@ const publicEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1),
   NEXT_PUBLIC_SITE_URL: z.url(),
   NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().min(1).optional(),
+  // Error monitoring (Sentry); empty = disabled.
+  NEXT_PUBLIC_SENTRY_DSN: z.url().optional(),
 });
 
 export type PublicEnv = z.infer<typeof publicEnvSchema>;
@@ -19,6 +21,7 @@ export function getPublicEnv(): PublicEnv {
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
     NEXT_PUBLIC_TURNSTILE_SITE_KEY: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || undefined,
+    NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN || undefined,
   });
   return cached;
 }

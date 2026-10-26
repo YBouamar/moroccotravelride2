@@ -12,6 +12,7 @@ import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 import { getBookingLinkSecret } from '@/lib/env.server';
 import { asAppLocale } from '@/lib/locale';
+import { readBookingCookie, setBookingCookie } from '@/lib/security/booking-cookie';
 import { verifyBookingToken } from '@/lib/security/booking-link';
 import { consumeRateLimit } from '@/lib/security/rate-limit';
 import { getClientIp } from '@/lib/security/request-context';
@@ -28,8 +29,7 @@ export type BookingError =
   | 'cannotCancel'
   | 'link'
   | 'unknown';
-export type BookingResult =
-  { ok: true; ref: string; token: string } | { ok: false; error: BookingError };
+export type BookingResult = { ok: true; ref: string } | { ok: false; error: BookingError };
 
 const fail = (error: BookingError): BookingResult => ({ ok: false, error });
 
@@ -92,20 +92,18 @@ export async function createBookingAction(
       carrier: 'booking_new_for_carrier',
     });
   }
-  return {
-    ok: true,
-    ref: created.public_ref,
-    token: booking ? bookingLink(booking).token : '',
-  };
+  // The traveler who just booked gets the access cookie directly: no token in any URL.
+  if (booking) await setBookingCookie(created.public_ref, bookingLink(booking).token);
+  return { ok: true, ref: created.public_ref };
 }
 
-/** Traveler cancellation through the magic link (BR-011). */
+/** Traveler cancellation through the magic link (BR-011); the token comes from the cookie. */
 export async function cancelGuestBookingAction(
   ref: string,
-  token: string,
   reason: string,
 ): Promise<BookingResult> {
-  if (!PUBLIC_REF_PATTERN.test(ref) || typeof token !== 'string') return fail('link');
+  if (!PUBLIC_REF_PATTERN.test(ref)) return fail('link');
+  const token = await readBookingCookie(ref);
   const ip = await getClientIp();
   if (!(await consumeRateLimit('booking-cancel-ip', ip, 20, 60 * 60))) return fail('rateLimited');
 
@@ -141,5 +139,36 @@ export async function cancelGuestBookingAction(
     { refund: formatMoney(Number(refund ?? 0), asAppLocale(booking.locale)) },
   );
   revalidatePath('/', 'layout');
-  return { ok: true, ref, token };
+  return { ok: true, ref };
+}
+
+/**
+ * Exchanges the token of an e-mail link (read by the page from the URL fragment, which browsers
+ * never send to the server) for the HttpOnly access cookie of this booking.
+ */
+export async function openBookingLinkAction(ref: string, token: string): Promise<BookingResult> {
+  if (!PUBLIC_REF_PATTERN.test(ref) || typeof token !== 'string' || token.length > 200) {
+    return fail('link');
+  }
+  if (!(await consumeRateLimit('booking-link-ip', await getClientIp(), 30, 60 * 60))) {
+    return fail('rateLimited');
+  }
+  const { data: booking } = await createAdminClient()
+    .from('bookings')
+    .select('traveler_email')
+    .eq('public_ref', ref)
+    .maybeSingle();
+  if (
+    !booking ||
+    !verifyBookingToken({
+      secret: getBookingLinkSecret(),
+      ref,
+      email: booking.traveler_email,
+      token,
+    })
+  ) {
+    return fail('link');
+  }
+  await setBookingCookie(ref, token);
+  return { ok: true, ref };
 }

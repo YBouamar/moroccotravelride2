@@ -1006,7 +1006,8 @@
     "seatsUpTo": "حتى {seats} ركاب",
     "allInclusive": "سعر شامل",
     "book": "احجز",
-    "rating": "{average} / 5 ({count, plural, one {رأي واحد} two {رأيان} few {# آراء} many {# رأيا} other {# رأي}})"
+    "rating": "{average} / 5 ({count, plural, one {رأي واحد} two {رأيان} few {# آراء} many {# رأيا} other {# رأي}})",
+    "throttled": "عمليات بحث كثيرة من اتصالك. انتظر دقيقة ثم حاول مرة أخرى."
   },
   "book": {
     "title": "حجزك",
@@ -1117,7 +1118,8 @@
     },
     "review": {
       "title": "شاركنا رأيك"
-    }
+    },
+    "opening": "جار فتح حجزك..."
   },
   "bookings": {
     "title": "الحجوزات",

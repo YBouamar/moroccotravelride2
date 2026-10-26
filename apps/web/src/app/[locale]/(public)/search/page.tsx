@@ -14,6 +14,8 @@ import {
 } from '@/features/search/queries';
 import { getPlatformSettings } from '@/features/settings/queries';
 import { asLocale } from '@/i18n/as-locale';
+import { consumeRateLimit } from '@/lib/security/rate-limit';
+import { getClientIp } from '@/lib/security/request-context';
 import { Link } from '@/i18n/navigation';
 
 export async function generateMetadata() {
@@ -40,8 +42,12 @@ export default async function SearchPage({
   const search = parseSearch(raw);
   const lead = settings.min_booking_lead_hours;
   const tooSoon = search ? !isBookableAt(searchPickupAt(search), new Date(), lead) : false;
+  // Security audit 2026-10-26 (finding 3): 60 searches per minute and per IP.
+  const throttled = !!search && !(await consumeRateLimit('search-ip', await getClientIp(), 60, 60));
   const offers =
-    search && !tooSoon && settings.marketplace_open ? await searchOffers(search, locale) : [];
+    search && !tooSoon && !throttled && settings.marketplace_open
+      ? await searchOffers(search, locale)
+      : [];
   const placeName = (id: string) => places.find((place) => place.id === id)?.name ?? '';
 
   const bookHref = (offerId: string) =>
@@ -67,8 +73,9 @@ export default async function SearchPage({
 
       {!settings.marketplace_open ? <Alert tone="danger">{t('closed')}</Alert> : null}
       {tooSoon ? <Alert tone="danger">{t('tooSoon', { hours: lead })}</Alert> : null}
+      {throttled ? <Alert tone="danger">{t('throttled')}</Alert> : null}
 
-      {search && !tooSoon ? (
+      {search && !tooSoon && !throttled ? (
         <section aria-labelledby="results-title" className="flex flex-col gap-4">
           <div>
             <h1 id="results-title" className="text-2xl font-bold">

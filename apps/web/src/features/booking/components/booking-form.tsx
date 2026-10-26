@@ -66,7 +66,7 @@ export function BookingForm({ offer, date, time, passengers, siteKey, nonce }: B
         setCaptchaKey((key) => key + 1);
         return;
       }
-      router.push(`/booking/${result.ref}?t=${result.token}`);
+      router.push(`/booking/${result.ref}`);
     });
   });
 

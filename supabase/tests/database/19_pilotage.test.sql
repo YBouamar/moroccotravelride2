@@ -29,7 +29,7 @@ select throws_ok($$ select public.submit_review('eeeeeeee-0000-4000-8000-0000000
   'a booking not completed cannot be reviewed');
 select throws_ok($$ select public.submit_review('eeeeeeee-0000-4000-8000-000000000001', 1, 'Again') $$, '23505', null,
   'a booking is reviewed only once');
-select is((select traveler_name from public.reviews), 'Emma', 'only the first name is shown');
+select is((select traveler_name from public.reviews where booking_id = 'eeeeeeee-0000-4000-8000-000000000001'), 'Emma', 'only the first name is shown');
 
 reset role;
 set local role anon;
@@ -40,12 +40,12 @@ reset role;
 set local role authenticated;
 select set_config('request.jwt.claims',
   '{"sub": "a0000000-0000-0000-0000-000000000001", "role": "authenticated", "aal": "aal1"}', true);
-select is_empty($$ update public.reviews set status = 'published' returning id $$, 'a carrier cannot moderate its reviews');
+select is_empty($$ update public.reviews set status = 'published' where booking_id = 'eeeeeeee-0000-4000-8000-000000000001' returning id $$, 'a carrier cannot moderate its reviews');
 select throws_ok($$ select public.admin_kpis() $$, '42501', null, 'KPIs are reserved to admins');
 
 select set_config('request.jwt.claims',
   '{"sub": "d0000000-0000-0000-0000-000000000001", "role": "authenticated", "aal": "aal2"}', true);
-update public.reviews set status = 'published';
+update public.reviews set status = 'published' where booking_id = 'eeeeeeee-0000-4000-8000-000000000001';
 select is((select (average, reviews)::text from public.carrier_ratings(array['aaaaaaaa-0000-0000-0000-000000000000'::uuid])),
   '(5.0,1)', 'a published review counts in the rating');
 select ok((public.admin_kpis() ->> 'gmv_cents')::bigint >= 80000, 'the admin reads the GMV of the month');

@@ -25,7 +25,7 @@ export function bookingLink(booking: {
   const site = getServerEnv().NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
   return {
     token,
-    url: `${site}/${asAppLocale(booking.locale)}/booking/${booking.public_ref}?t=${token}`,
+    url: `${site}/${asAppLocale(booking.locale)}/booking/${booking.public_ref}#t=${token}`,
   };
 }
 
@@ -87,5 +87,10 @@ export async function notifyBooking(
     }
   }
   await queueEmails(emails);
-  after(() => flushOutbox().catch((cause) => console.error('outbox flush failed', cause)));
+  after(() =>
+    flushOutbox().catch((cause) =>
+      // Message only: a provider error may quote an e-mail address.
+      console.error('outbox flush failed', cause instanceof Error ? cause.name : 'unknown'),
+    ),
+  );
 }

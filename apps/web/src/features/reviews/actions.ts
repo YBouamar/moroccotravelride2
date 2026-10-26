@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { getSessionUser } from '@/features/auth/session';
 import { fail, type FormResult } from '@/lib/action-result';
 import { getBookingLinkSecret } from '@/lib/env.server';
+import { readBookingCookie } from '@/lib/security/booking-cookie';
 import { verifyBookingToken } from '@/lib/security/booking-link';
 import { consumeRateLimit } from '@/lib/security/rate-limit';
 import { getClientIp } from '@/lib/security/request-context';
@@ -21,7 +22,6 @@ const reviewSchema = z.object({
 
 export async function submitReviewAction(
   ref: string,
-  token: string,
   input: z.input<typeof reviewSchema>,
 ): Promise<FormResult> {
   const parsed = reviewSchema.safeParse(input);
@@ -29,6 +29,7 @@ export async function submitReviewAction(
   if (!(await consumeRateLimit('review-ip', await getClientIp(), 10, 60 * 60)))
     return fail('rateLimited');
 
+  const token = await readBookingCookie(ref);
   const admin = createAdminClient();
   const { data: booking } = await admin
     .from('bookings')

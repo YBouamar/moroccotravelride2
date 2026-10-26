@@ -33,17 +33,43 @@ async function sendLocations(job: Extract<QueueJob, { kind: 'locations' }>): Pro
   return outcomeOf(error);
 }
 
+// The web API checks the real file type before storing it (security audit 2026-10-26).
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
+async function uploadReceipt(
+  companyId: string,
+  clientRef: string,
+  uri: string,
+): Promise<string | null | 'retry'> {
+  const { data } = await supabase.auth.getSession();
+  if (!API_URL || !data.session) return 'retry';
+  const form = new FormData();
+  form.append('companyId', companyId);
+  form.append('clientRef', clientRef);
+  // React Native sends a local file from its URI.
+  form.append('file', { uri, name: `${clientRef}.jpg`, type: 'image/jpeg' } as unknown as Blob);
+  try {
+    const response = await fetch(`${API_URL}/api/driver/receipts`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${data.session.access_token}` },
+      body: form,
+    });
+    if (response.ok) return ((await response.json()) as { path: string }).path;
+    // Refused (type, size, rights): the expense is still sent, without the receipt.
+    return response.status >= 500 || response.status === 429 ? 'retry' : null;
+  } catch {
+    return 'retry';
+  }
+}
+
 async function sendExpense(job: Extract<QueueJob, { kind: 'expense' }>): Promise<JobOutcome> {
   let receiptPath: string | null = null;
   if (job.photoUri) {
     const photo = new File(job.photoUri);
     if (photo.exists) {
-      receiptPath = `${job.companyId}/${job.clientRef}.jpg`;
-      const upload = await supabase.storage
-        .from('expense-receipts')
-        .upload(receiptPath, await photo.bytes(), { contentType: 'image/jpeg', upsert: false });
-      // Already uploaded by a previous attempt whose answer was lost: keep going.
-      if (upload.error && !/exist|duplicate/i.test(upload.error.message)) return 'retry';
+      const result = await uploadReceipt(job.companyId, job.clientRef, photo.uri);
+      if (result === 'retry') return 'retry';
+      receiptPath = result;
     }
   }
   // client_ref makes the insert idempotent: replaying after a lost answer never duplicates.

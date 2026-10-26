@@ -40,7 +40,8 @@ test('Phase 3 acceptance: a guest books an 800 MAD transfer, 160 MAD commission 
   await waitForCaptcha(page);
   await page.getByRole('button', { name: 'Confirmer la réservation' }).click();
 
-  await expect(page).toHaveURL(/\/fr\/booking\/MTR-[A-Z0-9]{6}\?t=/);
+  // No token in the URL: the access cookie is set by the server (security audit, finding 5).
+  await expect(page).toHaveURL(/\/fr\/booking\/MTR-[A-Z0-9]{6}$/);
   bookingUrl = page.url();
   bookingRef = bookingUrl.match(/MTR-[A-Z0-9]{6}/)![0];
   await expect(page.getByText('En attente du transporteur')).toBeVisible();
@@ -79,17 +80,29 @@ test('the carrier accepts the booking, which lands in the planning', async ({ pa
   ).toBe('marketplace|planned|240');
 });
 
-test('the traveler sees the bank details and cancels for free before paying', async ({ page }) => {
-  await page.goto(bookingUrl);
+test('the traveler sees the bank details and cancels for free before paying', async ({
+  page,
+  baseURL,
+}) => {
+  // A new browser opens the e-mail link: the token travels in the fragment, never to the server.
+  const emailLink = sql(
+    `select o.payload ->> 'link' from public.email_outbox o join public.bookings b on b.id = o.booking_id where b.public_ref = '${bookingRef}' and o.template = 'booking_received'`,
+  );
+  expect(emailLink).toContain(`/fr/booking/${bookingRef}#t=`);
+  const link = new URL(emailLink);
+  await page.goto(`${baseURL}${link.pathname}${link.hash}`);
+  await expect(page).toHaveURL(new RegExp(`/fr/booking/${bookingRef}$`));
   await expect(page.getByText('Confirmée', { exact: true })).toBeVisible();
   await expect(page.getByText('011780000012345678901234')).toBeVisible();
   await expect(
     page.getByText("Rien n'a encore été payé : l'annulation est sans frais.").first(),
   ).toBeVisible();
 
-  // A tampered link shows nothing.
-  await page.goto(bookingUrl.replace(/t=[^&]+/, 't=123.forged'));
-  await expect(page.getByText('Ce lien est invalide ou a expiré.')).toBeVisible();
+  // A tampered link opened in another browser shows nothing.
+  const other = await page.context().browser()!.newPage();
+  await other.goto(`${baseURL}/fr/booking/${bookingRef}#t=123.forged`);
+  await expect(other.getByText('Ce lien est invalide ou a expiré.')).toBeVisible();
+  await other.close();
 
   await page.goto(bookingUrl);
   await page.getByRole('button', { name: 'Annuler la réservation' }).click();

@@ -49,3 +49,18 @@ Aucun constat critique ni haut. Le socle est solide : RLS sur les 33 tables, rè
 ## Suite proposée
 
 Corriger 1 à 5 avant la mise en production (étapes 28 à 30), 6 à 13 au fil de l'eau. Aucune correction n'a été faite pendant cet audit.
+
+## Corrections (validées par Yassine, 2026-10-26)
+
+| # | Statut | Correction | Vérification |
+|---|---|---|---|
+| 1 | Corrigé | L'app chauffeur envoie le justificatif à `POST /api/driver/receipts` (jeton du chauffeur, membre et offre V2 vérifiés par `receipt_upload_allowed`, 10 Mo, type réel lu dans les premiers octets, chemin `{company_id}/{client_ref}.ext`) ; les chauffeurs ne peuvent plus écrire dans le bucket (migration `20261101090000_security_fixes.sql`). Un justificatif refusé n'empêche pas l'envoi de la dépense. | pgTAP `20_audit_fixes`, E2E `driver-receipts.spec.ts` (401, 415, 403, 200) |
+| 2 | Corrigé | Tests dédiés pour `booking_events`, `credit_notes`, `commission_statement_payments`, `plan_features`. | pgTAP `20_audit_fixes` |
+| 3 | Corrigé | 60 recherches par minute et par IP sur la recherche et la page de réservation, message traduit au-delà. | revue de code (`search/page.tsx`, `book/page.tsx`) |
+| 4 | Corrigé | Sentry 11.6.0 (`instrumentation.ts`, `instrumentation-client.ts`), inactif sans `NEXT_PUBLIC_SENTRY_DSN`, sans rejeu de session ; chaque événement nettoyé par `scrubEvent` (cookies, en-têtes d'authentification, chaînes de requête et fragments, e-mails, téléphones, IP, utilisateur réduit à un identifiant) ; origine d'envoi ajoutée à la CSP seulement si le DSN est défini. Reste à fournir le DSN. | tests unitaires `scrub.test.ts` |
+| 5 | Corrigé | Le jeton n'est plus jamais dans une URL vue par le serveur : les e-mails le placent dans le fragment (`#t=`), la page l'échange contre un cookie HttpOnly propre à la réservation puis l'efface de l'historique ; après une réservation, le cookie est posé directement. Annulation et avis lisent le cookie. | E2E `booking.spec.ts` (lien de l'e-mail, lien falsifié) |
+| 6 | Corrigé | Un chauffeur ne peut rattacher que son propre justificatif (`{company_id}/{client_ref}.ext`), contrôle dans `guard_expense`. | pgTAP `20_audit_fixes` |
+| 8 | Corrigé | Tests `15` et `19` limités à leurs propres données. | `pnpm db:test` après une passe E2E |
+| 13 | Corrigé | Le journal du vidage de la file d'e-mails ne transmet plus que le type d'erreur. | revue de code (`booking/notify.ts`) |
+| 7, 9 à 12 | Ouverts | Basse gravité, inscrits au BACKLOG. | |
+

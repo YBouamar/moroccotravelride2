@@ -1954,6 +1954,7 @@ export type Database = {
           trip_id: string;
         }[];
       };
+      receipt_upload_allowed: { Args: { p_company: string }; Returns: boolean };
       record_driver_locations: { Args: { p_points: Json; p_trip: string }; Returns: number };
       record_statement_payment: {
         Args: {

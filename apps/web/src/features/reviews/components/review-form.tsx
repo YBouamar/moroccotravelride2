@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { submitReviewAction } from '../actions';
 
 /** Rating from 1 to 5 stars and an optional comment, published after moderation. */
-export function ReviewForm({ bookingRef, token }: { bookingRef: string; token: string }) {
+export function ReviewForm({ bookingRef }: { bookingRef: string }) {
   const t = useTranslations();
   const { pending, error, run } = useOnboardingAction();
   const [rating, setRating] = useState(5);
@@ -25,7 +25,7 @@ export function ReviewForm({ bookingRef, token }: { bookingRef: string; token: s
       onSubmit={(event) => {
         event.preventDefault();
         run(
-          () => submitReviewAction(bookingRef, token, { rating, comment }),
+          () => submitReviewAction(bookingRef, { rating, comment }),
           () => setSent(true),
         );
       }}

@@ -1006,7 +1006,8 @@
     "seatsUpTo": "Jusqu'à {seats} passagers",
     "allInclusive": "Prix tout compris",
     "book": "Réserver",
-    "rating": "{average} / 5 ({count, plural, one {# avis} other {# avis}})"
+    "rating": "{average} / 5 ({count, plural, one {# avis} other {# avis}})",
+    "throttled": "Trop de recherches depuis votre connexion. Patientez une minute puis réessayez."
   },
   "book": {
     "title": "Votre réservation",
@@ -1117,7 +1118,8 @@
     },
     "review": {
       "title": "Donnez votre avis"
-    }
+    },
+    "opening": "Ouverture de votre réservation..."
   },
   "bookings": {
     "title": "Réservations",

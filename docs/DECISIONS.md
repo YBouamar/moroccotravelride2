@@ -369,3 +369,12 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Reversements** : sans objet dans le modèle hors ligne (ADR-016) : le transporteur encaisse tout et reverse la commission ; la plateforme ne verse rien aux transporteurs. Le sens « plateforme doit au transporteur » reste prévu pour le futur paiement par carte (BACKLOG).
 - **Journal d'audit** : page admin paginée, filtrable par type d'action (`trip`, `invoice`, `company`...), libellés traduits pour toutes les entités auditées.
 - **Avis** : le voyageur note une réservation terminée depuis son lien magique (une seule fois) ; l'avis est **modéré** par l'admin avant de compter ; seule la note des avis publiés apparaît dans les résultats de recherche ; le transporteur lit ses avis mais ne peut pas les modérer.
+
+## ADR-037 : Corrections de l'audit de sécurité du 2026-10-26
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (Yassine)
+- **Justificatifs de l'app chauffeur** : envoi par `POST /api/driver/receipts` (jeton d'accès du chauffeur, contrôle des droits, de la taille et du type réel, stockage par le serveur) ; politique de stockage réservée aux rôles de bureau ; un chauffeur ne rattache que `{company_id}/{client_ref}.ext`. Nouvelle variable `EXPO_PUBLIC_API_URL` pour l'app.
+- **Lien de réservation** : jeton dans le fragment de l'URL des e-mails, échangé contre un cookie HttpOnly par réservation (`openBookingLinkAction`, limité à 30 par heure et par IP) ; plus aucun jeton dans une URL reçue par le serveur, donc dans les journaux.
+- **Recherche** : 60 recherches par minute et par IP (page de recherche et page de réservation).
+- **Supervision** : `@sentry/nextjs` 11.6.0 (prévu dans la stack, CLAUDE.md), inactif sans DSN, sans rejeu de session, événements nettoyés des données personnelles avant envoi (fonction pure testée) ; DSN à fournir par Yassine.
+- **Tests** : 4 tables couvertes en plus, tests isolés des données des autres suites ; attente du widget Turnstile portée à 40 s dans les E2E (chargé depuis Cloudflare).
