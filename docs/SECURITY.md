@@ -26,10 +26,10 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 
 ### 2.1 Accès aux données
 - ✅ RLS sur toutes les tables existantes (testé : aucune table publique sans RLS ni sans politique) ; à maintenir à chaque migration.
-- 🟡 Tests pgTAP : isolation société A / B, rôles internes (gérant, chauffeur), colonnes admin, dernier propriétaire, profils, référentiels, admin sans MFA refusé (42 assertions, étape 4). Chauffeur / trajets et voyageur / réservations : Phases 2 et 3.
-- ✅ Clé service role (`SUPABASE_SECRET_KEY`) uniquement côté serveur (`src/lib/supabase/admin.ts`, `server-only`), utilisée seulement pour la limitation des tentatives ; jamais dans l'app chauffeur ni dans une variable `NEXT_PUBLIC_` / `EXPO_PUBLIC_`.
-- 🟡 Server Actions d'authentification : validation Zod côté serveur, langue et redirection validées (`safeNextPath`, anti redirection ouverte). Actions métier (rôle + appartenance) : Phase 2.
-- 🟡 UUID sur toutes les tables créées ; références publiques aléatoires en Phase 3.
+- 🟡 Tests pgTAP : 223 assertions (isolation, rôles, offres, trajets, factures, réservations, relevés, dépenses, positions, V3, avis). Manquent des tests dédiés pour `booking_events`, `credit_notes`, `commission_statement_payments`, `plan_features`, et deux fichiers dépendent de l'état de la base (audit 2026-10-26, constats 2 et 8).
+- ✅ Clé service role (`SUPABASE_SECRET_KEY`) uniquement côté serveur (modules `server-only` / `'use server'`) : limitation des tentatives, parcours invité vérifié par Turnstile ou lien magique signé, file d'e-mails ; jamais dans l'app chauffeur ni dans une variable `NEXT_PUBLIC_` / `EXPO_PUBLIC_` (audit 2026-10-26).
+- ✅ Server Actions et route handlers : validation Zod, identifiants `z.uuid()`, société lue dans la session (jamais dans l'entrée), rôle vérifié puis revérifié par la RLS ; redirections validées (`safeNextPath`). Seul `company_id` venant d'un client : l'app chauffeur, couverte par la RLS et le trigger des dépenses.
+- ✅ UUID sur toutes les tables ; références publiques aléatoires `MTR-XXXXXX` sans caractères ambigus (BR-013).
 
 - ✅ Journal d'audit en ajout seul (triggers, aucune écriture directe possible, testé), sans donnée sensible ; lecture admin et propriétaire.
 - ✅ Modifications d'abonnement réservées à l'admin MFA (RLS, testé).
@@ -37,39 +37,39 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 ### 2.2 Authentification
 - 🟡 Configuration locale (`supabase/config.toml`) : mot de passe de 10 caractères minimum avec minuscules, majuscules et chiffres, confirmation d'e-mail, ré-authentification pour changer de mot de passe. À reproduire sur le VPS. Écrans : étape 5.
 - ✅ MFA TOTP : `is_platform_admin()` exige `aal2` (pgTAP), le layout admin redirige vers `/mfa` sans aal2 (E2E), enrôlement et vérification par Server Actions. Proposition aux propriétaires : backlog.
-- ✅ Limitation des tentatives (Postgres, ADR-020) et Turnstile vérifié côté serveur sur connexion, inscription, mot de passe oublié. Recherche et réservation : Phase 3.
+- 🟡 Limitation des tentatives (Postgres, ADR-020) et Turnstile vérifié côté serveur sur connexion, inscription, mot de passe oublié, réservation ; limites aussi sur annulation, avis, dépôts. ⬜ Recherche publique non limitée (audit 2026-10-26, constat 3).
 - ✅ Cookies de session `HttpOnly`, `SameSite=Lax`, `Secure` en production (aucun jeton lisible par le navigateur) ; session mobile dans SecureStore (trousseau iOS / keystore Android).
 
 ### 2.3 Application web
 - ✅ HSTS, `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy` (géolocalisation, caméra, micro, paiement désactivés), en-tête `X-Powered-By` supprimé : `apps/web/next.config.ts`, testés par Playwright.
 - ✅ CSP stricte à nonce par requête (`src/proxy.ts`, `src/lib/security/csp.ts`), testée (unitaire + E2E).
-- ⬜ Interdiction de `dangerouslySetInnerHTML` sur contenu utilisateur (règle ESLint).
-- ⬜ CSRF natif des Server Actions conservé ; contrôle `Origin` sur route handlers sensibles.
+- 🟡 Aucun `dangerouslySetInnerHTML`, `eval` ni `innerHTML` dans le code (audit 2026-10-26) ; e-mails échappés ; ⬜ règle ESLint `react/no-danger` à activer.
+- 🟡 CSRF natif des Server Actions conservé ; route `/api/cron/emails` protégée par secret partagé comparé à temps constant ; ⬜ contrôle `Origin` / `Sec-Fetch-Site` sur les exports CSV (audit 2026-10-26, constat 10).
 
 ### 2.4 Fichiers
-- ✅ Bucket privé `company-documents`, chemins `{company_id}/...` imposés par les politiques Storage (testé), liens signés de 5 minutes pour l'admin. Bucket `receipts` : Phase 4.
-- ✅ Type réel détecté par les premiers octets, taille 10 Mo vérifiée côté serveur (et par le bucket), 20 dépôts par heure et par utilisateur. ⬜ Compression des images côté client (backlog).
+- ✅ Buckets privés `company-documents` et `expense-receipts`, chemins `{company_id}/...` imposés par les politiques Storage (testé), liens signés de 5 minutes.
+- 🟡 Type réel détecté par les premiers octets, taille 10 Mo vérifiée côté serveur (et par le bucket), 20 dépôts par heure et par utilisateur pour les dépôts web ; ⬜ justificatifs envoyés par l'app chauffeur sans contrôle du contenu (audit 2026-10-26, constat 1) ; ⬜ compression des images côté client (backlog).
 
 ### 2.5 Paiements (hors ligne, ADR-016)
-- ⬜ Aucune donnée de carte (pas de paiement en ligne au lancement).
-- ⬜ Confirmation d'un paiement voyageur réservée au transporteur (owner, manager, accountant) ; déclaration d'encaissement espèces par le chauffeur affecté uniquement ; enregistrement des règlements de relevés réservé à `platform_admin` ; tout est journalisé dans `audit_logs`.
-- ⬜ Montants dus (commission, part transporteur) calculés côté serveur depuis les valeurs figées de la réservation, jamais lus depuis le client.
-- ⬜ RIB des transporteurs : accès restreint, affiché au voyageur uniquement pour sa réservation confirmée.
+- ✅ Aucune donnée de carte (pas de paiement en ligne au lancement).
+- ✅ Confirmation d'un paiement ou d'un remboursement voyageur réservée au transporteur (owner, manager, accountant) ; règlements de relevés enregistrés par l'admin MFA ; historique dans `booking_events` et `audit_logs`. ⬜ Déclaration d'encaissement espèces par le chauffeur depuis l'app (BACKLOG).
+- ✅ Prix, taux, commission et part transporteur figés en base à la création (`create_booking`), jamais lus depuis le client (pgTAP : 800 MAD donnent 160 / 640).
+- 🟡 RIB des transporteurs affiché au voyageur uniquement sur sa réservation confirmée (lien magique) ; ⬜ encore lisible par tous les membres de la société, chauffeurs compris (audit 2026-10-26, constat 7).
 - ⬜ Le jour où la carte en ligne arrive : vérification de signature des callbacks, idempotence, montant recalculé (exigences d'origine conservées).
 
 ### 2.6 Données personnelles (loi 09-08, CNDP)
 - ⬜ Minimisation, consentement CGU / confidentialité, opt-in marketing séparé.
 - ⬜ Pages légales fr / en / ar marquées `À VALIDER` (juriste).
-- ⬜ Géolocalisation limitée aux trajets en cours, information du chauffeur, purge 90 jours.
+- ✅ Géolocalisation limitée au trajet en cours du chauffeur (contrôle en base, pgTAP), information dans la demande d'autorisation de l'app, purge quotidienne à 90 jours (durée légale À VÉRIFIER).
 - ⬜ Export et anonymisation de compte.
 - ⬜ Déclaration CNDP du traitement et du transfert hors Maroc (VPS en UE, ADR-013) : reportée par Yassine, **à faire avant la mise en production**.
 
 ### 2.7 Secrets et chaîne d'approvisionnement
-- 🟡 `.gitignore` excluant `.env*` (hors `.env.example`) : en place (Phase 0).
-- 🟡 `.env.example` documenté : version initiale (Phase 0).
-- ✅ Hook pre-commit gitleaks (fichiers indexés) ; historique analysé le 2026-10-25 : aucune fuite.
+- ✅ `.gitignore` excluant `.env*` (hors `.env.example`) ; aucun fichier d'environnement suivi (audit 2026-10-26).
+- ✅ `.env.example` documenté (Supabase, Turnstile, Resend, Sentry, lien magique, cron).
+- ✅ Hook pre-commit gitleaks (fichiers indexés) ; historique complet analysé le 2026-10-26 : aucune fuite.
 - 🟡 `pnpm audit` : 0 vulnérabilité non traitée au 2026-10-26 (zod forcé en version corrigée ; exception documentée pour node-forge, outil de dev Expo, ADR-020). Dependabot configuré, actif dès que le dépôt GitHub existe.
-- ⬜ Logs sans PII ni jetons ; Sentry `beforeSend` filtrant.
+- 🟡 Journaux applicatifs limités à des codes d'erreur (une exception : constat 13) ; ⬜ Sentry et son `beforeSend` filtrant à brancher ; ⬜ jeton du lien magique à masquer dans les journaux du proxy (audit 2026-10-26, constats 4 et 5).
 
 ### 2.8 Sauvegarde et continuité (auto-hébergement, ADR-013)
 - ⬜ Pas de sauvegarde managée : `pg_dump` quotidien chiffré + sauvegarde des volumes Storage vers un stockage objet **hors du VPS**, rétention 30 jours.
@@ -88,6 +88,6 @@ Implémentée dans `packages/shared/src/permissions.ts` (UI) et **doublée par l
 
 | Date | Portée | Rapport |
 |---|---|---|
-| (aucun) | | |
+| 2026-10-26 | Base (RLS, fonctions), web (actions, routes, en-têtes, CSP), app chauffeur, secrets, dépendances, après les étapes 8 à 27 : 0 critique, 0 haut, 5 moyens, 8 bas | [2026-10-26-audit-securite.md](sessions/2026-10-26-audit-securite.md) |
 
 Lancer `/audit-securite` pour produire un rapport dans `docs/sessions/`.
