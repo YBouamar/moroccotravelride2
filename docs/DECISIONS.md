@@ -296,3 +296,11 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Contexte** : sous Windows, Hyper-V réserve dynamiquement des plages de ports ; après un redémarrage, la plage 54117 à 54616 couvrait les ports par défaut de Supabase local (54321 à 54324) et `pnpm db:start` échouait. Le correctif (`net stop winnat`) demande les droits administrateur.
 - **Décision** : ports locaux déplacés de 543xx à **553xx** dans `supabase/config.toml` (API 55321, Postgres 55322, Studio 55323, Mailpit 55324). `.env.example`, les helpers E2E et la documentation suivent. Sur le poste de Yassine, `apps/web/.env.development.local` et `.env.production.local` (non commités) surchargent l'URL ; à terme, mettre `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:55321` dans `apps/web/.env.local` et adapter `EXPO_PUBLIC_SUPABASE_URL` de l'app chauffeur.
 - **Production** : sans effet (Supabase auto-hébergé sur le VPS avec sa propre configuration).
+
+## ADR-029 : Tableau de bord du jour et recette de la Phase 2 (étape 11)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (seuils À CONFIRMER)
+- **Contenu selon le rôle** (même matrice que la RLS) : trajets du jour et nombre de trajets à affecter sur les 7 prochains jours (rôles trajets), reste à encaisser et factures en retard (propriétaire, gérant, comptable), alertes (permis expirés ou expirant sous 30 jours, agrément de la société expiré ou expirant sous 60 jours, véhicules en maintenance). Chaque indicateur mène à la page où l'on agit. Le chauffeur est renvoyé vers l'app chauffeur.
+- **Seuils** : 30 jours pour les permis, 60 jours pour l'agrément (À CONFIRMER ; ils deviendront des réglages avec les échéances de la Phase 5).
+- **Recette Phase 2** : scénario E2E de bout en bout (trajet planifié et affecté, démarré, terminé, facturé avec la TVA choisie, émis avec numéro, payé) en plus des scénarios par domaine.
+- **Affichage** : heures au format 24 h dans les cartes de trajet (en arabe, les marqueurs matin et soir se mélangeaient aux chiffres latins).

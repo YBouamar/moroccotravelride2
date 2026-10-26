@@ -76,7 +76,28 @@
       "empty": {
         "title": "Your workspace is ready",
         "text": "Today's trips, bookings to accept and your alerts will appear here."
-      }
+      },
+      "stats": {
+        "today": "Trips today",
+        "unassigned": "To assign in the next 7 days",
+        "unpaid": "{count, plural, =0 {No unpaid invoice} one {Left to collect (# invoice)} other {Left to collect (# invoices)}}",
+        "overdue": "Overdue invoices"
+      },
+      "alerts": {
+        "title": "To watch",
+        "license": {
+          "expired": "{name}: license expired since {date}, cannot be assigned",
+          "soon": "{name}: license valid until {date}"
+        },
+        "maintenance": "{count, plural, one {# vehicle in maintenance} other {# vehicles in maintenance}}"
+      },
+      "companyLicense": {
+        "expired": "Your company's license expired on {date}: you no longer appear on the marketplace.",
+        "soon": "Your company's license expires on {date}: remember to renew it and upload the new document."
+      },
+      "todayTrips": "Today's trips",
+      "noTripToday": "No trip today.",
+      "driverHint": "Your trips and statuses are managed in the driver app."
     }
   },
   "admin": {

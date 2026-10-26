@@ -106,3 +106,15 @@ describe('tripSchema', () => {
     expect(tripSchema.safeParse({ ...base, price: '8,000' }).success).toBe(false);
   });
 });
+
+describe('expiry alerts', () => {
+  it('flags expired and soon-to-expire documents', async () => {
+    const { daysBetween, expiryAlert } = await import('./validity');
+    expect(daysBetween('2026-10-26', '2026-11-25')).toBe(30);
+    expect(expiryAlert('2026-10-25', '2026-10-26')).toBe('expired');
+    expect(expiryAlert('2026-10-26', '2026-10-26')).toBe('soon');
+    expect(expiryAlert('2026-11-25', '2026-10-26')).toBe('soon');
+    expect(expiryAlert('2026-11-26', '2026-10-26')).toBeNull();
+    expect(expiryAlert(null, '2026-10-26')).toBe('expired');
+  });
+});

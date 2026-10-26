@@ -118,3 +118,22 @@ export const isIsoDay = (value: unknown): value is string =>
 export function casablancaStartOfDay(day: string): Date {
   return new Date(casablancaEndOfDay(addDays(day, -1)).getTime() + 1000);
 }
+
+/** Whole days from `from` to `to` (yyyy-mm-dd), negative when `to` is earlier. */
+export function daysBetween(from: string, to: string): number {
+  return Math.round((Date.parse(`${to}T00:00:00Z`) - Date.parse(`${from}T00:00:00Z`)) / 86_400_000);
+}
+
+export type ExpiryAlert = 'expired' | 'soon';
+
+/** Alert level of a dated document: expired, expiring within `windowDays`, or nothing. */
+export function expiryAlert(
+  expiresOn: string | null | undefined,
+  today: string,
+  windowDays = 30,
+): ExpiryAlert | null {
+  if (!expiresOn) return 'expired';
+  const days = daysBetween(today, expiresOn);
+  if (days < 0) return 'expired';
+  return days <= windowDays ? 'soon' : null;
+}

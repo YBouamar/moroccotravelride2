@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 10 terminée · **Prochaine étape** : Étape 11 (tableau de bord du jour, recette Phase 2)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2 terminée (étapes 6 à 11) · **Prochaine étape** : Phase 3, marketplace (étapes 12 à 17)
 
 ## 1. Plan d'exécution par étapes
 
@@ -13,7 +13,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | 3 | 1b | Web : Next.js, design system (tokens de la marque, shadcn/ui, composants de base), logos dérivés (favicon carré, icônes), i18n fr / en / ar + RTL, layouts public / SaaS / admin | Page d'accueil vide avec logo, bascule fr / en / ar avec RTL, contrastes AA | ✅ fait |
 | 4 | 1c | Supabase local : migrations identité (profiles, companies, company_members, company_documents, platform_settings, cities, vehicle_types), fonctions de sécurité, RLS + pgTAP, seed de base, types générés | `pnpm db:test` au vert, isolation société A / B prouvée | ✅ fait |
 | 5 | 1d | Auth : inscription transporteur (crée société `pending` + owner), connexion, mot de passe oublié, MFA admin, rate limiting, Turnstile, en-têtes de sécurité, sélection de société ; Expo initialisé (écran de connexion, i18n, icône) | **Critère Phase 1** : inscription, connexion, changement de langue avec RTL, isolation prouvée | ✅ fait |
-| 6 à 11 | 2 | SaaS Standard en sous-étapes : onboarding + vérification admin ; véhicules / chauffeurs / clients ; trajets + planning + conflits ; facturation (PDF, numérotation, avoirs) + paiements ; abonnements + feature gating | Une semaine d'activité gérée de bout en bout, facture conforme | ⬜ |
+| 6 à 11 | 2 | SaaS Standard en sous-étapes : onboarding + vérification admin ; véhicules / chauffeurs / clients ; trajets + planning + conflits ; facturation (PDF, numérotation, avoirs) + paiements ; abonnements + feature gating | Une semaine d'activité gérée de bout en bout, facture conforme | ✅ fait |
 | 12 à 17 | 3 | Marketplace : villes + grilles ; recherche + résultats ; tunnel invité + 24 h ; acceptation + conversion en trajet ; paiement hors ligne (virement, espèces au chauffeur) + registre des commissions + relevé mensuel ; e-mails, lien magique, annulation, supervision admin | Casablanca vers Marrakech 800 MAD : 160 / 640 enregistrés, trajet au planning | ⬜ |
 | 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ⬜ |
 | 22 à 24 | 5 | V3 : entretien et pièces ; échéances + rappels planifiés ; consommation | Rappels J-30, J-7, J-1 sur une assurance | ⬜ |
@@ -50,6 +50,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étape 8 : listes Flotte, Chauffeurs et Clients (recherche, filtres, tri, pagination serveur, création, modification, désactivation, export CSV), table `clients`, navigation activée selon l'offre, données de démonstration. 151 tests unitaires, 98 pgTAP, 45 E2E (ADR-025).
 - 2026-10-26, étape 9 : trajets (création, modification, démarrage, fin, annulation motivée), planning jour et semaine, contrôles en base (permis valide le jour du trajet, véhicule disponible, capacité, chevauchements bloquants avec dérogation propriétaire ou gérant auditée), heures au fuseau marocain, trajets de démonstration. 159 tests unitaires, 115 pgTAP, 47 E2E (ADR-026).
 - 2026-10-26, étape 10 : facturation (brouillons, lignes libres ou issues de trajets terminés, TVA par ligne avec taux par défaut de la société, émission avec numéro sans trou et mentions figées, PDF, avoir total), paiements (statuts partiellement payée / payée), ports locaux 553xx. 166 tests unitaires, 135 pgTAP, 49 E2E (ADR-027, ADR-028).
+- 2026-10-26, étape 11 (fin de Phase 2) : tableau de bord du jour (trajets du jour, à affecter sur 7 jours, reste à encaisser, factures en retard, alertes permis, agrément et véhicules en maintenance, selon le rôle), recette Phase 2 automatisée (trajet planifié, démarré, terminé, facturé, émis, payé), heures en 24 h dans les cartes de trajet, vue semaine responsive. 167 tests unitaires, 135 pgTAP, 51 E2E (ADR-029).
 
 ## 3. En cours
 
@@ -88,4 +89,4 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 | 8 ✅ | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
 | 9 ✅ | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
 | 10 ✅ | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |
-| 11 | Tableau de bord du jour et recette de la Phase 2 (une semaine d'activité de bout en bout) |
+| 11 ✅ | Tableau de bord du jour et recette de la Phase 2 (une semaine d'activité de bout en bout) |

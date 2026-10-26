@@ -28,13 +28,15 @@ export async function TripCard({ trip, compact = false }: { trip: TripRow; compa
   const [t, format, locale] = await Promise.all([getTranslations(), getFormatter(), getLocale()]);
   const name = (city: { name_fr: string; name_en: string; name_ar: string } | null) =>
     city ? city[`name_${locale as 'fr' | 'en' | 'ar'}`] : '';
-  const time = (value: string) => format.dateTime(new Date(value), { timeStyle: 'short' });
+  // 24-hour clock: no AM/PM marker to mix with Latin digits in Arabic.
+  const time = (value: string) =>
+    format.dateTime(new Date(value), { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
 
   return (
     <Link
       href={`/app/trips/${trip.id}`}
       className={cn(
-        'block rounded-control border border-border border-s-4 bg-surface p-3 text-sm hover:bg-background',
+        'block min-w-0 rounded-control border border-border border-s-4 bg-surface p-3 text-sm break-words hover:bg-background',
         STATUS_STYLE[trip.status],
       )}
     >

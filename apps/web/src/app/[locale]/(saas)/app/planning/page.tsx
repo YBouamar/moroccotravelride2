@@ -110,7 +110,7 @@ export default async function PlanningPage({ params, searchParams }: PlanningPag
         </nav>
 
         {view === 'week' ? (
-          <div className="grid gap-3 md:grid-cols-7">
+          <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-7">
             {days.map((day) => (
               <section
                 key={day}

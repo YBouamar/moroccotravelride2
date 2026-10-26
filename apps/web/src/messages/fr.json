@@ -76,7 +76,28 @@
       "empty": {
         "title": "Votre espace est prêt",
         "text": "Les trajets du jour, les réservations à accepter et vos alertes s'afficheront ici."
-      }
+      },
+      "stats": {
+        "today": "Trajets aujourd'hui",
+        "unassigned": "À affecter sur 7 jours",
+        "unpaid": "{count, plural, =0 {Aucune facture impayée} one {Reste à encaisser (# facture)} other {Reste à encaisser (# factures)}}",
+        "overdue": "Factures en retard"
+      },
+      "alerts": {
+        "title": "À surveiller",
+        "license": {
+          "expired": "{name} : permis expiré depuis le {date}, aucune affectation possible",
+          "soon": "{name} : permis valable jusqu'au {date}"
+        },
+        "maintenance": "{count, plural, one {# véhicule en maintenance} other {# véhicules en maintenance}}"
+      },
+      "companyLicense": {
+        "expired": "L'agrément de votre société a expiré le {date} : vous n'apparaissez plus sur la marketplace.",
+        "soon": "L'agrément de votre société expire le {date} : pensez à le renouveler et à déposer le nouveau document."
+      },
+      "todayTrips": "Trajets du jour",
+      "noTripToday": "Aucun trajet aujourd'hui.",
+      "driverHint": "Vos trajets et vos statuts se gèrent depuis l'application chauffeur."
     }
   },
   "admin": {
