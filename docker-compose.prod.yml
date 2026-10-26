@@ -1,0 +1,45 @@
+# Production web service on the Contabo VPS (ADR-013). Coolify can deploy this file directly.
+# Supabase is self-hosted separately (Coolify "Supabase" template, own secrets: see RUNBOOK).
+# Server-side secrets come from the environment (Coolify secrets), never from the repository.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+        NEXT_PUBLIC_SENTRY_DSN: ${NEXT_PUBLIC_SENTRY_DSN:-}
+    image: mtr-web:latest
+    restart: unless-stopped
+    environment:
+      SUPABASE_SECRET_KEY: ${SUPABASE_SECRET_KEY:?required}
+      RATE_LIMIT_SALT: ${RATE_LIMIT_SALT:?required}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:?required}
+      BOOKING_LINK_SECRET: ${BOOKING_LINK_SECRET:-}
+      CRON_SECRET: ${CRON_SECRET:?required}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_FROM: ${EMAIL_FROM:-}
+      SENTRY_ENVIRONMENT: ${SENTRY_ENVIRONMENT:-production}
+    # Exposed only to the reverse proxy (Traefik managed by Coolify), never directly.
+    expose:
+      - '3000'
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+  # Flushes the e-mail outbox every 2 minutes (ADR-031).
+  outbox-cron:
+    image: curlimages/curl:8.11.1
+    restart: unless-stopped
+    depends_on: [web]
+    environment:
+      CRON_SECRET: ${CRON_SECRET:?required}
+    entrypoint: ['/bin/sh', '-c']
+    command:
+      - 'while true; do curl -fsS -X POST -H "Authorization: Bearer $$CRON_SECRET" http://web:3000/api/cron/emails > /dev/null || true; sleep 120; done'

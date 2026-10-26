@@ -49,11 +49,15 @@
         "title": "Paiement simple",
         "text": "Par virement avant le trajet ou en espèces au chauffeur."
       }
+    },
+    "cities": {
+      "title": "Transferts par ville",
+      "link": "Transferts depuis {city}"
     }
   },
   "footer": {
     "rights": "Tous droits réservés.",
-    "legalPending": "Mentions légales en préparation."
+    "legalTitle": "Informations légales"
   },
   "saas": {
     "title": "Espace transporteur",
@@ -381,7 +385,91 @@
   "legal": {
     "terms": {
       "title": "Conditions générales d'utilisation",
-      "pending": "Ce document est en cours de rédaction et sera validé par un juriste avant le lancement."
+      "pending": "Projet à valider par un juriste avant le lancement : ce texte décrit le fonctionnement de la plateforme, il n'engage pas encore MoroccoTravelRide.",
+      "sections": {
+        "role": {
+          "title": "Rôle de la plateforme",
+          "body": "MoroccoTravelRide met en relation des voyageurs avec des sociétés de transport touristique agréées et vérifiées. Le transport est réalisé par la société choisie, qui fixe ses prix et encaisse le paiement."
+        },
+        "booking": {
+          "title": "Réservation",
+          "body": "La réservation se fait au moins 24 heures avant la prise en charge. Elle est confirmée par le transporteur dans un délai de 2 heures ; à défaut, elle est annulée sans frais."
+        },
+        "payment": {
+          "title": "Paiement",
+          "body": "Le prix affiché est tout compris. Il est réglé au transporteur, par virement avant le trajet ou en espèces au chauffeur. Aucune carte bancaire n'est demandée en ligne."
+        },
+        "cancellation": {
+          "title": "Annulation",
+          "body": "Annulation gratuite jusqu'à 48 heures avant la prise en charge, remboursement de 50 % entre 48 et 24 heures, aucun remboursement à moins de 24 heures. Si rien n'a été payé, l'annulation est sans frais."
+        },
+        "carriers": {
+          "title": "Transporteurs",
+          "body": "Les transporteurs disposent d'un espace de gestion, d'un abonnement pour les outils de gestion et versent à la plateforme une commission sur les trajets réalisés via la marketplace."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "pending": "Projet à valider par un juriste et à déclarer auprès de la CNDP (loi 09-08) avant le lancement.",
+      "sections": {
+        "data": {
+          "title": "Données collectées",
+          "body": "Voyageurs : nom, e-mail, téléphone, adresses et date du trajet, nécessaires à la réservation. Transporteurs : informations légales de la société, documents d'agrément, comptes des membres. Chauffeurs : position pendant les trajets en cours uniquement."
+        },
+        "purposes": {
+          "title": "Finalités",
+          "body": "Réaliser et suivre les transferts, facturer, sécuriser la plateforme (lutte contre les abus, journal d'audit) et respecter les obligations comptables."
+        },
+        "retention": {
+          "title": "Durées de conservation",
+          "body": "Positions des chauffeurs : 90 jours. File d'envoi des e-mails : 90 jours. Factures et données comptables : durée légale (à préciser). Les durées définitives sont à valider."
+        },
+        "recipients": {
+          "title": "Destinataires",
+          "body": "Le transporteur qui réalise le trajet, la plateforme, et ses prestataires techniques (hébergement, envoi d'e-mails, protection anti-robot, supervision des erreurs sans données personnelles)."
+        },
+        "rights": {
+          "title": "Vos droits",
+          "body": "Accès, rectification, opposition et suppression : écrivez à l'adresse de contact de la plateforme. Les modalités seront précisées après la déclaration à la CNDP."
+        }
+      }
+    },
+    "notice": {
+      "title": "Mentions légales",
+      "pending": "Informations sur l'éditeur à compléter (raison sociale, siège, RC, ICE, directeur de la publication, hébergeur) avant le lancement.",
+      "sections": {
+        "publisher": {
+          "title": "Éditeur",
+          "body": "MoroccoTravelRide (informations de la société à compléter)."
+        },
+        "hosting": {
+          "title": "Hébergement",
+          "body": "Serveur privé virtuel loué auprès de Contabo (Europe). Les coordonnées complètes de l'hébergeur seront indiquées ici."
+        },
+        "contact": {
+          "title": "Contact",
+          "body": "Adresse e-mail et téléphone de la plateforme, tels que renseignés par l'administrateur."
+        }
+      }
+    },
+    "cookies": {
+      "title": "Cookies",
+      "pending": "Projet à valider par un juriste avant le lancement.",
+      "sections": {
+        "essential": {
+          "title": "Cookies indispensables",
+          "body": "Session des comptes transporteurs et administrateurs, accès sécurisé à une réservation invité, langue choisie. Ils sont nécessaires au service et ne servent pas à la publicité."
+        },
+        "security": {
+          "title": "Sécurité",
+          "body": "La vérification anti-robot (Cloudflare Turnstile) peut déposer ses propres éléments techniques lors de la connexion, de l'inscription et de la réservation."
+        },
+        "none": {
+          "title": "Pas de suivi publicitaire",
+          "body": "La plateforme n'utilise ni cookie publicitaire ni outil de mesure d'audience tiers à ce jour."
+        }
+      }
     }
   },
   "plans": {
@@ -1341,5 +1429,16 @@
     "comment": "Votre avis (facultatif)",
     "submit": "Envoyer mon avis",
     "thanks": "Merci ! Votre avis sera publié après vérification."
+  },
+  "transfers": {
+    "metaTitle": "Transferts depuis {city} : prix fixes, transporteurs agréés",
+    "metaDescription": "Réservez votre transfert au départ de {city} (aéroport, hôtel, autres villes) auprès de transporteurs touristiques agréés, à prix fixe connu à l'avance.",
+    "title": "Transferts depuis {city}",
+    "intro": "Aéroport, hôtel ou autre ville : comparez les transporteurs touristiques agréés au départ de {city} et réservez à prix fixe.",
+    "routesTitle": "Trajets proposés au départ de {city}",
+    "from": "à partir de {price}",
+    "carriers": "{count, plural, one {# transporteur} other {# transporteurs}}",
+    "noRoute": "Aucun trajet n'est encore proposé au départ de cette ville. Lancez une recherche pour d'autres dates ou d'autres villes.",
+    "allCities": "Toutes les villes"
   }
 }

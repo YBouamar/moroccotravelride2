@@ -1,17 +1,16 @@
-import { useTranslations } from 'next-intl';
-import { setRequestLocale } from 'next-intl/server';
-import { use } from 'react';
-import { Alert } from '@/components/ui/alert';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { LegalPage } from '@/features/legal/legal-page';
 import { asLocale } from '@/i18n/as-locale';
+import { localeAlternates } from '@/lib/seo';
 
-// Legal content to be written and validated by a lawyer before launch (À VALIDER, docs/SECURITY.md 2.6).
-export default function TermsPage({ params }: { params: Promise<{ locale: string }> }) {
-  setRequestLocale(asLocale(use(params).locale));
-  const t = useTranslations('legal.terms');
-  return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold">{t('title')}</h1>
-      <Alert className="mt-6">{t('pending')}</Alert>
-    </div>
-  );
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale: asLocale(locale), namespace: 'legal.terms' });
+  return { title: t('title'), alternates: localeAlternates(locale, '/legal/terms') };
+}
+
+// Content to be completed and validated by a lawyer before launch (À VALIDER, SECURITY.md 2.6).
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  setRequestLocale(asLocale((await params).locale));
+  return <LegalPage document="terms" />;
 }

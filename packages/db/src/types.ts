@@ -1975,6 +1975,14 @@ export type Database = {
         };
         Returns: string;
       };
+      route_prices: {
+        Args: { p_from: string };
+        Returns: {
+          carriers: number;
+          min_price_cents: number;
+          to_city_id: string;
+        }[];
+      };
       search_offers: {
         Args: { p_from: string; p_passengers: number; p_pickup_at: string; p_to: string };
         Returns: {

@@ -6,6 +6,8 @@ import { SearchForm } from '@/features/search/components/search-form';
 import { getPublicPlaces } from '@/features/search/queries';
 import { getPlatformSettings } from '@/features/settings/queries';
 import { asLocale } from '@/i18n/as-locale';
+import { Link } from '@/i18n/navigation';
+import { localeAlternates } from '@/lib/seo';
 
 const REASSURANCE = [
   { key: 'licensed', icon: BadgeCheck },
@@ -13,6 +15,10 @@ const REASSURANCE = [
   { key: 'cancellation', icon: CalendarX2 },
   { key: 'payment', icon: Banknote },
 ] as const;
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  return { alternates: localeAlternates((await params).locale, '') };
+}
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const locale = asLocale((await params).locale);
@@ -65,6 +71,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </Card>
             </li>
           ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="cities-title" className="mx-auto max-w-6xl px-4 pb-16">
+        <h2 id="cities-title" className="text-2xl font-bold">
+          {t('cities.title')}
+        </h2>
+        <ul className="mt-6 flex flex-wrap gap-2">
+          {places
+            .filter((place) => !place.isAirport)
+            .map((place) => (
+              <li key={place.id}>
+                <Link
+                  href={`/transfers/${place.slug}`}
+                  className="inline-flex min-h-11 items-center rounded-control border border-border bg-surface px-4 text-sm hover:bg-background"
+                >
+                  {t('cities.link', { city: place.name })}
+                </Link>
+              </li>
+            ))}
         </ul>
       </section>
     </>

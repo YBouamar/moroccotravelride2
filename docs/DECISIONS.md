@@ -378,3 +378,14 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Recherche** : 60 recherches par minute et par IP (page de recherche et page de réservation).
 - **Supervision** : `@sentry/nextjs` 11.6.0 (prévu dans la stack, CLAUDE.md), inactif sans DSN, sans rejeu de session, événements nettoyés des données personnelles avant envoi (fonction pure testée) ; DSN à fournir par Yassine.
 - **Tests** : 4 tables couvertes en plus, tests isolés des données des autres suites ; attente du widget Turnstile portée à 40 s dans les E2E (chargé depuis Cloudflare).
+
+## ADR-038 : Durcissement et mise en production (Phase 7)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (déploiement réel en attente d'accès externes)
+- **SEO** : `metadataBase`, Open Graph, URL canoniques et `hreflang` (fr, en, ar, x-default) ; `robots.txt` excluant API, espaces privés, réservation et authentification ; plan du site (accueil, pages légales, une page par ville active, trois langues) ; pages « Transferts depuis {ville} » avec formulaire prérempli et prix « à partir de » (`public.route_prices`, transporteurs éligibles seulement, aucun transporteur exposé) ; liens vers les villes depuis l'accueil.
+- **Pages légales** : CGU, confidentialité, mentions légales, cookies, en trois langues, accessibles depuis le pied de page. Elles décrivent factuellement le fonctionnement et les traitements (durées connues, destinataires, cookies) et portent un bandeau **À VALIDER** : rédaction finale par un juriste, déclaration CNDP (règle 13).
+- **Charge** : script sans dépendance, mesure locale consignée dans TESTING.md, à refaire sur staging.
+- **Déploiement** : `apps/web/Dockerfile` (multi-étapes, standalone, utilisateur non root, données de fuseau à jour, contrôle de santé), `docker-compose.prod.yml` pour Coolify (lecture seule, `no-new-privileges`, secrets par l'environnement, service de vidage de la file d'e-mails), `.dockerignore` excluant secrets et sorties de build. Image construite et testée localement.
+- **Sauvegarde** : `scripts/backup.sh` et `scripts/restore.sh` (age, rclone, rétention 30 jours, restauration sur environnement vierge avec garde-fous).
+- **Mobile** : `apps/driver/eas.json` (profils développement, aperçu, production) avec des URL à remplacer.
+- **Reste hors de portée sans accès externes** : VPS, domaine, clés réelles, comptes des magasins d'applications, CNDP, validation juridique et comptable, dépôt GitHub (voir la checklist de lancement, RUNBOOK §6).

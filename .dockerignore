@@ -1,0 +1,15 @@
+# Never send secrets, local state or build outputs to the Docker build context.
+.env
+.env.*
+!.env.example
+**/node_modules
+**/.next
+**/.turbo
+**/dist
+**/test-results
+**/playwright-report
+apps/driver
+supabase/.temp
+.git
+docs
+assets/brand/v1

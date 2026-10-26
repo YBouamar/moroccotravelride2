@@ -50,3 +50,9 @@ Les e-mails envoyés en local (confirmation, mot de passe oublié) arrivent dans
 ## 5. CI
 
 Tant qu'il n'y a pas de dépôt distant (ADR-015) : `pnpm check` en local et hook pre-commit. Ensuite, GitHub Actions bloquante : lint, typecheck, tests unitaires, pgTAP (Supabase dans le runner), build, gitleaks, `pnpm audit`. E2E sur PR vers `main`.
+
+## Test de charge léger (Phase 7)
+
+`node scripts/load-test.mjs <url> <secondes> <concurrence>` : pages publiques en boucle (accueil fr / en / ar, pages villes, CGU), débit, latences p50 / p95 / p99, statuts, erreurs réseau. Aucune dépendance.
+
+Mesure du 2026-10-26 sur le poste de développement (build de production local, Supabase sous Docker sur la même machine) : 30 s, 20 connexions simultanées, **1 439 requêtes (48 / s), p50 424 ms, p95 528 ms, p99 679 ms, 0 erreur**. Ordre de grandeur seulement : à refaire sur le VPS de staging avant le lancement (cible indicative : p95 sous 800 ms à 20 connexions).

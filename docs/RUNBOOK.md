@@ -27,31 +27,52 @@ Référence : [`.env.example`](../.env.example). Les variables `NEXT_PUBLIC_*` s
 
 Référence initiale : Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
 
-## 3. Hébergement et déploiement ⬜ (ADR-013)
+## 3. Hébergement et déploiement 🟡 (ADR-013, ADR-038)
 
-Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify** (ACTÉ).
+Cible : un VPS Contabo (datacenter UE), Docker, géré par **Coolify**. Fichiers prêts dans le dépôt, déploiement réel en attente du VPS, du domaine et des clés.
 
-- **Préparation du serveur** : Ubuntu LTS, utilisateur non root, SSH par clé, ufw, fail2ban, unattended-upgrades (voir SECURITY.md §2.9).
-- **Supabase auto-hébergé** : docker compose officiel, secrets régénérés, Studio accessible par tunnel SSH uniquement.
-- **Web** : image Docker Next.js `standalone`, déployée par Coolify depuis le dépôt git (ou image construite localement tant qu'il n'y a pas de dépôt distant).
-- **Base** : `supabase db push --db-url` à travers un tunnel SSH, staging puis production.
-- **Edge functions** : copiées dans le volume `functions` du conteneur Edge Runtime.
-- **Mobile** : `eas build` puis `eas submit` (service cloud d'Expo).
-- **Domaine** : aucun pour l'instant ; DNS (enregistrements A vers l'IP du VPS) et certificats Let's Encrypt à configurer quand il sera acheté.
+1. **Serveur** : Ubuntu LTS, utilisateur non root, SSH par clé uniquement (root et mot de passe désactivés), ufw (80, 443, SSH), fail2ban, unattended-upgrades (SECURITY.md §2.9).
+2. **Coolify** installé sur le VPS ; tableau de bord accessible par tunnel SSH ou VPN, jamais exposé publiquement.
+3. **Supabase auto-hébergé** : modèle Supabase de Coolify ; **tous les secrets régénérés** (JWT, clés anon et service role, mot de passe Postgres, identifiants du tableau de bord) ; Studio et Postgres non exposés ; reprendre la configuration Auth de `supabase/config.toml` (mot de passe 10 caractères avec minuscules, majuscules, chiffres, confirmation d'e-mail, modèles d'e-mails de `supabase/templates`, URL du site).
+4. **Migrations** : `supabase db push --db-url <url>` à travers un tunnel SSH, d'abord sur staging, puis production ; ne jamais lancer le seed de démonstration en production.
+5. **Web** : Coolify déploie `docker-compose.prod.yml` (image `apps/web/Dockerfile`, Next.js standalone, utilisateur non root, système de fichiers en lecture seule, contrôle de santé). Variables : `NEXT_PUBLIC_*` en arguments de build, secrets serveur (`SUPABASE_SECRET_KEY`, `RATE_LIMIT_SALT`, `TURNSTILE_SECRET_KEY`, `CRON_SECRET`, `BOOKING_LINK_SECRET`, `RESEND_API_KEY`, `EMAIL_FROM`) dans les secrets Coolify. Le service `outbox-cron` vide la file d'e-mails toutes les 2 minutes.
+6. **Journaux du proxy** : garder la rotation et une durée courte ; aucune donnée sensible attendue dans les URL (jeton de réservation dans le fragment, ADR-037).
+7. **Mobile** : `eas build --profile production` puis `eas submit` (renseigner les vraies URL dans `apps/driver/eas.json`, comptes Google Play et App Store).
+8. **Domaine** : enregistrements A vers l'IP du VPS, certificats Let's Encrypt par Coolify, `NEXT_PUBLIC_SITE_URL` mis à jour (liens d'e-mails, plan du site, URL canoniques).
 
-## 4. Sauvegarde et restauration ⬜
+Construction locale vérifiée le 2026-10-26 : image construite, conteneur en lecture seule servant les pages avec les en-têtes de sécurité, utilisateur non root.
 
-- `pg_dump` quotidien chiffré (age) + archive des volumes Storage, envoyés vers un stockage objet externe au VPS ; rétention 30 jours.
+## 4. Sauvegarde et restauration 🟡
+
+- `scripts/backup.sh` (cron quotidien 02:15 UTC) : `pg_dump` + archive du volume Storage, chiffrés avec age (clé publique seule sur le serveur), envoyés par rclone vers un stockage objet **hors du VPS**, rétention 30 jours, sommes de contrôle.
+- `scripts/restore.sh <horodatage>` : restauration sur un environnement **vierge** (refuse une base non vide sauf `FORCE=1`, demande une confirmation), vérification des sommes de contrôle.
 - Instantané du VPS avant toute mise à jour majeure.
-- Procédure de restauration sur un serveur vierge, chronométrée, à documenter ici avec la date du dernier test.
+- **Date du dernier test de restauration : aucun pour l'instant** (à faire sur le VPS de staging, chronométré, puis noter la date ici).
 
-## 5. Incidents ⬜
+## 5. Incidents
 
-Contacts, accès d'urgence au VPS (console Contabo), désactivation de la marketplace (`platform_settings.marketplace_open = false`), rotation des clés, restauration, communication voyageurs.
+- **Couper la marketplace** : `update public.platform_settings set value = 'false' where key = 'marketplace_open';` (la recherche et la réservation s'arrêtent, le SaaS continue).
+- **Clé compromise** : régénérer la clé dans Supabase ou le service concerné, mettre à jour le secret Coolify, redéployer ; pour `BOOKING_LINK_SECRET`, tous les liens de réservation deviennent invalides (prévenir les voyageurs concernés).
+- **Restauration** : `scripts/restore.sh` sur un serveur vierge, puis bascule DNS.
+- **Accès d'urgence** : console Contabo ; contacts et communication voyageurs à compléter.
 
-## 6. Checklist de lancement ⬜ (Phase 7)
+## 6. Checklist de lancement
 
-Inclut : domaine et HTTPS, déclaration CNDP, pages légales validées, sauvegarde restaurée avec succès, supervision active.
+| Point | Statut |
+|---|---|
+| Domaine acheté, DNS et HTTPS | ⬜ Yassine |
+| VPS de production et de staging préparés (§3), secrets Supabase régénérés | ⬜ Yassine |
+| Migrations appliquées sur staging puis production, sans seed de démonstration | ⬜ |
+| Compte administrateur créé, MFA activée, coordonnées de paiement saisies (Admin > Paramètres) | ⬜ Yassine |
+| Clés réelles : Turnstile, Resend (domaine d'envoi vérifié), Sentry (DSN), `CRON_SECRET`, `BOOKING_LINK_SECRET` | ⬜ Yassine |
+| Serveur de tuiles ou fournisseur de cartes (politique OpenStreetMap) | ⬜ |
+| Déclaration CNDP (traitement, transfert hors Maroc) | ⬜ Yassine |
+| Pages légales rédigées et validées par un juriste ; mentions de facture validées par un comptable (BR-109) | ⬜ Yassine |
+| Sauvegarde quotidienne active et restauration testée (date ci-dessus) | ⬜ |
+| Supervision : Sentry, contrôle de disponibilité externe, alertes disque et certificats | ⬜ |
+| App chauffeur testée sur appareils réels, publiée (EAS) | ⬜ Yassine |
+| Dépôt GitHub créé, CI activée, Dependabot actif | ⬜ Yassine |
+| `pnpm check`, `pnpm db:test`, `pnpm e2e` verts sur le commit déployé | ✅ en local |
 
 ## Supabase local : « ports are not available » (Windows)
 

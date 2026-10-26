@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { routing } from '@/i18n/routing';
 import { getDirection } from '@/lib/locale';
 import '../globals.css';
+import { siteUrl } from '@/lib/seo';
 
 // Fonts are downloaded at build time and self-hosted: no request to Google at runtime.
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -38,9 +39,17 @@ export async function generateMetadata({ params }: LocaleLayoutProps): Promise<M
   if (!hasLocale(routing.locales, locale)) return {};
   const t = await getTranslations({ locale, namespace: 'metadata' });
   return {
+    metadataBase: new URL(siteUrl()),
     title: { default: t('title'), template: `%s | MoroccoTravelRide` },
     description: t('description'),
     applicationName: 'MoroccoTravelRide',
+    openGraph: {
+      type: 'website',
+      siteName: 'MoroccoTravelRide',
+      title: t('title'),
+      description: t('description'),
+      locale: locale === 'ar' ? 'ar_MA' : `${locale}_MA`,
+    },
   };
 }
 

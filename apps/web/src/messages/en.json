@@ -49,11 +49,15 @@
         "title": "Easy payment",
         "text": "By bank transfer before the ride or in cash to the driver."
       }
+    },
+    "cities": {
+      "title": "Transfers by city",
+      "link": "Transfers from {city}"
     }
   },
   "footer": {
     "rights": "All rights reserved.",
-    "legalPending": "Legal notice in preparation."
+    "legalTitle": "Legal information"
   },
   "saas": {
     "title": "Carrier area",
@@ -381,7 +385,91 @@
   "legal": {
     "terms": {
       "title": "Terms of use",
-      "pending": "This document is being drafted and will be reviewed by a lawyer before launch."
+      "pending": "Draft to be validated by a lawyer before launch: it describes how the platform works and does not bind MoroccoTravelRide yet.",
+      "sections": {
+        "role": {
+          "title": "Role of the platform",
+          "body": "MoroccoTravelRide connects travelers with licensed and verified tourist transport companies. The trip is carried out by the chosen company, which sets its prices and collects the payment."
+        },
+        "booking": {
+          "title": "Booking",
+          "body": "Bookings are made at least 24 hours before pickup. The carrier confirms within 2 hours; otherwise the booking is cancelled at no cost."
+        },
+        "payment": {
+          "title": "Payment",
+          "body": "The displayed price is all-inclusive. It is paid to the carrier, by bank transfer before the trip or in cash to the driver. No card is requested online."
+        },
+        "cancellation": {
+          "title": "Cancellation",
+          "body": "Free cancellation up to 48 hours before pickup, 50 % refund between 48 and 24 hours, no refund within 24 hours. If nothing was paid, cancelling is free."
+        },
+        "carriers": {
+          "title": "Carriers",
+          "body": "Carriers have a management workspace, a subscription for the management tools, and pay the platform a commission on trips booked through the marketplace."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "pending": "Draft to be validated by a lawyer and declared to the CNDP (law 09-08) before launch.",
+      "sections": {
+        "data": {
+          "title": "Data collected",
+          "body": "Travelers: name, e-mail, phone, addresses and trip date, needed for the booking. Carriers: legal company details, license documents, member accounts. Drivers: location during trips in progress only."
+        },
+        "purposes": {
+          "title": "Purposes",
+          "body": "Carry out and follow transfers, invoice, secure the platform (abuse prevention, audit trail) and meet accounting obligations."
+        },
+        "retention": {
+          "title": "Retention",
+          "body": "Driver locations: 90 days. E-mail sending queue: 90 days. Invoices and accounting data: legal period (to be specified). Final periods are to be validated."
+        },
+        "recipients": {
+          "title": "Recipients",
+          "body": "The carrier performing the trip, the platform, and its technical providers (hosting, e-mail sending, anti-bot protection, error monitoring without personal data)."
+        },
+        "rights": {
+          "title": "Your rights",
+          "body": "Access, correction, objection and deletion: write to the platform's contact address. Details will be given after the CNDP declaration."
+        }
+      }
+    },
+    "notice": {
+      "title": "Legal notice",
+      "pending": "Publisher details to be completed (company name, head office, RC, ICE, publication director, host) before launch.",
+      "sections": {
+        "publisher": {
+          "title": "Publisher",
+          "body": "MoroccoTravelRide (company details to be completed)."
+        },
+        "hosting": {
+          "title": "Hosting",
+          "body": "Virtual private server rented from Contabo (Europe). The host's full details will be given here."
+        },
+        "contact": {
+          "title": "Contact",
+          "body": "Platform e-mail address and phone, as set by the administrator."
+        }
+      }
+    },
+    "cookies": {
+      "title": "Cookies",
+      "pending": "Draft to be validated by a lawyer before launch.",
+      "sections": {
+        "essential": {
+          "title": "Essential cookies",
+          "body": "Session of carrier and administrator accounts, secure access to a guest booking, chosen language. They are required for the service and are not used for advertising."
+        },
+        "security": {
+          "title": "Security",
+          "body": "The anti-bot check (Cloudflare Turnstile) may set its own technical items when signing in, signing up and booking."
+        },
+        "none": {
+          "title": "No advertising tracking",
+          "body": "The platform uses no advertising cookie and no third-party analytics tool at this time."
+        }
+      }
     }
   },
   "plans": {
@@ -1341,5 +1429,16 @@
     "comment": "Your review (optional)",
     "submit": "Send my review",
     "thanks": "Thank you! Your review will be published after review."
+  },
+  "transfers": {
+    "metaTitle": "Transfers from {city}: fixed prices, licensed carriers",
+    "metaDescription": "Book your transfer from {city} (airport, hotel, other cities) with licensed tourist transport companies, at a fixed price known in advance.",
+    "title": "Transfers from {city}",
+    "intro": "Airport, hotel or another city: compare licensed tourist carriers departing from {city} and book at a fixed price.",
+    "routesTitle": "Routes offered from {city}",
+    "from": "from {price}",
+    "carriers": "{count, plural, one {# carrier} other {# carriers}}",
+    "noRoute": "No route is offered from this city yet. Search other dates or cities.",
+    "allCities": "All cities"
   }
 }
