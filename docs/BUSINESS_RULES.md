@@ -73,7 +73,7 @@ Statut de paiement : `unpaid -> paid -> partially_refunded | refunded`. Chaque t
 | ID | Règle | Valeur | Statut | Source |
 |---|---|---|---|---|
 | BR-120 | Dossier de vérification | Raison sociale, ICE (15 chiffres), IF, RC, adresse, ville, n° et expiration de l'agrément, agrément déposé ; TP facultative | ACTÉ (Q24) | ADR-023 |
-| BR-121 | Dates expirées | Acceptées à la saisie avec avertissement ; un chauffeur sans permis valide le jour du trajet ne peut pas effectuer de prestation (appliqué à l'étape 9) ; agrément expiré = pas de visibilité marketplace | ACTÉ (Q24) | ADR-024 |
+| BR-121 | Dates expirées | Acceptées à la saisie avec avertissement ; un chauffeur sans permis valide le jour du trajet ne peut pas effectuer de prestation (appliqué en base, ADR-026) ; agrément expiré = pas de visibilité marketplace | ACTÉ (Q24) | ADR-024 |
 | BR-122 | Immatriculation | Unique par société, normalisée (majuscules, espaces simples) | ACTÉ | ADR-023 |
 | BR-123 | Documents refusés | Motif obligatoire, visible par le transporteur qui dépose un nouveau document | ACTÉ | ADR-023 |
 

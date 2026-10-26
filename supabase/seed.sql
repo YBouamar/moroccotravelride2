@@ -82,3 +82,27 @@ insert into public.vehicles (id, company_id, registration, brand, model, vehicle
 insert into public.drivers (id, company_id, user_id, full_name, phone, license_number, license_expires_on, languages) values
   ('00000000-0000-4000-9000-000000000201', '00000000-0000-4000-b000-000000000001', '00000000-0000-4000-a000-000000000013', 'Youssef Chauffeur', '+212661000013', 'DEMO-P-0013', '2031-03-31', '{ar,fr,en}'),
   ('00000000-0000-4000-9000-000000000202', '00000000-0000-4000-b000-000000000001', null, 'Hassan Ait Ali', '+212661000014', 'DEMO-P-0014', '2026-01-31', '{ar,fr,zgh}');
+
+-- Atlas trips around today (Morocco time), so that the planning and the dashboard show data.
+with day as (select (now() at time zone 'Africa/Casablanca')::date as today),
+places as (
+  select
+    (select id from public.cities where slug = 'aeroport-casablanca-mohammed-v') as cmn,
+    (select id from public.cities where slug = 'casablanca') as casa,
+    (select id from public.cities where slug = 'marrakech') as rak
+)
+insert into public.trips (company_id, client_id, passenger_name, passenger_phone, passengers, luggage,
+  pickup_city_id, pickup_address, dropoff_city_id, dropoff_address, starts_at, ends_at, price_cents,
+  vehicle_id, driver_id)
+select '00000000-0000-4000-b000-000000000001', c.id, v.passenger, v.phone, v.passengers, v.luggage,
+  v.pickup, v.pickup_address, v.dropoff, v.dropoff_address,
+  ((day.today + v.day_offset) + v.start_time) at time zone 'Africa/Casablanca',
+  ((day.today + v.day_offset) + v.end_time) at time zone 'Africa/Casablanca',
+  v.price, v.vehicle_id::uuid, v.driver_id::uuid
+from day, places,
+lateral (values
+  (0, time '09:00', time '10:00', 'Emma Martin', '+33600000001', 2, 3, places.cmn, 'Terminal 1', places.casa, 'Hôtel Hyatt Regency', 30000::bigint, '00000000-0000-4000-9000-000000000101', '00000000-0000-4000-9000-000000000201', 'Emma Martin'),
+  (1, time '08:00', time '12:00', 'Groupe Découverte', '+212522000101', 6, 6, places.casa, 'Agence Découverte, Maarif', places.rak, 'Riad Atlas Palace, Médina', 80000::bigint, '00000000-0000-4000-9000-000000000102', '00000000-0000-4000-9000-000000000201', 'Agence Découverte Maroc'),
+  (2, time '15:00', time '16:00', 'Famille Haddad', null, 3, 2, places.rak, 'Gare de Marrakech', places.rak, 'Palmeraie', 25000::bigint, null, null, null)
+) as v(day_offset, start_time, end_time, passenger, phone, passengers, luggage, pickup, pickup_address, dropoff, dropoff_address, price, vehicle_id, driver_id, client_name)
+left join public.clients c on c.name = v.client_name and c.company_id = '00000000-0000-4000-b000-000000000001';

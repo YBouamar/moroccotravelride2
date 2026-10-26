@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 8 terminée · **Prochaine étape** : Étape 9 (trajets et planning)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 9 terminée · **Prochaine étape** : Étape 10 (facturation et paiements)
 
 ## 1. Plan d'exécution par étapes
 
@@ -48,6 +48,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étape 7 : véhicules et chauffeurs (RLS lecture / écriture), bucket privé des documents, assistant d'onboarding en 4 étapes, détection du type réel des fichiers, validation des documents par l'admin (lien signé, refus motivé). 140 tests unitaires, 92 pgTAP, 41 E2E (ADR-023).
 - 2026-10-26 : Q24 intégrée (dates expirées acceptées avec avertissement, `canDriverPerformTrip` pour l'étape 9), dates au fuseau marocain sans décalage en dur (ADR-024), course `typecheck` / `build` corrigée dans Turborepo.
 - 2026-10-26, étape 8 : listes Flotte, Chauffeurs et Clients (recherche, filtres, tri, pagination serveur, création, modification, désactivation, export CSV), table `clients`, navigation activée selon l'offre, données de démonstration. 151 tests unitaires, 98 pgTAP, 45 E2E (ADR-025).
+- 2026-10-26, étape 9 : trajets (création, modification, démarrage, fin, annulation motivée), planning jour et semaine, contrôles en base (permis valide le jour du trajet, véhicule disponible, capacité, chevauchements bloquants avec dérogation propriétaire ou gérant auditée), heures au fuseau marocain, trajets de démonstration. 159 tests unitaires, 115 pgTAP, 47 E2E (ADR-026).
 
 ## 3. En cours
 
@@ -82,6 +83,6 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 | 6 ✅ | Abonnements et feature gating (`plans`, `plan_features`, `subscriptions`, essai 14 jours V2, `has_feature`, `<FeatureGate>`), journal d'audit, vérification des sociétés par l'admin (liste, documents, valider / suspendre) |
 | 7 ✅ | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
 | 8 ✅ | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
-| 9 | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
+| 9 ✅ | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
 | 10 | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |
 | 11 | Tableau de bord du jour et recette de la Phase 2 (une semaine d'activité de bout en bout) |

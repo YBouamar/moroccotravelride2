@@ -262,3 +262,18 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Pas de suppression physique** : véhicule actif / en maintenance / inactif, chauffeur et client actif / inactif, après confirmation explicite. L'historique (trajets, factures) reste intact.
 - **Clients** : B2B (agence, hôtel) avec ICE facultatif mais vérifié (15 chiffres) et B2C (particulier, sans ICE). Le dispatcheur peut gérer les clients (il en crée en saisissant des trajets), pas la flotte ni les chauffeurs.
 - **Seed** : 3 véhicules, 2 chauffeurs (dont un au permis expiré) et 3 clients pour Atlas. Les UUID fixes respectent la variante RFC 4122 (`8`, `9`, `a` ou `b`), sinon `z.uuid()` les refuse.
+
+## ADR-026 : Trajets, planning et conflits (étape 9)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Les règles vivent en base** (trigger `private.check_trip`), l'interface ne fait que les refléter :
+  - machine à états BR-113 : `planned` et `assigned` suivent l'affectation (chauffeur **et** véhicule renseignés = affecté), puis `in_progress`, `completed` ; annulation (avec motif) depuis tout état ouvert ; un trajet terminé ou annulé est verrouillé ;
+  - **permis (Q24)** : chauffeur actif avec un permis valide le jour du trajet (date marocaine du départ), **jamais dérogeable** ;
+  - véhicule en maintenance ou inactif : refusé ;
+  - **conflits BR-114** : chauffeur ou véhicule déjà pris sur un créneau qui se chevauche (intervalles semi-ouverts, trajets annulés et terminés ignorés) ou passagers au-delà des places : bloquant, sauf dérogation cochée par un **propriétaire ou gérant** avec un motif. Le dispatcheur ne peut pas déroger (42501). La dérogation, son auteur et son motif sont dans le journal d'audit ;
+  - un verrou consultatif par société sérialise les contrôles pour que deux affectations simultanées ne passent pas toutes les deux.
+- **Codes d'erreur métier** : SQLSTATE `MT001` à `MT006` levés par le trigger, traduits par `fromDbError` en messages i18n.
+- **Heures** : saisies en heure du Maroc (`datetime-local`), converties en UTC par `casablancaLocalToUtc` (décalage lu deux fois pour rester exact autour d'un changement d'heure), affichées avec le fuseau `Africa/Casablanca`.
+- **Planning** : vue semaine (7 colonnes, empilées sur mobile) et vue jour (une ligne par chauffeur, les trajets non affectés en premier), navigation par l'URL. Liste des trajets filtrable par texte, statut et période.
+- **Prix** : saisi en MAD (`800` ou `800,50`), converti en centimes sans passer par un nombre flottant (`parseMoneyInput`).
+- **Tests e2e** : les connexions de toute la suite viennent de 127.0.0.1 ; le helper de test remet à zéro les compteurs `login-*` avant chaque connexion, les limites de production restent inchangées.

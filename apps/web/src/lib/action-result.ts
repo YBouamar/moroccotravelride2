@@ -6,7 +6,11 @@ export type FormError =
   | 'duplicate'
   | 'inUse'
   | 'conflict'
+  | 'capacity'
   | 'driverIneligible'
+  | 'vehicleUnavailable'
+  | 'invalidTransition'
+  | 'locked'
   | 'fileMissing'
   | 'fileType'
   | 'fileSize'
@@ -17,8 +21,20 @@ export type FormResult = { ok: true; id?: string } | { ok: false; error: FormErr
 
 export const fail = (error: FormError): FormResult => ({ ok: false, error });
 
-/** Maps a Postgres error to a form error (unique violation, RLS, foreign key...). */
+/** Business rule errors raised by database triggers (custom SQLSTATEs, see the trips migration). */
+const BUSINESS_CODES: Record<string, FormError> = {
+  MT001: 'driverIneligible',
+  MT002: 'conflict',
+  MT003: 'capacity',
+  MT004: 'vehicleUnavailable',
+  MT005: 'invalidTransition',
+  MT006: 'locked',
+};
+
+/** Maps a Postgres error to a form error (unique violation, RLS, foreign key, business rule...). */
 export function fromDbError(error: { code?: string }): FormResult {
+  const business = error.code ? BUSINESS_CODES[error.code] : undefined;
+  if (business) return fail(business);
   if (error.code === '23505') return fail('duplicate');
   if (error.code === '23503') return fail('inUse');
   if (error.code === '42501') return fail('forbidden');

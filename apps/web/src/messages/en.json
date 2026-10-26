@@ -273,7 +273,12 @@
     "date": "Invalid date.",
     "registration": "Invalid registration.",
     "seats": "Between 1 and 80 seats.",
-    "year": "Invalid year."
+    "year": "Invalid year.",
+    "dateTime": "Enter a date and a time.",
+    "passengers": "Between 1 and 80 passengers.",
+    "luggage": "Between 0 and 200 pieces of luggage.",
+    "endBeforeStart": "The arrival must be after the departure.",
+    "amount": "Invalid amount (for example 800 or 800.50)."
   },
   "company": {
     "pending": {
@@ -456,7 +461,11 @@
       "unknown": "Something went wrong. Try again.",
       "inUse": "This item is used elsewhere: deactivate it instead.",
       "conflict": "Scheduling conflict: this driver or vehicle is already assigned in this time slot.",
-      "driverIneligible": "This driver cannot perform a trip (expired license or inactive driver)."
+      "driverIneligible": "This driver cannot perform a trip (expired license or inactive driver).",
+      "capacity": "There are more passengers than seats in the vehicle.",
+      "vehicleUnavailable": "This vehicle is in maintenance or inactive.",
+      "invalidTransition": "This status change is not possible.",
+      "locked": "This trip is completed or cancelled: it can no longer be changed."
     }
   },
   "companyForm": {
@@ -614,5 +623,82 @@
   "driverStatus": {
     "active": "Active",
     "inactive": "Inactive"
+  },
+  "tripStatus": {
+    "planned": "To assign",
+    "assigned": "Assigned",
+    "in_progress": "In progress",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "tripForm": {
+    "passengerSection": "Client and passengers",
+    "routeSection": "Route",
+    "assignmentSection": "Assignment",
+    "client": "Client (optional)",
+    "noClient": "No registered client",
+    "passengerName": "Lead passenger name",
+    "passengerPhone": "Passenger phone (optional)",
+    "passengers": "Passengers",
+    "luggage": "Luggage",
+    "placePlaceholder": "Choose a city or an airport",
+    "pickupCity": "Departure city",
+    "pickupAddress": "Pickup address",
+    "dropoffCity": "Arrival city",
+    "dropoffAddress": "Drop-off address",
+    "startsAt": "Departure",
+    "endsAt": "Estimated arrival",
+    "timeHint": "Morocco time.",
+    "price": "Agreed price in MAD (optional)",
+    "priceHint": "For example 800 or 800.50.",
+    "vehicle": "Vehicle",
+    "driver": "Driver",
+    "driverHint": "Drivers without a valid license on the trip date cannot be selected.",
+    "unassigned": "Unassigned",
+    "seats": "{seats, plural, one {# seat} other {# seats}}",
+    "notes": "Notes (optional)",
+    "to": "to",
+    "overrideTitle": "Override",
+    "overrideLabel": "I confirm this trip despite the conflict (owner or manager). The override is recorded in the history.",
+    "overrideReason": "Reason for the override"
+  },
+  "trips": {
+    "title": "Trips",
+    "new": "New trip",
+    "edit": "Edit the trip",
+    "from": "From",
+    "to": "To",
+    "fromMarketplace": "Marketplace booking",
+    "overridden": "Conflict accepted by override: {reason}",
+    "cancelledBecause": "Cancelled: {reason}",
+    "columns": {
+      "date": "Date",
+      "route": "Route"
+    },
+    "actions": {
+      "start": "Start the trip",
+      "startHelp": "The trip goes in progress.",
+      "complete": "Complete the trip",
+      "completeHelp": "The trip is completed and can no longer be changed.",
+      "cancel": "Cancel the trip",
+      "cancelTitle": "Cancel this trip?",
+      "cancelHelp": "The trip stays in the history with its cancellation reason. The driver and the vehicle are released.",
+      "cancelReason": "Cancellation reason",
+      "cancelConfirm": "Cancel the trip"
+    }
+  },
+  "planning": {
+    "title": "Planning",
+    "navigation": "Planning navigation",
+    "previous": "Previous period",
+    "next": "Next period",
+    "today": "Today",
+    "view": "View",
+    "views": {
+      "day": "Day",
+      "week": "Week"
+    },
+    "weekOf": "Week of {day}",
+    "noTrip": "No trip."
   }
 }

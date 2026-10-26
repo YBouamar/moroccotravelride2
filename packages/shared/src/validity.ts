@@ -67,3 +67,54 @@ export function casablancaEndOfDay(day: string): Date {
   const guess = Date.UTC(year, month - 1, date, 23, 59, 59);
   return new Date(guess - casablancaOffsetMs(new Date(guess)));
 }
+
+/**
+ * UTC instant of a Morocco wall-clock time typed in a datetime-local input ("2026-10-27T09:30").
+ * The offset is looked up twice so that a time right after a change of offset is still exact.
+ */
+export function casablancaLocalToUtc(local: string): Date {
+  const [day, time] = local.split('T') as [string, string];
+  const [year, month, date] = day.split('-').map(Number) as [number, number, number];
+  const [hour, minute] = time.split(':').map(Number) as [number, number];
+  const wallClock = Date.UTC(year, month - 1, date, hour, minute);
+  const first = wallClock - casablancaOffsetMs(new Date(wallClock));
+  return new Date(wallClock - casablancaOffsetMs(new Date(first)));
+}
+
+const LOCAL_INPUT = new Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'Africa/Casablanca',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
+});
+
+/** Morocco wall-clock value for a datetime-local input ("2026-10-27T09:30"). */
+export function toCasablancaLocalInput(at: Date): string {
+  return LOCAL_INPUT.format(at).replace(' ', 'T');
+}
+
+/** Calendar arithmetic on yyyy-mm-dd strings (no timezone involved). */
+export function addDays(day: string, days: number): string {
+  const [year, month, date] = day.split('-').map(Number) as [number, number, number];
+  return new Date(Date.UTC(year, month - 1, date + days)).toISOString().slice(0, 10);
+}
+
+/** Monday of the week containing `day` (ISO weeks, as used in Morocco). */
+export function startOfWeek(day: string): string {
+  const [year, month, date] = day.split('-').map(Number) as [number, number, number];
+  const weekday = new Date(Date.UTC(year, month - 1, date)).getUTCDay();
+  return addDays(day, -((weekday + 6) % 7));
+}
+
+export const isIsoDay = (value: unknown): value is string =>
+  typeof value === 'string' &&
+  /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+  !Number.isNaN(Date.parse(`${value}T00:00:00Z`));
+
+/** First instant (00:00) of a calendar day in Morocco, as a UTC instant. */
+export function casablancaStartOfDay(day: string): Date {
+  return new Date(casablancaEndOfDay(addDays(day, -1)).getTime() + 1000);
+}

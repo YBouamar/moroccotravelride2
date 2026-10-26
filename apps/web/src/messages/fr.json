@@ -273,7 +273,12 @@
     "date": "Date invalide.",
     "registration": "Immatriculation invalide.",
     "seats": "Entre 1 et 80 places.",
-    "year": "Année invalide."
+    "year": "Année invalide.",
+    "dateTime": "Indiquez une date et une heure.",
+    "passengers": "Entre 1 et 80 passagers.",
+    "luggage": "Entre 0 et 200 bagages.",
+    "endBeforeStart": "L'arrivée doit être après le départ.",
+    "amount": "Montant invalide (par exemple 800 ou 800,50)."
   },
   "company": {
     "pending": {
@@ -456,7 +461,11 @@
       "unknown": "Une erreur est survenue. Réessayez.",
       "inUse": "Cet élément est utilisé ailleurs : désactivez-le plutôt.",
       "conflict": "Conflit de planning : ce chauffeur ou ce véhicule est déjà affecté sur ce créneau.",
-      "driverIneligible": "Ce chauffeur ne peut pas effectuer de prestation (permis expiré ou chauffeur inactif)."
+      "driverIneligible": "Ce chauffeur ne peut pas effectuer de prestation (permis expiré ou chauffeur inactif).",
+      "capacity": "Le nombre de passagers dépasse les places du véhicule.",
+      "vehicleUnavailable": "Ce véhicule est en maintenance ou inactif.",
+      "invalidTransition": "Ce changement de statut n'est pas possible.",
+      "locked": "Ce trajet est terminé ou annulé : il ne peut plus être modifié."
     }
   },
   "companyForm": {
@@ -614,5 +623,82 @@
   "driverStatus": {
     "active": "Actif",
     "inactive": "Inactif"
+  },
+  "tripStatus": {
+    "planned": "À affecter",
+    "assigned": "Affecté",
+    "in_progress": "En cours",
+    "completed": "Terminé",
+    "cancelled": "Annulé"
+  },
+  "tripForm": {
+    "passengerSection": "Client et passagers",
+    "routeSection": "Trajet",
+    "assignmentSection": "Affectation",
+    "client": "Client (facultatif)",
+    "noClient": "Sans client enregistré",
+    "passengerName": "Nom du passager principal",
+    "passengerPhone": "Téléphone du passager (facultatif)",
+    "passengers": "Passagers",
+    "luggage": "Bagages",
+    "placePlaceholder": "Choisissez une ville ou un aéroport",
+    "pickupCity": "Ville de départ",
+    "pickupAddress": "Adresse de prise en charge",
+    "dropoffCity": "Ville d'arrivée",
+    "dropoffAddress": "Adresse de dépose",
+    "startsAt": "Départ",
+    "endsAt": "Arrivée estimée",
+    "timeHint": "Heure du Maroc.",
+    "price": "Prix convenu en MAD (facultatif)",
+    "priceHint": "Par exemple 800 ou 800,50.",
+    "vehicle": "Véhicule",
+    "driver": "Chauffeur",
+    "driverHint": "Les chauffeurs sans permis valide à la date du trajet ne peuvent pas être choisis.",
+    "unassigned": "Non affecté",
+    "seats": "{seats, plural, one {# place} other {# places}}",
+    "notes": "Notes (facultatif)",
+    "to": "vers",
+    "overrideTitle": "Dérogation",
+    "overrideLabel": "Je confirme ce trajet malgré le conflit (propriétaire ou gérant). La dérogation est enregistrée dans l'historique.",
+    "overrideReason": "Motif de la dérogation"
+  },
+  "trips": {
+    "title": "Trajets",
+    "new": "Nouveau trajet",
+    "edit": "Modifier le trajet",
+    "from": "Du",
+    "to": "Au",
+    "fromMarketplace": "Réservation marketplace",
+    "overridden": "Conflit accepté par dérogation : {reason}",
+    "cancelledBecause": "Annulé : {reason}",
+    "columns": {
+      "date": "Date",
+      "route": "Trajet"
+    },
+    "actions": {
+      "start": "Démarrer le trajet",
+      "startHelp": "Le trajet passe en cours.",
+      "complete": "Terminer le trajet",
+      "completeHelp": "Le trajet passe à terminé et ne pourra plus être modifié.",
+      "cancel": "Annuler le trajet",
+      "cancelTitle": "Annuler ce trajet ?",
+      "cancelHelp": "Le trajet reste dans l'historique avec son motif d'annulation. Le chauffeur et le véhicule sont libérés.",
+      "cancelReason": "Motif d'annulation",
+      "cancelConfirm": "Annuler le trajet"
+    }
+  },
+  "planning": {
+    "title": "Planning",
+    "navigation": "Navigation dans le planning",
+    "previous": "Période précédente",
+    "next": "Période suivante",
+    "today": "Aujourd'hui",
+    "view": "Vue",
+    "views": {
+      "day": "Jour",
+      "week": "Semaine"
+    },
+    "weekOf": "Semaine du {day}",
+    "noTrip": "Aucun trajet."
   }
 }

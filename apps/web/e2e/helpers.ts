@@ -18,6 +18,9 @@ export async function signIn(
   password = DEMO_PASSWORD,
   path = '/fr/login',
 ) {
+  // Every test signs in from 127.0.0.1: reset the login counters so that the production limits
+  // (20 attempts per IP, 8 per e-mail, per 15 minutes) do not throttle the suite itself.
+  sql("delete from private.rate_limits where key like 'login-%'");
   await page.goto(path);
   await page.getByLabel('Adresse e-mail').fill(email);
   await page.getByLabel('Mot de passe').fill(password);

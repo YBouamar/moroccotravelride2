@@ -10,3 +10,4 @@ export * from './documents';
 export * from './onboarding';
 export * from './validity';
 export * from './lists';
+export * from './trips';

@@ -69,8 +69,8 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
 
   const items: ShellNavItem[] = [
     { key: 'dashboard', label: t('saas.nav.dashboard'), icon: icon(LayoutDashboard), href: '/app' },
-    section('planning', t('saas.nav.planning'), CalendarDays, 'trips'),
-    section('trips', t('saas.nav.trips'), Route, 'trips'),
+    section('planning', t('saas.nav.planning'), CalendarDays, 'trips', '/app/planning'),
+    section('trips', t('saas.nav.trips'), Route, 'trips', '/app/trips'),
     section('bookings', t('saas.nav.bookings'), ClipboardList, 'trips'),
     section('fleet', t('saas.nav.fleet'), CarFront, 'vehicles', '/app/fleet'),
     section('drivers', t('saas.nav.drivers'), UserRound, 'drivers', '/app/drivers'),

@@ -72,6 +72,8 @@ export async function getCompanyDetail(companyId: string) {
         .from('audit_logs')
         .select('id, occurred_at, actor_id, action, before, after')
         .eq('company_id', companyId)
+        // Governance history only: operational changes (trips...) are shown where they happen.
+        .in('entity_type', ['companies', 'subscriptions', 'company_members', 'company_documents'])
         .order('occurred_at', { ascending: false })
         .limit(20),
       supabase

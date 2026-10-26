@@ -538,6 +538,137 @@ export type Database = {
           },
         ];
       };
+      trips: {
+        Row: {
+          cancel_reason: string | null;
+          client_id: string | null;
+          company_id: string;
+          conflict_override: boolean;
+          created_at: string;
+          created_by: string | null;
+          driver_id: string | null;
+          dropoff_address: string;
+          dropoff_city_id: string;
+          ends_at: string;
+          id: string;
+          luggage: number;
+          notes: string | null;
+          origin: Database['public']['Enums']['trip_origin'];
+          override_by: string | null;
+          override_reason: string | null;
+          passenger_name: string;
+          passenger_phone: string | null;
+          passengers: number;
+          pickup_address: string;
+          pickup_city_id: string;
+          price_cents: number | null;
+          starts_at: string;
+          status: Database['public']['Enums']['trip_status'];
+          updated_at: string;
+          vehicle_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          cancel_reason?: string | null;
+          client_id?: string | null;
+          company_id: string;
+          conflict_override?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          driver_id?: string | null;
+          dropoff_address: string;
+          dropoff_city_id: string;
+          ends_at: string;
+          id?: string;
+          luggage?: number;
+          notes?: string | null;
+          origin?: Database['public']['Enums']['trip_origin'];
+          override_by?: string | null;
+          override_reason?: string | null;
+          passenger_name: string;
+          passenger_phone?: string | null;
+          passengers: number;
+          pickup_address: string;
+          pickup_city_id: string;
+          price_cents?: number | null;
+          starts_at: string;
+          status?: Database['public']['Enums']['trip_status'];
+          updated_at?: string;
+          vehicle_id?: string | null;
+        };
+        Update: {
+          cancel_reason?: string | null;
+          client_id?: string | null;
+          company_id?: string;
+          conflict_override?: boolean;
+          created_at?: string;
+          created_by?: string | null;
+          driver_id?: string | null;
+          dropoff_address?: string;
+          dropoff_city_id?: string;
+          ends_at?: string;
+          id?: string;
+          luggage?: number;
+          notes?: string | null;
+          origin?: Database['public']['Enums']['trip_origin'];
+          override_by?: string | null;
+          override_reason?: string | null;
+          passenger_name?: string;
+          passenger_phone?: string | null;
+          passengers?: number;
+          pickup_address?: string;
+          pickup_city_id?: string;
+          price_cents?: number | null;
+          starts_at?: string;
+          status?: Database['public']['Enums']['trip_status'];
+          updated_at?: string;
+          vehicle_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'trips_client_id_company_id_fkey';
+            columns: ['client_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'clients';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'trips_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'trips_driver_id_company_id_fkey';
+            columns: ['driver_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'drivers';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'trips_dropoff_city_id_fkey';
+            columns: ['dropoff_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'trips_pickup_city_id_fkey';
+            columns: ['pickup_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'trips_vehicle_id_company_id_fkey';
+            columns: ['vehicle_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'vehicles';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       vehicle_types: {
         Row: {
           code: string;
@@ -648,6 +779,8 @@ export type Database = {
       driver_status: 'active' | 'inactive';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
       subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
+      trip_origin: 'manual' | 'marketplace';
+      trip_status: 'planned' | 'assigned' | 'in_progress' | 'completed' | 'cancelled';
       vehicle_status: 'active' | 'maintenance' | 'inactive';
       verification_status: 'pending' | 'approved' | 'rejected';
     };
@@ -767,6 +900,8 @@ export const Constants = {
       driver_status: ['active', 'inactive'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
       subscription_status: ['trial', 'active', 'past_due', 'cancelled'],
+      trip_origin: ['manual', 'marketplace'],
+      trip_status: ['planned', 'assigned', 'in_progress', 'completed', 'cancelled'],
       vehicle_status: ['active', 'maintenance', 'inactive'],
       verification_status: ['pending', 'approved', 'rejected'],
     },

@@ -23,6 +23,10 @@ const MATRIX = {
   'drivers.manage': ['owner', 'manager'],
   'clients.read': ['owner', 'manager', 'dispatcher', 'accountant'],
   'clients.manage': ['owner', 'manager', 'dispatcher'],
+  'trips.read': ['owner', 'manager', 'dispatcher', 'accountant'],
+  'trips.manage': ['owner', 'manager', 'dispatcher'],
+  // BR-114: only owners and managers override a planning conflict (checked again in the database).
+  'trips.overrideConflicts': ['owner', 'manager'],
 } as const satisfies Record<string, readonly MemberRole[]>;
 
 export type Permission = keyof typeof MATRIX;
