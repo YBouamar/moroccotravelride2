@@ -305,7 +305,8 @@
     "vatRate": "Taux de TVA entre 0 et 100 (par exemple 20 ou 5,5).",
     "quantity": "Quantité entre 1 et 10 000.",
     "gridPrice": "Prix entre 10 et 100 000 MAD.",
-    "time": "Indiquez une heure."
+    "time": "Indiquez une heure.",
+    "flight": "Lettres et chiffres uniquement (par exemple AT 201)."
   },
   "company": {
     "pending": {
@@ -884,6 +885,13 @@
       "activate": "Activer",
       "deactivate": "Désactiver",
       "toggleHelp": "Le prix est retiré ou remis dans les résultats de recherche. Les réservations existantes gardent leur prix."
+    },
+    "bank": {
+      "title": "Coordonnées pour les virements",
+      "help": "Montrées aux voyageurs qui paient par virement, une fois la réservation acceptée. Sans RIB, indiquez-leur vos coordonnées vous-même.",
+      "name": "Banque",
+      "rib": "RIB (24 chiffres)",
+      "save": "Enregistrer"
     }
   },
   "search": {
@@ -909,5 +917,165 @@
     "seatsUpTo": "Jusqu'à {seats} passagers",
     "allInclusive": "Prix tout compris",
     "book": "Réserver"
+  },
+  "book": {
+    "title": "Votre réservation",
+    "summary": "Récapitulatif",
+    "passengers": "{count, plural, one {# passager} other {# passagers}}",
+    "carrier": "Transporteur agréé : {name}",
+    "priceNote": "Prix tout compris, payé au transporteur.",
+    "acceptNote": "Le transporteur confirme sous {hours} h. Vous recevez un e-mail à chaque étape.",
+    "unavailable": "Cette offre n'est plus disponible. Relancez une recherche.",
+    "tooSoon": "Cette prise en charge est trop proche pour être réservée en ligne.",
+    "backToSearch": "Nouvelle recherche",
+    "submit": "Confirmer la réservation",
+    "fields": {
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "emailHint": "Vous recevrez le lien de suivi de votre réservation.",
+      "phone": "Téléphone (avec indicatif)",
+      "phoneHint": "Le chauffeur pourra vous joindre le jour du trajet.",
+      "luggage": "Nombre de bagages",
+      "pickupAddress": "Adresse de prise en charge",
+      "dropoffAddress": "Adresse de dépose",
+      "flight": "Numéro de vol (facultatif)",
+      "notes": "Précisions (facultatif)",
+      "payment": "Mode de paiement",
+      "terms": "J'accepte les <link>conditions générales</link> et la politique d'annulation."
+    },
+    "payment": {
+      "bank_transfer": {
+        "title": "Virement au transporteur",
+        "text": "Les coordonnées bancaires vous sont communiquées dès que le transporteur accepte, à régler avant le trajet."
+      },
+      "cash_to_driver": {
+        "title": "Espèces au chauffeur",
+        "text": "Vous payez le chauffeur le jour du trajet."
+      }
+    },
+    "errors": {
+      "invalid": "Certains champs sont invalides.",
+      "captcha": "La vérification anti-robot a échoué. Réessayez.",
+      "rateLimited": "Trop de réservations depuis votre connexion. Réessayez plus tard.",
+      "unavailable": "Cette offre n'est plus disponible. Relancez une recherche.",
+      "tooLate": "Cette prise en charge est trop proche pour être réservée en ligne.",
+      "cannotCancel": "Cette réservation ne peut plus être annulée en ligne.",
+      "link": "Lien invalide ou expiré.",
+      "unknown": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "booking": {
+    "title": "Ma réservation",
+    "heading": "Réservation {ref}",
+    "details": "Détails du trajet",
+    "pickup": "Prise en charge : {address}",
+    "dropoff": "Dépose : {address}",
+    "passengers": "{count, plural, one {# passager} other {# passagers}}",
+    "flight": "vol {number}",
+    "carrier": "Transporteur : {name}",
+    "refundDue": "Remboursement dû par le transporteur : {amount}",
+    "status": {
+      "pending_carrier": "En attente du transporteur",
+      "confirmed": "Confirmée",
+      "assigned": "Chauffeur affecté",
+      "completed": "Terminée",
+      "cancelled_by_traveler": "Annulée par vous",
+      "cancelled_by_carrier": "Annulée",
+      "disputed": "En litige"
+    },
+    "statusText": {
+      "pending_carrier": "{carrier} doit confirmer votre demande. Vous recevrez un e-mail.",
+      "confirmed": "{carrier} a confirmé votre transfert.",
+      "assigned": "Un chauffeur de {carrier} est affecté à votre transfert.",
+      "completed": "Merci d'avoir voyagé avec {carrier}.",
+      "cancelled_by_traveler": "Vous avez annulé cette réservation.",
+      "cancelled_by_carrier": "Cette réservation a été annulée par le transporteur ou n'a pas été confirmée à temps. Rien ne vous sera facturé.",
+      "disputed": "Un litige est en cours d'examen."
+    },
+    "paymentMethod": {
+      "bank_transfer": "Virement au transporteur",
+      "cash_to_driver": "Espèces au chauffeur",
+      "online_card": "Carte en ligne"
+    },
+    "paymentStatus": {
+      "unpaid": "Non payé",
+      "paid": "Payé",
+      "partially_refunded": "Remboursé en partie",
+      "refunded": "Remboursé"
+    },
+    "bank": {
+      "title": "Payer par virement",
+      "text": "Indiquez la référence {ref} dans le libellé du virement :"
+    },
+    "cancel": {
+      "title": "Annuler la réservation",
+      "button": "Annuler la réservation",
+      "reason": "Motif (facultatif)",
+      "confirm": "Confirmer l'annulation",
+      "refundPreview": "Si vous annulez maintenant, {percent} % vous seront remboursés, soit {amount}.",
+      "unpaid": "Rien n'a encore été payé : l'annulation est sans frais."
+    },
+    "errors": {
+      "invalid": "Certains champs sont invalides.",
+      "captcha": "La vérification anti-robot a échoué.",
+      "rateLimited": "Trop de tentatives. Réessayez plus tard.",
+      "unavailable": "Offre indisponible.",
+      "tooLate": "Trop tard.",
+      "cannotCancel": "Cette réservation ne peut plus être annulée en ligne. Contactez le transporteur.",
+      "link": "Ce lien est invalide ou a expiré.",
+      "unknown": "Une erreur est survenue. Réessayez."
+    }
+  },
+  "bookings": {
+    "title": "Réservations",
+    "empty": {
+      "title": "Aucune réservation",
+      "text": "Les réservations de la marketplace apparaîtront ici. Vérifiez votre visibilité et votre grille tarifaire."
+    },
+    "deadline": "À accepter dans {minutes} min",
+    "duration": "Durée estimée",
+    "minutes": "{minutes} min",
+    "accept": "Accepter",
+    "refuse": "Refuser",
+    "refuseTitle": "Refuser la réservation ?",
+    "refuseHelp": "Le voyageur est prévenu par e-mail ; la plateforme peut proposer un autre transporteur.",
+    "refuseReason": "Motif du refus",
+    "refuseConfirm": "Refuser",
+    "confirmPayment": "Confirmer le paiement reçu",
+    "confirmPaymentHelp": "Le virement ou les espèces ont bien été encaissés par votre société.",
+    "confirmRefund": "Confirmer le remboursement effectué",
+    "confirmRefundHelp": "Vous avez rendu au voyageur le montant dû après son annulation.",
+    "amounts": "Prix {total} · commission plateforme {commission} · votre part {carrier}",
+    "cancelReason": "Motif : {reason}",
+    "expired": "non acceptée dans le délai",
+    "openTrip": "Voir le trajet au planning"
+  },
+  "emails": {
+    "footer": "MoroccoTravelRide : transferts touristiques au Maroc. Move smarter. Manage better.",
+    "booking_received": {
+      "subject": "Réservation {ref} enregistrée",
+      "body": "Bonjour {name},\n\nVotre demande de transfert du {date} ({total}) est enregistrée sous la référence {ref}.\n\nLe transporteur doit la confirmer rapidement. Vous recevrez un e-mail dès sa réponse.\n\nGardez ce message : le lien ci-dessous permet de suivre ou d'annuler votre réservation.",
+      "action": "Suivre ma réservation"
+    },
+    "booking_new_for_carrier": {
+      "subject": "Nouvelle réservation {ref} à accepter",
+      "body": "Nouvelle réservation marketplace {ref} pour le {date} ({total}).\n\nAcceptez-la ou refusez-la rapidement : passé le délai, elle est annulée automatiquement.",
+      "action": "Voir les réservations"
+    },
+    "booking_confirmed": {
+      "subject": "Réservation {ref} confirmée",
+      "body": "Bonjour {name},\n\nVotre transfert du {date} est confirmé par le transporteur.\n\nSi vous payez par virement, les coordonnées bancaires sont sur la page de votre réservation.",
+      "action": "Voir ma réservation"
+    },
+    "booking_refused": {
+      "subject": "Réservation {ref} non confirmée",
+      "body": "Bonjour {name},\n\nLe transporteur n'a pas pu confirmer votre transfert du {date}. Rien ne vous sera facturé.\n\nVous pouvez relancer une recherche pour choisir un autre transporteur.",
+      "action": "Voir ma réservation"
+    },
+    "booking_cancelled": {
+      "subject": "Réservation {ref} annulée",
+      "body": "La réservation {ref} du {date} est annulée à la demande du voyageur.\n\nMontant à rembourser au voyageur par le transporteur : {refund}.",
+      "action": "Voir la réservation"
+    }
   }
 }

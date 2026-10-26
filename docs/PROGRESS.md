@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 3, étapes 12 et 13 terminées · **Prochaine étape** : Étape 14 (tunnel de réservation invité)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 3, étapes 12 à 15 terminées · **Prochaine étape** : Étape 16 (relevés mensuels de commissions) puis 17 (supervision admin)
 
 ## 1. Plan d'exécution par étapes
 
@@ -52,6 +52,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étape 10 : facturation (brouillons, lignes libres ou issues de trajets terminés, TVA par ligne avec taux par défaut de la société, émission avec numéro sans trou et mentions figées, PDF, avoir total), paiements (statuts partiellement payée / payée), ports locaux 553xx. 166 tests unitaires, 135 pgTAP, 49 E2E (ADR-027, ADR-028).
 - 2026-10-26, étape 11 (fin de Phase 2) : tableau de bord du jour (trajets du jour, à affecter sur 7 jours, reste à encaisser, factures en retard, alertes permis, agrément et véhicules en maintenance, selon le rôle), recette Phase 2 automatisée (trajet planifié, démarré, terminé, facturé, émis, payé), heures en 24 h dans les cartes de trajet, vue semaine responsive. 167 tests unitaires, 135 pgTAP, 51 E2E (ADR-029).
 - 2026-10-26, étapes 12 et 13 : grilles tarifaires et visibilité marketplace côté transporteur (liste des conditions BR-016), recherche publique par lieu, date, heure et passagers, règle des 24 h, grilles de démonstration. 172 tests unitaires, 146 pgTAP, 54 E2E (ADR-030).
+- 2026-10-26, étapes 14 et 15 : tunnel de réservation invité (Turnstile, limite, prix et commission figés), lien magique signé (suivi, coordonnées de virement, annulation selon les paliers), réservations côté transporteur (acceptation sous 2 h avec conversion en trajet, refus motivé, expiration automatique, confirmation du paiement et du remboursement), registre des commissions, file d'e-mails trilingues. Critère Phase 3 vérifié (800 MAD : 160 / 640). 183 tests unitaires, 172 pgTAP, 57 E2E (ADR-031).
 
 ## 3. En cours
 

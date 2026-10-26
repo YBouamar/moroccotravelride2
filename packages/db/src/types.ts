@@ -48,6 +48,200 @@ export type Database = {
           },
         ];
       };
+      booking_events: {
+        Row: {
+          actor_id: string | null;
+          booking_id: string;
+          company_id: string;
+          created_at: string;
+          data: Json | null;
+          event: string;
+          id: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          actor_id?: string | null;
+          booking_id: string;
+          company_id: string;
+          created_at?: string;
+          data?: Json | null;
+          event: string;
+          id?: never;
+        };
+        Update: {
+          actor_id?: string | null;
+          booking_id?: string;
+          company_id?: string;
+          created_at?: string;
+          data?: Json | null;
+          event?: string;
+          id?: never;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'booking_events_booking_id_fkey';
+            columns: ['booking_id'];
+            isOneToOne: false;
+            referencedRelation: 'bookings';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      bookings: {
+        Row: {
+          accept_deadline: string;
+          cancel_reason: string | null;
+          cancellation_policy: NonNullable<Json>;
+          cancelled_at: string | null;
+          carrier_cents: number;
+          commission_cents: number;
+          commission_rate_bps: number;
+          company_id: string;
+          created_at: string;
+          dropoff_address: string;
+          flight_number: string | null;
+          from_city_id: string;
+          id: string;
+          locale: string;
+          luggage: number;
+          notes: string | null;
+          passengers: number;
+          payment_method: Database['public']['Enums']['booking_payment_method'];
+          payment_status: Database['public']['Enums']['booking_payment_status'];
+          pickup_address: string;
+          pickup_at: string;
+          price_grid_id: string | null;
+          public_ref: string;
+          refund_cents: number;
+          responded_at: string | null;
+          status: Database['public']['Enums']['booking_status'];
+          to_city_id: string;
+          total_cents: number;
+          traveler_email: string;
+          traveler_name: string;
+          traveler_phone: string;
+          trip_id: string | null;
+          updated_at: string;
+          vehicle_type_code: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          accept_deadline: string;
+          cancel_reason?: string | null;
+          cancellation_policy: NonNullable<Json>;
+          cancelled_at?: string | null;
+          carrier_cents: number;
+          commission_cents: number;
+          commission_rate_bps: number;
+          company_id: string;
+          created_at?: string;
+          dropoff_address: string;
+          flight_number?: string | null;
+          from_city_id: string;
+          id?: string;
+          locale?: string;
+          luggage?: number;
+          notes?: string | null;
+          passengers: number;
+          payment_method: Database['public']['Enums']['booking_payment_method'];
+          payment_status?: Database['public']['Enums']['booking_payment_status'];
+          pickup_address: string;
+          pickup_at: string;
+          price_grid_id?: string | null;
+          public_ref: string;
+          refund_cents?: number;
+          responded_at?: string | null;
+          status?: Database['public']['Enums']['booking_status'];
+          to_city_id: string;
+          total_cents: number;
+          traveler_email: string;
+          traveler_name: string;
+          traveler_phone: string;
+          trip_id?: string | null;
+          updated_at?: string;
+          vehicle_type_code: string;
+        };
+        Update: {
+          accept_deadline?: string;
+          cancel_reason?: string | null;
+          cancellation_policy?: NonNullable<Json>;
+          cancelled_at?: string | null;
+          carrier_cents?: number;
+          commission_cents?: number;
+          commission_rate_bps?: number;
+          company_id?: string;
+          created_at?: string;
+          dropoff_address?: string;
+          flight_number?: string | null;
+          from_city_id?: string;
+          id?: string;
+          locale?: string;
+          luggage?: number;
+          notes?: string | null;
+          passengers?: number;
+          payment_method?: Database['public']['Enums']['booking_payment_method'];
+          payment_status?: Database['public']['Enums']['booking_payment_status'];
+          pickup_address?: string;
+          pickup_at?: string;
+          price_grid_id?: string | null;
+          public_ref?: string;
+          refund_cents?: number;
+          responded_at?: string | null;
+          status?: Database['public']['Enums']['booking_status'];
+          to_city_id?: string;
+          total_cents?: number;
+          traveler_email?: string;
+          traveler_name?: string;
+          traveler_phone?: string;
+          trip_id?: string | null;
+          updated_at?: string;
+          vehicle_type_code?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'bookings_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'bookings_from_city_id_fkey';
+            columns: ['from_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'bookings_price_grid_id_fkey';
+            columns: ['price_grid_id'];
+            isOneToOne: false;
+            referencedRelation: 'price_grids';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'bookings_to_city_id_fkey';
+            columns: ['to_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'bookings_trip_id_company_id_fkey';
+            columns: ['trip_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'trips';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'bookings_vehicle_type_code_fkey';
+            columns: ['vehicle_type_code'];
+            isOneToOne: false;
+            referencedRelation: 'vehicle_types';
+            referencedColumns: ['code'];
+          },
+        ];
+      };
       cities: {
         Row: {
           created_at: string;
@@ -159,9 +353,57 @@ export type Database = {
           },
         ];
       };
+      commission_ledger: {
+        Row: {
+          amount_cents: number;
+          booking_id: string;
+          company_id: string;
+          id: string;
+          kind: string;
+          occurred_at: string;
+          statement_id: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          amount_cents: number;
+          booking_id: string;
+          company_id: string;
+          id?: string;
+          kind: string;
+          occurred_at?: string;
+          statement_id?: string | null;
+        };
+        Update: {
+          amount_cents?: number;
+          booking_id?: string;
+          company_id?: string;
+          id?: string;
+          kind?: string;
+          occurred_at?: string;
+          statement_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'commission_ledger_booking_id_fkey';
+            columns: ['booking_id'];
+            isOneToOne: false;
+            referencedRelation: 'bookings';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'commission_ledger_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       companies: {
         Row: {
           address: string | null;
+          bank_name: string | null;
+          bank_rib: string | null;
           city_id: string | null;
           commission_rate: number | null;
           created_at: string;
@@ -185,6 +427,8 @@ export type Database = {
         ComputedFields: never;
         Insert: {
           address?: string | null;
+          bank_name?: string | null;
+          bank_rib?: string | null;
           city_id?: string | null;
           commission_rate?: number | null;
           created_at?: string;
@@ -207,6 +451,8 @@ export type Database = {
         };
         Update: {
           address?: string | null;
+          bank_name?: string | null;
+          bank_rib?: string | null;
           city_id?: string | null;
           commission_rate?: number | null;
           created_at?: string;
@@ -431,6 +677,57 @@ export type Database = {
             columns: ['company_id'];
             isOneToOne: false;
             referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      email_outbox: {
+        Row: {
+          attempts: number;
+          booking_id: string | null;
+          created_at: string;
+          id: string;
+          last_error: string | null;
+          locale: string;
+          payload: NonNullable<Json>;
+          sent_at: string | null;
+          status: string;
+          template: string;
+          to_email: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          attempts?: number;
+          booking_id?: string | null;
+          created_at?: string;
+          id?: string;
+          last_error?: string | null;
+          locale?: string;
+          payload?: NonNullable<Json>;
+          sent_at?: string | null;
+          status?: string;
+          template: string;
+          to_email: string;
+        };
+        Update: {
+          attempts?: number;
+          booking_id?: string | null;
+          created_at?: string;
+          id?: string;
+          last_error?: string | null;
+          locale?: string;
+          payload?: NonNullable<Json>;
+          sent_at?: string | null;
+          status?: string;
+          template?: string;
+          to_email?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'email_outbox_booking_id_fkey';
+            columns: ['booking_id'];
+            isOneToOne: false;
+            referencedRelation: 'bookings';
             referencedColumns: ['id'];
           },
         ];
@@ -848,6 +1145,7 @@ export type Database = {
       };
       trips: {
         Row: {
+          booking_id: string | null;
           cancel_reason: string | null;
           client_id: string | null;
           company_id: string;
@@ -877,6 +1175,7 @@ export type Database = {
         };
         ComputedFields: never;
         Insert: {
+          booking_id?: string | null;
           cancel_reason?: string | null;
           client_id?: string | null;
           company_id: string;
@@ -905,6 +1204,7 @@ export type Database = {
           vehicle_id?: string | null;
         };
         Update: {
+          booking_id?: string | null;
           cancel_reason?: string | null;
           client_id?: string | null;
           company_id?: string;
@@ -933,6 +1233,13 @@ export type Database = {
           vehicle_id?: string | null;
         };
         Relationships: [
+          {
+            foreignKeyName: 'trips_booking_fk';
+            columns: ['booking_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'bookings';
+            referencedColumns: ['id', 'company_id'];
+          },
           {
             foreignKeyName: 'trips_client_id_company_id_fkey';
             columns: ['client_id', 'company_id'];
@@ -1071,9 +1378,43 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      booking_notification_recipients: {
+        Args: { p_company: string };
+        Returns: {
+          email: string;
+          locale: string;
+        }[];
+      };
+      cancel_booking_by_traveler: {
+        Args: { p_booking: string; p_reason?: string };
+        Returns: number;
+      };
+      confirm_booking_payment: { Args: { p_booking: string }; Returns: undefined };
+      confirm_booking_refund: { Args: { p_booking: string }; Returns: undefined };
       consume_rate_limit: {
         Args: { p_key: string; p_limit: number; p_window_seconds: number };
         Returns: boolean;
+      };
+      create_booking: {
+        Args: {
+          p_dropoff_address: string;
+          p_flight_number: string;
+          p_locale: string;
+          p_luggage: number;
+          p_notes: string;
+          p_offer: string;
+          p_passengers: number;
+          p_payment_method: Database['public']['Enums']['booking_payment_method'];
+          p_pickup_address: string;
+          p_pickup_at: string;
+          p_traveler_email: string;
+          p_traveler_name: string;
+          p_traveler_phone: string;
+        };
+        Returns: {
+          booking_id: string;
+          public_ref: string;
+        }[];
       };
       create_company: {
         Args: { p_city_id?: string; p_legal_name: string; p_trade_name?: string };
@@ -1081,6 +1422,15 @@ export type Database = {
       };
       create_credit_note: { Args: { p_invoice_id: string; p_reason: string }; Returns: string };
       issue_invoice: { Args: { p_due_date?: string; p_invoice_id: string }; Returns: string };
+      respond_booking: {
+        Args: {
+          p_accept: boolean;
+          p_booking: string;
+          p_duration_minutes?: number;
+          p_reason?: string;
+        };
+        Returns: string;
+      };
       search_offers: {
         Args: { p_from: string; p_passengers: number; p_pickup_at: string; p_to: string };
         Returns: {
@@ -1095,6 +1445,16 @@ export type Database = {
       };
     };
     Enums: {
+      booking_payment_method: 'bank_transfer' | 'cash_to_driver' | 'online_card';
+      booking_payment_status: 'unpaid' | 'paid' | 'partially_refunded' | 'refunded';
+      booking_status:
+        | 'pending_carrier'
+        | 'confirmed'
+        | 'assigned'
+        | 'completed'
+        | 'cancelled_by_traveler'
+        | 'cancelled_by_carrier'
+        | 'disputed';
       client_type: 'b2b' | 'b2c';
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
@@ -1218,6 +1578,17 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      booking_payment_method: ['bank_transfer', 'cash_to_driver', 'online_card'],
+      booking_payment_status: ['unpaid', 'paid', 'partially_refunded', 'refunded'],
+      booking_status: [
+        'pending_carrier',
+        'confirmed',
+        'assigned',
+        'completed',
+        'cancelled_by_traveler',
+        'cancelled_by_carrier',
+        'disputed',
+      ],
       client_type: ['b2b', 'b2c'],
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],

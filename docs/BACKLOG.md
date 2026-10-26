@@ -43,3 +43,6 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Historique d'un trajet et d'une facture (journal d'audit) visible sur leur fiche |
 | P3 | Renommer `useOnboardingAction` en hook générique de formulaire (utilisé par tout le SaaS) |
 | P3 | Numérotation des factures : format à confirmer par un comptable (BR-107) |
+| P2 | Modèles d'e-mails avec React Email (aujourd'hui : HTML simple traduit) |
+| P2 | Réservation avec compte voyageur (historique, avis) en plus du mode invité |
+| P2 | Pénalités transporteur en cas d'annulation (BR-012, À CONFIRMER) |

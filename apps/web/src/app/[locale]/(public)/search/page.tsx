@@ -47,6 +47,8 @@ export default async function SearchPage({
   const bookHref = (offerId: string) =>
     `/book?${new URLSearchParams({
       offer: offerId,
+      from: search!.from,
+      to: search!.to,
       date: search!.date,
       time: search!.time,
       passengers: String(search!.passengers),

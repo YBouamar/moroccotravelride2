@@ -21,6 +21,7 @@ import { Alert } from '@/components/ui/alert';
 import { EmptyState } from '@/components/ui/empty-state';
 import { UserMenu } from '@/features/auth/components/user-menu';
 import { requireUser } from '@/features/auth/session';
+import { countPendingBookings } from '@/features/bookings/queries';
 import { getCompanyContext } from '@/features/companies/context';
 import { getPlans, lowestPlanWith } from '@/features/subscriptions/plans';
 import { asLocale } from '@/i18n/as-locale';
@@ -42,6 +43,11 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     getCompanyContext(),
     getPlans(),
   ]);
+
+  const pendingBookings =
+    context && can(context.membership.role, 'bookings.read')
+      ? await countPendingBookings(context.membership.companyId)
+      : 0;
 
   // Sections of the offer link to their page (or show "soon" when not built yet); the others are
   // locked with the offer that unlocks them.
@@ -72,7 +78,18 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     { key: 'dashboard', label: t('saas.nav.dashboard'), icon: icon(LayoutDashboard), href: '/app' },
     section('planning', t('saas.nav.planning'), CalendarDays, 'trips', '/app/planning'),
     section('trips', t('saas.nav.trips'), Route, 'trips', '/app/trips'),
-    section('bookings', t('saas.nav.bookings'), ClipboardList, 'trips'),
+    // Marketplace bookings: not a SaaS offer feature, shown to the office roles with a pending count.
+    ...(context && can(context.membership.role, 'bookings.read')
+      ? [
+          {
+            key: 'bookings',
+            label: t('saas.nav.bookings'),
+            icon: icon(ClipboardList),
+            href: '/app/bookings',
+            badge: pendingBookings > 0 ? String(pendingBookings) : undefined,
+          } satisfies ShellNavItem,
+        ]
+      : []),
     // Marketplace (Pillar A): not part of the SaaS offers, owners and managers only.
     ...(can(context?.membership.role, 'marketplace.manage')
       ? [

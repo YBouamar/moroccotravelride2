@@ -147,3 +147,7 @@ from (values
 ) as v(company, from_slug, to_slug, vehicle_type, price)
 join public.cities f on f.slug = v.from_slug
 join public.cities t on t.slug = v.to_slug;
+
+-- Bank details shown to travelers paying Atlas by transfer (demo RIB).
+update public.companies set bank_name = 'Banque Démo', bank_rib = '011780000012345678901234'
+where id = '00000000-0000-4000-b000-000000000001';

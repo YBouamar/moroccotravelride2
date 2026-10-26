@@ -18,6 +18,7 @@ import {
   setMarketplaceVisibilityAction,
   setPriceGridActiveAction,
 } from '@/features/marketplace/actions';
+import { BankDetailsForm } from '@/features/marketplace/components/bank-details-form';
 import { PriceGridForm } from '@/features/marketplace/components/price-grid-form';
 import { getMarketplaceSettings } from '@/features/marketplace/queries';
 import { getVehicleTypeOptions } from '@/features/reference/queries';
@@ -130,6 +131,12 @@ export default async function MarketplaceSettingsPage({
             action={setMarketplaceVisibilityAction.bind(null, !company.marketplace_enabled)}
           />
         </div>
+      </Card>
+
+      <Card className="flex flex-col gap-4">
+        <CardTitle>{t('marketplace.bank.title')}</CardTitle>
+        <CardDescription>{t('marketplace.bank.help')}</CardDescription>
+        <BankDetailsForm bankName={company.bank_name ?? ''} rib={company.bank_rib ?? ''} />
       </Card>
 
       <Card className="flex flex-col gap-4">

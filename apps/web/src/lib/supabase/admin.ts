@@ -6,7 +6,8 @@ import { getServerEnv } from '@/lib/env.server';
 
 /**
  * Service role client: bypasses RLS. Only for server-side operations that have no user context
- * (rate limiting, system jobs). Never use it to read or write tenant data on behalf of a user.
+ * (rate limiting, system jobs, guest bookings checked by Turnstile or a signed magic link, e-mail
+ * outbox). Never use it to read or write tenant data on behalf of a signed-in user.
  */
 export function createAdminClient() {
   return createClient<Database>(

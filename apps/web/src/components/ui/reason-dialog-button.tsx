@@ -12,7 +12,9 @@ interface ReasonDialogButtonProps {
   reasonLabel: string;
   confirmLabel: string;
   disabled?: boolean;
-  /** Called with the trimmed reason (3 characters at least). */
+  /** False for an optional reason (e.g. a traveler cancelling). */
+  reasonRequired?: boolean;
+  /** Called with the trimmed reason (3 characters at least when required). */
   onConfirm: (reason: string) => void;
 }
 
@@ -41,7 +43,7 @@ export function ReasonDialogButton(props: ReasonDialogButtonProps) {
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (reason.trim().length < 3) return;
+            if (props.reasonRequired !== false && reason.trim().length < 3) return;
             dialog.current?.close();
             props.onConfirm(reason.trim());
           }}
@@ -55,8 +57,8 @@ export function ReasonDialogButton(props: ReasonDialogButtonProps) {
             <Label htmlFor={`${id}-reason`}>{props.reasonLabel}</Label>
             <Input
               id={`${id}-reason`}
-              required
-              minLength={3}
+              required={props.reasonRequired !== false}
+              minLength={props.reasonRequired !== false ? 3 : undefined}
               maxLength={300}
               value={reason}
               onChange={(event) => setReason(event.target.value)}

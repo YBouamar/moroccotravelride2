@@ -13,3 +13,4 @@ export * from './lists';
 export * from './trips';
 export * from './invoices';
 export * from './marketplace';
+export * from './bookings';

@@ -9,7 +9,7 @@ export async function getMarketplaceSettings(companyId: string, locale: Locale) 
     supabase
       .from('companies')
       .select(
-        'status, marketplace_enabled, marketplace_suspended_at, marketplace_suspension_reason, license_expires_on',
+        'status, marketplace_enabled, marketplace_suspended_at, marketplace_suspension_reason, license_expires_on, bank_name, bank_rib',
       )
       .eq('id', companyId)
       .single(),

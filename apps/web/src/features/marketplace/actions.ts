@@ -81,3 +81,31 @@ export async function setPriceGridActiveAction(id: string, active: boolean): Pro
   if (error) return fromDbError(error);
   return data.length ? done() : fail('forbidden');
 }
+
+const bankSchema = z.object({
+  bankName: z.string().trim().max(100),
+  // Moroccan RIB: 24 digits, spaces ignored; empty removes the details.
+  rib: z
+    .string()
+    .transform((value) => value.replace(/\s/g, ''))
+    .pipe(z.union([z.literal(''), z.string().regex(/^\d{24}$/)])),
+});
+
+/** Bank details shown to travelers who chose a transfer, once the booking is confirmed (BR-009). */
+export async function saveBankDetailsAction(input: {
+  bankName: string;
+  rib: string;
+}): Promise<FormResult> {
+  const context = await marketplaceContext();
+  if ('error' in context) return context.error;
+  const parsed = bankSchema.safeParse(input);
+  if (!parsed.success) return fail('invalid');
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from('companies')
+    .update({ bank_name: parsed.data.bankName || null, bank_rib: parsed.data.rib || null })
+    .eq('id', context.companyId)
+    .select('id');
+  if (error) return fromDbError(error);
+  return data.length ? done() : fail('forbidden');
+}

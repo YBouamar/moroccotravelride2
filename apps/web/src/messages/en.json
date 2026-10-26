@@ -305,7 +305,8 @@
     "vatRate": "VAT rate between 0 and 100 (for example 20 or 5.5).",
     "quantity": "Quantity between 1 and 10,000.",
     "gridPrice": "Price between 10 and 100,000 MAD.",
-    "time": "Enter a time."
+    "time": "Enter a time.",
+    "flight": "Letters and digits only (for example AT 201)."
   },
   "company": {
     "pending": {
@@ -884,6 +885,13 @@
       "activate": "Activate",
       "deactivate": "Deactivate",
       "toggleHelp": "The price is removed from or put back in search results. Existing bookings keep their price."
+    },
+    "bank": {
+      "title": "Details for bank transfers",
+      "help": "Shown to travelers who pay by transfer, once the booking is accepted. Without a RIB, give them your details yourself.",
+      "name": "Bank",
+      "rib": "RIB (24 digits)",
+      "save": "Save"
     }
   },
   "search": {
@@ -909,5 +917,165 @@
     "seatsUpTo": "Up to {seats} passengers",
     "allInclusive": "All-inclusive price",
     "book": "Book"
+  },
+  "book": {
+    "title": "Your booking",
+    "summary": "Summary",
+    "passengers": "{count, plural, one {# passenger} other {# passengers}}",
+    "carrier": "Licensed carrier: {name}",
+    "priceNote": "All-inclusive price, paid to the carrier.",
+    "acceptNote": "The carrier confirms within {hours} hours. You get an e-mail at every step.",
+    "unavailable": "This offer is no longer available. Please search again.",
+    "tooSoon": "This pickup is too soon to be booked online.",
+    "backToSearch": "New search",
+    "submit": "Confirm the booking",
+    "fields": {
+      "name": "Full name",
+      "email": "E-mail address",
+      "emailHint": "You will receive the link to follow your booking.",
+      "phone": "Phone (with country code)",
+      "phoneHint": "The driver can reach you on the day of the trip.",
+      "luggage": "Pieces of luggage",
+      "pickupAddress": "Pickup address",
+      "dropoffAddress": "Drop-off address",
+      "flight": "Flight number (optional)",
+      "notes": "Details (optional)",
+      "payment": "Payment method",
+      "terms": "I accept the <link>terms and conditions</link> and the cancellation policy."
+    },
+    "payment": {
+      "bank_transfer": {
+        "title": "Bank transfer to the carrier",
+        "text": "The bank details are sent as soon as the carrier accepts, to be paid before the trip."
+      },
+      "cash_to_driver": {
+        "title": "Cash to the driver",
+        "text": "You pay the driver on the day of the trip."
+      }
+    },
+    "errors": {
+      "invalid": "Some fields are invalid.",
+      "captcha": "The anti-bot check failed. Try again.",
+      "rateLimited": "Too many bookings from your connection. Try again later.",
+      "unavailable": "This offer is no longer available. Please search again.",
+      "tooLate": "This pickup is too soon to be booked online.",
+      "cannotCancel": "This booking can no longer be cancelled online.",
+      "link": "Invalid or expired link.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "booking": {
+    "title": "My booking",
+    "heading": "Booking {ref}",
+    "details": "Trip details",
+    "pickup": "Pickup: {address}",
+    "dropoff": "Drop-off: {address}",
+    "passengers": "{count, plural, one {# passenger} other {# passengers}}",
+    "flight": "flight {number}",
+    "carrier": "Carrier: {name}",
+    "refundDue": "Refund due by the carrier: {amount}",
+    "status": {
+      "pending_carrier": "Waiting for the carrier",
+      "confirmed": "Confirmed",
+      "assigned": "Driver assigned",
+      "completed": "Completed",
+      "cancelled_by_traveler": "Cancelled by you",
+      "cancelled_by_carrier": "Cancelled",
+      "disputed": "Disputed"
+    },
+    "statusText": {
+      "pending_carrier": "{carrier} has to confirm your request. You will get an e-mail.",
+      "confirmed": "{carrier} confirmed your transfer.",
+      "assigned": "A driver from {carrier} is assigned to your transfer.",
+      "completed": "Thank you for travelling with {carrier}.",
+      "cancelled_by_traveler": "You cancelled this booking.",
+      "cancelled_by_carrier": "This booking was cancelled by the carrier or not confirmed in time. You will not be charged.",
+      "disputed": "A dispute is being reviewed."
+    },
+    "paymentMethod": {
+      "bank_transfer": "Bank transfer to the carrier",
+      "cash_to_driver": "Cash to the driver",
+      "online_card": "Online card"
+    },
+    "paymentStatus": {
+      "unpaid": "Unpaid",
+      "paid": "Paid",
+      "partially_refunded": "Partly refunded",
+      "refunded": "Refunded"
+    },
+    "bank": {
+      "title": "Pay by bank transfer",
+      "text": "Use the reference {ref} as the transfer label:"
+    },
+    "cancel": {
+      "title": "Cancel the booking",
+      "button": "Cancel the booking",
+      "reason": "Reason (optional)",
+      "confirm": "Confirm the cancellation",
+      "refundPreview": "If you cancel now, {percent} % will be refunded, that is {amount}.",
+      "unpaid": "Nothing has been paid yet: cancelling is free."
+    },
+    "errors": {
+      "invalid": "Some fields are invalid.",
+      "captcha": "The anti-bot check failed.",
+      "rateLimited": "Too many attempts. Try again later.",
+      "unavailable": "Offer unavailable.",
+      "tooLate": "Too late.",
+      "cannotCancel": "This booking can no longer be cancelled online. Please contact the carrier.",
+      "link": "This link is invalid or has expired.",
+      "unknown": "Something went wrong. Try again."
+    }
+  },
+  "bookings": {
+    "title": "Bookings",
+    "empty": {
+      "title": "No booking",
+      "text": "Marketplace bookings will appear here. Check your visibility and your price grid."
+    },
+    "deadline": "To accept within {minutes} min",
+    "duration": "Estimated duration",
+    "minutes": "{minutes} min",
+    "accept": "Accept",
+    "refuse": "Refuse",
+    "refuseTitle": "Refuse the booking?",
+    "refuseHelp": "The traveler is told by e-mail; the platform may offer another carrier.",
+    "refuseReason": "Reason for refusing",
+    "refuseConfirm": "Refuse",
+    "confirmPayment": "Confirm the payment received",
+    "confirmPaymentHelp": "The transfer or the cash was collected by your company.",
+    "confirmRefund": "Confirm the refund made",
+    "confirmRefundHelp": "You gave back to the traveler the amount due after their cancellation.",
+    "amounts": "Price {total} · platform commission {commission} · your share {carrier}",
+    "cancelReason": "Reason: {reason}",
+    "expired": "not accepted in time",
+    "openTrip": "See the trip in the planning"
+  },
+  "emails": {
+    "footer": "MoroccoTravelRide: tourist transfers in Morocco. Move smarter. Manage better.",
+    "booking_received": {
+      "subject": "Booking {ref} received",
+      "body": "Hello {name},\n\nYour transfer request for {date} ({total}) is registered under the reference {ref}.\n\nThe carrier has to confirm it shortly. You will get an e-mail as soon as they answer.\n\nKeep this message: the link below lets you follow or cancel your booking.",
+      "action": "Follow my booking"
+    },
+    "booking_new_for_carrier": {
+      "subject": "New booking {ref} to accept",
+      "body": "New marketplace booking {ref} for {date} ({total}).\n\nAccept or refuse it quickly: past the deadline, it is cancelled automatically.",
+      "action": "See the bookings"
+    },
+    "booking_confirmed": {
+      "subject": "Booking {ref} confirmed",
+      "body": "Hello {name},\n\nYour transfer on {date} is confirmed by the carrier.\n\nIf you pay by transfer, the bank details are on your booking page.",
+      "action": "See my booking"
+    },
+    "booking_refused": {
+      "subject": "Booking {ref} not confirmed",
+      "body": "Hello {name},\n\nThe carrier could not confirm your transfer on {date}. You will not be charged.\n\nYou can search again to choose another carrier.",
+      "action": "See my booking"
+    },
+    "booking_cancelled": {
+      "subject": "Booking {ref} cancelled",
+      "body": "Booking {ref} on {date} is cancelled at the traveler's request.\n\nAmount the carrier refunds to the traveler: {refund}.",
+      "action": "See the booking"
+    }
   }
 }
