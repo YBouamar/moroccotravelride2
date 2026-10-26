@@ -725,6 +725,65 @@ export type Database = {
           },
         ];
       };
+      driver_locations: {
+        Row: {
+          accuracy_m: number | null;
+          company_id: string;
+          driver_id: string;
+          id: number;
+          latitude: number;
+          longitude: number;
+          received_at: string;
+          recorded_at: string;
+          trip_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          accuracy_m?: number | null;
+          company_id: string;
+          driver_id: string;
+          id?: never;
+          latitude: number;
+          longitude: number;
+          received_at?: string;
+          recorded_at: string;
+          trip_id: string;
+        };
+        Update: {
+          accuracy_m?: number | null;
+          company_id?: string;
+          driver_id?: string;
+          id?: never;
+          latitude?: number;
+          longitude?: number;
+          received_at?: string;
+          recorded_at?: string;
+          trip_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'driver_locations_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'driver_locations_driver_id_company_id_fkey';
+            columns: ['driver_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'drivers';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'driver_locations_trip_id_company_id_fkey';
+            columns: ['trip_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'trips';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       drivers: {
         Row: {
           company_id: string;
@@ -1615,8 +1674,22 @@ export type Database = {
         Returns: string;
       };
       create_credit_note: { Args: { p_invoice_id: string; p_reason: string }; Returns: string };
+      driver_set_trip_status: {
+        Args: { p_status: Database['public']['Enums']['trip_status']; p_trip: string };
+        Returns: undefined;
+      };
       generate_commission_statements: { Args: { p_month?: string }; Returns: number };
       issue_invoice: { Args: { p_due_date?: string; p_invoice_id: string }; Returns: string };
+      live_positions: {
+        Args: { p_company: string };
+        Returns: {
+          latitude: number;
+          longitude: number;
+          recorded_at: string;
+          trip_id: string;
+        }[];
+      };
+      record_driver_locations: { Args: { p_points: Json; p_trip: string }; Returns: number };
       record_statement_payment: {
         Args: {
           p_amount_cents: number;

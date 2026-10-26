@@ -81,6 +81,8 @@ Implémentation (étape 4) :
 
 **Implémentée (étape 18)** : `expenses` (`category`, `amount_cents`, `spent_on`, `description`, trajet, véhicule et chauffeur facultatifs, `receipt_path` dans le bucket privé `expense-receipts` (dossier de la société), `status` `submitted|approved|rejected` avec motif de refus, `submitted_by`, `reviewed_by`, `reviewed_at`, `client_ref` unique pour rejouer une file hors ligne sans doublon). Trigger `private.guard_expense` : un chauffeur dépose en son nom seulement, seuls propriétaire, gérant et comptable décident, une décision est définitive ; écriture avec l'offre V2 (`has_feature('expenses')`), pas de suppression.
 
+**Implémentés (étapes 19 à 21)** : `driver_locations` (`trip_id`, `driver_id`, latitude, longitude, précision, `recorded_at`), écrite uniquement par `public.record_driver_locations` (lot de points, trajet du chauffeur **en cours** seulement, BR-201) ; lecture : propriétaire, gérant, dispatcheur ; publication Realtime prête ; `public.live_positions` (dernière position par trajet en cours) ; `public.driver_set_trip_status` (le chauffeur démarre ou termine son trajet, offre V2) ; purge quotidienne `private.purge_driver_locations` (`location_retention_days`, 90 jours, BR-202).
+
 `expenses` (justificatif dans bucket privé `receipts/{company_id}/...`), `driver_locations` (insert uniquement par le chauffeur affecté quand `trips.status = 'in_progress'` ; purge pg_cron après `platform_settings.location_retention_days`).
 
 ### SaaS V3 (Phase 5)
@@ -119,5 +121,6 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261028110000_email_outbox.sql` | file d'envoi des e-mails et purge à 90 jours | 3 (étape 17) |
 | `20261028120000_commission_statements.sql` | relevés mensuels de commissions, paiements, retards et suspension | 3 (étape 16) |
 | `20261029090000_expenses.sql` | dépenses, justificatifs privés, validation | 4 (étape 18) |
+| `20261029100000_driver_app_and_tracking.sql` | actions du chauffeur, positions, carte en direct, purge | 4 (étapes 19 à 21) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (191 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (202 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

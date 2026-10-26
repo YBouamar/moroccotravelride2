@@ -1154,5 +1154,13 @@
     "rejectTitle": "Reject the expense?",
     "rejectHelp": "The reason is visible to the author. A rejected expense can no longer be changed.",
     "rejectReason": "Reason for rejecting"
+  },
+  "tracking": {
+    "title": "Live tracking",
+    "help": "Drivers' positions during trips in progress only, refreshed every 15 seconds. Positions are deleted after 90 days.",
+    "mapLabel": "Map of the trips in progress",
+    "none": "No trip in progress.",
+    "lastSeen": "Last position at {time}",
+    "noPosition": "No position received yet."
   }
 }

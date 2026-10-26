@@ -5,7 +5,11 @@
   },
   "language": {
     "label": "Langue",
-    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+    "names": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
   },
   "login": {
     "title": "Espace chauffeur",
@@ -22,9 +26,62 @@
     }
   },
   "today": {
-    "title": "Aujourd'hui",
+    "title": "Mes trajets",
     "greeting": "Bonjour {{name}}",
-    "empty": "Vos trajets du jour apparaîtront ici.",
-    "signOut": "Se déconnecter"
+    "empty": "Aucun trajet prévu dans les 7 prochains jours.",
+    "signOut": "Se déconnecter",
+    "offline": "Pas de connexion : la liste n'est peut-être pas à jour."
+  },
+  "trip": {
+    "status": {
+      "planned": "À affecter",
+      "assigned": "Prévu",
+      "in_progress": "En cours",
+      "completed": "Terminé",
+      "cancelled": "Annulé"
+    },
+    "passengers_one": "{{count}} passager",
+    "passengers_other": "{{count}} passagers",
+    "luggage_one": "{{count}} bagage",
+    "luggage_other": "{{count}} bagages",
+    "pickup": "Prise en charge",
+    "dropoff": "Dépose",
+    "passenger": "Passager",
+    "call": "Appeler le passager",
+    "start": "Démarrer le trajet",
+    "complete": "Terminer le trajet",
+    "back": "Retour",
+    "trackingOn": "Position partagée avec votre société pendant ce trajet.",
+    "locationTitle": "Localisation",
+    "locationDenied": "Sans autorisation de localisation, votre société ne voit pas votre position. Le trajet est quand même démarré.",
+    "errorTitle": "Action impossible",
+    "errors": {
+      "refused": "Ce changement n'est pas autorisé pour ce trajet.",
+      "network": "Pas de connexion. Réessayez."
+    }
+  },
+  "expense": {
+    "add": "Ajouter une dépense",
+    "title": "Nouvelle dépense",
+    "offlineHint": "Sans réseau, la dépense est gardée sur le téléphone et envoyée automatiquement plus tard.",
+    "amount": "Montant (MAD)",
+    "note": "Note (facultatif)",
+    "takePhoto": "Photographier le justificatif",
+    "retakePhoto": "Reprendre la photo",
+    "photoTaken": "Photo du justificatif",
+    "save": "Enregistrer",
+    "categories": {
+      "fuel": "Carburant",
+      "toll": "Péage",
+      "parking": "Stationnement",
+      "maintenance": "Entretien",
+      "meal": "Repas",
+      "other": "Autre"
+    },
+    "errors": {
+      "amount": "Saisissez un montant valide (par exemple 450).",
+      "camera": "Autorisez l'appareil photo pour photographier le justificatif.",
+      "unknown": "Compte chauffeur introuvable. Reconnectez-vous."
+    }
   }
 }

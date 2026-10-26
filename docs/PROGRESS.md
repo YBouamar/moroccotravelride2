@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 4, étape 18 terminée · **Prochaine étape** : Étape 19 (app chauffeur)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 4 terminée (étapes 18 à 21) · **Prochaine étape** : Phase 5 (V3 : entretien, échéances, consommation)
 
 ## 1. Plan d'exécution par étapes
 
@@ -15,7 +15,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | 5 | 1d | Auth : inscription transporteur (crée société `pending` + owner), connexion, mot de passe oublié, MFA admin, rate limiting, Turnstile, en-têtes de sécurité, sélection de société ; Expo initialisé (écran de connexion, i18n, icône) | **Critère Phase 1** : inscription, connexion, changement de langue avec RTL, isolation prouvée | ✅ fait |
 | 6 à 11 | 2 | SaaS Standard en sous-étapes : onboarding + vérification admin ; véhicules / chauffeurs / clients ; trajets + planning + conflits ; facturation (PDF, numérotation, avoirs) + paiements ; abonnements + feature gating | Une semaine d'activité gérée de bout en bout, facture conforme | ✅ fait |
 | 12 à 17 | 3 | Marketplace : villes + grilles ; recherche + résultats ; tunnel invité + 24 h ; acceptation + conversion en trajet ; paiement hors ligne (virement, espèces au chauffeur) + registre des commissions + relevé mensuel ; e-mails, lien magique, annulation, supervision admin | Casablanca vers Marrakech 800 MAD : 160 / 640 enregistrés, trajet au planning | ✅ fait |
-| 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ⬜ |
+| 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ✅ fait |
 | 22 à 24 | 5 | V3 : entretien et pièces ; échéances + rappels planifiés ; consommation | Rappels J-30, J-7, J-1 sur une assurance | ⬜ |
 | 25 à 27 | 6 | Pilotage : indicateurs ; reversements + exports ; audit consultable, avis et modération | Tableau de bord admin chiffré | ⬜ |
 | 28 à 30 | 7 | Durcissement : audit sécurité, charge, SEO, pages légales, VPS Contabo (Coolify, Supabase auto-hébergé, staging), sauvegarde testée, EAS, CNDP, checklist | Checklist de lancement verte | ⬜ |
@@ -55,6 +55,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étapes 14 et 15 : tunnel de réservation invité (Turnstile, limite, prix et commission figés), lien magique signé (suivi, coordonnées de virement, annulation selon les paliers), réservations côté transporteur (acceptation sous 2 h avec conversion en trajet, refus motivé, expiration automatique, confirmation du paiement et du remboursement), registre des commissions, file d'e-mails trilingues. Critère Phase 3 vérifié (800 MAD : 160 / 640). 183 tests unitaires, 172 pgTAP, 57 E2E (ADR-031).
 - 2026-10-26, étapes 16 et 17 (fin de Phase 3) : relevés mensuels de commissions (génération automatique ou manuelle, paiements enregistrés par l'admin, retard puis suspension marketplace), page Commissions du transporteur, supervision admin des réservations. 183 tests unitaires, 182 pgTAP, 59 E2E (ADR-032).
 - 2026-10-26, étape 18 : dépenses (dépôt par le bureau ou le chauffeur, justificatif privé, validation ou refus motivé, décision définitive, offre V2). 186 tests unitaires, 191 pgTAP, 60 E2E (ADR-033).
+- 2026-10-26, étapes 19 à 21 (fin de Phase 4) : app chauffeur (trajets à venir, démarrer et terminer, appel du passager, dépense avec photo, file hors ligne idempotente), positions limitées aux trajets en cours et contrôlées en base, carte en direct côté bureau (MapLibre, rafraîchie toutes les 15 s), purge à 90 jours. 190 tests unitaires, 202 pgTAP, 61 E2E (ADR-034).
 
 ## 3. En cours
 

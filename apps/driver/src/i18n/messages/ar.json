@@ -5,7 +5,11 @@
   },
   "language": {
     "label": "اللغة",
-    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+    "names": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
   },
   "login": {
     "title": "فضاء السائق",
@@ -22,9 +26,70 @@
     }
   },
   "today": {
-    "title": "اليوم",
+    "title": "رحلاتي",
     "greeting": "مرحبا {{name}}",
-    "empty": "ستظهر هنا رحلاتك لهذا اليوم.",
-    "signOut": "تسجيل الخروج"
+    "empty": "لا توجد رحلات مبرمجة خلال 7 أيام القادمة.",
+    "signOut": "تسجيل الخروج",
+    "offline": "لا يوجد اتصال: قد لا تكون القائمة محينة."
+  },
+  "trip": {
+    "status": {
+      "planned": "في انتظار التخصيص",
+      "assigned": "مبرمجة",
+      "in_progress": "جارية",
+      "completed": "منتهية",
+      "cancelled": "ملغاة"
+    },
+    "passengers_zero": "{{count}} راكب",
+    "passengers_one": "راكب واحد",
+    "passengers_two": "راكبان",
+    "passengers_few": "{{count}} ركاب",
+    "passengers_many": "{{count}} راكبا",
+    "passengers_other": "{{count}} راكب",
+    "luggage_zero": "{{count}} حقيبة",
+    "luggage_one": "حقيبة واحدة",
+    "luggage_two": "حقيبتان",
+    "luggage_few": "{{count}} حقائب",
+    "luggage_many": "{{count}} حقيبة",
+    "luggage_other": "{{count}} حقيبة",
+    "pickup": "الاستقبال",
+    "dropoff": "الإيصال",
+    "passenger": "الراكب",
+    "call": "الاتصال بالراكب",
+    "start": "بدء الرحلة",
+    "complete": "إنهاء الرحلة",
+    "back": "رجوع",
+    "trackingOn": "موقعك مشارك مع شركتك خلال هذه الرحلة.",
+    "locationTitle": "الموقع",
+    "locationDenied": "بدون إذن الموقع، لا ترى شركتك موقعك. تم بدء الرحلة على كل حال.",
+    "errorTitle": "الإجراء غير ممكن",
+    "errors": {
+      "refused": "هذا التغيير غير مسموح به لهذه الرحلة.",
+      "network": "لا يوجد اتصال. حاول مرة أخرى."
+    }
+  },
+  "expense": {
+    "add": "إضافة مصروف",
+    "title": "مصروف جديد",
+    "offlineHint": "بدون شبكة، يحفظ المصروف في الهاتف ويرسل تلقائيا لاحقا.",
+    "amount": "المبلغ (درهم)",
+    "note": "ملاحظة (اختياري)",
+    "takePhoto": "تصوير الإثبات",
+    "retakePhoto": "إعادة التصوير",
+    "photoTaken": "صورة الإثبات",
+    "save": "حفظ",
+    "categories": {
+      "fuel": "الوقود",
+      "toll": "الطريق السيار",
+      "parking": "الوقوف",
+      "maintenance": "الصيانة",
+      "meal": "الأكل",
+      "other": "أخرى"
+    },
+    "errors": {
+      "amount": "أدخل مبلغا صالحا (مثلا 450).",
+      "camera": "اسمح باستعمال الكاميرا لتصوير الإثبات.",
+      "unknown": "لم يتم العثور على حساب السائق. أعد تسجيل الدخول."
+    }
   }
 }

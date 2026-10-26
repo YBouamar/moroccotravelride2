@@ -27,6 +27,22 @@ const config: ExpoConfig = {
     'expo-router',
     'expo-secure-store',
     'expo-localization',
+    // Foreground location only, during trips in progress (BR-201); no background tracking.
+    [
+      'expo-location',
+      {
+        locationWhenInUsePermission:
+          'MTR Chauffeur partage votre position avec votre société uniquement pendant vos trajets en cours.',
+      },
+    ],
+    [
+      'expo-image-picker',
+      {
+        cameraPermission: 'MTR Chauffeur photographie vos justificatifs de dépenses.',
+        photosPermission: false,
+        microphonePermission: false,
+      },
+    ],
     [
       'expo-splash-screen',
       {

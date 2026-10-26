@@ -29,6 +29,7 @@ const MATRIX = {
   'trips.overrideConflicts': ['owner', 'manager'],
   'expenses.read': ['owner', 'manager', 'dispatcher', 'accountant'],
   'expenses.review': ['owner', 'manager', 'accountant'],
+  'tracking.read': ['owner', 'manager', 'dispatcher'],
   'invoices.read': ['owner', 'manager', 'accountant'],
   'invoices.manage': ['owner', 'manager', 'accountant'],
   // Marketplace (Pillar A): price grids, visibility, booking acceptance.

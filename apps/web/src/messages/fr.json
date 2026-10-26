@@ -1154,5 +1154,13 @@
     "rejectTitle": "Refuser la dépense ?",
     "rejectHelp": "Le motif est visible par l'auteur de la dépense. Une dépense refusée ne peut plus être modifiée.",
     "rejectReason": "Motif du refus"
+  },
+  "tracking": {
+    "title": "Suivi en direct",
+    "help": "Position des chauffeurs pendant les trajets en cours uniquement, actualisée toutes les 15 secondes. Les positions sont effacées après 90 jours.",
+    "mapLabel": "Carte des trajets en cours",
+    "none": "Aucun trajet en cours.",
+    "lastSeen": "Dernière position à {time}",
+    "noPosition": "Pas encore de position reçue."
   }
 }

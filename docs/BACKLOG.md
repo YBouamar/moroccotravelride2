@@ -48,3 +48,6 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Pénalités transporteur en cas d'annulation (BR-012, À CONFIRMER) |
 | P2 | Réaffectation assistée d'une réservation refusée ou expirée vers un autre transporteur (aujourd'hui : contact manuel depuis la supervision) |
 | P2 | Relances automatiques par e-mail des relevés de commissions avant et après l'échéance |
+| P1 | Serveur de tuiles ou fournisseur de cartes avant le lancement (politique d'usage OpenStreetMap, ADR-034) |
+| P2 | Suivi de position en arrière-plan (consentement explicite, autonomie de la batterie) |
+| P2 | Test de l'app chauffeur sur appareils réels (Android d'entrée de gamme, iPhone) avec EAS |

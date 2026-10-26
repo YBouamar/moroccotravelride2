@@ -1,3 +1,5 @@
+import { MAP_TILES_ORIGIN } from '@/lib/map';
+
 const TURNSTILE = 'https://challenges.cloudflare.com';
 
 /**
@@ -28,9 +30,11 @@ export function buildCsp({
       ...(isDev ? ["'unsafe-eval'"] : []),
     ],
     'style-src': ["'self'", "'unsafe-inline'"],
-    'img-src': ["'self'", 'data:', 'blob:'],
+    'img-src': ["'self'", 'data:', 'blob:', MAP_TILES_ORIGIN],
     'font-src': ["'self'"],
-    'connect-src': ["'self'", supabase.origin, realtime, TURNSTILE],
+    'connect-src': ["'self'", supabase.origin, realtime, TURNSTILE, MAP_TILES_ORIGIN],
+    // MapLibre renders in a web worker created from a blob URL.
+    'worker-src': ["'self'", 'blob:'],
     'frame-src': [TURNSTILE],
     'frame-ancestors': ["'none'"],
     'base-uri': ["'self'"],

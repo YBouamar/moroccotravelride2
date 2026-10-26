@@ -341,3 +341,13 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Justificatifs** : bucket privé `expense-receipts`, dossier de la société, 10 Mo, JPEG / PNG / WEBP / PDF, type réel lu dans les premiers octets, consultation par lien signé de 5 minutes (RLS sur le stockage : rôles de bureau et auteur du dépôt).
 - **Hors ligne** : `client_ref` unique généré par l'app chauffeur : rejouer la file après une coupure ne crée jamais de doublon (étape 19).
 - **Offre** : écriture avec la V2 (`has_feature('expenses')`), lecture conservée en lecture seule (Q21).
+
+## ADR-034 : App chauffeur, localisation et purge (étapes 19 à 21, V2)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (fréquence BR-203 À CONFIRMER, tuiles À VÉRIFIER)
+- **App chauffeur** : trajets des 7 prochains jours (RLS : seulement ceux affectés au chauffeur), fiche trajet (adresses, passager, appel, véhicule), **démarrer / terminer** par `driver_set_trip_status` (transitions limitées au chauffeur, offre V2 `driver_app`), dépense avec photo du justificatif. Grandes cibles tactiles en bas d'écran, fr / en / ar avec RTL.
+- **Hors ligne** : file locale (fichier privé de l'app) rejouée à chaque retour sur l'écran et après chaque envoi ; ordre conservé, arrêt à la première coupure, abandon après 20 essais ou sur refus de la base ; dépenses idempotentes par `client_ref`, positions regroupées par trajet (2 000 points au plus). Logique pure testée (`offline-queue.ts`).
+- **Localisation (BR-201, BR-203)** : au premier plan seulement, pendant un trajet en cours, un point toutes les 15 s ou 50 m ; la base refuse tout point hors du trajet en cours du chauffeur. Pas de suivi en arrière-plan dans le MVP (consentement et batterie ; BACKLOG). Textes de permission dans `app.config.ts`.
+- **Carte en direct (bureau)** : MapLibre GL 6.11.1 (dépendance prévue dans la stack) avec les tuiles OpenStreetMap (attribution affichée ; politique d'usage à respecter : serveur de tuiles ou fournisseur avant le lancement, **À VÉRIFIER**). Rafraîchissement toutes les 15 s par action serveur plutôt que par abonnement Realtime : les cookies de session restent HttpOnly, aucun jeton n'est exposé au navigateur. La publication Realtime est prête pour une évolution. CSP : tuiles autorisées en `img-src` / `connect-src`, `worker-src blob:` pour MapLibre.
+- **Purge (BR-202)** : positions supprimées après `location_retention_days` (90 jours) chaque nuit ; durée légale **À VÉRIFIER** avec la CNDP.
+- **Builds mobiles** : non testés sur appareil dans cette session (EAS en Phase 7) ; vérifiés par TypeScript, ESLint, tests unitaires et `expo export` Android dans `pnpm check`.

@@ -5,7 +5,11 @@
   },
   "language": {
     "label": "Language",
-    "names": { "fr": "Français", "en": "English", "ar": "العربية" }
+    "names": {
+      "fr": "Français",
+      "en": "English",
+      "ar": "العربية"
+    }
   },
   "login": {
     "title": "Driver area",
@@ -22,9 +26,62 @@
     }
   },
   "today": {
-    "title": "Today",
+    "title": "My trips",
     "greeting": "Hello {{name}}",
-    "empty": "Your trips for today will appear here.",
-    "signOut": "Sign out"
+    "empty": "No trip planned in the next 7 days.",
+    "signOut": "Sign out",
+    "offline": "No connection: the list may not be up to date."
+  },
+  "trip": {
+    "status": {
+      "planned": "To assign",
+      "assigned": "Planned",
+      "in_progress": "In progress",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "passengers_one": "{{count}} passenger",
+    "passengers_other": "{{count}} passengers",
+    "luggage_one": "{{count}} bag",
+    "luggage_other": "{{count}} bags",
+    "pickup": "Pickup",
+    "dropoff": "Drop-off",
+    "passenger": "Passenger",
+    "call": "Call the passenger",
+    "start": "Start the trip",
+    "complete": "Finish the trip",
+    "back": "Back",
+    "trackingOn": "Location shared with your company during this trip.",
+    "locationTitle": "Location",
+    "locationDenied": "Without location permission, your company cannot see your position. The trip is started anyway.",
+    "errorTitle": "Action not possible",
+    "errors": {
+      "refused": "This change is not allowed for this trip.",
+      "network": "No connection. Try again."
+    }
+  },
+  "expense": {
+    "add": "Add an expense",
+    "title": "New expense",
+    "offlineHint": "Without network, the expense is kept on the phone and sent automatically later.",
+    "amount": "Amount (MAD)",
+    "note": "Note (optional)",
+    "takePhoto": "Take a photo of the receipt",
+    "retakePhoto": "Take the photo again",
+    "photoTaken": "Photo of the receipt",
+    "save": "Save",
+    "categories": {
+      "fuel": "Fuel",
+      "toll": "Toll",
+      "parking": "Parking",
+      "maintenance": "Maintenance",
+      "meal": "Meal",
+      "other": "Other"
+    },
+    "errors": {
+      "amount": "Enter a valid amount (for example 450).",
+      "camera": "Allow the camera to take a photo of the receipt.",
+      "unknown": "Driver account not found. Sign in again."
+    }
   }
 }

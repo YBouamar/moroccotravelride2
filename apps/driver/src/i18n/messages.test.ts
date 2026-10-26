@@ -16,9 +16,17 @@ const flatten = (tree: Tree, prefix = ''): Record<string, string> =>
 
 const catalogs = { fr: flatten(fr), en: flatten(en), ar: flatten(ar) };
 
+// Plural forms differ per language (Arabic has zero, two, few, many): compare the base keys.
+const baseKeys = (messages: Record<string, string>) =>
+  [
+    ...new Set(
+      Object.keys(messages).map((key) => key.replace(/_(zero|one|two|few|many|other)$/, '')),
+    ),
+  ].sort();
+
 describe.each(Object.entries(catalogs))('%s driver messages', (_locale, messages) => {
   it('has the same keys as fr.json', () => {
-    expect(Object.keys(messages).sort()).toEqual(Object.keys(catalogs.fr).sort());
+    expect(baseKeys(messages)).toEqual(baseKeys(catalogs.fr));
   });
 
   it('never uses the em dash (project rule 6)', () => {

@@ -107,7 +107,7 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     section('clients', t('saas.nav.clients'), Users, 'clients', '/app/clients'),
     section('invoices', t('saas.nav.invoices'), FileText, 'invoicing', '/app/invoices'),
     section('expenses', t('saas.nav.expenses'), Receipt, 'expenses', '/app/expenses'),
-    section('tracking', t('saas.nav.tracking'), MapPinned, 'live_tracking'),
+    section('tracking', t('saas.nav.tracking'), MapPinned, 'live_tracking', '/app/tracking'),
     section('maintenance', t('saas.nav.maintenance'), Wrench, 'fleet_maintenance'),
     ...(context && can(context.membership.role, 'invoices.read')
       ? [

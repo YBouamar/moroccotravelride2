@@ -27,9 +27,12 @@ test('a Standard carrier sees locked V2 features and the offers comparison', asy
 test('a company on trial sees how many days are left', async ({ page }) => {
   await signIn(page, 'owner.oasis@moroccotravelride.test');
   await expect(page.getByText(/Essai gratuit : 1[34] jours restants\./)).toBeVisible();
-  // V2 trial: V2 sections are included (soon), V3 ones are locked.
+  // V2 trial: V2 sections are included (built ones are links), V3 ones are locked.
   await expect(page.getByRole('link', { name: /Parc/ })).toContainText('V3');
-  await expect(page.getByRole('link', { name: /Dépenses/ })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /Dépenses/ })).toHaveAttribute(
+    'href',
+    /\/app\/expenses$/,
+  );
 });
 
 // These tests temporarily change demo subscriptions: run this file serially and restore them.
