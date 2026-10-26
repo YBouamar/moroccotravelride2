@@ -453,7 +453,10 @@
       "fileType": "Format non accepté : PDF, JPEG, PNG ou WEBP uniquement.",
       "fileSize": "Le fichier dépasse 10 Mo.",
       "rateLimited": "Trop de dépôts. Réessayez dans quelques minutes.",
-      "unknown": "Une erreur est survenue. Réessayez."
+      "unknown": "Une erreur est survenue. Réessayez.",
+      "inUse": "Cet élément est utilisé ailleurs : désactivez-le plutôt.",
+      "conflict": "Conflit de planning : ce chauffeur ou ce véhicule est déjà affecté sur ce créneau.",
+      "driverIneligible": "Ce chauffeur ne peut pas effectuer de prestation (permis expiré ou chauffeur inactif)."
     }
   },
   "companyForm": {
@@ -518,5 +521,98 @@
     "de": "Allemand",
     "it": "Italien",
     "zgh": "Amazigh"
+  },
+  "lists": {
+    "search": "Rechercher",
+    "status": "Statut",
+    "sort": "Trier par",
+    "all": "Tous",
+    "apply": "Appliquer",
+    "export": "Exporter en CSV",
+    "empty": "Aucun résultat.",
+    "pagination": "Pagination",
+    "summary": "{total, plural, =0 {Aucun élément} one {# élément} other {# éléments}} · page {page} sur {pages}",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "forbidden": "Cette page n'est pas accessible avec votre rôle.",
+    "create": "Créer",
+    "saveChanges": "Enregistrer les modifications",
+    "back": "Retour à la liste",
+    "statusTitle": "Statut",
+    "currentStatus": "Statut actuel : {status}.",
+    "sorts": {
+      "registration": "Immatriculation",
+      "name": "Nom",
+      "license": "Expiration du permis",
+      "recent": "Plus récents"
+    }
+  },
+  "fleet": {
+    "title": "Flotte",
+    "new": "Ajouter un véhicule",
+    "vehicle": "Véhicule",
+    "setStatus": {
+      "active": "Remettre en service",
+      "maintenance": "Passer en maintenance",
+      "inactive": "Désactiver"
+    },
+    "setStatusHelp": {
+      "active": "Le véhicule pourra de nouveau être affecté aux trajets.",
+      "maintenance": "Le véhicule ne pourra plus être affecté tant qu'il est en maintenance.",
+      "inactive": "Le véhicule n'apparaîtra plus pour les affectations. Son historique est conservé."
+    }
+  },
+  "drivers": {
+    "title": "Chauffeurs",
+    "new": "Ajouter un chauffeur",
+    "license": "Permis valable jusqu'au",
+    "setStatus": {
+      "active": "Réactiver",
+      "inactive": "Désactiver"
+    },
+    "setStatusHelp": {
+      "active": "Le chauffeur pourra de nouveau être affecté (avec un permis valide).",
+      "inactive": "Le chauffeur ne pourra plus être affecté. Son historique est conservé."
+    }
+  },
+  "clients": {
+    "title": "Clients",
+    "new": "Ajouter un client",
+    "contact": "Contact",
+    "setStatus": {
+      "active": "Réactiver",
+      "inactive": "Désactiver"
+    },
+    "setStatusHelp": {
+      "active": "Le client sera de nouveau proposé pour les trajets et factures.",
+      "inactive": "Le client ne sera plus proposé. Ses trajets et factures sont conservés."
+    }
+  },
+  "clientForm": {
+    "type": "Type de client",
+    "name": "Nom ou raison sociale",
+    "ice": "ICE (facultatif)",
+    "iceHint": "15 chiffres, obligatoire pour facturer une entreprise.",
+    "email": "E-mail (facultatif)",
+    "phone": "Téléphone (facultatif)",
+    "address": "Adresse (facultatif)",
+    "notes": "Notes internes (facultatif)"
+  },
+  "clientType": {
+    "b2b": "Entreprise (agence, hôtel)",
+    "b2c": "Particulier"
+  },
+  "clientStatus": {
+    "active": "Actif",
+    "inactive": "Inactif"
+  },
+  "vehicleStatus": {
+    "active": "En service",
+    "maintenance": "En maintenance",
+    "inactive": "Inactif"
+  },
+  "driverStatus": {
+    "active": "Actif",
+    "inactive": "Inactif"
   }
 }

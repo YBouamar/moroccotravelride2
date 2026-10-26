@@ -42,10 +42,19 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     getPlans(),
   ]);
 
-  // Upcoming sections: locked with the offer that unlocks them when not in the current offer.
-  const section = (key: string, label: string, Icon: typeof LayoutDashboard, feature: Feature) => {
+  // Sections of the offer link to their page (or show "soon" when not built yet); the others are
+  // locked with the offer that unlocks them.
+  const section = (
+    key: string,
+    label: string,
+    Icon: typeof LayoutDashboard,
+    feature: Feature,
+    href?: string,
+  ) => {
     if (context?.features.has(feature)) {
-      return { key, label, icon: icon(Icon), badge: t('saas.soon') } satisfies ShellNavItem;
+      return href
+        ? ({ key, label, icon: icon(Icon), href } satisfies ShellNavItem)
+        : ({ key, label, icon: icon(Icon), badge: t('saas.soon') } satisfies ShellNavItem);
     }
     const plan = lowestPlanWith(plans, feature);
     return {
@@ -63,9 +72,9 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     section('planning', t('saas.nav.planning'), CalendarDays, 'trips'),
     section('trips', t('saas.nav.trips'), Route, 'trips'),
     section('bookings', t('saas.nav.bookings'), ClipboardList, 'trips'),
-    section('fleet', t('saas.nav.fleet'), CarFront, 'vehicles'),
-    section('drivers', t('saas.nav.drivers'), UserRound, 'drivers'),
-    section('clients', t('saas.nav.clients'), Users, 'clients'),
+    section('fleet', t('saas.nav.fleet'), CarFront, 'vehicles', '/app/fleet'),
+    section('drivers', t('saas.nav.drivers'), UserRound, 'drivers', '/app/drivers'),
+    section('clients', t('saas.nav.clients'), Users, 'clients', '/app/clients'),
     section('invoices', t('saas.nav.invoices'), FileText, 'invoicing'),
     section('expenses', t('saas.nav.expenses'), Receipt, 'expenses'),
     section('tracking', t('saas.nav.tracking'), MapPinned, 'live_tracking'),

@@ -21,6 +21,8 @@ const MATRIX = {
   'vehicles.manage': ['owner', 'manager'],
   'drivers.read': ['owner', 'manager', 'dispatcher', 'accountant'],
   'drivers.manage': ['owner', 'manager'],
+  'clients.read': ['owner', 'manager', 'dispatcher', 'accountant'],
+  'clients.manage': ['owner', 'manager', 'dispatcher'],
 } as const satisfies Record<string, readonly MemberRole[]>;
 
 export type Permission = keyof typeof MATRIX;

@@ -453,7 +453,10 @@
       "fileType": "Format not accepted: PDF, JPEG, PNG or WEBP only.",
       "fileSize": "The file is larger than 10 MB.",
       "rateLimited": "Too many uploads. Try again in a few minutes.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "inUse": "This item is used elsewhere: deactivate it instead.",
+      "conflict": "Scheduling conflict: this driver or vehicle is already assigned in this time slot.",
+      "driverIneligible": "This driver cannot perform a trip (expired license or inactive driver)."
     }
   },
   "companyForm": {
@@ -518,5 +521,98 @@
     "de": "German",
     "it": "Italian",
     "zgh": "Amazigh"
+  },
+  "lists": {
+    "search": "Search",
+    "status": "Status",
+    "sort": "Sort by",
+    "all": "All",
+    "apply": "Apply",
+    "export": "Export as CSV",
+    "empty": "No results.",
+    "pagination": "Pagination",
+    "summary": "{total, plural, =0 {No items} one {# item} other {# items}} · page {page} of {pages}",
+    "previous": "Previous",
+    "next": "Next",
+    "forbidden": "This page is not available for your role.",
+    "create": "Create",
+    "saveChanges": "Save changes",
+    "back": "Back to the list",
+    "statusTitle": "Status",
+    "currentStatus": "Current status: {status}.",
+    "sorts": {
+      "registration": "Registration",
+      "name": "Name",
+      "license": "License expiry",
+      "recent": "Most recent"
+    }
+  },
+  "fleet": {
+    "title": "Fleet",
+    "new": "Add a vehicle",
+    "vehicle": "Vehicle",
+    "setStatus": {
+      "active": "Put back in service",
+      "maintenance": "Set to maintenance",
+      "inactive": "Deactivate"
+    },
+    "setStatusHelp": {
+      "active": "The vehicle can be assigned to trips again.",
+      "maintenance": "The vehicle cannot be assigned while in maintenance.",
+      "inactive": "The vehicle will no longer be offered for assignments. Its history is kept."
+    }
+  },
+  "drivers": {
+    "title": "Drivers",
+    "new": "Add a driver",
+    "license": "License valid until",
+    "setStatus": {
+      "active": "Reactivate",
+      "inactive": "Deactivate"
+    },
+    "setStatusHelp": {
+      "active": "The driver can be assigned again (with a valid license).",
+      "inactive": "The driver can no longer be assigned. Their history is kept."
+    }
+  },
+  "clients": {
+    "title": "Clients",
+    "new": "Add a client",
+    "contact": "Contact",
+    "setStatus": {
+      "active": "Reactivate",
+      "inactive": "Deactivate"
+    },
+    "setStatusHelp": {
+      "active": "The client will be offered again for trips and invoices.",
+      "inactive": "The client will no longer be offered. Their trips and invoices are kept."
+    }
+  },
+  "clientForm": {
+    "type": "Client type",
+    "name": "Name or company name",
+    "ice": "ICE (optional)",
+    "iceHint": "15 digits, required to invoice a company.",
+    "email": "Email (optional)",
+    "phone": "Phone (optional)",
+    "address": "Address (optional)",
+    "notes": "Internal notes (optional)"
+  },
+  "clientType": {
+    "b2b": "Business (agency, hotel)",
+    "b2c": "Individual"
+  },
+  "clientStatus": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "vehicleStatus": {
+    "active": "In service",
+    "maintenance": "In maintenance",
+    "inactive": "Inactive"
+  },
+  "driverStatus": {
+    "active": "Active",
+    "inactive": "Inactive"
   }
 }

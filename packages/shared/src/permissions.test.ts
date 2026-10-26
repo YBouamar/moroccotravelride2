@@ -15,6 +15,13 @@ describe('can', () => {
     expect(can('manager', 'subscription.manage')).toBe(false);
   });
 
+  it('mirrors the clients RLS: dispatchers manage, accountants read, drivers see nothing', () => {
+    expect(can('dispatcher', 'clients.manage')).toBe(true);
+    expect(can('accountant', 'clients.read')).toBe(true);
+    expect(can('accountant', 'clients.manage')).toBe(false);
+    expect(can('driver', 'clients.read')).toBe(false);
+  });
+
   it('denies everything without a role', () => {
     expect(can(null, 'company.read')).toBe(false);
     expect(can(undefined, 'members.read')).toBe(false);

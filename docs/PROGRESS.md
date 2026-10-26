@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 7 terminée (Q24 intégrée) · **Prochaine étape** : Étape 8 (véhicules, chauffeurs, clients)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 8 terminée · **Prochaine étape** : Étape 9 (trajets et planning)
 
 ## 1. Plan d'exécution par étapes
 
@@ -47,10 +47,11 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 
 - 2026-10-26, étape 7 : véhicules et chauffeurs (RLS lecture / écriture), bucket privé des documents, assistant d'onboarding en 4 étapes, détection du type réel des fichiers, validation des documents par l'admin (lien signé, refus motivé). 140 tests unitaires, 92 pgTAP, 41 E2E (ADR-023).
 - 2026-10-26 : Q24 intégrée (dates expirées acceptées avec avertissement, `canDriverPerformTrip` pour l'étape 9), dates au fuseau marocain sans décalage en dur (ADR-024), course `typecheck` / `build` corrigée dans Turborepo.
+- 2026-10-26, étape 8 : listes Flotte, Chauffeurs et Clients (recherche, filtres, tri, pagination serveur, création, modification, désactivation, export CSV), table `clients`, navigation activée selon l'offre, données de démonstration. 151 tests unitaires, 98 pgTAP, 45 E2E (ADR-025).
 
 ## 3. En cours
 
-Rien. Attente du feu vert pour l'étape 8.
+Exécution enchaînée des étapes 9 à 30 (demande de Yassine : « exécute toutes les étapes restantes en une seule fois »).
 
 ## 4. Bloqué / points d'attention
 
@@ -80,7 +81,7 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 |---|---|
 | 6 ✅ | Abonnements et feature gating (`plans`, `plan_features`, `subscriptions`, essai 14 jours V2, `has_feature`, `<FeatureGate>`), journal d'audit, vérification des sociétés par l'admin (liste, documents, valider / suspendre) |
 | 7 ✅ | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
-| 8 | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
+| 8 ✅ | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
 | 9 | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
 | 10 | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |
 | 11 | Tableau de bord du jour et recette de la Phase 2 (une semaine d'activité de bout en bout) |

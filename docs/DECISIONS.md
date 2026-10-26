@@ -252,3 +252,13 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (Yassine pour la règle métier)
 - **Règle (Q24)** : un agrément ou un permis de conduire expiré est **accepté à la saisie** et signalé par un avertissement. **Un chauffeur ne peut pas effectuer de prestation sans permis valide** le jour du trajet : `canDriverPerformTrip` (`@mtr/shared`, testé) sera appliqué à l'affectation des trajets (étape 9), côté serveur et en base. Une société à l'agrément expiré n'apparaît pas sur la marketplace (BR-016).
 - **Fuseau horaire** : les données de fuseau (tz database, 2026e) montrent que le Maroc **alterne entre UTC+0 et UTC+1** selon la période (le 26 octobre 2026 est en UTC+0, juillet 2026 en UTC+1). Aucun décalage n'est donc écrit en dur : `casablancaDate()` (date du jour au Maroc) et `casablancaEndOfDay()` (fin de journée marocaine en UTC) s'appuient sur `Africa/Casablanca`. Corrigé au passage : la fin d'essai saisie par l'admin utilisait `+01:00` en dur. Les serveurs et les images Docker doivent garder des données de fuseau à jour (Node et Postgres embarquent les leurs).
+
+## ADR-025 : Listes du SaaS (étape 8)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Recherche, filtres, tri et pagination côté serveur**, pilotés par l'URL (`?q=&status=&sort=&page=`) via un simple formulaire GET : fonctionne sans JavaScript, liens partageables, bouton retour du navigateur respecté. 20 lignes par page (`PAGE_SIZE`), tri par liste blanche de colonnes.
+- **Recherche sûre** : `likePattern` (`@mtr/shared`, testé) échappe `%`, `_` et `\\` et retire les séparateurs de filtres PostgREST (`,`, parenthèses) avant l'`ilike`.
+- **Export CSV** (`/api/export/{vehicles|drivers|clients}`) : mêmes filtres que la page, société lue dans la session, requête faite avec le client RLS de l'utilisateur, séparateur `;` et BOM UTF-8 (Excel en français, arabe), protection contre l'injection de formules (cellules commençant par `= + - @` préfixées d'une apostrophe), 5 000 lignes au plus, `Cache-Control: private, no-store`.
+- **Pas de suppression physique** : véhicule actif / en maintenance / inactif, chauffeur et client actif / inactif, après confirmation explicite. L'historique (trajets, factures) reste intact.
+- **Clients** : B2B (agence, hôtel) avec ICE facultatif mais vérifié (15 chiffres) et B2C (particulier, sans ICE). Le dispatcheur peut gérer les clients (il en crée en saisissant des trajets), pas la flotte ni les chauffeurs.
+- **Seed** : 3 véhicules, 2 chauffeurs (dont un au permis expiré) et 3 clients pour Atlas. Les UUID fixes respectent la variante RFC 4122 (`8`, `9`, `a` ou `b`), sinon `z.uuid()` les refuse.

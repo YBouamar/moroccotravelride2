@@ -67,3 +67,18 @@ set plan_code = 'standard', status = 'active', trial_ends_at = null,
     current_period_end = (date_trunc('month', now()) + interval '1 month - 1 day')::date
 where company_id = '00000000-0000-4000-b000-000000000002';
 -- Oasis Mobility (pending) keeps its 14-day V2 trial.
+
+-- Step 8: a few clients for Atlas (B2B agency and hotel, one traveler).
+insert into public.clients (company_id, type, name, ice, email, phone) values
+  ('00000000-0000-4000-b000-000000000001', 'b2b', 'Agence Découverte Maroc', '000000000000101', 'contact@decouverte.test', '+212522000101'),
+  ('00000000-0000-4000-b000-000000000001', 'b2b', 'Riad Atlas Palace', '000000000000102', 'reservation@atlaspalace.test', '+212524000102'),
+  ('00000000-0000-4000-b000-000000000001', 'b2c', 'Emma Martin', null, 'emma.martin@example.test', null);
+
+-- Atlas fleet and drivers (Youssef has the driver app account; Hassan's license is expired, Q24).
+insert into public.vehicles (id, company_id, registration, brand, model, vehicle_type_code, seats, luggage_capacity, year) values
+  ('00000000-0000-4000-9000-000000000101', '00000000-0000-4000-b000-000000000001', '12345-A-6', 'Mercedes', 'Classe E', 'sedan', 3, 3, 2023),
+  ('00000000-0000-4000-9000-000000000102', '00000000-0000-4000-b000-000000000001', '23456-B-6', 'Mercedes', 'Vito', 'van', 7, 7, 2022),
+  ('00000000-0000-4000-9000-000000000103', '00000000-0000-4000-b000-000000000001', '34567-A-6', 'Toyota', 'Land Cruiser', 'suv_4x4', 4, 4, 2021);
+insert into public.drivers (id, company_id, user_id, full_name, phone, license_number, license_expires_on, languages) values
+  ('00000000-0000-4000-9000-000000000201', '00000000-0000-4000-b000-000000000001', '00000000-0000-4000-a000-000000000013', 'Youssef Chauffeur', '+212661000013', 'DEMO-P-0013', '2031-03-31', '{ar,fr,en}'),
+  ('00000000-0000-4000-9000-000000000202', '00000000-0000-4000-b000-000000000001', null, 'Hassan Ait Ali', '+212661000014', 'DEMO-P-0014', '2026-01-31', '{ar,fr,zgh}');

@@ -2,6 +2,7 @@ import { casablancaDate, isDocumentValidOn } from '@mtr/shared';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import { createDriverAction } from '@/features/onboarding/actions';
 import { DriverForm } from '@/features/onboarding/components/driver-form';
 import { StepShell } from '@/features/onboarding/components/step-shell';
 import { getOfficeContext } from '@/features/onboarding/office';
@@ -41,7 +42,7 @@ export default async function DriverStepPage({ params }: { params: Promise<{ loc
           ) : null}
         </div>
       ) : null}
-      <DriverForm nextHref="/app/onboarding" />
+      <DriverForm action={createDriverAction} nextHref="/app/onboarding" />
     </StepShell>
   );
 }

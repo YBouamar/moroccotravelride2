@@ -9,3 +9,4 @@ export * from './company-schemas';
 export * from './documents';
 export * from './onboarding';
 export * from './validity';
+export * from './lists';

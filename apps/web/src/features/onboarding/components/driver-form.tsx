@@ -1,22 +1,30 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DRIVER_LANGUAGES, driverSchema } from '@mtr/shared';
+import { DRIVER_LANGUAGES, driverSchema, type DriverInput } from '@mtr/shared';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Alert } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { FormField } from '@/components/ui/form-field';
 import { Input } from '@/components/ui/input';
-import { createDriverAction } from '../actions';
+import type { FormResult } from '@/lib/action-result';
 import { useOnboardingAction } from './use-onboarding-action';
 
-export function DriverForm({ nextHref }: { nextHref: string }) {
+interface DriverFormProps {
+  /** Create or update Server Action (bound to the driver id when editing). */
+  action: (input: DriverInput) => Promise<FormResult>;
+  nextHref: string;
+  initial?: DriverInput;
+  submitLabel?: string;
+}
+
+export function DriverForm({ action, nextHref, initial, submitLabel }: DriverFormProps) {
   const t = useTranslations();
   const { pending, error, run, fieldError } = useOnboardingAction(nextHref);
   const form = useForm({
     resolver: zodResolver(driverSchema),
-    defaultValues: {
+    defaultValues: initial ?? {
       fullName: '',
       phone: '',
       licenseNumber: '',
@@ -30,7 +38,7 @@ export function DriverForm({ nextHref }: { nextHref: string }) {
 
   return (
     <form
-      onSubmit={form.handleSubmit((values) => run(() => createDriverAction(values)))}
+      onSubmit={form.handleSubmit((values) => run(() => action(values)))}
       noValidate
       className="flex flex-col gap-4"
     >
@@ -99,7 +107,7 @@ export function DriverForm({ nextHref }: { nextHref: string }) {
         </div>
       </fieldset>
       <Button type="submit" size="lg" disabled={pending} className="self-start">
-        {t('onboarding.save')}
+        {submitLabel ?? t('onboarding.save')}
       </Button>
     </form>
   );

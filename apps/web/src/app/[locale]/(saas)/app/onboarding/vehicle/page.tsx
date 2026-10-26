@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
 import { StepShell } from '@/features/onboarding/components/step-shell';
+import { createVehicleAction } from '@/features/onboarding/actions';
 import { VehicleForm } from '@/features/onboarding/components/vehicle-form';
 import { getOfficeContext } from '@/features/onboarding/office';
 import { getOnboardingData } from '@/features/onboarding/queries';
@@ -33,7 +34,7 @@ export default async function VehicleStepPage({ params }: { params: Promise<{ lo
           </ul>
         </div>
       ) : null}
-      <VehicleForm types={types} nextHref="/app/onboarding/driver" />
+      <VehicleForm types={types} action={createVehicleAction} nextHref="/app/onboarding/driver" />
     </StepShell>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { vehicleSchema } from '@mtr/shared';
+import { vehicleSchema, type VehicleInput } from '@mtr/shared';
 import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { Alert } from '@/components/ui/alert';
@@ -10,24 +10,27 @@ import { FormField } from '@/components/ui/form-field';
 import { Input } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 import type { Option } from '@/features/reference/queries';
-import { createVehicleAction } from '../actions';
+import type { FormResult } from '@/lib/action-result';
 import { useOnboardingAction } from './use-onboarding-action';
 
 // Empty optional number inputs become null instead of NaN.
 const optionalNumber = (value: unknown) => (value === '' || value === null ? null : Number(value));
 
-export function VehicleForm({
-  types,
-  nextHref,
-}: {
+interface VehicleFormProps {
   types: (Option & { seats: number })[];
+  /** Create or update Server Action (bound to the vehicle id when editing). */
+  action: (input: VehicleInput) => Promise<FormResult>;
   nextHref: string;
-}) {
+  initial?: VehicleInput;
+  submitLabel?: string;
+}
+
+export function VehicleForm({ types, action, nextHref, initial, submitLabel }: VehicleFormProps) {
   const t = useTranslations();
   const { pending, error, run, fieldError } = useOnboardingAction(nextHref);
   const form = useForm({
     resolver: zodResolver(vehicleSchema),
-    defaultValues: {
+    defaultValues: initial ?? {
       registration: '',
       brand: '',
       model: '',
@@ -41,7 +44,7 @@ export function VehicleForm({
 
   return (
     <form
-      onSubmit={form.handleSubmit((values) => run(() => createVehicleAction(values)))}
+      onSubmit={form.handleSubmit((values) => run(() => action(values)))}
       noValidate
       className="flex flex-col gap-4"
     >
@@ -125,7 +128,7 @@ export function VehicleForm({
         </FormField>
       </div>
       <Button type="submit" size="lg" disabled={pending} className="self-start">
-        {t('onboarding.save')}
+        {submitLabel ?? t('onboarding.save')}
       </Button>
     </form>
   );

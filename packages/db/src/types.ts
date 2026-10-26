@@ -105,6 +105,60 @@ export type Database = {
           },
         ];
       };
+      clients: {
+        Row: {
+          address: string | null;
+          company_id: string;
+          created_at: string;
+          email: string | null;
+          ice: string | null;
+          id: string;
+          is_active: boolean;
+          name: string;
+          notes: string | null;
+          phone: string | null;
+          type: Database['public']['Enums']['client_type'];
+          updated_at: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          address?: string | null;
+          company_id: string;
+          created_at?: string;
+          email?: string | null;
+          ice?: string | null;
+          id?: string;
+          is_active?: boolean;
+          name: string;
+          notes?: string | null;
+          phone?: string | null;
+          type: Database['public']['Enums']['client_type'];
+          updated_at?: string;
+        };
+        Update: {
+          address?: string | null;
+          company_id?: string;
+          created_at?: string;
+          email?: string | null;
+          ice?: string | null;
+          id?: string;
+          is_active?: boolean;
+          name?: string;
+          notes?: string | null;
+          phone?: string | null;
+          type?: Database['public']['Enums']['client_type'];
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'clients_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       companies: {
         Row: {
           address: string | null;
@@ -588,6 +642,7 @@ export type Database = {
       };
     };
     Enums: {
+      client_type: 'b2b' | 'b2c';
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
       driver_status: 'active' | 'inactive';
@@ -706,6 +761,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      client_type: ['b2b', 'b2c'],
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
       driver_status: ['active', 'inactive'],

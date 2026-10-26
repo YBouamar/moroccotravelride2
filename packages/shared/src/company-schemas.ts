@@ -80,3 +80,26 @@ export const driverSchema = z.object({
 export type CompanyProfileInput = z.infer<typeof companyProfileSchema>;
 export type VehicleInput = z.infer<typeof vehicleSchema>;
 export type DriverInput = z.infer<typeof driverSchema>;
+
+export const CLIENT_TYPES = ['b2b', 'b2c'] as const;
+
+export const clientSchema = z
+  .object({
+    type: z.enum(CLIENT_TYPES),
+    name: z.string().trim().min(2, { error: 'nameTooShort' }).max(200, { error: 'tooLong' }),
+    ice: z.union([
+      z.literal(''),
+      z
+        .string()
+        .trim()
+        .regex(/^\d{15}$/, { error: 'ice' }),
+    ]),
+    email: z.union([z.literal(''), z.email({ error: 'email' })]),
+    phone: z.union([z.literal(''), phoneSchema]),
+    address: optionalText(300),
+    notes: optionalText(1000),
+  })
+  // The ICE only applies to companies (B2B); it is dropped for individuals.
+  .transform((value) => (value.type === 'b2c' ? { ...value, ice: '' } : value));
+
+export type ClientInput = z.input<typeof clientSchema>;

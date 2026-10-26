@@ -19,20 +19,10 @@ import { getCompanyContext } from '@/features/companies/context';
 import { getSessionUser } from '@/features/auth/session';
 import { consumeRateLimit } from '@/lib/security/rate-limit';
 import { createClient } from '@/lib/supabase/server';
+import { fail, fromDbError, type FormError, type FormResult } from '@/lib/action-result';
 
-export type OnboardingError =
-  | 'invalid'
-  | 'forbidden'
-  | 'readOnly'
-  | 'duplicate'
-  | 'fileMissing'
-  | 'fileType'
-  | 'fileSize'
-  | 'rateLimited'
-  | 'unknown';
-export type OnboardingResult = { ok: true } | { ok: false; error: OnboardingError };
-
-const fail = (error: OnboardingError): OnboardingResult => ({ ok: false, error });
+export type OnboardingError = FormError;
+export type OnboardingResult = FormResult;
 
 /**
  * The company always comes from the signed-in user's membership, never from the client
@@ -43,13 +33,6 @@ async function officeContext() {
   if (!context || !can(context.membership.role, 'company.update')) return null;
   return context;
 }
-
-const fromDbError = (error: { code?: string }): OnboardingResult => {
-  if (error.code === '23505') return fail('duplicate');
-  if (error.code === '42501') return fail('forbidden');
-  console.error('onboarding write failed', error.code);
-  return fail('unknown');
-};
 
 const done = (): OnboardingResult => {
   revalidatePath('/', 'layout');
