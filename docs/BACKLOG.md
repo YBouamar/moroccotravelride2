@@ -46,3 +46,5 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Modèles d'e-mails avec React Email (aujourd'hui : HTML simple traduit) |
 | P2 | Réservation avec compte voyageur (historique, avis) en plus du mode invité |
 | P2 | Pénalités transporteur en cas d'annulation (BR-012, À CONFIRMER) |
+| P2 | Réaffectation assistée d'une réservation refusée ou expirée vers un autre transporteur (aujourd'hui : contact manuel depuis la supervision) |
+| P2 | Relances automatiques par e-mail des relevés de commissions avant et après l'échéance |

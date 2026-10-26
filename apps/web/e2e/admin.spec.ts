@@ -136,3 +136,54 @@ test('the admin approves and rejects company documents', async ({ page }) => {
     // Newest first in the list: the insurance (approved) comes before the license (rejected).
   ).toBe('tourism_license:rejected:Attestation illisible,insurance:approved:');
 });
+
+test('the admin generates a monthly commission statement and records its payment (ADR-016)', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  // A completed Atlas booking of the previous month: 800 MAD, 160 MAD of commission.
+  const ref = `MTR-${['A', 'B', 'C', 'D', 'E', 'F'].sort(() => Math.random() - 0.5).join('')}`;
+  sql(`
+    with b as (
+      insert into public.bookings (public_ref, company_id, traveler_name, traveler_email, traveler_phone,
+        passengers, from_city_id, to_city_id, pickup_address, dropoff_address, pickup_at, vehicle_type_code,
+        total_cents, commission_rate_bps, commission_cents, carrier_cents, cancellation_policy, payment_method,
+        status, accept_deadline)
+      select '${ref}', '00000000-0000-4000-b000-000000000001', 'Traveler', 't@example.test', '+33600000001', 1,
+        c.id, c.id, 'A street', 'B street', date_trunc('month', now()) - interval '10 days', 'sedan',
+        80000, 2000, 16000, 64000, '{"tiers": []}', 'cash_to_driver', 'completed', now()
+      from public.cities c where c.slug = 'casablanca'
+      returning id
+    )
+    insert into public.commission_ledger (company_id, booking_id, kind, amount_cents, occurred_at)
+    select '00000000-0000-4000-b000-000000000001', id, 'completed', 16000, date_trunc('month', now()) - interval '10 days' from b`);
+
+  await signInAsAdmin(page);
+  await page.goto('/fr/admin/commissions');
+  await page.getByRole('button', { name: 'Générer' }).click();
+  const card = page.locator('li', { hasText: 'Atlas Transport' }).first();
+  await expect(card.getByText('À régler')).toBeVisible();
+  await card.getByRole('button', { name: 'Enregistrer le paiement' }).click();
+  await expect(card.getByText('Réglé', { exact: true })).toBeVisible();
+  expect(
+    sql(
+      "select status, paid_cents = total_cents from public.commission_statements where company_id = '00000000-0000-4000-b000-000000000001' order by month desc limit 1",
+    ),
+  ).toBe('paid|t');
+
+  // Supervision of marketplace bookings (step 17).
+  await page.goto('/fr/admin/bookings?status=completed');
+  await expect(page.getByRole('heading', { name: 'Réservations marketplace' })).toBeVisible();
+  await expect(page.getByRole('table').getByText(ref)).toBeVisible();
+});
+
+test('the carrier owner sees the statement in the Commissions page', async ({ page }) => {
+  await signIn(page, 'owner.atlas@moroccotravelride.test');
+  await expect(page).toHaveURL(/\/fr\/app$/);
+  await page
+    .getByRole('navigation', { name: 'Navigation principale' })
+    .getByRole('link', { name: 'Commissions' })
+    .click();
+  await expect(page.getByRole('heading', { name: 'Commissions plateforme' })).toBeVisible();
+  await expect(page.getByRole('table').getByRole('cell', { name: 'Réglé' })).toBeVisible();
+});

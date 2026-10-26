@@ -71,7 +71,8 @@
       "expenses": "Dépenses",
       "tracking": "Suivi en direct",
       "maintenance": "Parc",
-      "marketplace": "Marketplace"
+      "marketplace": "Marketplace",
+      "commissions": "Commissions"
     },
     "dashboard": {
       "title": "Tableau de bord",
@@ -205,6 +206,14 @@
       "graceTitle": "Paiement en retard",
       "graceDays": "Jours avant résiliation",
       "save": "Enregistrer"
+    },
+    "bookings": {
+      "title": "Réservations marketplace",
+      "ref": "Référence",
+      "pickup": "Prise en charge",
+      "carrier": "Transporteur",
+      "traveler": "Voyageur",
+      "amounts": "Prix / commission"
     }
   },
   "notFound": {
@@ -1076,6 +1085,42 @@
       "subject": "Réservation {ref} annulée",
       "body": "La réservation {ref} du {date} est annulée à la demande du voyageur.\n\nMontant à rembourser au voyageur par le transporteur : {refund}.",
       "action": "Voir la réservation"
+    }
+  },
+  "commissions": {
+    "title": "Commissions plateforme",
+    "adminTitle": "Relevés de commissions",
+    "month": "Mois",
+    "total": "Total dû",
+    "paid": "Réglé",
+    "dueDate": "Échéance",
+    "none": "Aucun relevé pour l'instant.",
+    "status": {
+      "issued": "À régler",
+      "overdue": "En retard",
+      "paid": "Réglé"
+    },
+    "currentMonth": "Commissions du mois en cours",
+    "currentMonthHelp": "Elles seront reprises dans le relevé du mois, émis le 1er du mois suivant.",
+    "overdueWarning": "Un relevé est en retard : sans règlement, votre visibilité marketplace sera suspendue {days} jours après l'échéance.",
+    "howToPay": "Comment régler",
+    "howToPayText": "En espèces ou par virement instantané à la plateforme, en indiquant le mois du relevé. La plateforme enregistre le paiement.",
+    "generateTitle": "Générer les relevés",
+    "generateHelp": "Fait automatiquement le 1er de chaque mois pour le mois précédent. Relancer ne crée pas de doublon.",
+    "generate": "Générer",
+    "line": "Total {total} · réglé {paid} · échéance {due}",
+    "suspended": "Visibilité marketplace suspendue (relevé impayé). La levée se fait depuis la fiche société.",
+    "payment": {
+      "amount": "Montant (MAD)",
+      "method": "Mode",
+      "date": "Reçu le",
+      "reference": "Référence",
+      "record": "Enregistrer le paiement"
+    },
+    "methods": {
+      "cash": "Espèces",
+      "instant_transfer": "Virement instantané",
+      "bank_transfer": "Virement"
     }
   }
 }

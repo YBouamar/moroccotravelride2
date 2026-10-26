@@ -4,6 +4,7 @@ import {
   CarFront,
   ClipboardList,
   CreditCard,
+  Percent,
   FileText,
   LayoutDashboard,
   MapPinned,
@@ -108,6 +109,16 @@ export default async function SaasLayout({ children, params }: SaasLayoutProps) 
     section('expenses', t('saas.nav.expenses'), Receipt, 'expenses'),
     section('tracking', t('saas.nav.tracking'), MapPinned, 'live_tracking'),
     section('maintenance', t('saas.nav.maintenance'), Wrench, 'fleet_maintenance'),
+    ...(context && can(context.membership.role, 'invoices.read')
+      ? [
+          {
+            key: 'commissions',
+            label: t('saas.nav.commissions'),
+            icon: icon(Percent),
+            href: '/app/commissions',
+          } satisfies ShellNavItem,
+        ]
+      : []),
     {
       key: 'subscription',
       label: t('saas.nav.subscription'),

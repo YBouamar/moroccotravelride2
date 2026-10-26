@@ -71,7 +71,8 @@
       "expenses": "Expenses",
       "tracking": "Live tracking",
       "maintenance": "Fleet care",
-      "marketplace": "Marketplace"
+      "marketplace": "Marketplace",
+      "commissions": "Commissions"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -205,6 +206,14 @@
       "graceTitle": "Overdue payment",
       "graceDays": "Days before cancellation",
       "save": "Save"
+    },
+    "bookings": {
+      "title": "Marketplace bookings",
+      "ref": "Reference",
+      "pickup": "Pickup",
+      "carrier": "Carrier",
+      "traveler": "Traveler",
+      "amounts": "Price / commission"
     }
   },
   "notFound": {
@@ -1076,6 +1085,42 @@
       "subject": "Booking {ref} cancelled",
       "body": "Booking {ref} on {date} is cancelled at the traveler's request.\n\nAmount the carrier refunds to the traveler: {refund}.",
       "action": "See the booking"
+    }
+  },
+  "commissions": {
+    "title": "Platform commissions",
+    "adminTitle": "Commission statements",
+    "month": "Month",
+    "total": "Total due",
+    "paid": "Paid",
+    "dueDate": "Due date",
+    "none": "No statement yet.",
+    "status": {
+      "issued": "To pay",
+      "overdue": "Overdue",
+      "paid": "Paid"
+    },
+    "currentMonth": "Commissions of the current month",
+    "currentMonthHelp": "They will be included in the monthly statement issued on the 1st of next month.",
+    "overdueWarning": "A statement is overdue: without payment, your marketplace visibility will be suspended {days} days after the due date.",
+    "howToPay": "How to pay",
+    "howToPayText": "In cash or by instant transfer to the platform, quoting the statement month. The platform records the payment.",
+    "generateTitle": "Generate the statements",
+    "generateHelp": "Done automatically on the 1st of each month for the previous month. Running it again creates no duplicate.",
+    "generate": "Generate",
+    "line": "Total {total} · paid {paid} · due {due}",
+    "suspended": "Marketplace visibility suspended (unpaid statement). Lift it from the company page.",
+    "payment": {
+      "amount": "Amount (MAD)",
+      "method": "Method",
+      "date": "Received on",
+      "reference": "Reference",
+      "record": "Record the payment"
+    },
+    "methods": {
+      "cash": "Cash",
+      "instant_transfer": "Instant transfer",
+      "bank_transfer": "Bank transfer"
     }
   }
 }

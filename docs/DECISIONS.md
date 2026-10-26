@@ -324,3 +324,12 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Paiement hors ligne (ADR-016)** : virement (le RIB du transporteur est montré au voyageur une fois la réservation acceptée) ou espèces au chauffeur ; le propriétaire, le gérant ou le comptable confirme l'encaissement.
 - **Annulation voyageur (BR-011)** : jusqu'au démarrage du trajet ; palier selon les heures restantes ; si rien n'a été payé, annulation sans frais ; si payé, remboursement selon le palier, part retenue partagée au taux figé (commission inscrite au registre), remboursement fait hors plateforme puis confirmé par le transporteur (À CONFIRMER).
 - **E-mails** : file `email_outbox` (rôle service seulement), envoi après la réponse et reprise par `/api/cron/emails` (secret partagé `CRON_SECRET`, à planifier sur le VPS) ; API Resend par `fetch` sans dépendance ; sans clé, les e-mails restent « ignorés » dans la file (développement, tests). Modèles HTML simples traduits et échappés ; React Email : BACKLOG.
+
+## ADR-032 : Relevés mensuels de commissions et supervision (étapes 16 et 17)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (échéance À CONFIRMER)
+- **Registre** : chaque trajet marketplace terminé inscrit sa commission figée ; une annulation payée inscrit la commission sur la part retenue (ADR-031).
+- **Relevé mensuel (BR-009b)** : généré le 1er du mois pour le mois précédent (mois marocain, pg_cron), ou à la main par l'admin depuis « Relevés de commissions » ; idempotent. Échéance : fin du mois + `statement_due_days` (10 jours, nouveau réglage, À CONFIRMER).
+- **Règlement** : en espèces ou par virement instantané à la plateforme (coordonnées de la page Paramètres admin, Q23, montrées au transporteur dans « Commissions ») ; l'admin enregistre le paiement, partiel ou total, jamais au-delà du dû.
+- **Retard et suspension (BR-009d, Q17)** : relevé non réglé après l'échéance : « en retard » ; `statement_suspension_days` (15 jours) plus tard, la visibilité marketplace est suspendue avec le motif ; seul l'admin la lève depuis la fiche société (Q19).
+- **Supervision des réservations (étape 17)** : liste admin de toutes les réservations, filtrable par statut, avec le contact du voyageur pour proposer un autre transporteur après un refus ou une expiration. Réaffectation assistée (nouvelle réservation chez un autre transporteur en un clic) : BACKLOG.

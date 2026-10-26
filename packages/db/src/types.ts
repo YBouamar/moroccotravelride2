@@ -397,6 +397,107 @@ export type Database = {
             referencedRelation: 'companies';
             referencedColumns: ['id'];
           },
+          {
+            foreignKeyName: 'commission_ledger_statement_fk';
+            columns: ['statement_id'];
+            isOneToOne: false;
+            referencedRelation: 'commission_statements';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      commission_statement_payments: {
+        Row: {
+          amount_cents: number;
+          company_id: string;
+          created_at: string;
+          id: string;
+          method: Database['public']['Enums']['statement_payment_method'];
+          received_on: string;
+          recorded_by: string | null;
+          reference: string | null;
+          statement_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          amount_cents: number;
+          company_id: string;
+          created_at?: string;
+          id?: string;
+          method: Database['public']['Enums']['statement_payment_method'];
+          received_on: string;
+          recorded_by?: string | null;
+          reference?: string | null;
+          statement_id: string;
+        };
+        Update: {
+          amount_cents?: number;
+          company_id?: string;
+          created_at?: string;
+          id?: string;
+          method?: Database['public']['Enums']['statement_payment_method'];
+          received_on?: string;
+          recorded_by?: string | null;
+          reference?: string | null;
+          statement_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'commission_statement_payments_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'commission_statement_payments_statement_id_fkey';
+            columns: ['statement_id'];
+            isOneToOne: false;
+            referencedRelation: 'commission_statements';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      commission_statements: {
+        Row: {
+          company_id: string;
+          due_date: string;
+          id: string;
+          issued_at: string;
+          month: string;
+          paid_cents: number;
+          status: Database['public']['Enums']['statement_status'];
+          total_cents: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          due_date: string;
+          id?: string;
+          issued_at?: string;
+          month: string;
+          paid_cents?: number;
+          status?: Database['public']['Enums']['statement_status'];
+          total_cents: number;
+        };
+        Update: {
+          company_id?: string;
+          due_date?: string;
+          id?: string;
+          issued_at?: string;
+          month?: string;
+          paid_cents?: number;
+          status?: Database['public']['Enums']['statement_status'];
+          total_cents?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'commission_statements_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
         ];
       };
       companies: {
@@ -1421,7 +1522,18 @@ export type Database = {
         Returns: string;
       };
       create_credit_note: { Args: { p_invoice_id: string; p_reason: string }; Returns: string };
+      generate_commission_statements: { Args: { p_month?: string }; Returns: number };
       issue_invoice: { Args: { p_due_date?: string; p_invoice_id: string }; Returns: string };
+      record_statement_payment: {
+        Args: {
+          p_amount_cents: number;
+          p_method: Database['public']['Enums']['statement_payment_method'];
+          p_received_on: string;
+          p_reference?: string;
+          p_statement: string;
+        };
+        Returns: undefined;
+      };
       respond_booking: {
         Args: {
           p_accept: boolean;
@@ -1462,6 +1574,8 @@ export type Database = {
       invoice_payment_method: 'bank_transfer' | 'cash' | 'cheque' | 'other';
       invoice_status: 'draft' | 'issued' | 'partially_paid' | 'paid' | 'cancelled';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
+      statement_payment_method: 'cash' | 'instant_transfer' | 'bank_transfer';
+      statement_status: 'issued' | 'paid' | 'overdue';
       subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
       trip_origin: 'manual' | 'marketplace';
       trip_status: 'planned' | 'assigned' | 'in_progress' | 'completed' | 'cancelled';
@@ -1596,6 +1710,8 @@ export const Constants = {
       invoice_payment_method: ['bank_transfer', 'cash', 'cheque', 'other'],
       invoice_status: ['draft', 'issued', 'partially_paid', 'paid', 'cancelled'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
+      statement_payment_method: ['cash', 'instant_transfer', 'bank_transfer'],
+      statement_status: ['issued', 'paid', 'overdue'],
       subscription_status: ['trial', 'active', 'past_due', 'cancelled'],
       trip_origin: ['manual', 'marketplace'],
       trip_status: ['planned', 'assigned', 'in_progress', 'completed', 'cancelled'],

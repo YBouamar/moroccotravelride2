@@ -17,6 +17,7 @@ const rows = [
     },
   },
   { key: 'statement_suspension_days', value: 15 },
+  { key: 'statement_due_days', value: 10 },
   { key: 'location_retention_days', value: 90 },
   { key: 'saas_trial', value: { days: 14, plan: 'v2' } },
   { key: 'marketplace_open', value: true },

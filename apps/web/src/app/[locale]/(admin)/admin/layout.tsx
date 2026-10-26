@@ -39,13 +39,13 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       key: 'bookings',
       label: t('admin.nav.bookings'),
       icon: icon(ClipboardList),
-      badge: t('saas.soon'),
+      href: '/admin/bookings',
     },
     {
       key: 'commissions',
       label: t('admin.nav.commissions'),
       icon: icon(Percent),
-      badge: t('saas.soon'),
+      href: '/admin/commissions',
     },
     {
       key: 'settings',

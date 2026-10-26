@@ -43,6 +43,7 @@ export const platformSettingsSchema = z.object({
       ),
   }),
   statement_suspension_days: positiveInt,
+  statement_due_days: positiveInt,
   location_retention_days: positiveInt,
   saas_trial: z.object({ days: positiveInt, plan: z.enum(['standard', 'v2', 'v3']) }),
   marketplace_open: z.boolean(),
