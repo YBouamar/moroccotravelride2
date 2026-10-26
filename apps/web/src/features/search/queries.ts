@@ -52,6 +52,12 @@ export async function searchOffers(search: SearchInput, locale: Locale) {
     supabase.from('vehicle_types').select('code, name_fr, name_en, name_ar, indicative_seats'),
   ]);
   if (error) throw error;
+  // Public rating from published reviews only (moderated, step 27).
+  const companies = [...new Set((data ?? []).map((offer) => offer.company_id))];
+  const { data: ratings } = companies.length
+    ? await supabase.rpc('carrier_ratings', { p_companies: companies })
+    : { data: [] };
+  const ratingOf = new Map((ratings ?? []).map((rating) => [rating.company_id, rating]));
   const typeName = new Map((types.data ?? []).map((type) => [type.code, type[`name_${locale}`]]));
   return (data ?? []).map((offer) => ({
     offerId: offer.offer_id,
@@ -59,6 +65,7 @@ export async function searchOffers(search: SearchInput, locale: Locale) {
     vehicleType: typeName.get(offer.vehicle_type_code) ?? offer.vehicle_type_code,
     priceCents: offer.price_cents,
     maxSeats: offer.max_seats,
+    rating: ratingOf.get(offer.company_id) ?? null,
   }));
 }
 

@@ -190,3 +190,44 @@ test('the carrier owner sees the statement in the Commissions page', async ({ pa
   await expect(page.getByRole('heading', { name: 'Commissions plateforme' })).toBeVisible();
   await expect(page.getByRole('table').getByRole('cell', { name: 'Réglé' })).toBeVisible();
 });
+
+test('the admin reads the KPIs, exports a month, moderates a review and filters the audit trail', async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  // A completed booking with a pending review (submitted by the traveler through the server).
+  const ref = `MTR-${['G', 'H', 'J', 'K', 'M', 'N'].sort(() => Math.random() - 0.5).join('')}`;
+  sql(`
+    with b as (
+      insert into public.bookings (public_ref, company_id, traveler_name, traveler_email, traveler_phone,
+        passengers, from_city_id, to_city_id, pickup_address, dropoff_address, pickup_at, vehicle_type_code,
+        total_cents, commission_rate_bps, commission_cents, carrier_cents, cancellation_policy, payment_method,
+        status, accept_deadline)
+      select '${ref}', '00000000-0000-4000-b000-000000000001', 'Lina Review', 'lina@example.test', '+33600000001', 1,
+        c.id, c.id, 'A street', 'B street', now(), 'sedan', 80000, 2000, 16000, 64000, '{"tiers": []}',
+        'cash_to_driver', 'completed', now()
+      from public.cities c where c.slug = 'casablanca'
+      returning id
+    )
+    insert into public.reviews (booking_id, company_id, rating, comment, traveler_name)
+    select id, '00000000-0000-4000-b000-000000000001', 4, 'Très bon chauffeur', 'Lina' from b`);
+
+  await signInAsAdmin(page);
+  await page.goto('/fr/admin');
+  await expect(page.getByText('Revenu mensuel récurrent (abonnements)')).toBeVisible();
+  const download = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Exporter les réservations' }).click();
+  const file = await download;
+  const content = Buffer.concat(await (await file.createReadStream()).toArray()).toString('utf8');
+  expect(content).toContain('"Référence";"Transporteur"');
+  expect(content).toContain(ref);
+
+  await page.goto('/fr/admin/reviews');
+  const card = page.locator('li', { hasText: ref });
+  await card.getByRole('button', { name: 'Publier' }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirmer' }).click();
+  await expect(card.getByText('Publié', { exact: true })).toBeVisible();
+
+  await page.goto('/fr/admin/audit?action=review');
+  await expect(page.getByText('Avis modéré').first()).toBeVisible();
+});

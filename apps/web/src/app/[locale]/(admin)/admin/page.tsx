@@ -1,16 +1,21 @@
 import { COMPANY_STATUSES, SUBSCRIPTION_STATUSES } from '@mtr/shared';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Card, CardTitle } from '@/components/ui/card';
+import { KpiCards } from '@/features/admin/components/kpi-cards';
 import { getOverviewStats } from '@/features/admin/queries';
 import { asLocale } from '@/i18n/as-locale';
 import { Link } from '@/i18n/navigation';
 
 export default async function AdminOverviewPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ month?: string }>;
 }) {
   setRequestLocale(asLocale((await params).locale));
+  const requestedMonth = (await searchParams).month;
+  const month = requestedMonth && /^\d{4}-\d{2}$/.test(requestedMonth) ? requestedMonth : undefined;
   const [t, format, stats] = await Promise.all([
     getTranslations(),
     getFormatter(),
@@ -20,6 +25,7 @@ export default async function AdminOverviewPage({
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-bold">{t('admin.overview.title')}</h1>
+      <KpiCards month={month} />
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>

@@ -110,7 +110,9 @@
       "companies": "Companies",
       "bookings": "Bookings",
       "commissions": "Commissions",
-      "settings": "Settings"
+      "settings": "Settings",
+      "reviews": "Reviews",
+      "audit": "Audit trail"
     },
     "overview": {
       "title": "Overview",
@@ -214,6 +216,49 @@
       "carrier": "Carrier",
       "traveler": "Traveler",
       "amounts": "Price / commission"
+    },
+    "kpis": {
+      "title": "Key figures of {month}",
+      "month": "Month",
+      "show": "Show",
+      "tiles": {
+        "mrr": "Monthly recurring revenue (subscriptions)",
+        "gmv": "Value of completed trips",
+        "commission": "Commissions of the month",
+        "bookings": "Bookings created",
+        "completed": "Bookings completed",
+        "openStatements": "Statements left to collect",
+        "overdue": "Overdue statements"
+      },
+      "exports": {
+        "bookings": "Export the bookings",
+        "ledger": "Export the commission ledger",
+        "statements": "Export the statements"
+      }
+    },
+    "exportColumns": {
+      "ref": "Reference",
+      "carrier": "Carrier",
+      "ice": "ICE",
+      "pickup": "Pickup (UTC)",
+      "status": "Status",
+      "payment": "Payment",
+      "total": "Total MAD",
+      "rate": "Commission rate %",
+      "commission": "Commission MAD",
+      "carrierShare": "Carrier share MAD",
+      "date": "Date (UTC)",
+      "booking": "Booking",
+      "kind": "Kind",
+      "statement": "Statement",
+      "month": "Month",
+      "paid": "Paid MAD",
+      "due": "Due date"
+    },
+    "audit": {
+      "title": "Audit trail",
+      "filter": "Action type",
+      "placeholder": "trip, invoice, company"
     }
   },
   "notFound": {
@@ -430,6 +475,39 @@
       "verification_status": "Verification",
       "rejection_reason": "Rejection reason",
       "type": "Type"
+    },
+    "trip": {
+      "insert": "Trip created",
+      "update": "Trip changed"
+    },
+    "invoice": {
+      "insert": "Invoice created",
+      "update": "Invoice changed"
+    },
+    "credit_note": {
+      "insert": "Credit note issued"
+    },
+    "payment": {
+      "insert": "Payment recorded",
+      "delete": "Payment deleted"
+    },
+    "price_grid": {
+      "insert": "Price added",
+      "update": "Price changed"
+    },
+    "statement": {
+      "insert": "Statement issued",
+      "update": "Statement changed"
+    },
+    "statement_payment": {
+      "insert": "Statement payment"
+    },
+    "expense": {
+      "insert": "Expense filed",
+      "update": "Expense changed"
+    },
+    "review": {
+      "update": "Review moderated"
     }
   },
   "roles": {
@@ -927,7 +1005,8 @@
     "carrier": "Licensed carrier: {name}",
     "seatsUpTo": "Up to {seats} passengers",
     "allInclusive": "All-inclusive price",
-    "book": "Book"
+    "book": "Book",
+    "rating": "{average} / 5 ({count, plural, one {# review} other {# reviews}})"
   },
   "book": {
     "title": "Your booking",
@@ -1035,6 +1114,9 @@
       "cannotCancel": "This booking can no longer be cancelled online. Please contact the carrier.",
       "link": "This link is invalid or has expired.",
       "unknown": "Something went wrong. Try again."
+    },
+    "review": {
+      "title": "Leave a review"
     }
   },
   "bookings": {
@@ -1239,5 +1321,23 @@
       "notEnough": "Two full tanks needed",
       "spent": "Fuel: {amount}"
     }
+  },
+  "reviews": {
+    "adminTitle": "Traveler reviews",
+    "none": "No review yet.",
+    "status": {
+      "pending": "To moderate",
+      "published": "Published",
+      "hidden": "Hidden"
+    },
+    "publish": "Publish",
+    "publishHelp": "The review counts in the carrier's public rating.",
+    "hide": "Hide",
+    "hideHelp": "The review no longer appears nor counts in the rating.",
+    "stars": "{count, plural, one {# star} other {# stars}}",
+    "rating": "Your rating",
+    "comment": "Your review (optional)",
+    "submit": "Send my review",
+    "thanks": "Thank you! Your review will be published after review."
   }
 }

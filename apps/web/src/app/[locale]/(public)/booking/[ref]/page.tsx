@@ -11,6 +11,7 @@ import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardTitle } from '@/components/ui/card';
 import { CancelBooking } from '@/features/booking/components/cancel-booking';
+import { ReviewForm } from '@/features/reviews/components/review-form';
 import { getGuestBooking } from '@/features/booking/queries';
 import { asLocale } from '@/i18n/as-locale';
 import { getBookingLinkSecret } from '@/lib/env.server';
@@ -125,6 +126,13 @@ export default async function GuestBookingPage({
           <p dir="ltr" className="font-mono">
             {booking.company?.bank_rib}
           </p>
+        </Card>
+      ) : null}
+
+      {status === 'completed' ? (
+        <Card className="flex flex-col gap-3">
+          <CardTitle>{t('review.title')}</CardTitle>
+          <ReviewForm bookingRef={booking.public_ref} token={token} />
         </Card>
       ) : null}
 

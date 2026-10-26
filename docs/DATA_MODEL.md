@@ -97,6 +97,10 @@ Implémentation (étape 4) :
 
 Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation par référence + e-mail passe par une Server Action qui vérifie un jeton de lien magique signé et à durée limitée.
 
+### Pilotage (Phase 6)
+
+**Implémentés (étapes 25 à 27)** : `reviews` (une note de 1 à 5 et un commentaire par réservation terminée, prénom seulement, `status` `pending|published|hidden`, modération par l'admin), `public.submit_review` (rôle service, après vérification du lien magique), `public.carrier_ratings` (note publique, avis publiés seulement), `public.admin_kpis(p_month)` (admin avec MFA : MRR, GMV, commissions, entonnoir des réservations, sociétés, relevés ouverts).
+
 ### Transverse
 
 `notifications`, `audit_logs` (**implémentée**, étape 6 : ajout seul par triggers `private.audit_changes`, colonnes modifiées uniquement, lecture admin et propriétaire), `platform_settings` (implémentée : clé / valeur JSON validée par Zod dans `@mtr/shared` : `default_commission_bps`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `statement_suspension_days`, `location_retention_days`, `saas_trial`, `marketplace_open`, `subscription_grace_days`, `subscription_payment_info` ; lecture publique, modification admin, clés créées par migration uniquement).
@@ -125,5 +129,6 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261029090000_expenses.sql` | dépenses, justificatifs privés, validation | 4 (étape 18) |
 | `20261029100000_driver_app_and_tracking.sql` | actions du chauffeur, positions, carte en direct, purge | 4 (étapes 19 à 21) |
 | `20261030090000_fleet_v3.sql` | entretien et pièces, échéances et rappels, consommation | 5 (étapes 22 à 24) |
+| `20261031090000_pilotage.sql` | avis et modération, notes publiques, indicateurs admin | 6 (étapes 25 à 27) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (214 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (223 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

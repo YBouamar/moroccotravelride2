@@ -1487,6 +1487,61 @@ export type Database = {
         };
         Relationships: [];
       };
+      reviews: {
+        Row: {
+          booking_id: string;
+          comment: string | null;
+          company_id: string;
+          created_at: string;
+          id: string;
+          moderated_at: string | null;
+          moderated_by: string | null;
+          rating: number;
+          status: Database['public']['Enums']['review_status'];
+          traveler_name: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          booking_id: string;
+          comment?: string | null;
+          company_id: string;
+          created_at?: string;
+          id?: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          rating: number;
+          status?: Database['public']['Enums']['review_status'];
+          traveler_name: string;
+        };
+        Update: {
+          booking_id?: string;
+          comment?: string | null;
+          company_id?: string;
+          created_at?: string;
+          id?: string;
+          moderated_at?: string | null;
+          moderated_by?: string | null;
+          rating?: number;
+          status?: Database['public']['Enums']['review_status'];
+          traveler_name?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'reviews_booking_id_fkey';
+            columns: ['booking_id'];
+            isOneToOne: true;
+            referencedRelation: 'bookings';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'reviews_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       subscriptions: {
         Row: {
           company_id: string;
@@ -1832,6 +1887,7 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
+      admin_kpis: { Args: { p_month?: string }; Returns: Json };
       booking_notification_recipients: {
         Args: { p_company: string };
         Returns: {
@@ -1842,6 +1898,14 @@ export type Database = {
       cancel_booking_by_traveler: {
         Args: { p_booking: string; p_reason?: string };
         Returns: number;
+      };
+      carrier_ratings: {
+        Args: { p_companies: string[] };
+        Returns: {
+          average: number;
+          company_id: string;
+          reviews: number;
+        }[];
       };
       confirm_booking_payment: { Args: { p_booking: string }; Returns: undefined };
       confirm_booking_refund: { Args: { p_booking: string }; Returns: undefined };
@@ -1922,6 +1986,10 @@ export type Database = {
           vehicle_type_code: string;
         }[];
       };
+      submit_review: {
+        Args: { p_booking: string; p_comment: string; p_rating: number };
+        Returns: string;
+      };
     };
     Enums: {
       booking_payment_method: 'bank_transfer' | 'cash_to_driver' | 'online_card';
@@ -1946,6 +2014,7 @@ export type Database = {
       invoice_status: 'draft' | 'issued' | 'partially_paid' | 'paid' | 'cancelled';
       maintenance_kind: 'service' | 'repair' | 'tires' | 'inspection' | 'other';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
+      review_status: 'pending' | 'published' | 'hidden';
       statement_payment_method: 'cash' | 'instant_transfer' | 'bank_transfer';
       statement_status: 'issued' | 'paid' | 'overdue';
       subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
@@ -2092,6 +2161,7 @@ export const Constants = {
       invoice_status: ['draft', 'issued', 'partially_paid', 'paid', 'cancelled'],
       maintenance_kind: ['service', 'repair', 'tires', 'inspection', 'other'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
+      review_status: ['pending', 'published', 'hidden'],
       statement_payment_method: ['cash', 'instant_transfer', 'bank_transfer'],
       statement_status: ['issued', 'paid', 'overdue'],
       subscription_status: ['trial', 'active', 'past_due', 'cancelled'],

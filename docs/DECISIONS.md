@@ -360,3 +360,12 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Consommation** : volumes en centilitres entiers (pas de flottant), consommation moyenne entre le premier et le dernier plein complet (carburant ajouté après le premier plein complet divisé par la distance), affichée en L / 100 km par véhicule avec la dépense de carburant.
 - **Offre** : écriture avec la V3 (`fleet_maintenance`, `vehicle_deadlines`, `fuel_tracking`). Atlas (démo) passe en V3 pour montrer tous les modules.
 - **Tests E2E** : attente systématique du contenu d'un onglet avant de remplir un formulaire, et attente active sur la base plutôt que sur un message déjà présent (instabilités corrigées).
+
+## ADR-036 : Pilotage : indicateurs, exports, audit, avis (étapes 25 à 27)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Indicateurs (vue d'ensemble admin)** par mois marocain : revenu mensuel récurrent des abonnements actifs ou en retard (V3 sur devis non compté), volume des trajets marketplace terminés (GMV), commissions inscrites au registre, réservations créées et terminées, relevés restant à encaisser et en retard. Calculés en base par `admin_kpis` (admin avec MFA).
+- **Exports comptables** : réservations, registre des commissions et relevés d'un mois en CSV (séparateur `;`, BOM, montants en MAD avec virgule, protection contre l'injection de formules), libellés traduits ; exigent la MFA (requêtes faites avec le client RLS de l'admin).
+- **Reversements** : sans objet dans le modèle hors ligne (ADR-016) : le transporteur encaisse tout et reverse la commission ; la plateforme ne verse rien aux transporteurs. Le sens « plateforme doit au transporteur » reste prévu pour le futur paiement par carte (BACKLOG).
+- **Journal d'audit** : page admin paginée, filtrable par type d'action (`trip`, `invoice`, `company`...), libellés traduits pour toutes les entités auditées.
+- **Avis** : le voyageur note une réservation terminée depuis son lien magique (une seule fois) ; l'avis est **modéré** par l'admin avant de compter ; seule la note des avis publiés apparaît dans les résultats de recherche ; le transporteur lit ses avis mais ne peut pas les modérer.

@@ -110,7 +110,9 @@
       "companies": "الشركات",
       "bookings": "الحجوزات",
       "commissions": "العمولات",
-      "settings": "الإعدادات"
+      "settings": "الإعدادات",
+      "reviews": "الآراء",
+      "audit": "سجل التدقيق"
     },
     "overview": {
       "title": "نظرة عامة",
@@ -214,6 +216,49 @@
       "carrier": "الناقل",
       "traveler": "المسافر",
       "amounts": "السعر / العمولة"
+    },
+    "kpis": {
+      "title": "مؤشرات {month}",
+      "month": "الشهر",
+      "show": "عرض",
+      "tiles": {
+        "mrr": "المداخيل الشهرية المتكررة (الاشتراكات)",
+        "gmv": "قيمة الرحلات المنتهية",
+        "commission": "عمولات الشهر",
+        "bookings": "الحجوزات المنشأة",
+        "completed": "الحجوزات المنتهية",
+        "openStatements": "الكشوفات المتبقية للتحصيل",
+        "overdue": "الكشوفات المتأخرة"
+      },
+      "exports": {
+        "bookings": "تصدير الحجوزات",
+        "ledger": "تصدير سجل العمولات",
+        "statements": "تصدير الكشوفات"
+      }
+    },
+    "exportColumns": {
+      "ref": "المرجع",
+      "carrier": "الناقل",
+      "ice": "ICE",
+      "pickup": "الاستقبال (UTC)",
+      "status": "الحالة",
+      "payment": "الأداء",
+      "total": "المجموع بالدرهم",
+      "rate": "نسبة العمولة %",
+      "commission": "العمولة بالدرهم",
+      "carrierShare": "حصة الناقل بالدرهم",
+      "date": "التاريخ (UTC)",
+      "booking": "الحجز",
+      "kind": "النوع",
+      "statement": "الكشف",
+      "month": "الشهر",
+      "paid": "المؤدى بالدرهم",
+      "due": "الاستحقاق"
+    },
+    "audit": {
+      "title": "سجل التدقيق",
+      "filter": "نوع الإجراء",
+      "placeholder": "trip, invoice, company"
     }
   },
   "notFound": {
@@ -430,6 +475,39 @@
       "verification_status": "التحقق",
       "rejection_reason": "سبب الرفض",
       "type": "النوع"
+    },
+    "trip": {
+      "insert": "إنشاء رحلة",
+      "update": "تعديل رحلة"
+    },
+    "invoice": {
+      "insert": "إنشاء فاتورة",
+      "update": "تعديل فاتورة"
+    },
+    "credit_note": {
+      "insert": "إصدار إشعار دائن"
+    },
+    "payment": {
+      "insert": "تسجيل أداء",
+      "delete": "حذف أداء"
+    },
+    "price_grid": {
+      "insert": "إضافة سعر",
+      "update": "تعديل سعر"
+    },
+    "statement": {
+      "insert": "إصدار كشف",
+      "update": "تعديل كشف"
+    },
+    "statement_payment": {
+      "insert": "أداء كشف"
+    },
+    "expense": {
+      "insert": "إيداع مصروف",
+      "update": "تعديل مصروف"
+    },
+    "review": {
+      "update": "مراقبة رأي"
     }
   },
   "roles": {
@@ -927,7 +1005,8 @@
     "carrier": "ناقل معتمد: {name}",
     "seatsUpTo": "حتى {seats} ركاب",
     "allInclusive": "سعر شامل",
-    "book": "احجز"
+    "book": "احجز",
+    "rating": "{average} / 5 ({count, plural, one {رأي واحد} two {رأيان} few {# آراء} many {# رأيا} other {# رأي}})"
   },
   "book": {
     "title": "حجزك",
@@ -1035,6 +1114,9 @@
       "cannotCancel": "لم يعد من الممكن إلغاء هذا الحجز عبر الإنترنت. اتصل بالناقل.",
       "link": "هذا الرابط غير صالح أو منته.",
       "unknown": "حدث خطأ. حاول مرة أخرى."
+    },
+    "review": {
+      "title": "شاركنا رأيك"
     }
   },
   "bookings": {
@@ -1239,5 +1321,23 @@
       "notEnough": "يلزم تعبئتان كاملتان",
       "spent": "الوقود: {amount}"
     }
+  },
+  "reviews": {
+    "adminTitle": "آراء المسافرين",
+    "none": "لا توجد آراء بعد.",
+    "status": {
+      "pending": "للمراقبة",
+      "published": "منشور",
+      "hidden": "مخفي"
+    },
+    "publish": "نشر",
+    "publishHelp": "يحتسب الرأي في التقييم العام للناقل.",
+    "hide": "إخفاء",
+    "hideHelp": "لا يظهر الرأي ولا يحتسب في التقييم.",
+    "stars": "{count, plural, one {نجمة واحدة} two {نجمتان} few {# نجوم} many {# نجمة} other {# نجمة}}",
+    "rating": "تقييمك",
+    "comment": "رأيك (اختياري)",
+    "submit": "إرسال رأيي",
+    "thanks": "شكرا! سينشر رأيك بعد التحقق."
   }
 }

@@ -1,5 +1,5 @@
 import { earliestBookableDay, formatMoney, isBookableAt, searchPickupAt } from '@mtr/shared';
-import { BadgeCheck, CarFront, SearchX, Users } from 'lucide-react';
+import { BadgeCheck, CarFront, SearchX, Star, Users } from 'lucide-react';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
@@ -105,6 +105,18 @@ export default async function SearchPage({
                           <BadgeCheck aria-hidden="true" className="size-4 text-secondary" />
                           {t('carrier', { name: offer.carrierName })}
                         </span>
+                        {offer.rating ? (
+                          <span className="flex items-center gap-1">
+                            <Star
+                              aria-hidden="true"
+                              className="size-4 fill-accent text-secondary"
+                            />
+                            {t('rating', {
+                              average: offer.rating.average,
+                              count: offer.rating.reviews,
+                            })}
+                          </span>
+                        ) : null}
                         <span className="flex items-center gap-1">
                           <Users aria-hidden="true" className="size-4" />
                           {t('seatsUpTo', { seats: offer.maxSeats })}

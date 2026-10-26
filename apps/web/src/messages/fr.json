@@ -110,7 +110,9 @@
       "companies": "Sociétés",
       "bookings": "Réservations",
       "commissions": "Commissions",
-      "settings": "Paramètres"
+      "settings": "Paramètres",
+      "reviews": "Avis",
+      "audit": "Journal d'audit"
     },
     "overview": {
       "title": "Vue d'ensemble",
@@ -214,6 +216,49 @@
       "carrier": "Transporteur",
       "traveler": "Voyageur",
       "amounts": "Prix / commission"
+    },
+    "kpis": {
+      "title": "Indicateurs de {month}",
+      "month": "Mois",
+      "show": "Afficher",
+      "tiles": {
+        "mrr": "Revenu mensuel récurrent (abonnements)",
+        "gmv": "Volume des trajets terminés",
+        "commission": "Commissions du mois",
+        "bookings": "Réservations créées",
+        "completed": "Réservations terminées",
+        "openStatements": "Relevés restant à encaisser",
+        "overdue": "Relevés en retard"
+      },
+      "exports": {
+        "bookings": "Exporter les réservations",
+        "ledger": "Exporter le registre des commissions",
+        "statements": "Exporter les relevés"
+      }
+    },
+    "exportColumns": {
+      "ref": "Référence",
+      "carrier": "Transporteur",
+      "ice": "ICE",
+      "pickup": "Prise en charge (UTC)",
+      "status": "Statut",
+      "payment": "Paiement",
+      "total": "Total MAD",
+      "rate": "Taux de commission %",
+      "commission": "Commission MAD",
+      "carrierShare": "Part transporteur MAD",
+      "date": "Date (UTC)",
+      "booking": "Réservation",
+      "kind": "Nature",
+      "statement": "Relevé",
+      "month": "Mois",
+      "paid": "Réglé MAD",
+      "due": "Échéance"
+    },
+    "audit": {
+      "title": "Journal d'audit",
+      "filter": "Type d'action",
+      "placeholder": "trip, invoice, company"
     }
   },
   "notFound": {
@@ -430,6 +475,39 @@
       "verification_status": "Vérification",
       "rejection_reason": "Motif de refus",
       "type": "Type"
+    },
+    "trip": {
+      "insert": "Trajet créé",
+      "update": "Trajet modifié"
+    },
+    "invoice": {
+      "insert": "Facture créée",
+      "update": "Facture modifiée"
+    },
+    "credit_note": {
+      "insert": "Avoir émis"
+    },
+    "payment": {
+      "insert": "Paiement enregistré",
+      "delete": "Paiement supprimé"
+    },
+    "price_grid": {
+      "insert": "Prix ajouté",
+      "update": "Prix modifié"
+    },
+    "statement": {
+      "insert": "Relevé émis",
+      "update": "Relevé modifié"
+    },
+    "statement_payment": {
+      "insert": "Règlement de relevé"
+    },
+    "expense": {
+      "insert": "Dépense déposée",
+      "update": "Dépense modifiée"
+    },
+    "review": {
+      "update": "Avis modéré"
     }
   },
   "roles": {
@@ -927,7 +1005,8 @@
     "carrier": "Transporteur agréé : {name}",
     "seatsUpTo": "Jusqu'à {seats} passagers",
     "allInclusive": "Prix tout compris",
-    "book": "Réserver"
+    "book": "Réserver",
+    "rating": "{average} / 5 ({count, plural, one {# avis} other {# avis}})"
   },
   "book": {
     "title": "Votre réservation",
@@ -1035,6 +1114,9 @@
       "cannotCancel": "Cette réservation ne peut plus être annulée en ligne. Contactez le transporteur.",
       "link": "Ce lien est invalide ou a expiré.",
       "unknown": "Une erreur est survenue. Réessayez."
+    },
+    "review": {
+      "title": "Donnez votre avis"
     }
   },
   "bookings": {
@@ -1239,5 +1321,23 @@
       "notEnough": "Deux pleins complets nécessaires",
       "spent": "Carburant : {amount}"
     }
+  },
+  "reviews": {
+    "adminTitle": "Avis voyageurs",
+    "none": "Aucun avis pour l'instant.",
+    "status": {
+      "pending": "À modérer",
+      "published": "Publié",
+      "hidden": "Masqué"
+    },
+    "publish": "Publier",
+    "publishHelp": "L'avis compte dans la note publique du transporteur.",
+    "hide": "Masquer",
+    "hideHelp": "L'avis n'apparaît plus et ne compte plus dans la note.",
+    "stars": "{count, plural, one {# étoile} other {# étoiles}}",
+    "rating": "Votre note",
+    "comment": "Votre avis (facultatif)",
+    "submit": "Envoyer mon avis",
+    "thanks": "Merci ! Votre avis sera publié après vérification."
   }
 }

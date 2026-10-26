@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 5 terminée (étapes 22 à 24) · **Prochaine étape** : Phase 6 (pilotage : indicateurs, reversements et exports, audit, avis)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 6 terminée (étapes 25 à 27) · **Prochaine étape** : Phase 7 (durcissement et mise en production)
 
 ## 1. Plan d'exécution par étapes
 
@@ -17,7 +17,7 @@ Chaque étape se termine par une synthèse, une procédure de test manuel, les t
 | 12 à 17 | 3 | Marketplace : villes + grilles ; recherche + résultats ; tunnel invité + 24 h ; acceptation + conversion en trajet ; paiement hors ligne (virement, espèces au chauffeur) + registre des commissions + relevé mensuel ; e-mails, lien magique, annulation, supervision admin | Casablanca vers Marrakech 800 MAD : 160 / 640 enregistrés, trajet au planning | ✅ fait |
 | 18 à 21 | 4 | V2 : dépenses ; app chauffeur (planning, statuts, dépense photo, hors ligne) ; localisation Realtime + carte ; purge | Position visible pendant le trajet seulement ; dépense hors ligne synchronisée | ✅ fait |
 | 22 à 24 | 5 | V3 : entretien et pièces ; échéances + rappels planifiés ; consommation | Rappels J-30, J-7, J-1 sur une assurance | ✅ fait |
-| 25 à 27 | 6 | Pilotage : indicateurs ; reversements + exports ; audit consultable, avis et modération | Tableau de bord admin chiffré | ⬜ |
+| 25 à 27 | 6 | Pilotage : indicateurs ; reversements + exports ; audit consultable, avis et modération | Tableau de bord admin chiffré | ✅ fait |
 | 28 à 30 | 7 | Durcissement : audit sécurité, charge, SEO, pages légales, VPS Contabo (Coolify, Supabase auto-hébergé, staging), sauvegarde testée, EAS, CNDP, checklist | Checklist de lancement verte | ⬜ |
 
 Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phase.
@@ -57,6 +57,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étape 18 : dépenses (dépôt par le bureau ou le chauffeur, justificatif privé, validation ou refus motivé, décision définitive, offre V2). 186 tests unitaires, 191 pgTAP, 60 E2E (ADR-033).
 - 2026-10-26, étapes 19 à 21 (fin de Phase 4) : app chauffeur (trajets à venir, démarrer et terminer, appel du passager, dépense avec photo, file hors ligne idempotente), positions limitées aux trajets en cours et contrôlées en base, carte en direct côté bureau (MapLibre, rafraîchie toutes les 15 s), purge à 90 jours. 190 tests unitaires, 202 pgTAP, 61 E2E (ADR-034).
 - 2026-10-26, étapes 22 à 24 (Phase 5) : entretien avec pièces, échéances avec rappels J-30 / J-7 / J-1 (critère vérifié), consommation par véhicule ; Atlas de démonstration en V3 ; deux instabilités E2E corrigées. 194 tests unitaires, 214 pgTAP, 62 E2E (ADR-035).
+- 2026-10-26, étapes 25 à 27 (Phase 6) : indicateurs admin du mois, exports comptables CSV, journal d'audit consultable, avis voyageurs modérés et note publique dans la recherche. 194 tests unitaires, 223 pgTAP, 63 E2E (ADR-036).
 
 ## 3. En cours
 
