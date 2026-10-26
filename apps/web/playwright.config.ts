@@ -24,7 +24,7 @@ export default defineConfig({
       name: 'mobile',
       use: { ...devices['Pixel 7'], channel },
       testIgnore:
-        /(auth|admin|subscription|onboarding|lists|trips|invoices|phase2|marketplace|booking|expenses|tracking)\.spec\.ts$/,
+        /(auth|admin|subscription|onboarding|lists|trips|invoices|phase2|marketplace|booking|expenses|tracking|fleet-v3)\.spec\.ts$/,
     },
   ],
   // Tests run against the production build, like on the VPS.

@@ -55,8 +55,9 @@ insert into public.company_members (company_id, user_id, role) values
   ('00000000-0000-4000-b000-000000000003', '00000000-0000-4000-a000-000000000031', 'owner');
 
 -- Subscriptions (a V2 trial is created by trigger for every company): one of each situation.
+-- Atlas: V3 (includes V2 and Standard), to demonstrate every module.
 update public.subscriptions
-set plan_code = 'v2', status = 'active', trial_ends_at = null,
+set plan_code = 'v3', status = 'active', trial_ends_at = null,
     current_period_start = date_trunc('month', now())::date,
     current_period_end = (date_trunc('month', now()) + interval '1 month - 1 day')::date
 where company_id = '00000000-0000-4000-b000-000000000001';
@@ -151,3 +152,11 @@ join public.cities t on t.slug = v.to_slug;
 -- Bank details shown to travelers paying Atlas by transfer (demo RIB).
 update public.companies set bank_name = 'Banque Démo', bank_rib = '011780000012345678901234'
 where id = '00000000-0000-4000-b000-000000000001';
+
+-- V3 demo: an insurance deadline in 20 days (D-30 reminder already due) and two full tanks.
+insert into public.vehicle_deadlines (company_id, vehicle_id, kind, label, due_on) values
+  ('00000000-0000-4000-b000-000000000001', '00000000-0000-4000-9000-000000000102', 'insurance', 'Wafa Assurance',
+   (now() at time zone 'Africa/Casablanca')::date + 20);
+insert into public.fuel_logs (company_id, vehicle_id, filled_on, odometer_km, volume_cl, amount_cents, full_tank) values
+  ('00000000-0000-4000-b000-000000000001', '00000000-0000-4000-9000-000000000102', (now() at time zone 'Africa/Casablanca')::date - 10, 120000, 6000, 78000, true),
+  ('00000000-0000-4000-b000-000000000001', '00000000-0000-4000-9000-000000000102', (now() at time zone 'Africa/Casablanca')::date - 2, 120800, 6400, 83200, true);

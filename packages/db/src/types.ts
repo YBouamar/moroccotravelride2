@@ -985,6 +985,61 @@ export type Database = {
           },
         ];
       };
+      fuel_logs: {
+        Row: {
+          amount_cents: number;
+          company_id: string;
+          created_at: string;
+          created_by: string | null;
+          filled_on: string;
+          full_tank: boolean;
+          id: string;
+          odometer_km: number;
+          vehicle_id: string;
+          volume_cl: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          amount_cents: number;
+          company_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          filled_on: string;
+          full_tank?: boolean;
+          id?: string;
+          odometer_km: number;
+          vehicle_id: string;
+          volume_cl: number;
+        };
+        Update: {
+          amount_cents?: number;
+          company_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          filled_on?: string;
+          full_tank?: boolean;
+          id?: string;
+          odometer_km?: number;
+          vehicle_id?: string;
+          volume_cl?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'fuel_logs_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'fuel_logs_vehicle_id_company_id_fkey';
+            columns: ['vehicle_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'vehicles';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       invoice_lines: {
         Row: {
           company_id: string;
@@ -1125,6 +1180,100 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'companies';
             referencedColumns: ['id'];
+          },
+        ];
+      };
+      maintenance_parts: {
+        Row: {
+          company_id: string;
+          id: string;
+          name: string;
+          quantity: number;
+          record_id: string;
+          unit_cost_cents: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          id?: string;
+          name: string;
+          quantity: number;
+          record_id: string;
+          unit_cost_cents: number;
+        };
+        Update: {
+          company_id?: string;
+          id?: string;
+          name?: string;
+          quantity?: number;
+          record_id?: string;
+          unit_cost_cents?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_parts_record_id_company_id_fkey';
+            columns: ['record_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'maintenance_records';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
+      maintenance_records: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          created_by: string | null;
+          garage: string | null;
+          id: string;
+          kind: Database['public']['Enums']['maintenance_kind'];
+          labour_cents: number;
+          notes: string | null;
+          odometer_km: number | null;
+          performed_on: string;
+          vehicle_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          garage?: string | null;
+          id?: string;
+          kind: Database['public']['Enums']['maintenance_kind'];
+          labour_cents?: number;
+          notes?: string | null;
+          odometer_km?: number | null;
+          performed_on: string;
+          vehicle_id: string;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          garage?: string | null;
+          id?: string;
+          kind?: Database['public']['Enums']['maintenance_kind'];
+          labour_cents?: number;
+          notes?: string | null;
+          odometer_km?: number | null;
+          performed_on?: string;
+          vehicle_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'maintenance_records_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'maintenance_records_vehicle_id_company_id_fkey';
+            columns: ['vehicle_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'vehicles';
+            referencedColumns: ['id', 'company_id'];
           },
         ];
       };
@@ -1537,6 +1686,58 @@ export type Database = {
           },
         ];
       };
+      vehicle_deadlines: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          done_at: string | null;
+          due_on: string;
+          id: string;
+          kind: Database['public']['Enums']['deadline_kind'];
+          label: string | null;
+          last_reminder_days: number | null;
+          vehicle_id: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          done_at?: string | null;
+          due_on: string;
+          id?: string;
+          kind: Database['public']['Enums']['deadline_kind'];
+          label?: string | null;
+          last_reminder_days?: number | null;
+          vehicle_id: string;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          done_at?: string | null;
+          due_on?: string;
+          id?: string;
+          kind?: Database['public']['Enums']['deadline_kind'];
+          label?: string | null;
+          last_reminder_days?: number | null;
+          vehicle_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'vehicle_deadlines_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'vehicle_deadlines_vehicle_id_company_id_fkey';
+            columns: ['vehicle_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'vehicles';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       vehicle_types: {
         Row: {
           code: string;
@@ -1735,12 +1936,15 @@ export type Database = {
         | 'disputed';
       client_type: 'b2b' | 'b2c';
       company_status: 'pending' | 'verified' | 'suspended';
+      deadline_kind:
+        'insurance' | 'technical_inspection' | 'vignette' | 'transport_authorization' | 'other';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
       driver_status: 'active' | 'inactive';
       expense_category: 'fuel' | 'toll' | 'parking' | 'maintenance' | 'meal' | 'other';
       expense_status: 'submitted' | 'approved' | 'rejected';
       invoice_payment_method: 'bank_transfer' | 'cash' | 'cheque' | 'other';
       invoice_status: 'draft' | 'issued' | 'partially_paid' | 'paid' | 'cancelled';
+      maintenance_kind: 'service' | 'repair' | 'tires' | 'inspection' | 'other';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
       statement_payment_method: 'cash' | 'instant_transfer' | 'bank_transfer';
       statement_status: 'issued' | 'paid' | 'overdue';
@@ -1873,12 +2077,20 @@ export const Constants = {
       ],
       client_type: ['b2b', 'b2c'],
       company_status: ['pending', 'verified', 'suspended'],
+      deadline_kind: [
+        'insurance',
+        'technical_inspection',
+        'vignette',
+        'transport_authorization',
+        'other',
+      ],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
       driver_status: ['active', 'inactive'],
       expense_category: ['fuel', 'toll', 'parking', 'maintenance', 'meal', 'other'],
       expense_status: ['submitted', 'approved', 'rejected'],
       invoice_payment_method: ['bank_transfer', 'cash', 'cheque', 'other'],
       invoice_status: ['draft', 'issued', 'partially_paid', 'paid', 'cancelled'],
+      maintenance_kind: ['service', 'repair', 'tires', 'inspection', 'other'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
       statement_payment_method: ['cash', 'instant_transfer', 'bank_transfer'],
       statement_status: ['issued', 'paid', 'overdue'],

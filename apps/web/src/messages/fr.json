@@ -315,7 +315,9 @@
     "quantity": "Quantité entre 1 et 10 000.",
     "gridPrice": "Prix entre 10 et 100 000 MAD.",
     "time": "Indiquez une heure.",
-    "flight": "Lettres et chiffres uniquement (par exemple AT 201)."
+    "flight": "Lettres et chiffres uniquement (par exemple AT 201).",
+    "odometer": "Kilométrage en chiffres (par exemple 120500).",
+    "volume": "Volume en litres (par exemple 45,3)."
   },
   "company": {
     "pending": {
@@ -1085,6 +1087,18 @@
       "subject": "Réservation {ref} annulée",
       "body": "La réservation {ref} du {date} est annulée à la demande du voyageur.\n\nMontant à rembourser au voyageur par le transporteur : {refund}.",
       "action": "Voir la réservation"
+    },
+    "deadline_reminder": {
+      "subject": "Échéance {kind} du véhicule {vehicle} dans {days} jours",
+      "body": "L'échéance {kind} {label} du véhicule {vehicle} arrive le {date}, dans {days} jours.\n\nPensez à la renouveler pour rester en règle.",
+      "action": "Voir le parc"
+    },
+    "kinds": {
+      "insurance": "Assurance",
+      "technical_inspection": "Visite technique",
+      "vignette": "Vignette",
+      "transport_authorization": "Autorisation de transport",
+      "other": "Autre"
     }
   },
   "commissions": {
@@ -1162,5 +1176,68 @@
     "none": "Aucun trajet en cours.",
     "lastSeen": "Dernière position à {time}",
     "noPosition": "Pas encore de position reçue."
+  },
+  "deadlineKind": {
+    "insurance": "Assurance",
+    "technical_inspection": "Visite technique",
+    "vignette": "Vignette",
+    "transport_authorization": "Autorisation de transport",
+    "other": "Autre"
+  },
+  "maintenanceKind": {
+    "service": "Vidange et révision",
+    "repair": "Réparation",
+    "tires": "Pneumatiques",
+    "inspection": "Contrôle",
+    "other": "Autre"
+  },
+  "fleetV3": {
+    "title": "Parc",
+    "chooseVehicle": "Choisissez un véhicule",
+    "odometer": "Kilométrage",
+    "tabs": {
+      "deadlines": "Échéances",
+      "maintenance": "Entretien",
+      "fuel": "Consommation"
+    },
+    "deadlines": {
+      "new": "Nouvelle échéance",
+      "help": "Un rappel par e-mail est envoyé au propriétaire et au gérant 30 jours, 7 jours et 1 jour avant.",
+      "kind": "Type",
+      "label": "Précision (facultatif)",
+      "dueOn": "Échéance",
+      "add": "Enregistrer l'échéance",
+      "done": "Marquer comme faite",
+      "doneHelp": "L'échéance est close et ne déclenche plus de rappel. Ajoutez la suivante si besoin.",
+      "state": {
+        "overdue": "Dépassée",
+        "due_soon": "Dans moins de 30 jours",
+        "ok": "À jour",
+        "done": "Faite"
+      }
+    },
+    "maintenance": {
+      "new": "Nouvel entretien",
+      "kind": "Type",
+      "date": "Date",
+      "garage": "Garage (facultatif)",
+      "labour": "Main-d'œuvre (MAD)",
+      "part": "Pièce (facultatif)",
+      "partCost": "Prix de la pièce (MAD)",
+      "notes": "Notes (facultatif)",
+      "total": "Coût total",
+      "add": "Enregistrer l'entretien"
+    },
+    "fuel": {
+      "new": "Nouveau plein",
+      "date": "Date",
+      "volume": "Volume (litres)",
+      "amount": "Montant (MAD)",
+      "fullTank": "Plein complet (sert au calcul de la consommation)",
+      "add": "Enregistrer le plein",
+      "per100": "{litres} L / 100 km",
+      "notEnough": "Deux pleins complets nécessaires",
+      "spent": "Carburant : {amount}"
+    }
   }
 }

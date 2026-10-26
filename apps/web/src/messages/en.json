@@ -315,7 +315,9 @@
     "quantity": "Quantity between 1 and 10,000.",
     "gridPrice": "Price between 10 and 100,000 MAD.",
     "time": "Enter a time.",
-    "flight": "Letters and digits only (for example AT 201)."
+    "flight": "Letters and digits only (for example AT 201).",
+    "odometer": "Mileage in digits (for example 120500).",
+    "volume": "Volume in litres (for example 45.3)."
   },
   "company": {
     "pending": {
@@ -1085,6 +1087,18 @@
       "subject": "Booking {ref} cancelled",
       "body": "Booking {ref} on {date} is cancelled at the traveler's request.\n\nAmount the carrier refunds to the traveler: {refund}.",
       "action": "See the booking"
+    },
+    "deadline_reminder": {
+      "subject": "{kind} of vehicle {vehicle} due in {days} days",
+      "body": "The {kind} {label} of vehicle {vehicle} is due on {date}, in {days} days.\n\nRemember to renew it to stay compliant.",
+      "action": "See the fleet"
+    },
+    "kinds": {
+      "insurance": "Insurance",
+      "technical_inspection": "Technical inspection",
+      "vignette": "Road tax",
+      "transport_authorization": "Transport authorization",
+      "other": "Other"
     }
   },
   "commissions": {
@@ -1162,5 +1176,68 @@
     "none": "No trip in progress.",
     "lastSeen": "Last position at {time}",
     "noPosition": "No position received yet."
+  },
+  "deadlineKind": {
+    "insurance": "Insurance",
+    "technical_inspection": "Technical inspection",
+    "vignette": "Road tax",
+    "transport_authorization": "Transport authorization",
+    "other": "Other"
+  },
+  "maintenanceKind": {
+    "service": "Oil change and service",
+    "repair": "Repair",
+    "tires": "Tyres",
+    "inspection": "Check",
+    "other": "Other"
+  },
+  "fleetV3": {
+    "title": "Fleet care",
+    "chooseVehicle": "Choose a vehicle",
+    "odometer": "Mileage",
+    "tabs": {
+      "deadlines": "Deadlines",
+      "maintenance": "Maintenance",
+      "fuel": "Fuel"
+    },
+    "deadlines": {
+      "new": "New deadline",
+      "help": "An e-mail reminder is sent to the owner and the manager 30 days, 7 days and 1 day before.",
+      "kind": "Type",
+      "label": "Detail (optional)",
+      "dueOn": "Due date",
+      "add": "Save the deadline",
+      "done": "Mark as done",
+      "doneHelp": "The deadline is closed and no longer sends reminders. Add the next one if needed.",
+      "state": {
+        "overdue": "Overdue",
+        "due_soon": "Within 30 days",
+        "ok": "Up to date",
+        "done": "Done"
+      }
+    },
+    "maintenance": {
+      "new": "New maintenance",
+      "kind": "Type",
+      "date": "Date",
+      "garage": "Garage (optional)",
+      "labour": "Labour (MAD)",
+      "part": "Part (optional)",
+      "partCost": "Part price (MAD)",
+      "notes": "Notes (optional)",
+      "total": "Total cost",
+      "add": "Save the maintenance"
+    },
+    "fuel": {
+      "new": "New fill",
+      "date": "Date",
+      "volume": "Volume (litres)",
+      "amount": "Amount (MAD)",
+      "fullTank": "Full tank (used for the consumption)",
+      "add": "Save the fill",
+      "per100": "{litres} L / 100 km",
+      "notEnough": "Two full tanks needed",
+      "spent": "Fuel: {amount}"
+    }
   }
 }

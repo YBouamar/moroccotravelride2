@@ -13,6 +13,7 @@ export const EMAIL_TEMPLATES = [
   'booking_confirmed',
   'booking_refused',
   'booking_cancelled',
+  'deadline_reminder',
 ] as const;
 export type EmailTemplate = (typeof EMAIL_TEMPLATES)[number];
 
@@ -41,6 +42,9 @@ export async function renderEmail(
   const values = Object.fromEntries(
     Object.entries(payload).map(([key, value]) => [key, String(value)]),
   );
+  // Enum values written by SQL jobs (e.g. the deadline kind) are translated here.
+  const kindKey = `kinds.${values.kind}` as 'kinds.insurance';
+  if (values.kind && t.has(kindKey)) values.kind = t(kindKey);
   const subject = t(`${template}.subject`, values);
   // Paragraphs are separated by a blank line in the messages; placeholders are filled below.
   const bodyLines = (t.raw(`${template}.body`) as string).split(/\n\n/);

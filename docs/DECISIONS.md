@@ -351,3 +351,12 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Carte en direct (bureau)** : MapLibre GL 6.11.1 (dépendance prévue dans la stack) avec les tuiles OpenStreetMap (attribution affichée ; politique d'usage à respecter : serveur de tuiles ou fournisseur avant le lancement, **À VÉRIFIER**). Rafraîchissement toutes les 15 s par action serveur plutôt que par abonnement Realtime : les cookies de session restent HttpOnly, aucun jeton n'est exposé au navigateur. La publication Realtime est prête pour une évolution. CSP : tuiles autorisées en `img-src` / `connect-src`, `worker-src blob:` pour MapLibre.
 - **Purge (BR-202)** : positions supprimées après `location_retention_days` (90 jours) chaque nuit ; durée légale **À VÉRIFIER** avec la CNDP.
 - **Builds mobiles** : non testés sur appareil dans cette session (EAS en Phase 7) ; vérifiés par TypeScript, ESLint, tests unitaires et `expo export` Android dans `pnpm check`.
+
+## ADR-035 : Parc V3 : entretien, échéances, consommation (étapes 22 à 24)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Entretien** : opération (vidange et révision, réparation, pneumatiques, contrôle, autre) avec main-d'œuvre et pièces ; coût total calculé, jamais stocké en double.
+- **Échéances et rappels (critère Phase 5)** : assurance, visite technique, vignette, autorisation de transport, autre. Un e-mail aux propriétaires et gérants à **J-30, J-7 et J-1**, chacun une seule fois (`last_reminder_days`), par une tâche pg_cron quotidienne qui alimente la file d'e-mails ; une échéance marquée « faite » ne relance plus. Vérifié en pgTAP avec des dates simulées.
+- **Consommation** : volumes en centilitres entiers (pas de flottant), consommation moyenne entre le premier et le dernier plein complet (carburant ajouté après le premier plein complet divisé par la distance), affichée en L / 100 km par véhicule avec la dépense de carburant.
+- **Offre** : écriture avec la V3 (`fleet_maintenance`, `vehicle_deadlines`, `fuel_tracking`). Atlas (démo) passe en V3 pour montrer tous les modules.
+- **Tests E2E** : attente systématique du contenu d'un onglet avant de remplir un formulaire, et attente active sur la base plutôt que sur un message déjà présent (instabilités corrigées).

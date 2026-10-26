@@ -129,12 +129,15 @@ test('the admin approves and rejects company documents', async ({ page }) => {
   await page.getByRole('dialog').getByRole('button', { name: 'Confirmer' }).click();
   await expect(page.getByText('Modifications enregistrées.').last()).toBeVisible();
 
-  expect(
-    sql(
-      `select string_agg(type || ':' || verification_status || ':' || coalesce(rejection_reason, ''), ',' order by type) from public.company_documents where company_id = '${companyId}'`,
-    ),
+  // Poll the database: the first "saved" message may already be on screen before the refusal ends.
+  await expect
+    .poll(() =>
+      sql(
+        `select string_agg(type || ':' || verification_status || ':' || coalesce(rejection_reason, ''), ',' order by type) from public.company_documents where company_id = '${companyId}'`,
+      ),
+    )
     // Newest first in the list: the insurance (approved) comes before the license (rejected).
-  ).toBe('tourism_license:rejected:Attestation illisible,insurance:approved:');
+    .toBe('tourism_license:rejected:Attestation illisible,insurance:approved:');
 });
 
 test('the admin generates a monthly commission statement and records its payment (ADR-016)', async ({

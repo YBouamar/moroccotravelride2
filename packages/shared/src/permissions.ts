@@ -30,6 +30,9 @@ const MATRIX = {
   'expenses.read': ['owner', 'manager', 'dispatcher', 'accountant'],
   'expenses.review': ['owner', 'manager', 'accountant'],
   'tracking.read': ['owner', 'manager', 'dispatcher'],
+  'fleet.read': ['owner', 'manager', 'dispatcher', 'accountant'],
+  'fleet.manage': ['owner', 'manager'],
+  'fuel.manage': ['owner', 'manager', 'dispatcher'],
   'invoices.read': ['owner', 'manager', 'accountant'],
   'invoices.manage': ['owner', 'manager', 'accountant'],
   // Marketplace (Pillar A): price grids, visibility, booking acceptance.

@@ -87,6 +87,8 @@ Implémentation (étape 4) :
 
 ### SaaS V3 (Phase 5)
 
+**Implémentés (étapes 22 à 24)** : `maintenance_records` (type, date, kilométrage, garage, main-d'œuvre) et `maintenance_parts` (nom, quantité, prix unitaire ; coût total calculé), `vehicle_deadlines` (type, précision, échéance, `last_reminder_days` 30 / 7 / 1, `done_at`), `fuel_logs` (kilométrage, volume en **centilitres** entiers, montant, plein complet). Rappels : `private.send_deadline_reminders(p_today)` (pg_cron quotidien, un e-mail par niveau J-30, J-7, J-1 aux propriétaires et gérants via `email_outbox`). Lecture : rôles de bureau ; écriture : propriétaire et gérant (pleins : aussi dispatcheur) avec l'offre V3.
+
 `maintenance_records`, `vehicle_deadlines` (rappels J-30/J-7/J-1 via edge function planifiée), `fuel_logs`.
 
 ### Marketplace (Phase 3)
@@ -122,5 +124,6 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 | `20261028120000_commission_statements.sql` | relevés mensuels de commissions, paiements, retards et suspension | 3 (étape 16) |
 | `20261029090000_expenses.sql` | dépenses, justificatifs privés, validation | 4 (étape 18) |
 | `20261029100000_driver_app_and_tracking.sql` | actions du chauffeur, positions, carte en direct, purge | 4 (étapes 19 à 21) |
+| `20261030090000_fleet_v3.sql` | entretien et pièces, échéances et rappels, consommation | 5 (étapes 22 à 24) |
 
-Tests pgTAP : `supabase/tests/database/*.test.sql` (202 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).
+Tests pgTAP : `supabase/tests/database/*.test.sql` (214 assertions). Données de démonstration : `supabase/seed.sql` (local uniquement). Types : `pnpm db:types` vers `packages/db/src/types.ts` (vérifié en CI).

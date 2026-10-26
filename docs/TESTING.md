@@ -30,7 +30,7 @@ pnpm e2e             # Playwright : build de production + tests ordinateur et mo
 
 ## 3. Données de démonstration (`supabase/seed.sql`, Phase 1 à 3)
 
-3 sociétés fictives (une `verified` Standard, une `verified` V2, une `pending`), véhicules et chauffeurs, grilles sur Casablanca, Marrakech, Fès, Agadir, Tanger, Rabat, réservations dans tous les statuts. Aucune donnée réelle.
+3 sociétés fictives (une `verified` Standard, une `verified` V3 (Atlas : flotte, chauffeurs, clients, trajets, grilles, échéances, pleins), une `pending` en essai V2), véhicules et chauffeurs, grilles sur Casablanca, Marrakech, Fès, Agadir, Tanger, Rabat, réservations dans tous les statuts. Aucune donnée réelle.
 
 ## 4. Comptes de démonstration (local uniquement)
 
