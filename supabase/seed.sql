@@ -106,3 +106,24 @@ lateral (values
   (2, time '15:00', time '16:00', 'Famille Haddad', null, 3, 2, places.rak, 'Gare de Marrakech', places.rak, 'Palmeraie', 25000::bigint, null, null, null)
 ) as v(day_offset, start_time, end_time, passenger, phone, passengers, luggage, pickup, pickup_address, dropoff, dropoff_address, price, vehicle_id, driver_id, client_name)
 left join public.clients c on c.name = v.client_name and c.company_id = '00000000-0000-4000-b000-000000000001';
+
+-- Legal details required to issue invoices (demo values) and a completed trip to invoice.
+update public.companies
+set if_number = '00000001', rc_number = 'Casablanca 000001', address = '10 boulevard Anfa, Casablanca'
+where id = '00000000-0000-4000-b000-000000000001';
+
+with places as (
+  select (select id from public.cities where slug = 'casablanca') as casa,
+         (select id from public.cities where slug = 'marrakech') as rak
+)
+insert into public.trips (id, company_id, client_id, passenger_name, passengers, luggage, pickup_city_id,
+  pickup_address, dropoff_city_id, dropoff_address, starts_at, ends_at, price_cents, vehicle_id, driver_id)
+select '00000000-0000-4000-9000-000000000301', '00000000-0000-4000-b000-000000000001', c.id,
+  'Groupe Découverte (aller)', 6, 6, places.casa, 'Agence Découverte, Maarif', places.rak, 'Riad Atlas Palace',
+  (((now() at time zone 'Africa/Casablanca')::date - 1) + time '08:00') at time zone 'Africa/Casablanca',
+  (((now() at time zone 'Africa/Casablanca')::date - 1) + time '12:00') at time zone 'Africa/Casablanca',
+  80000, '00000000-0000-4000-9000-000000000102', '00000000-0000-4000-9000-000000000201'
+from places
+join public.clients c on c.name = 'Agence Découverte Maroc';
+update public.trips set status = 'in_progress' where id = '00000000-0000-4000-9000-000000000301';
+update public.trips set status = 'completed' where id = '00000000-0000-4000-9000-000000000301';

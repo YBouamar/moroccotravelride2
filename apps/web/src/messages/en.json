@@ -278,7 +278,9 @@
     "passengers": "Between 1 and 80 passengers.",
     "luggage": "Between 0 and 200 pieces of luggage.",
     "endBeforeStart": "The arrival must be after the departure.",
-    "amount": "Invalid amount (for example 800 or 800.50)."
+    "amount": "Invalid amount (for example 800 or 800.50).",
+    "vatRate": "VAT rate between 0 and 100 (for example 20 or 5.5).",
+    "quantity": "Quantity between 1 and 10,000."
   },
   "company": {
     "pending": {
@@ -465,7 +467,11 @@
       "capacity": "There are more passengers than seats in the vehicle.",
       "vehicleUnavailable": "This vehicle is in maintenance or inactive.",
       "invalidTransition": "This status change is not possible.",
-      "locked": "This trip is completed or cancelled: it can no longer be changed."
+      "locked": "This trip is completed or cancelled: it can no longer be changed.",
+      "paymentRefused": "Payment refused: the invoice does not expect a payment or the amount exceeds what is due.",
+      "sellerIncomplete": "Complete your company's ICE, IF, RC and address before issuing an invoice.",
+      "clientIce": "This client is a business: enter its ICE before issuing the invoice.",
+      "emptyInvoice": "Add at least one line before issuing the invoice."
     }
   },
   "companyForm": {
@@ -700,5 +706,121 @@
     },
     "weekOf": "Week of {day}",
     "noTrip": "No trip."
+  },
+  "invoiceStatus": {
+    "draft": "Draft",
+    "issued": "Issued",
+    "partially_paid": "Partially paid",
+    "paid": "Paid",
+    "cancelled": "Cancelled by credit note"
+  },
+  "invoicePaymentMethod": {
+    "bank_transfer": "Bank transfer",
+    "cash": "Cash",
+    "cheque": "Cheque",
+    "other": "Other"
+  },
+  "invoices": {
+    "title": "Invoicing",
+    "newTitle": "New invoice",
+    "client": "Client",
+    "chooseClient": "Choose a client",
+    "createDraft": "Create the draft",
+    "noClient": "First add a client in the Clients page.",
+    "defaultVat": "Default VAT rate (%)",
+    "vatHint": "No rate is imposed: check it with your accountant.",
+    "save": "Save",
+    "draftLabel": "Draft",
+    "draftTitle": "Draft invoice",
+    "numberTitle": "Invoice {number}",
+    "issuedOn": "issued on {date}",
+    "dueOn": "due on {date}",
+    "columns": {
+      "number": "Number",
+      "issueDate": "Issue date",
+      "paid": "Received"
+    },
+    "noLine": "No line yet.",
+    "linesTitle": "Invoice lines",
+    "line": {
+      "description": "Description",
+      "quantity": "Quantity",
+      "unitPrice": "Unit price excl. VAT (MAD)",
+      "vatRate": "VAT (%)",
+      "totalExclTax": "Total excl. VAT",
+      "add": "Add the line",
+      "addTitle": "Add a free line",
+      "remove": "Remove",
+      "removeHelp": "The line is removed from the draft."
+    },
+    "totals": {
+      "subtotal": "Total excl. VAT",
+      "vat": "VAT {rate}",
+      "total": "Total incl. VAT"
+    },
+    "addFromTrips": "Invoice completed trips",
+    "tripsToBill": "Completed trips not invoiced yet",
+    "noTripToBill": "No completed trip to invoice.",
+    "addTrips": "{count, plural, =0 {Add the trips} one {Add # trip} other {Add # trips}}",
+    "tripLabel": "{date} · {from} to {to} · {passenger}",
+    "noPrice": "no price set",
+    "detailsTitle": "Due date and notes",
+    "dueDate": "Due date",
+    "notes": "Note or payment terms",
+    "previewPdf": "PDF preview",
+    "downloadPdf": "Download the PDF",
+    "issue": "Issue the invoice",
+    "issueHelp": "The invoice gets its final number and can no longer be changed. A mistake is then corrected with a credit note.",
+    "deleteDraft": "Delete the draft",
+    "deleteDraftHelp": "The draft and its lines are deleted. No number is used.",
+    "payment": {
+      "title": "Payments received",
+      "none": "No payment recorded.",
+      "due": "Amount due: {amount}",
+      "add": "Record a payment",
+      "amount": "Amount (MAD)",
+      "method": "Payment method",
+      "paidOn": "Payment date",
+      "reference": "Reference (optional)",
+      "record": "Record the payment",
+      "remove": "Delete",
+      "removeHelp": "The payment is removed and the invoice status recomputed. The operation is logged."
+    },
+    "creditNote": {
+      "create": "Issue a credit note",
+      "title": "Cancel the invoice with a credit note?",
+      "help": "A credit note for the full amount is issued with its own number and the invoice becomes cancelled. Any refund happens outside the platform.",
+      "reason": "Reason for the credit note",
+      "confirm": "Issue the credit note",
+      "done": "Cancelled by credit note {number}: {reason}"
+    }
+  },
+  "invoicePdf": {
+    "title": "Invoice {number}",
+    "draftTitle": "Invoice (draft)",
+    "watermark": "DRAFT",
+    "issueDate": "Issue date",
+    "dueDate": "Due date",
+    "creditNote": "Cancelled by credit note",
+    "seller": "Issuer",
+    "buyer": "Client",
+    "ice": "ICE",
+    "if": "IF",
+    "rc": "RC",
+    "tp": "TP",
+    "license": "License",
+    "columns": {
+      "description": "Description",
+      "quantity": "Qty",
+      "unitPrice": "Unit excl. VAT",
+      "vatRate": "VAT",
+      "subtotal": "Total excl. VAT"
+    },
+    "subtotal": "Total excl. VAT",
+    "vat": "VAT {rate}",
+    "total": "Total incl. VAT",
+    "paid": "Already paid",
+    "due": "Amount due",
+    "footer": "Document created with MoroccoTravelRide"
   }
 }

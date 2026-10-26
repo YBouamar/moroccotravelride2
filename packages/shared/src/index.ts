@@ -11,3 +11,4 @@ export * from './onboarding';
 export * from './validity';
 export * from './lists';
 export * from './trips';
+export * from './invoices';

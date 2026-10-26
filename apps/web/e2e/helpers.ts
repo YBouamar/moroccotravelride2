@@ -3,7 +3,7 @@ import { createHmac } from 'node:crypto';
 import { expect, type Page } from '@playwright/test';
 
 export const DEMO_PASSWORD = 'Demo-Mtr-2026';
-const MAILPIT = 'http://127.0.0.1:54324/api/v1';
+const MAILPIT = 'http://127.0.0.1:55324/api/v1';
 
 /** Turnstile test keys pass automatically, but the token arrives asynchronously. */
 export async function waitForCaptcha(page: Page) {

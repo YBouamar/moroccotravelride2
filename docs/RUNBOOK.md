@@ -15,7 +15,7 @@
 
 ### Supabase local
 
-`pnpm db:start` puis : API `http://127.0.0.1:54321`, Studio `http://127.0.0.1:54323`, e-mails de test (Mailpit) `http://127.0.0.1:54324`, Postgres `postgresql://postgres:postgres@127.0.0.1:54322/postgres`. Clés locales affichées par `pnpm exec supabase status` (clés de démonstration publiques, jamais utilisées ailleurs). Arrêt : `pnpm db:stop`.
+`pnpm db:start` puis : API `http://127.0.0.1:55321`, Studio `http://127.0.0.1:55323`, e-mails de test (Mailpit) `http://127.0.0.1:55324`, Postgres `postgresql://postgres:postgres@127.0.0.1:55322/postgres`. Clés locales affichées par `pnpm exec supabase status` (clés de démonstration publiques, jamais utilisées ailleurs). Arrêt : `pnpm db:stop`.
 
 ## 2. Variables d'environnement
 
@@ -23,7 +23,7 @@ Référence : [`.env.example`](../.env.example). Les variables `NEXT_PUBLIC_*` s
 
 ### App chauffeur en local
 
-`pnpm --filter @mtr/driver dev` puis Expo Go (téléphone) ou un émulateur. L'app ne peut pas joindre `127.0.0.1` : dans `apps/driver/.env.local`, mettre `http://10.0.2.2:54321` (émulateur Android) ou l'IP du PC sur le réseau local (téléphone). Compte de test : driver.atlas@moroccotravelride.test.
+`pnpm --filter @mtr/driver dev` puis Expo Go (téléphone) ou un émulateur. L'app ne peut pas joindre `127.0.0.1` : dans `apps/driver/.env.local`, mettre `http://10.0.2.2:55321` (émulateur Android) ou l'IP du PC sur le réseau local (téléphone). Compte de test : driver.atlas@moroccotravelride.test.
 
 Référence initiale : Stockage : variables d'environnement Coolify (web et Supabase sur le VPS), EAS (mobile). Jamais dans le dépôt. Les variables `NEXT_PUBLIC_*` et `EXPO_PUBLIC_*` sont publiques par nature : n'y mettre aucun secret.
 
@@ -52,3 +52,7 @@ Contacts, accès d'urgence au VPS (console Contabo), désactivation de la market
 ## 6. Checklist de lancement ⬜ (Phase 7)
 
 Inclut : domaine et HTTPS, déclaration CNDP, pages légales validées, sauvegarde restaurée avec succès, supervision active.
+
+## Supabase local : « ports are not available » (Windows)
+
+Après un redémarrage, Hyper-V peut réserver une plage de ports qui couvre ceux de Supabase local (55321 à 55324 depuis ADR-028, qui a déplacé les ports hors de la plage 54117 à 54616 réservée en octobre 2026). Vérification : `netsh interface ipv4 show excludedportrange protocol=tcp`. Correctif dans un PowerShell **administrateur** : `net stop winnat` puis `net start winnat`, puis `pnpm db:start`.

@@ -324,6 +324,60 @@ export type Database = {
           },
         ];
       };
+      credit_notes: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          invoice_id: string;
+          issue_date: string;
+          number: string;
+          reason: string;
+          subtotal_cents: number;
+          total_cents: number;
+          vat_cents: number;
+          year: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          invoice_id: string;
+          issue_date: string;
+          number: string;
+          reason: string;
+          subtotal_cents: number;
+          total_cents: number;
+          vat_cents: number;
+          year: number;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          invoice_id?: string;
+          issue_date?: string;
+          number?: string;
+          reason?: string;
+          subtotal_cents?: number;
+          total_cents?: number;
+          vat_cents?: number;
+          year?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'credit_notes_invoice_id_company_id_fkey';
+            columns: ['invoice_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
       drivers: {
         Row: {
           company_id: string;
@@ -378,6 +432,194 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: 'companies';
             referencedColumns: ['id'];
+          },
+        ];
+      };
+      invoice_lines: {
+        Row: {
+          company_id: string;
+          created_at: string;
+          description: string;
+          id: string;
+          invoice_id: string;
+          position: number;
+          quantity: number;
+          subtotal_cents: number;
+          total_cents: number;
+          trip_id: string | null;
+          unit_price_cents: number;
+          vat_cents: number;
+          vat_rate_bps: number;
+        };
+        ComputedFields: never;
+        Insert: {
+          company_id: string;
+          created_at?: string;
+          description: string;
+          id?: string;
+          invoice_id: string;
+          position?: number;
+          quantity: number;
+          subtotal_cents?: number;
+          total_cents?: number;
+          trip_id?: string | null;
+          unit_price_cents: number;
+          vat_cents?: number;
+          vat_rate_bps: number;
+        };
+        Update: {
+          company_id?: string;
+          created_at?: string;
+          description?: string;
+          id?: string;
+          invoice_id?: string;
+          position?: number;
+          quantity?: number;
+          subtotal_cents?: number;
+          total_cents?: number;
+          trip_id?: string | null;
+          unit_price_cents?: number;
+          vat_cents?: number;
+          vat_rate_bps?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invoice_lines_invoice_id_company_id_fkey';
+            columns: ['invoice_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'invoice_lines_trip_id_company_id_fkey';
+            columns: ['trip_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'trips';
+            referencedColumns: ['id', 'company_id'];
+          },
+        ];
+      };
+      invoices: {
+        Row: {
+          buyer: Json | null;
+          client_id: string;
+          company_id: string;
+          created_at: string;
+          created_by: string | null;
+          due_date: string | null;
+          id: string;
+          issue_date: string | null;
+          notes: string | null;
+          number: string | null;
+          paid_cents: number;
+          seller: Json | null;
+          status: Database['public']['Enums']['invoice_status'];
+          subtotal_cents: number;
+          total_cents: number;
+          updated_at: string;
+          vat_cents: number;
+          year: number | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          buyer?: Json | null;
+          client_id: string;
+          company_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          due_date?: string | null;
+          id?: string;
+          issue_date?: string | null;
+          notes?: string | null;
+          number?: string | null;
+          paid_cents?: number;
+          seller?: Json | null;
+          status?: Database['public']['Enums']['invoice_status'];
+          subtotal_cents?: number;
+          total_cents?: number;
+          updated_at?: string;
+          vat_cents?: number;
+          year?: number | null;
+        };
+        Update: {
+          buyer?: Json | null;
+          client_id?: string;
+          company_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          due_date?: string | null;
+          id?: string;
+          issue_date?: string | null;
+          notes?: string | null;
+          number?: string | null;
+          paid_cents?: number;
+          seller?: Json | null;
+          status?: Database['public']['Enums']['invoice_status'];
+          subtotal_cents?: number;
+          total_cents?: number;
+          updated_at?: string;
+          vat_cents?: number;
+          year?: number | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'invoices_client_id_company_id_fkey';
+            columns: ['client_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'clients';
+            referencedColumns: ['id', 'company_id'];
+          },
+          {
+            foreignKeyName: 'invoices_company_id_fkey';
+            columns: ['company_id'];
+            isOneToOne: false;
+            referencedRelation: 'companies';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      payments: {
+        Row: {
+          amount_cents: number;
+          company_id: string;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          invoice_id: string;
+          method: Database['public']['Enums']['invoice_payment_method'];
+          paid_on: string;
+          reference: string | null;
+        };
+        ComputedFields: never;
+        Insert: {
+          amount_cents: number;
+          company_id: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          invoice_id: string;
+          method: Database['public']['Enums']['invoice_payment_method'];
+          paid_on: string;
+          reference?: string | null;
+        };
+        Update: {
+          amount_cents?: number;
+          company_id?: string;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          invoice_id?: string;
+          method?: Database['public']['Enums']['invoice_payment_method'];
+          paid_on?: string;
+          reference?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'payments_invoice_id_company_id_fkey';
+            columns: ['invoice_id', 'company_id'];
+            isOneToOne: false;
+            referencedRelation: 'invoices';
+            referencedColumns: ['id', 'company_id'];
           },
         ];
       };
@@ -771,12 +1013,16 @@ export type Database = {
         Args: { p_city_id?: string; p_legal_name: string; p_trade_name?: string };
         Returns: string;
       };
+      create_credit_note: { Args: { p_invoice_id: string; p_reason: string }; Returns: string };
+      issue_invoice: { Args: { p_due_date?: string; p_invoice_id: string }; Returns: string };
     };
     Enums: {
       client_type: 'b2b' | 'b2c';
       company_status: 'pending' | 'verified' | 'suspended';
       document_type: 'tourism_license' | 'insurance' | 'trade_register' | 'other';
       driver_status: 'active' | 'inactive';
+      invoice_payment_method: 'bank_transfer' | 'cash' | 'cheque' | 'other';
+      invoice_status: 'draft' | 'issued' | 'partially_paid' | 'paid' | 'cancelled';
       member_role: 'owner' | 'manager' | 'dispatcher' | 'accountant' | 'driver';
       subscription_status: 'trial' | 'active' | 'past_due' | 'cancelled';
       trip_origin: 'manual' | 'marketplace';
@@ -898,6 +1144,8 @@ export const Constants = {
       company_status: ['pending', 'verified', 'suspended'],
       document_type: ['tourism_license', 'insurance', 'trade_register', 'other'],
       driver_status: ['active', 'inactive'],
+      invoice_payment_method: ['bank_transfer', 'cash', 'cheque', 'other'],
+      invoice_status: ['draft', 'issued', 'partially_paid', 'paid', 'cancelled'],
       member_role: ['owner', 'manager', 'dispatcher', 'accountant', 'driver'],
       subscription_status: ['trial', 'active', 'past_due', 'cancelled'],
       trip_origin: ['manual', 'marketplace'],

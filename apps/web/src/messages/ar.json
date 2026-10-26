@@ -278,7 +278,9 @@
     "passengers": "ما بين 1 و80 راكبا.",
     "luggage": "ما بين 0 و200 حقيبة.",
     "endBeforeStart": "يجب أن يكون الوصول بعد الانطلاق.",
-    "amount": "مبلغ غير صالح (مثلا 800 أو 800,50)."
+    "amount": "مبلغ غير صالح (مثلا 800 أو 800,50).",
+    "vatRate": "نسبة الضريبة على القيمة المضافة بين 0 و100 (مثلا 20 أو 5,5).",
+    "quantity": "الكمية بين 1 و10000."
   },
   "company": {
     "pending": {
@@ -465,7 +467,11 @@
       "capacity": "عدد الركاب يتجاوز مقاعد المركبة.",
       "vehicleUnavailable": "هذه المركبة في الصيانة أو غير نشطة.",
       "invalidTransition": "تغيير الحالة هذا غير ممكن.",
-      "locked": "هذه الرحلة منتهية أو ملغاة: لا يمكن تعديلها."
+      "locked": "هذه الرحلة منتهية أو ملغاة: لا يمكن تعديلها.",
+      "paymentRefused": "تم رفض الأداء: الفاتورة لا تنتظر أداء أو المبلغ يتجاوز الباقي.",
+      "sellerIncomplete": "أكمل ICE وIF وRC وعنوان شركتك قبل إصدار فاتورة.",
+      "clientIce": "هذا الزبون مقاولة: أدخل ICE الخاص به قبل إصدار الفاتورة.",
+      "emptyInvoice": "أضف سطرا واحدا على الأقل قبل إصدار الفاتورة."
     }
   },
   "companyForm": {
@@ -700,5 +706,121 @@
     },
     "weekOf": "أسبوع {day}",
     "noTrip": "لا توجد رحلات."
+  },
+  "invoiceStatus": {
+    "draft": "مسودة",
+    "issued": "صادرة",
+    "partially_paid": "مؤداة جزئيا",
+    "paid": "مؤداة",
+    "cancelled": "ملغاة بإشعار دائن"
+  },
+  "invoicePaymentMethod": {
+    "bank_transfer": "تحويل بنكي",
+    "cash": "نقدا",
+    "cheque": "شيك",
+    "other": "أخرى"
+  },
+  "invoices": {
+    "title": "الفوترة",
+    "newTitle": "فاتورة جديدة",
+    "client": "الزبون",
+    "chooseClient": "اختر زبونا",
+    "createDraft": "إنشاء المسودة",
+    "noClient": "أضف زبونا أولا في صفحة الزبناء.",
+    "defaultVat": "نسبة الضريبة الافتراضية (%)",
+    "vatHint": "لا تفرض أي نسبة: تحقق منها مع محاسبك.",
+    "save": "حفظ",
+    "draftLabel": "مسودة",
+    "draftTitle": "فاتورة في طور المسودة",
+    "numberTitle": "الفاتورة {number}",
+    "issuedOn": "صدرت في {date}",
+    "dueOn": "تستحق في {date}",
+    "columns": {
+      "number": "الرقم",
+      "issueDate": "تاريخ الإصدار",
+      "paid": "المحصل"
+    },
+    "noLine": "لا توجد أسطر بعد.",
+    "linesTitle": "أسطر الفاتورة",
+    "line": {
+      "description": "البيان",
+      "quantity": "الكمية",
+      "unitPrice": "الثمن الأحادي دون احتساب الرسوم (درهم)",
+      "vatRate": "الضريبة (%)",
+      "totalExclTax": "المجموع دون احتساب الرسوم",
+      "add": "إضافة السطر",
+      "addTitle": "إضافة سطر حر",
+      "remove": "حذف",
+      "removeHelp": "يتم حذف السطر من المسودة."
+    },
+    "totals": {
+      "subtotal": "المجموع دون احتساب الرسوم",
+      "vat": "الضريبة {rate}",
+      "total": "المجموع مع احتساب الرسوم"
+    },
+    "addFromTrips": "فوترة رحلات منتهية",
+    "tripsToBill": "رحلات منتهية لم تتم فوترتها",
+    "noTripToBill": "لا توجد رحلات منتهية للفوترة.",
+    "addTrips": "{count, plural, =0 {إضافة الرحلات} one {إضافة رحلة واحدة} two {إضافة رحلتين} few {إضافة # رحلات} many {إضافة # رحلة} other {إضافة # رحلة}}",
+    "tripLabel": "{date} · من {from} إلى {to} · {passenger}",
+    "noPrice": "السعر غير محدد",
+    "detailsTitle": "تاريخ الاستحقاق والملاحظات",
+    "dueDate": "تاريخ الاستحقاق",
+    "notes": "ملاحظة أو شروط الأداء",
+    "previewPdf": "معاينة PDF",
+    "downloadPdf": "تحميل PDF",
+    "issue": "إصدار الفاتورة",
+    "issueHelp": "تحصل الفاتورة على رقمها النهائي ولا يمكن تعديلها بعد ذلك. يصحح أي خطأ بإشعار دائن.",
+    "deleteDraft": "حذف المسودة",
+    "deleteDraftHelp": "يتم حذف المسودة وأسطرها. لا يستهلك أي رقم.",
+    "payment": {
+      "title": "الأداءات المستلمة",
+      "none": "لا يوجد أي أداء مسجل.",
+      "due": "الباقي للأداء: {amount}",
+      "add": "تسجيل أداء",
+      "amount": "المبلغ (درهم)",
+      "method": "طريقة الأداء",
+      "paidOn": "تاريخ الأداء",
+      "reference": "المرجع (اختياري)",
+      "record": "تسجيل الأداء",
+      "remove": "حذف",
+      "removeHelp": "يتم حذف الأداء وإعادة حساب حالة الفاتورة. تسجل العملية في السجل."
+    },
+    "creditNote": {
+      "create": "إصدار إشعار دائن",
+      "title": "إلغاء الفاتورة بإشعار دائن؟",
+      "help": "يصدر إشعار دائن بالمبلغ الكامل برقمه الخاص وتصبح الفاتورة ملغاة. تتم أي استرجاعات خارج المنصة.",
+      "reason": "سبب الإشعار الدائن",
+      "confirm": "إصدار الإشعار الدائن",
+      "done": "ملغاة بالإشعار الدائن {number}: {reason}"
+    }
+  },
+  "invoicePdf": {
+    "title": "Facture {number}",
+    "draftTitle": "Facture (brouillon)",
+    "watermark": "BROUILLON",
+    "issueDate": "Date d'émission",
+    "dueDate": "Échéance",
+    "creditNote": "Annulée par l'avoir",
+    "seller": "Émetteur",
+    "buyer": "Client",
+    "ice": "ICE",
+    "if": "IF",
+    "rc": "RC",
+    "tp": "TP",
+    "license": "Agrément",
+    "columns": {
+      "description": "Désignation",
+      "quantity": "Qté",
+      "unitPrice": "PU HT",
+      "vatRate": "TVA",
+      "subtotal": "Total HT"
+    },
+    "subtotal": "Total HT",
+    "vat": "TVA {rate}",
+    "total": "Total TTC",
+    "paid": "Déjà payé",
+    "due": "Reste à payer",
+    "footer": "Document établi avec MoroccoTravelRide"
   }
 }

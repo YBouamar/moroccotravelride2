@@ -40,7 +40,7 @@ describe('buildCsp', () => {
   });
 
   it('allows eval only in development (Next.js dev tooling)', () => {
-    expect(buildCsp({ nonce: 'n', supabaseUrl: 'http://127.0.0.1:54321', isDev: true })).toContain(
+    expect(buildCsp({ nonce: 'n', supabaseUrl: 'http://127.0.0.1:55321', isDev: true })).toContain(
       "'unsafe-eval'",
     );
   });

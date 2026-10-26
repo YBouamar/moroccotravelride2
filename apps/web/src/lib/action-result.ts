@@ -11,6 +11,10 @@ export type FormError =
   | 'vehicleUnavailable'
   | 'invalidTransition'
   | 'locked'
+  | 'paymentRefused'
+  | 'sellerIncomplete'
+  | 'clientIce'
+  | 'emptyInvoice'
   | 'fileMissing'
   | 'fileType'
   | 'fileSize'
@@ -29,6 +33,11 @@ const BUSINESS_CODES: Record<string, FormError> = {
   MT004: 'vehicleUnavailable',
   MT005: 'invalidTransition',
   MT006: 'locked',
+  MT007: 'locked',
+  MT008: 'paymentRefused',
+  MT009: 'sellerIncomplete',
+  MT010: 'clientIce',
+  MT011: 'emptyInvoice',
 };
 
 /** Maps a Postgres error to a form error (unique violation, RLS, foreign key, business rule...). */

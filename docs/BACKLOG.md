@@ -38,3 +38,8 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Compression des photos de documents côté client avant envoi (SECURITY 2.4) |
 | P2 | Rappels d'expiration de l'agrément et des documents de la société (avec les échéances, Phase 5) |
 | P3 | Données de test E2E qui s'accumulent en local : `pnpm db:reset` de temps en temps |
+| P2 | Avoirs partiels (aujourd'hui : avoir total uniquement, ADR-027) |
+| P2 | PDF de facture en arabe : police arabe intégrée et mise en page RTL (ADR-027) |
+| P2 | Historique d'un trajet et d'une facture (journal d'audit) visible sur leur fiche |
+| P3 | Renommer `useOnboardingAction` en hook générique de formulaire (utilisé par tout le SaaS) |
+| P3 | Numérotation des factures : format à confirmer par un comptable (BR-107) |

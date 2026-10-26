@@ -45,7 +45,7 @@ Créés par `supabase/seed.sql` (`pnpm db:reset`). Mot de passe commun : **Demo-
 | owner.sahara@moroccotravelride.test | Propriétaire (langue anglaise) | Sahara Tours SARL (vérifiée, Marrakech) |
 | owner.oasis@moroccotravelride.test | Propriétaire | Oasis Mobility SARL (en attente, Agadir) |
 
-Les e-mails envoyés en local (confirmation, mot de passe oublié) arrivent dans Mailpit : http://127.0.0.1:54324.
+Les e-mails envoyés en local (confirmation, mot de passe oublié) arrivent dans Mailpit : http://127.0.0.1:55324.
 
 ## 5. CI
 

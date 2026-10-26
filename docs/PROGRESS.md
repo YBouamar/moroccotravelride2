@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 9 terminée · **Prochaine étape** : Étape 10 (facturation et paiements)
+**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 2, étape 10 terminée · **Prochaine étape** : Étape 11 (tableau de bord du jour, recette Phase 2)
 
 ## 1. Plan d'exécution par étapes
 
@@ -49,10 +49,13 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26 : Q24 intégrée (dates expirées acceptées avec avertissement, `canDriverPerformTrip` pour l'étape 9), dates au fuseau marocain sans décalage en dur (ADR-024), course `typecheck` / `build` corrigée dans Turborepo.
 - 2026-10-26, étape 8 : listes Flotte, Chauffeurs et Clients (recherche, filtres, tri, pagination serveur, création, modification, désactivation, export CSV), table `clients`, navigation activée selon l'offre, données de démonstration. 151 tests unitaires, 98 pgTAP, 45 E2E (ADR-025).
 - 2026-10-26, étape 9 : trajets (création, modification, démarrage, fin, annulation motivée), planning jour et semaine, contrôles en base (permis valide le jour du trajet, véhicule disponible, capacité, chevauchements bloquants avec dérogation propriétaire ou gérant auditée), heures au fuseau marocain, trajets de démonstration. 159 tests unitaires, 115 pgTAP, 47 E2E (ADR-026).
+- 2026-10-26, étape 10 : facturation (brouillons, lignes libres ou issues de trajets terminés, TVA par ligne avec taux par défaut de la société, émission avec numéro sans trou et mentions figées, PDF, avoir total), paiements (statuts partiellement payée / payée), ports locaux 553xx. 166 tests unitaires, 135 pgTAP, 49 E2E (ADR-027, ADR-028).
 
 ## 3. En cours
 
 Exécution enchaînée des étapes 9 à 30 (demande de Yassine : « exécute toutes les étapes restantes en une seule fois »).
+
+Ports de Supabase local déplacés en 553xx (ADR-028) : la plage 543xx était réservée par Windows.
 
 ## 4. Bloqué / points d'attention
 
@@ -84,5 +87,5 @@ Phase 2 (SaaS Standard), découpage proposé (chaque étape validée séparémen
 | 7 ✅ | Onboarding transporteur (assistant : société, agrément, premier véhicule, premier chauffeur) + stockage privé des documents |
 | 8 ✅ | Véhicules, chauffeurs, clients (tables avec recherche, filtres, pagination serveur, export CSV) |
 | 9 ✅ | Trajets et planning (jour / semaine, affectation, conflits bloquants avec dérogation owner / manager) |
-| 10 | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |
+| 10 ✅ | Facturation (numérotation sans trou, PDF, émission immuable, avoirs) et paiements |
 | 11 | Tableau de bord du jour et recette de la Phase 2 (une semaine d'activité de bout en bout) |

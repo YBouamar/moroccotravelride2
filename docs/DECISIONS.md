@@ -277,3 +277,22 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
 - **Planning** : vue semaine (7 colonnes, empilées sur mobile) et vue jour (une ligne par chauffeur, les trajets non affectés en premier), navigation par l'URL. Liste des trajets filtrable par texte, statut et période.
 - **Prix** : saisi en MAD (`800` ou `800,50`), converti en centimes sans passer par un nombre flottant (`parseMoneyInput`).
 - **Tests e2e** : les connexions de toute la suite viennent de 127.0.0.1 ; le helper de test remet à zéro les compteurs `login-*` avant chaque connexion, les limites de production restent inchangées.
+
+## ADR-027 : Facturation, avoirs et paiements (étape 10)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE (points À CONFIRMER / À VÉRIFIER signalés)
+- **Numérotation (BR-107)** : attribuée à l'émission par `public.issue_invoice`, format `AAAA-NNNNNN` par société et par année (format À CONFIRMER). Le compteur est une ligne verrouillée jusqu'à la fin de la transaction : deux émissions simultanées attendent leur tour et une émission annulée rend son numéro, donc ni trou ni doublon. Supprimer un brouillon ne consomme aucun numéro.
+- **Immutabilité (BR-108)** : une facture émise ne peut plus changer (trigger, `MT007`), ses lignes non plus ; seuls le statut de paiement et le montant encaissé évoluent. Jamais de suppression d'une facture émise (RLS : brouillons seulement, trigger en seconde barrière).
+- **Avoir** : avoir **total** uniquement dans le MVP (série `AV-AAAA-NNNNNN`), qui passe la facture à `cancelled`. Avoirs partiels : BACKLOG. Un avoir reste possible sur une facture déjà payée ; le remboursement éventuel se fait hors plateforme (À CONFIRMER).
+- **Mentions (BR-109)** : ICE, IF, RC et adresse du vendeur obligatoires pour émettre (`MT009`), ICE obligatoire pour un client B2B (`MT010`), TP et agrément imprimés s'ils existent. Ces informations sont **figées** dans la facture à l'émission. Liste exhaustive des mentions légales : **À VÉRIFIER** avec un comptable.
+- **TVA (BR-110, BR-111, ADR-007)** : taux choisi ligne par ligne, prérempli par un taux par défaut que la société saisit elle-même (aucune valeur imposée). Calcul et arrondi au centime supérieur à partir de 0,5 **par ligne**, totaux = somme des lignes, récapitulatif par taux. Même calcul en base (trigger) et dans `@mtr/shared` (testé).
+- **Facturer des trajets** : les trajets terminés pas encore portés sur une facture vivante (brouillon ou émise) sont proposés, une ligne par trajet au prix convenu ; ceux d'une facture annulée par avoir redeviennent facturables.
+- **Paiements** : virement, espèces, chèque, autre ; jamais au-delà du reste à payer ni sur une facture non émise (`MT008`), date non future ; le statut passe à partiellement payée puis payée. Un paiement saisi par erreur peut être supprimé (journalisé). Rôles : propriétaire, gérant, comptable.
+- **PDF** : `@react-pdf/renderer` 4.9.0 (dépendance prévue dans la stack, CLAUDE.md) : génération côté serveur sans navigateur headless, adaptée à un VPS modeste et à une maintenance solo. Le document est celui du transporteur (ses mentions, MoroccoTravelRide seulement en pied de page). Polices intégrées Helvetica : PDF en français ou en anglais ; l'interface arabe reçoit un PDF français (PDF arabe avec police intégrée et mise en page RTL : BACKLOG). Les brouillons portent un filigrane.
+
+## ADR-028 : Ports de Supabase en local (553xx)
+
+- **Date** : 2026-10-26 · **Statut** : ACCEPTÉE
+- **Contexte** : sous Windows, Hyper-V réserve dynamiquement des plages de ports ; après un redémarrage, la plage 54117 à 54616 couvrait les ports par défaut de Supabase local (54321 à 54324) et `pnpm db:start` échouait. Le correctif (`net stop winnat`) demande les droits administrateur.
+- **Décision** : ports locaux déplacés de 543xx à **553xx** dans `supabase/config.toml` (API 55321, Postgres 55322, Studio 55323, Mailpit 55324). `.env.example`, les helpers E2E et la documentation suivent. Sur le poste de Yassine, `apps/web/.env.development.local` et `.env.production.local` (non commités) surchargent l'URL ; à terme, mettre `NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:55321` dans `apps/web/.env.local` et adapter `EXPO_PUBLIC_SUPABASE_URL` de l'app chauffeur.
+- **Production** : sans effet (Supabase auto-hébergé sur le VPS avec sa propre configuration).
