@@ -74,7 +74,7 @@ Rien côté code : les phases 0 à 7 sont livrées. En attente des actions exter
 
 ## 4. Bloqué / points d'attention
 
-- Dépôt GitHub créé le 2026-10-28 par Yassine : `YBouamar/moroccotravelride2` (privé), `main` et `feat/home-quotes-booking-form` poussées (commit d'initialisation remplacé, pas de licence : code propriétaire). Branche fusionnée dans `main` (avance rapide, `074c1aa`) ; GitHub Actions actif (check, secrets, database, e2e ; Supabase Storage ajouté aux jobs e2e et database). Premier run complet sur `main` à vérifier ; 9 PR Dependabot ouvertes à trier.
+- Dépôt GitHub créé le 2026-10-28 par Yassine : `YBouamar/moroccotravelride2` (privé), `main` et `feat/home-quotes-booking-form` poussées (commit d'initialisation remplacé, pas de licence : code propriétaire). Branche fusionnée dans `main` (avance rapide, `074c1aa`) ; GitHub Actions actif (check, secrets, database, e2e ; Supabase Storage ajouté aux jobs e2e et database). Premier run complet vert. PR Dependabot triées : actions GitHub v6 et v7 (Node 24), maplibre-gl 6.15.0 et @sentry/nextjs 11.9.0 reprises ; TypeScript 7, ESLint 10 et @types/node 26 refusés et ignorés dans `dependabot.yml` (bloqués par typescript-eslint, eslint-plugin-react et Node 24) ; react-dom de l'app chauffeur remis en 19.3.0 après la fusion de la PR #10 (Expo 58 impose React 19.3.0). PR #6 et #7 à fermer à la main (le jeton GitHub ne peut pas écrire sur les PR).
 - Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
