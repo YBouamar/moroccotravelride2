@@ -70,11 +70,11 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 
 ## 3. En cours
 
-Rien côté code : les phases 0 à 7 sont livrées. En attente des actions externes listées dans RUNBOOK §6 (VPS, domaine, clés, CNDP, validations juridique et comptable, dépôt GitHub).
+Rien côté code : les phases 0 à 7 sont livrées. En attente des actions externes listées dans RUNBOOK §6 (VPS, domaine, clés, CNDP, validations juridique et comptable).
 
 ## 4. Bloqué / points d'attention
 
-- **Dépôt GitHub non créé** : la création de `moroccotravelride2` échoue toujours (403, nouvelles tentatives aux étapes 3 à 6) : le jeton n'a pas le droit de créer des dépôts. À corriger côté Yassine, puis création + push des commits.
+- Dépôt GitHub créé le 2026-10-28 par Yassine : `YBouamar/moroccotravelride2` (privé), `main` et `feat/home-quotes-booking-form` poussées (commit d'initialisation remplacé, pas de licence : code propriétaire). Reste à activer le workflow CI (ADR-015) et à fusionner la branche dans `main`.
 - Juridique À VÉRIFIER : facture mensuelle de commission (TVA), plafonds légaux des paiements en espèces, mentions de facture, CNDP.
 
 ## 5. Questions ouvertes pour Yassine
@@ -90,7 +90,6 @@ Action côté Yassine : saisir les vraies coordonnées de paiement (RIB, e-mail,
 | # | Question | Défaut appliqué si pas de réponse |
 |---|---|---|
 
-Action en attente côté Yassine : donner au jeton GitHub le droit de créer des dépôts, ou créer `moroccotravelride2` vide à la main.
 
 ## 6. Prochaine étape précise
 
