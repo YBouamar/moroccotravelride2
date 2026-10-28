@@ -10,6 +10,10 @@ import type { LiveTrip } from '../queries';
 
 const REFRESH_MS = 15_000;
 
+// Served from public/vendor (scripts/copy-maplibre-worker.mjs): MapLibre cannot find its worker
+// next to the chunks renamed by Turbopack.
+maplibregl.setWorkerUrl(`/vendor/maplibre-gl/${maplibregl.getVersion()}/maplibre-gl-worker.mjs`);
+
 /** Live positions of the trips in progress (step 20), refreshed every 15 seconds. */
 export function LiveMap({ initial }: { initial: LiveTrip[] }) {
   const t = useTranslations('tracking');

@@ -36,4 +36,5 @@
 - `getByRole('alert')` en E2E : Next.js a son propre `role=alert` (annonceur de route), filtrer par texte.
 - Après un `pnpm install` / `pnpm add` qui change les dépendances, **redémarrer `pnpm dev`** (et vider `apps/web/.next` si besoin) puis recharger la page sans cache (Ctrl+Shift+R) : sinon Turbopack sert des modules à l'ancien chemin (« module factory is not available »).
 - Requêtes `/sw.js` en 404 dans les journaux : service worker d'un autre projet enregistré sur localhost:3000 dans le navigateur (l'app n'en a pas) ; le désinscrire dans les outils de développement.
+- MapLibre 6 cherche son worker à côté de son propre fichier, introuvable une fois les chunks renommés par Turbopack (« Worker failed to load ») : `pnpm brand` copie le worker dans `public/vendor/maplibre-gl/<version>/` (ignoré par git) et `live-map.tsx` appelle `setWorkerUrl`. Toute nouvelle carte doit importer ce composant ou reprendre l'appel.
 - `next start` avertit avec `output: 'standalone'` : sans effet en local ; en production, lancer `server.js` du dossier standalone (image Docker, Phase 7).

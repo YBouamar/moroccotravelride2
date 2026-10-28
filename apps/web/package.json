@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "brand": "node scripts/copy-brand.mjs",
-    "predev": "node scripts/copy-brand.mjs",
+    "brand": "node scripts/copy-brand.mjs && node scripts/copy-maplibre-worker.mjs",
+    "predev": "pnpm brand",
     "dev": "next dev",
-    "prebuild": "node scripts/copy-brand.mjs",
+    "prebuild": "pnpm brand",
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings=0",

@@ -66,6 +66,7 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-28 : accueil refondu (ADR-042) : vidéo Pexels de Tanger (touristes à l'étage d'un bus découvert) hébergée par l'app dans le bandeau, avec affiche, pause, pas de vidéo si moins d'animations ou économie de données ; barre de recherche à cheval sur le bandeau ; offres en hiérarchie asymétrique ; transferts populaires en tableau des départs (placé après les offres) ; route tracée au défilement entre les trois étapes (GSAP, RTL) ; réassurance en bande ; étiquettes en majuscules retirées. Validé par Yassine.
 
 - 2026-10-28 : accueil et menu mobile validés par Yassine (commit `df066a5`). Recherche et réservation : photo par type de véhicule (5 photos Unsplash / Pexels hébergées par l'app, ADR-043), cartes d'offre avec photo et étiquette « Meilleur prix », formulaire de recherche sur une ligne, photo et mention « photo non contractuelle » dans le récapitulatif de réservation. Validé par Yassine.
+- 2026-10-28 : correctif « Suivi en direct » signalé par Yassine (« Worker failed to load ») : MapLibre 6 ne trouvait pas son worker derrière les chunks renommés par Turbopack (en dev comme en production). Le worker est copié dans `public/vendor/maplibre-gl/<version>/` par `pnpm brand` (avant `dev` et `build`, ignoré par git) et déclaré avec `setWorkerUrl` ; le test E2E du suivi exige désormais le chargement du worker. Validé par Yassine.
 
 ## 3. En cours
 

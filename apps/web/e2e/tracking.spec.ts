@@ -21,11 +21,15 @@ test('the live map lists the trips in progress with their last position', async 
 
   const errors: string[] = [];
   page.on('console', (message) => {
-    if (message.type() === 'error' && /Content Security Policy/.test(message.text()))
+    if (message.type() === 'error' && /Content Security Policy|Worker failed/.test(message.text()))
       errors.push(message.text());
   });
   await signIn(page, 'owner.atlas@moroccotravelride.test');
   await expect(page).toHaveURL(/\/fr\/app$/);
+  // MapLibre loads its worker from public/vendor: it cannot find it next to the bundled chunks.
+  const worker = page.waitForResponse((response) =>
+    response.url().includes('/maplibre-gl-worker.mjs'),
+  );
   await page
     .getByRole('navigation', { name: 'Navigation principale' })
     .getByRole('link', { name: 'Suivi en direct' })
@@ -34,6 +38,7 @@ test('the live map lists the trips in progress with their last position', async 
   await expect(page.getByText('Youssef Chauffeur · 34567-A-6')).toBeVisible();
   await expect(page.getByText(/Dernière position à/)).toBeVisible();
   await expect(page.getByRole('region', { name: 'Carte des trajets en cours' })).toBeVisible();
+  expect((await worker).ok()).toBe(true);
   expect(errors).toEqual([]);
 
   sql(`delete from public.driver_locations where trip_id = '${tripId}'`);
