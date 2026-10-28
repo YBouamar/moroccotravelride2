@@ -31,12 +31,9 @@ export async function DestinationsSection({
   });
 
   return (
-    <section aria-labelledby="destinations-title" className="bg-surface py-16">
+    <section aria-labelledby="destinations-title" className="bg-surface py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <p className="text-sm font-semibold tracking-wide text-secondary uppercase">
-          {t('eyebrow')}
-        </p>
-        <h2 id="destinations-title" className="mt-2 text-2xl font-bold md:text-3xl">
+        <h2 id="destinations-title" className="text-3xl font-bold tracking-tight md:text-4xl">
           {t('title')}
         </h2>
         <p className="mt-2 max-w-2xl text-muted">{t('subtitle')}</p>
@@ -59,7 +56,7 @@ export async function DestinationsSection({
                         : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
                     }
                     placeholder="blur"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-400 ease-out motion-safe:group-hover:scale-105 motion-safe:group-focus-visible:scale-105"
                   />
                   {/* Navy gradient: white text keeps its contrast whatever the photo. */}
                   <div

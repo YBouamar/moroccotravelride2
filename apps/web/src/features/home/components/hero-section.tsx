@@ -2,8 +2,8 @@ import { BadgeCheck } from 'lucide-react';
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { SearchForm } from '@/features/search/components/search-form';
-import { HeroParallax } from './hero-parallax';
-import { HERO_PHOTO } from '../photos';
+import { HeroBackdrop } from './hero-backdrop';
+import { HERO_POSTER } from '../photos';
 
 interface HeroSectionProps {
   locale: string;
@@ -12,58 +12,61 @@ interface HeroSectionProps {
   marketplaceOpen: boolean;
 }
 
-/** Full-bleed Sahara photo, text on the shaded start side, search as a single white bar. */
+/**
+ * Full-bleed video of travelers riding through Tangier, text on the shaded start side, the
+ * search as a single white bar anchored at the bottom of the frame.
+ */
 export async function HeroSection({ locale, places, minDay, marketplaceOpen }: HeroSectionProps) {
   const t = await getTranslations('home');
 
   return (
-    <section className="relative isolate overflow-hidden bg-navy text-white">
-      <HeroParallax>
-        <Image
-          src={HERO_PHOTO}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          placeholder="blur"
-          className="object-cover"
+    <>
+      <section className="relative isolate flex flex-col justify-end overflow-hidden bg-navy text-white md:min-h-[min(80svh,50rem)]">
+        <HeroBackdrop pauseLabel={t('hero.pauseVideo')} playLabel={t('hero.playVideo')}>
+          <Image
+            src={HERO_POSTER}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            placeholder="blur"
+            className="object-cover object-bottom"
+          />
+        </HeroBackdrop>
+        {/* Shade the text side so the street stays visible; mirrored in RTL. Full shade on mobile. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10 bg-navy/65 md:bg-transparent md:bg-linear-to-r md:from-navy/95 md:from-25% md:via-navy/70 md:via-50% md:to-transparent md:rtl:bg-linear-to-l"
         />
-      </HeroParallax>
-      {/* Shade only the text side so the dunes stay visible; mirrored in RTL. Full shade on mobile. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-navy/60 md:bg-transparent md:bg-linear-to-r md:from-navy/95 md:via-navy/65 md:to-navy/10 md:rtl:bg-linear-to-l"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-linear-to-t from-navy/80 to-transparent"
-      />
 
-      <div className="mx-auto max-w-6xl px-4 pt-10 pb-10 md:pt-32 md:pb-16">
-        <h1 className="max-w-4xl text-4xl leading-[1.05] font-bold tracking-tight text-balance text-white motion-safe:animate-rise md:text-6xl">
-          {t('hero.title')}
-        </h1>
-        <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:80ms]">
-          {t('hero.subtitle')}
-        </p>
+        <div className="mx-auto w-full max-w-6xl px-4 pt-12 pb-24 md:pt-28 md:pb-36">
+          <h1 className="max-w-3xl text-4xl leading-[1.04] font-bold tracking-tight text-balance text-white motion-safe:animate-rise md:text-6xl lg:text-7xl">
+            {t('hero.title')}
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:80ms]">
+            {t('hero.subtitle')}
+          </p>
+        </div>
+      </section>
 
-        <div className="mt-10 rounded-card bg-surface p-4 text-foreground shadow-2xl shadow-navy/50 motion-safe:animate-rise motion-safe:[animation-delay:160ms] md:mt-14 md:p-5">
+      {/* The search bar straddles the bottom edge of the video, leaving the bus deck in view. */}
+      <div className="relative z-10 mx-auto -mt-16 w-full max-w-6xl px-4 md:-mt-20">
+        <div className="rounded-card bg-surface p-4 text-foreground shadow-2xl shadow-navy/30 motion-safe:animate-rise motion-safe:[animation-delay:160ms] md:p-5">
           {marketplaceOpen ? (
             <SearchForm places={places} minDay={minDay} layout="bar" action={`/${locale}/search`} />
           ) : (
             <p className="text-secondary">{t('hero.closed')}</p>
           )}
         </div>
-
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85 motion-safe:animate-rise motion-safe:[animation-delay:240ms]">
+        <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium text-muted">
           {(['licensed', 'fixedPrice', 'cancellation'] as const).map((key) => (
             <li key={key} className="flex items-center gap-2">
-              <BadgeCheck aria-hidden="true" className="size-4 text-teal" />
+              <BadgeCheck aria-hidden="true" className="size-4 text-secondary" />
               {t(`reassurance.${key}.title`)}
             </li>
           ))}
         </ul>
       </div>
-    </section>
+    </>
   );
 }

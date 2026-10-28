@@ -158,5 +158,6 @@ Photos Unsplash (licence Unsplash : usage commercial gratuit, attribution non ob
 | `city-fes.webp` | Médina de Fès | Mohammed | https://unsplash.com/photos/brown-concrete-building-under-blue-sky-during-daytime-7d3rAyEyw2U |
 | `city-tanger.webp` | Tanger de nuit | Raúl Cacho Oses | https://unsplash.com/photos/atwIEcpyeSM |
 | `city-agadir.webp` | Baie et plage | Louis Hansel | https://unsplash.com/photos/birds-eye-view-photography-of-beach-E6QT35zL4UM |
+| `hero-tangier.webp` + `public/videos/hero-tangier-{1280,960}.mp4` | Touristes à l'étage d'un bus découvert, médina de Tanger (vidéo du bandeau et son affiche, ADR-042) | Earth Photart (Pexels, licence Pexels) | https://www.pexels.com/video/scenic-ride-through-tangier-s-iconic-streets-34713200/ |
 
 À VÉRIFIER : la photo « Agadir » vient d'une recherche « Agadir » sans lieu certifié ; la remplacer par une photo de la baie d'Agadir confirmée ou par une photo du transporteur avant le lancement. Une ville ajoutée sans photo reprend la photo du désert.

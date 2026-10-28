@@ -23,6 +23,7 @@
     "login": "Sign in",
     "logout": "Sign out",
     "offers": "Our services",
+    "menu": "Menu",
     "transfers": "Transfers",
     "hourly": "Chauffeur hire",
     "tours": "Organized tours"
@@ -31,6 +32,8 @@
     "hero": {
       "title": "Travel across Morocco with licensed carriers",
       "subtitle": "Fixed-price airport and intercity transfers, chauffeur hire and organized tours: book in a few minutes.",
+      "pauseVideo": "Pause the video",
+      "playVideo": "Play the video",
       "cta": "Search a ride",
       "comingSoon": "Ride search is coming soon.",
       "closed": "Bookings are temporarily closed. Please try again later."
@@ -59,12 +62,10 @@
       "link": "Transfers from {city}"
     },
     "services": {
-      "eyebrow": "Our services",
       "title": "A driver for every step of your stay",
       "badgeOnline": "Book online",
       "badgeQuote": "On quote",
       "fromPrice": "From {price}",
-      "onQuote": "Price on quote",
       "transfer": {
         "title": "Transfers",
         "text": "Airport, hotel, station or another city: a direct ride at a fixed price, known before you book.",
@@ -85,21 +86,18 @@
       }
     },
     "destinations": {
-      "eyebrow": "Destinations",
       "title": "Where would you like to go?",
       "subtitle": "Cities served by our carriers, with the lowest transfer price available.",
       "fromPrice": "Transfers from {price}",
       "noPrice": "See transfers"
     },
     "routes": {
-      "eyebrow": "Price ideas",
       "title": "Popular transfers",
       "perVehicle": "Price per vehicle, one way",
       "from": "from",
       "note": "Lowest prices offered by licensed carriers. The exact price depends on the vehicle and is shown when you search."
     },
     "tours": {
-      "eyebrow": "Organized tours",
       "title": "Tour ideas from the main cities",
       "onQuote": "Price on quote",
       "tourCta": "Request a tour quote",

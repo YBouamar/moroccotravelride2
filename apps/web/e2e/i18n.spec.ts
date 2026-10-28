@@ -1,4 +1,10 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+/** On mobile the public header links sit behind the Menu button. */
+async function openSiteMenu(page: Page) {
+  const menu = page.locator('button[aria-controls="site-menu"]');
+  if (await menu.isVisible()) await menu.click();
+}
 
 test.describe('with an unsupported browser language', () => {
   test.use({ locale: 'de-DE' });
@@ -21,6 +27,7 @@ test('switches language and flips to RTL for Arabic', async ({ page }) => {
   await page.goto('/fr');
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
 
+  await openSiteMenu(page);
   await page.getByRole('link', { name: 'العربية' }).click();
   await expect(page).toHaveURL(/\/ar$/);
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
@@ -28,6 +35,7 @@ test('switches language and flips to RTL for Arabic', async ({ page }) => {
     'سافر عبر المغرب مع ناقلين معتمدين',
   );
 
+  await openSiteMenu(page);
   await page.getByRole('link', { name: 'English' }).click();
   await expect(page).toHaveURL(/\/en$/);
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');

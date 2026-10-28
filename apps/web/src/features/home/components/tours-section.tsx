@@ -14,8 +14,7 @@ export async function ToursSection() {
     <section aria-labelledby="tours-title" className="bg-navy py-16 text-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[2fr_1fr]">
         <div>
-          <p className="text-sm font-semibold tracking-wide text-teal uppercase">{t('eyebrow')}</p>
-          <h2 id="tours-title" className="mt-2 text-2xl font-bold text-white md:text-3xl">
+          <h2 id="tours-title" className="text-3xl font-bold tracking-tight text-white md:text-4xl">
             {t('title')}
           </h2>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
