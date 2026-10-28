@@ -8,6 +8,18 @@ updates:
     groups:
       dev-tooling:
         dependency-type: development
+    ignore:
+      # typescript-eslint 8 requires typescript < 6.1 (ADR-009, BACKLOG).
+      - dependency-name: typescript
+        versions: ['>=6.1.0']
+      # eslint-plugin-react (through eslint-config-next) does not support ESLint 10 yet (ADR-020).
+      - dependency-name: eslint
+        versions: ['>=10.0.0']
+      - dependency-name: '@eslint/js'
+        versions: ['>=10.0.0']
+      # Types of the Node.js major in .nvmrc: bumped together with Node, not on their own.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: github-actions
     directory: /
     schedule:
