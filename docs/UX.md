@@ -159,5 +159,10 @@ Photos Unsplash (licence Unsplash : usage commercial gratuit, attribution non ob
 | `city-tanger.webp` | Tanger de nuit | Raúl Cacho Oses | https://unsplash.com/photos/atwIEcpyeSM |
 | `city-agadir.webp` | Baie et plage | Louis Hansel | https://unsplash.com/photos/birds-eye-view-photography-of-beach-E6QT35zL4UM |
 | `hero-tangier.webp` + `public/videos/hero-tangier-{1280,960}.mp4` | Touristes à l'étage d'un bus découvert, médina de Tanger (vidéo du bandeau et son affiche, ADR-042) | Earth Photart (Pexels, licence Pexels) | https://www.pexels.com/video/scenic-ride-through-tangier-s-iconic-streets-34713200/ |
+| `vehicle-sedan.webp` | Berline Mercedes Classe E noire (type `sedan`, ADR-043) | Karim (Pexels, licence Pexels) | https://www.pexels.com/photo/elegant-black-mercedes-benz-sedan-on-roadside-30809411/ |
+| `vehicle-suv.webp` | Toyota Land Cruiser dans les dunes au coucher du soleil (type `suv_4x4`) | Caspian Dahlström | https://unsplash.com/photos/silver-toyota-land-cruiser-climbing-desert-dune-during-sunset-7ChW7XZNcUM |
+| `vehicle-van.webp` | Van Mercedes noir, porte latérale ouverte (type `van`) | Yusuf Çelik (Pexels, licence Pexels) | https://www.pexels.com/photo/black-mercedes-v-class-parked-by-the-sidewalk-with-the-side-door-open-17455633/ |
+| `vehicle-minibus.webp` | Minibus Mercedes blanc (type `minibus`) | Julian Gojani | https://unsplash.com/photos/white-mercedes-benz-bus-drives-past-trash-cans-on-road-rLavDpEaHKA |
+| `vehicle-coach.webp` | Autocar Hyundai Universe blanc (type `coach`) | Safi Erneste (Pexels, licence Pexels) | https://www.pexels.com/photo/side-and-rear-of-a-bus-18029613/ |
 
 À VÉRIFIER : la photo « Agadir » vient d'une recherche « Agadir » sans lieu certifié ; la remplacer par une photo de la baie d'Agadir confirmée ou par une photo du transporteur avant le lancement. Une ville ajoutée sans photo reprend la photo du désert.

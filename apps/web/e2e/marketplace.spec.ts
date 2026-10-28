@@ -21,7 +21,7 @@ test('a traveler searches a transfer and sees the verified carriers with their p
   await page.getByLabel('Départ', { exact: true }).selectOption({ label: 'Casablanca' });
   await page.getByLabel('Arrivée').selectOption({ label: 'Marrakech' });
   await page.getByLabel('Date').fill(moroccoDay(3));
-  await page.getByLabel('Heure de prise en charge').fill('09:00');
+  await page.getByLabel('Heure', { exact: true }).fill('09:00');
   await page.getByLabel('Passagers').fill('3');
   await page.getByRole('button', { name: 'Rechercher' }).click();
 

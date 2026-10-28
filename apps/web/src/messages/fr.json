@@ -1207,6 +1207,8 @@
     "seatsUpTo": "Jusqu'à {seats} passagers",
     "allInclusive": "Prix tout compris",
     "book": "Réserver",
+    "cheapest": "Meilleur prix",
+    "photoNote": "Photos indicatives du type de véhicule : le transporteur attribue le véhicule exact en confirmant la réservation.",
     "rating": "{average} / 5 ({count, plural, one {# avis} other {# avis}})",
     "throttled": "Trop de recherches depuis votre connexion. Patientez une minute puis réessayez."
   },
@@ -1217,6 +1219,7 @@
     "passengers": "{count, plural, one {# passager} other {# passagers}}",
     "carrier": "Transporteur agréé : {name}",
     "priceNote": "Prix tout compris, payé au transporteur.",
+    "photoNote": "Photo non contractuelle",
     "acceptNote": "Le transporteur confirme sous {hours} h. Vous recevez un e-mail à chaque étape.",
     "unavailable": "Cette offre n'est plus disponible. Relancez une recherche.",
     "tooSoon": "Cette prise en charge est trop proche pour être réservée en ligne.",

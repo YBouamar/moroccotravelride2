@@ -437,3 +437,13 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
   - **Chargement** : la photo affiche (première image de la vidéo, `hero-tangier.webp`, `priority`) reste l'élément LCP ; la vidéo est choisie côté client seulement et apparaît en fondu quand elle joue. Pas de vidéo si `prefers-reduced-motion: reduce` ou mode économie de données ; lecture seulement quand le bandeau est à l'écran ; **bouton pause** toujours présent (WCAG 2.2.2).
   - **Mise en page** : barre de recherche à cheval sur le bas du bandeau (le pont du bus reste visible) ; offres en hiérarchie asymétrique (le transfert, seul réservable en ligne, en grand) ; transferts populaires en tableau des départs ; une seule animation liée au défilement : la route tracée entre les trois étapes (GSAP, part du côté du début en RTL) ; réassurance en bande sans cartes ; plus d'étiquettes en majuscules au-dessus des titres.
 - **Conséquences** : environ 2 Mo transférés en plus sur desktop après le chargement (1,2 Mo sur mobile), à surveiller au prochain audit de performance. Deux enseignes de commerces de Tanger sont lisibles dans la vidéo (autorisé par la licence). Une vidéo d'un transporteur partenaire pourra la remplacer sans changer le code (mêmes chemins).
+
+## ADR-043 : Photos de véhicules par type dans la recherche et la réservation
+
+- **Date** : 2026-10-28 · **Statut** : ACCEPTÉE (Yassine : « photo par type »)
+- **Contexte** : Yassine veut des photos de véhicules dans le parcours de réservation. Une offre de la recherche est un type de véhicule chez une société (grille tarifaire), pas un véhicule précis : le véhicule réel est attribué à l'acceptation.
+- **Décision** :
+  - Une photo libre de droits par type (`sedan`, `suv_4x4`, `van`, `minibus`, `coach`), hébergée par l'application comme les photos de l'accueil (ADR-040), 1200 × 800 en WebP, correspondance dans `features/search/vehicle-photos.ts` ; un type ajouté plus tard sans photo reprend la photo du transfert.
+  - Mention « photo non contractuelle » sur le récapitulatif et note sous les résultats : le transporteur attribue le véhicule exact.
+  - Résultats de recherche : carte avec photo, étiquette « Meilleur prix » sur la première offre quand elle est strictement la moins chère, formulaire de recherche sur une ligne (disposition de l'accueil).
+- **Conséquences** : aucune migration ni dépendance. Reporté (BACKLOG) : photo fournie par le transporteur pour chaque type proposé (stockage, modération).

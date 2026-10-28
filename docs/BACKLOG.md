@@ -15,6 +15,7 @@ Priorités : **P1** (prochaine itération après MVP), **P2** (utile), **P3** (i
 | P2 | Diffusion d'une réservation à plusieurs transporteurs (premier qui accepte) | ADR-002 |
 | P2 | Réservation en ligne des mises à disposition (à l'heure / journée) et des circuits ; aujourd'hui sur devis | ADR-040 |
 | P2 | Transmission des demandes de devis aux transporteurs (aujourd'hui traitées par l'admin) | ADR-040 |
+| P2 | Photo du transporteur pour chaque type de véhicule proposé (remplace la photo par type dans la recherche) | ADR-043 |
 | P2 | Notifications WhatsApp / SMS (rappels voyageur, alertes chauffeur) | Hors cadrage |
 | P2 | Sélecteur de lieu sur carte avec géocodage (Nominatim / Photon) | §4 cartographie |
 | P3 | Transport de personnel (cible hors périmètre initial) | Overview |

@@ -1,10 +1,10 @@
 import { earliestBookableDay, formatMoney, isBookableAt, searchPickupAt } from '@mtr/shared';
-import { BadgeCheck, CarFront, SearchX, Star, Users } from 'lucide-react';
+import { SearchX } from 'lucide-react';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
-import { buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { EmptyState } from '@/components/ui/empty-state';
+import { OfferCard } from '@/features/search/components/offer-card';
 import { SearchForm } from '@/features/search/components/search-form';
 import {
   getPublicPlaces,
@@ -16,7 +16,6 @@ import { getPlatformSettings } from '@/features/settings/queries';
 import { asLocale } from '@/i18n/as-locale';
 import { consumeRateLimit } from '@/lib/security/rate-limit';
 import { getClientIp } from '@/lib/security/request-context';
-import { Link } from '@/i18n/navigation';
 
 export async function generateMetadata() {
   const t = await getTranslations('search');
@@ -70,6 +69,7 @@ export default async function SearchPage({
           places={places}
           minDay={earliestBookableDay(new Date(), lead)}
           defaults={search ?? { from: knownPlace(raw.from), to: knownPlace(raw.to) }}
+          layout="bar"
           action={`/${locale}/search`}
         />
       </Card>
@@ -101,49 +101,21 @@ export default async function SearchPage({
               description={t('noResult.text')}
             />
           ) : (
-            <ul className="flex flex-col gap-3">
-              {offers.map((offer) => (
-                <li key={offer.offerId}>
-                  <Card className="flex flex-wrap items-center gap-4">
-                    <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-background">
-                      <CarFront aria-hidden="true" className="size-6 text-secondary" />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-lg font-semibold">{offer.vehicleType}</p>
-                      <p className="flex flex-wrap items-center gap-3 text-sm text-muted">
-                        <span className="flex items-center gap-1">
-                          <BadgeCheck aria-hidden="true" className="size-4 text-secondary" />
-                          {t('carrier', { name: offer.carrierName })}
-                        </span>
-                        {offer.rating ? (
-                          <span className="flex items-center gap-1">
-                            <Star
-                              aria-hidden="true"
-                              className="size-4 fill-accent text-secondary"
-                            />
-                            {t('rating', {
-                              average: offer.rating.average,
-                              count: offer.rating.reviews,
-                            })}
-                          </span>
-                        ) : null}
-                        <span className="flex items-center gap-1">
-                          <Users aria-hidden="true" className="size-4" />
-                          {t('seatsUpTo', { seats: offer.maxSeats })}
-                        </span>
-                      </p>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <p className="text-2xl font-bold">{formatMoney(offer.priceCents, locale)}</p>
-                      <p className="text-xs text-muted">{t('allInclusive')}</p>
-                      <Link href={bookHref(offer.offerId)} className={buttonVariants()}>
-                        {t('book')}
-                      </Link>
-                    </div>
-                  </Card>
-                </li>
-              ))}
-            </ul>
+            <>
+              <ul className="flex flex-col gap-4">
+                {offers.map((offer, index) => (
+                  <li key={offer.offerId}>
+                    <OfferCard
+                      offer={offer}
+                      price={formatMoney(offer.priceCents, locale)}
+                      href={bookHref(offer.offerId)}
+                      cheapest={index === 0 && offer.priceCents < (offers[1]?.priceCents ?? 0)}
+                    />
+                  </li>
+                ))}
+              </ul>
+              <p className="text-xs text-muted">{t('photoNote')}</p>
+            </>
           )}
         </section>
       ) : null}

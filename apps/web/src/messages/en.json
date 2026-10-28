@@ -1207,6 +1207,8 @@
     "seatsUpTo": "Up to {seats} passengers",
     "allInclusive": "All-inclusive price",
     "book": "Book",
+    "cheapest": "Best price",
+    "photoNote": "Photos show the vehicle type: the carrier assigns the exact vehicle when confirming the booking.",
     "rating": "{average} / 5 ({count, plural, one {# review} other {# reviews}})",
     "throttled": "Too many searches from your connection. Wait a minute and try again."
   },
@@ -1217,6 +1219,7 @@
     "passengers": "{count, plural, one {# passenger} other {# passengers}}",
     "carrier": "Licensed carrier: {name}",
     "priceNote": "All-inclusive price, paid to the carrier.",
+    "photoNote": "Illustrative photo",
     "acceptNote": "The carrier confirms within {hours} hours. You get an e-mail at every step.",
     "unavailable": "This offer is no longer available. Please search again.",
     "tooSoon": "This pickup is too soon to be booked online.",

@@ -62,6 +62,7 @@ export async function searchOffers(search: SearchInput, locale: Locale) {
   return (data ?? []).map((offer) => ({
     offerId: offer.offer_id,
     carrierName: offer.carrier_name,
+    vehicleTypeCode: offer.vehicle_type_code,
     vehicleType: typeName.get(offer.vehicle_type_code) ?? offer.vehicle_type_code,
     priceCents: offer.price_cents,
     maxSeats: offer.max_seats,

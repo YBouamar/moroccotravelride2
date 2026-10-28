@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-27 · **Phase en cours** : Phase 7 terminée côté code (étapes 28 à 30) · **Prochaine étape** : actions externes de la checklist de lancement (RUNBOOK §6), puis déploiement sur le VPS
+**Dernière mise à jour** : 2026-10-28 · **Phase en cours** : Phase 7 terminée côté code (étapes 28 à 30) · **Prochaine étape** : actions externes de la checklist de lancement (RUNBOOK §6), puis déploiement sur le VPS
 
 ## 1. Plan d'exécution par étapes
 
@@ -64,6 +64,8 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-27 : page d'accueil refondue à la demande de Yassine (ADR-040) : photos Unsplash hébergées par l'app, trois offres, destinations avec prix réels « dès », transferts populaires, idées de circuits, étapes ; demande de devis pour la mise à disposition et les voyages organisés (table `quote_requests`, Turnstile, e-mails, page admin) ; menu des offres dans l'en-tête ; recherche préremplie depuis les liens de l'accueil ; correctif de développement `/sw.js` (désinscrit un ancien service worker de localhost). 202 tests unitaires, 250 pgTAP, E2E ajoutés (accueil, devis, admin). À CONFIRMER : conservation des devis 12 mois (BR-017).
 - 2026-10-28 : outillage Claude (plugin frontend-design désactivé pour le projet, theme-factory et webapp-testing inscrits dans `skills-lock.json`, règle « charte prioritaire sur theme-factory » dans CLAUDE.md). Formulaire de réservation retouché : nom en pleine largeur puis e-mail et téléphone côte à côte, « Précisions » en zone de texte (`Textarea`), saisie du n° de vol en majuscules, clavier numérique pour les bagages, récapitulatif extrait (`booking-summary.tsx`) avec flèche de trajet inversée en RTL, icônes et bloc prix séparé (clé `book.route`). Validé par Yassine. `.playwright-mcp/` (captures du MCP Playwright) ajouté au `.gitignore`. En-tête public mobile : les offres, l'espace transporteur et les langues passent dans un panneau ouvert par un bouton « Menu » (`site-header-menu.tsx`, clé `nav.menu`, fermeture par Escape ou au clic sur un lien) ; en-tête fermé d'environ 60 px au lieu de 160, desktop inchangé ; test E2E i18n mobile adapté (ouverture du menu). Validé par Yassine.
 - 2026-10-28 : accueil refondu (ADR-042) : vidéo Pexels de Tanger (touristes à l'étage d'un bus découvert) hébergée par l'app dans le bandeau, avec affiche, pause, pas de vidéo si moins d'animations ou économie de données ; barre de recherche à cheval sur le bandeau ; offres en hiérarchie asymétrique ; transferts populaires en tableau des départs (placé après les offres) ; route tracée au défilement entre les trois étapes (GSAP, RTL) ; réassurance en bande ; étiquettes en majuscules retirées. Validé par Yassine.
+
+- 2026-10-28 : accueil et menu mobile validés par Yassine (commit `df066a5`). Recherche et réservation : photo par type de véhicule (5 photos Unsplash / Pexels hébergées par l'app, ADR-043), cartes d'offre avec photo et étiquette « Meilleur prix », formulaire de recherche sur une ligne, photo et mention « photo non contractuelle » dans le récapitulatif de réservation. Validé par Yassine.
 
 ## 3. En cours
 

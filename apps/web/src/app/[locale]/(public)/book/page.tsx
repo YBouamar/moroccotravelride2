@@ -84,6 +84,7 @@ export default async function BookPage({
             dateStyle: 'full',
             timeStyle: 'short',
           })}
+          vehicleTypeCode={offer.vehicleTypeCode}
           vehicleType={offer.vehicleType}
           passengers={search.passengers}
           carrierName={offer.carrierName}
