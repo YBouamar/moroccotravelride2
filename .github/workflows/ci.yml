@@ -51,7 +51,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @mtr/web exec playwright install --with-deps chromium
       # Full local stack: auth flows need Auth + Mailpit; seed.sql provides the demo accounts.
-      - run: pnpm exec supabase start -x studio,imgproxy,realtime,storage-api,edge-runtime,logflare,vector,supavisor
+      # Storage is needed: onboarding, expenses and admin tests upload documents.
+      - run: pnpm exec supabase start -x studio,imgproxy,realtime,edge-runtime,logflare,vector,supavisor
       - name: Write apps/web/.env.local from the local stack
         run: |
           eval "$(pnpm exec supabase status -o env | grep -E '^(API_URL|PUBLISHABLE_KEY|SECRET_KEY)=')"
@@ -81,8 +82,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # Postgres + Auth are enough for migrations and RLS tests.
-      - run: pnpm exec supabase start -x studio,imgproxy,mailpit,realtime,storage-api,edge-runtime,logflare,vector,supavisor,postgres-meta
+      # Postgres, Auth and Storage (migrations create buckets and storage.objects policies).
+      - run: pnpm exec supabase start -x studio,imgproxy,mailpit,realtime,edge-runtime,logflare,vector,supavisor,postgres-meta
       - run: pnpm db:test
       - name: Generated types are up to date
         run: pnpm db:types && git diff --exit-code packages/db/src/types.ts
