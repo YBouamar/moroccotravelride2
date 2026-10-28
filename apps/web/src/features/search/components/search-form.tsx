@@ -12,6 +12,8 @@ interface SearchFormProps {
   defaults?: { from?: string; to?: string; date?: string; time?: string; passengers?: number };
   /** `dark` on the navy hero (white labels). */
   tone?: 'light' | 'dark';
+  /** `bar`: every field on one row from `lg` (home hero), with a short time label. */
+  layout?: 'grid' | 'bar';
   /** Locale-prefixed path of the results page. */
   action: string;
 }
@@ -22,10 +24,12 @@ export async function SearchForm({
   minDay,
   defaults,
   tone = 'light',
+  layout = 'grid',
   action,
 }: SearchFormProps) {
   const t = await getTranslations('search');
   const label = cn(tone === 'dark' && 'text-white');
+  const bar = layout === 'bar';
   const cities = places.filter((place) => !place.isAirport);
   const airports = places.filter((place) => place.isAirport);
   const options = (
@@ -52,9 +56,12 @@ export async function SearchForm({
     <form
       method="get"
       action={action}
-      className="grid gap-3 sm:grid-cols-2 lg:grid-cols-6 lg:items-end"
+      className={cn(
+        'grid gap-3 sm:grid-cols-2 lg:items-end',
+        bar ? 'lg:grid-cols-[2fr_2fr_1.3fr_1fr_0.8fr_auto]' : 'lg:grid-cols-6',
+      )}
     >
-      <div className="flex flex-col gap-1.5 lg:col-span-2">
+      <div className={cn('flex flex-col gap-1.5', !bar && 'lg:col-span-2')}>
         <Label htmlFor="search-from" className={label}>
           {t('from')}
         </Label>
@@ -62,7 +69,7 @@ export async function SearchForm({
           {options}
         </Select>
       </div>
-      <div className="flex flex-col gap-1.5 lg:col-span-2">
+      <div className={cn('flex flex-col gap-1.5', !bar && 'lg:col-span-2')}>
         <Label htmlFor="search-to" className={label}>
           {t('to')}
         </Label>
@@ -85,7 +92,7 @@ export async function SearchForm({
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="search-time" className={label}>
-          {t('time')}
+          {t(bar ? 'timeShort' : 'time')}
         </Label>
         <Input
           id="search-time"
@@ -109,7 +116,14 @@ export async function SearchForm({
           defaultValue={defaults?.passengers ?? 2}
         />
       </div>
-      <Button type="submit" size="lg" className="sm:col-span-2 lg:col-span-5 lg:justify-self-start">
+      <Button
+        type="submit"
+        size="lg"
+        className={cn(
+          'sm:col-span-2',
+          bar ? 'lg:col-span-1 lg:px-8' : 'lg:col-span-5 lg:justify-self-start',
+        )}
+      >
         <Search aria-hidden="true" />
         {t('submit')}
       </Button>

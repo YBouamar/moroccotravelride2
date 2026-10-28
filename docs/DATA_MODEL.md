@@ -101,6 +101,10 @@ Accès invité : jamais d'accès direct anonyme à `bookings` ; la consultation 
 
 **Implémentés (étapes 25 à 27)** : `reviews` (une note de 1 à 5 et un commentaire par réservation terminée, prénom seulement, `status` `pending|published|hidden`, modération par l'admin), `public.submit_review` (rôle service, après vérification du lien magique), `public.carrier_ratings` (note publique, avis publiés seulement), `public.admin_kpis(p_month)` (admin avec MFA : MRR, GMV, commissions, entonnoir des réservations, sociétés, relevés ouverts).
 
+### Accueil et devis (ADR-040)
+
+**Implémentés** : `quote_requests` (`kind` `hourly|tour`, nom, e-mail, téléphone, `from_city_id`, `start_date`, `days` de 1 à 30, `passengers`, `message`, `locale`, `status` `new|handled|closed` ; écriture par le rôle service seul, lecture et statut par les admins avec MFA, audité, purge à 12 mois), `public.route_price_overview()` (anonyme autorisé : plus bas prix par trajet des transporteurs éligibles), `public.platform_admin_emails()` (rôle service seul).
+
 ### Transverse
 
 `notifications`, `audit_logs` (**implémentée**, étape 6 : ajout seul par triggers `private.audit_changes`, colonnes modifiées uniquement, lecture admin et propriétaire), `platform_settings` (implémentée : clé / valeur JSON validée par Zod dans `@mtr/shared` : `default_commission_bps`, `min_booking_lead_hours`, `carrier_accept_hours`, `cancellation_policy`, `statement_suspension_days`, `location_retention_days`, `saas_trial`, `marketplace_open`, `subscription_grace_days`, `subscription_payment_info` ; lecture publique, modification admin, clés créées par migration uniquement).

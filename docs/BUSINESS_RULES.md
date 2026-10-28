@@ -27,6 +27,8 @@ Toutes les valeurs « paramétrables » vivent dans `platform_settings` (global)
 | BR-014 | Réservation invité | Autorisée sans compte ; accès ultérieur par référence + e-mail (lien magique) | ACTÉ | Prompt §8.2 |
 | BR-015 | Conversion | Une réservation acceptée crée automatiquement un trajet SaaS (`origin = marketplace`) chez le transporteur | ACTÉ | Prompt §13 Phase 3 |
 | BR-016 | Visibilité marketplace | Seules les sociétés `verified` avec `marketplace_enabled = true`, un agrément non expiré et une grille active apparaissent  et non suspendues. Le transporteur active ou désactive lui-même sa visibilité ; une suspension par l'admin la bloque et seul l'admin la lève | ACTÉ | Q19, ADR-020 |
+| BR-017 | Mise à disposition et voyages organisés | Non réservables en ligne : demande de devis traitée par l'admin ; demandes conservées 12 mois après leur dernière modification | À CONFIRMER | ADR-040 |
+| BR-018 | Prix « à partir de » de l'accueil | Plus bas prix actif des transporteurs éligibles (BR-016), jamais un prix saisi à la main | ACTÉ | ADR-040 |
 
 ### Machine à états : réservation
 

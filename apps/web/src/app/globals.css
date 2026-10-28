@@ -26,6 +26,23 @@
   --font-heading: var(--font-display);
 }
 
+/* Page-load entrance: pure CSS so the content is never hidden while JavaScript loads.
+   Vertical only, so nothing to mirror in RTL. Use with `motion-safe:`. */
+@theme {
+  --animate-rise: rise 400ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
 :root {
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-montserrat), var(--font-inter), system-ui, sans-serif;

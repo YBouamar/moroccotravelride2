@@ -87,3 +87,14 @@ Commandes de session : `/debut-session`, `/fin-session`, `/decision`, `/audit-se
 ## Identité visuelle (résumé, détail dans UX.md)
 
 Bleu nuit `#102A43` · Turquoise profond `#087E8B` · Turquoise clair `#21B6A8` · Fond `#F4F8FA` · Blanc `#FFFFFF`. Logos dans `assets/brand/logos/` : `MTR_horizontal_couleur` (fond clair), `_negatif` (fond bleu nuit), `_blanc` (photo, dégradé), `MTR_vertical_*` (auth, splash, PDF), `MTR_symbole_*`, `MTR_icone_app_*`, `favicon/`. Polices : Montserrat (titres), Inter (texte), Noto Sans Arabic. Signature « Move smarter. Manage better. » dans les traductions.
+
+## Design et UI
+
+- **Gestionnaire de paquets : pnpm** (monorepo, `pnpm --filter <pkg> add ...`). Ne jamais utiliser npm (ni `npm install`, ni `npx shadcn add` qui écrit un `package-lock.json` : utiliser `pnpm dlx`).
+- **Charte en tokens** : bleu nuit `#102A43`, turquoise profond `#087E8B`, turquoise clair `#21B6A8`, fond `#F4F8FA`, blanc `#FFFFFF`. Définis une seule fois comme variables CSS et tokens Tailwind (`packages/ui`, thème de `apps/web`). Jamais de couleur en dur (hex, `rgb()`, classe Tailwind de palette par défaut comme `bg-blue-900`) dans un composant.
+- **Slogan** : MOVE SMARTER. MANAGE BETTER. Texte via l'i18n (règle 5) ; les majuscules s'obtiennent en CSS (`uppercase`), pas dans la chaîne traduite.
+- **Composants** : shadcn/ui en base (thème branché sur les tokens), Magic UI pour les effets ponctuels. Pas d'autre bibliothèque de composants (daisyUI exclu).
+- **Thèmes** : la charte MoroccoTravelRide prévaut toujours. Ne jamais appliquer un thème de theme-factory sur l'application.
+- **Animations** : entrées au-dessus de la ligne de flottaison en CSS (pas de dépendance au JS) ; Motion pour les interactions et transitions ; GSAP + ScrollTrigger pour le scroll ; Lenis pour le smooth scroll (ADR-041). Durées de 150 à 400 ms. Respecter `prefers-reduced-motion` : animations réduites ou coupées, Lenis désactivé. Chaque bibliothèque ajoutée doit être justifiée dans DECISIONS.md (règle 14).
+- **Trilingue FR/EN/AR** : l'arabe en RTL (`dir="rtl"`). Les animations directionnelles (glissements, translations, flèches, carrousels) s'inversent en RTL : direction calculée depuis `dir`, jamais un `x` positif ou négatif figé.
+- **Vérification visuelle obligatoire** : après chaque modification d'interface, ouvrir la page avec Playwright (MCP), faire une capture desktop (1440 × 900) et mobile (390 × 844), vérifier aussi `/ar` si la mise en page ou une animation directionnelle a changé, et corriger avant de continuer.

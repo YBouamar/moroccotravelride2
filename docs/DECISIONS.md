@@ -401,3 +401,28 @@ Statuts : **ACCEPTÉE**, **À CONFIRMER** (hypothèse par défaut appliquée en 
   - les mises à jour de Supabase et de Coolify suivent la même règle : essai en local, sauvegarde, instantané du VPS, puis mise à jour ;
   - l'image du site peut être construite hors du serveur pour ne pas surcharger le VPS unique.
 - Remplace la mention « staging puis production » de RUNBOOK §3 jusqu'à la création du second serveur.
+
+## ADR-040 : Page d'accueil enrichie, demandes de devis pour la mise à disposition et les voyages organisés
+
+- **Date** : 2026-10-27 · **Statut** : ACCEPTÉE (Yassine : vitrine + devis, prix réels, photos Unsplash / Pexels)
+- **Contexte** : l'accueil était jugé trop simple ; Yassine veut des photos, des destinations, des idées de prix pour trois offres : transferts, mises à disposition, voyages organisés. Seuls les transferts sont réservables (BACKLOG : mises à disposition et circuits hors cadrage).
+- **Décision** :
+  - **Transferts** : prix « à partir de » **réels**, calculés par `public.route_price_overview()` (plus bas prix actif des transporteurs éligibles, aller et retour regroupés). Aucun prix codé en dur (règle 13).
+  - **Mise à disposition et voyages organisés** : vitrine + **demande de devis** (`/[locale]/quote?type=hourly|tour`), sans réservation en ligne. Les idées de circuits sont du contenu éditorial sans prix (« Prix sur devis »).
+  - Table `quote_requests` : écriture par le serveur seul (Server Action, Turnstile, 5 demandes par heure et par IP), lecture et changement de statut (`new`, `handled`, `closed`) par les admins avec MFA (colonne `status` seule, audité). E-mails : accusé de réception au voyageur, alerte aux admins (`public.platform_admin_emails`, rôle service seul).
+  - **Photos** : Unsplash (licence libre, usage commercial, attribution non obligatoire), téléchargées en WebP et servies par l'application (`apps/web/src/assets/photos`, `next/image`), aucune requête vers un tiers (CSP inchangée). Crédits dans UX.md §8.
+- **À CONFIRMER** : conservation des demandes de devis **12 mois** après leur dernière modification (purge pg_cron) ; traitement manuel des devis par l'admin (pas de transmission automatique aux transporteurs).
+- **Suite possible** (BACKLOG) : réservation en ligne des mises à disposition et des circuits (tarifs horaires ou journaliers par transporteur), transmission des devis aux transporteurs.
+
+## ADR-041 : Bibliothèques d'animation (Motion, GSAP + ScrollTrigger, Lenis)
+
+- **Date** : 2026-10-28 · **Statut** : ACCEPTÉE (Yassine)
+- **Contexte** : CLAUDE.md, section « Design et UI », fixe les outils d'animation de l'interface publique. Les trois paquets ont été ajoutés à `apps/web` ; la règle 14 impose de les justifier.
+- **Décision** :
+  - **Motion** (`motion` 14.6.0) : transitions et micro-interactions déclenchées par l'utilisateur (ouvrir, confirmer, apparition de résultats).
+  - **GSAP + ScrollTrigger** (`gsap` 3.15.0, licence gratuite y compris pour un usage commercial) : animations liées au scroll. Premier usage : parallax de la photo du hero d'accueil (`features/home/components/hero-parallax.tsx`).
+  - **Lenis** (`lenis` 1.3.27) : défilement doux, pas encore utilisé.
+  - Versions figées (sans `^`), comme le reste du dépôt.
+  - **Entrée au chargement en CSS pur** (`animate-rise` dans `globals.css`) plutôt qu'avec Motion : Motion rend le contenu en `opacity: 0` jusqu'à l'hydratation, ce qui retarde le LCP et masque le hero sans JavaScript (la recherche fonctionne sans JS).
+  - Durées de 150 à 400 ms ; `prefers-reduced-motion` respecté partout (`motion-safe:` en CSS, `gsap.matchMedia` pour GSAP, Lenis désactivé) ; animations horizontales dérivées de `dir` en RTL.
+- **Conséquences** : GSAP + ScrollTrigger ajoutent du JavaScript client sur l'accueil uniquement (poids exact à mesurer au prochain audit de performance). Motion et Lenis ne pèsent rien tant qu'ils ne sont pas importés.

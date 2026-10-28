@@ -17,5 +17,8 @@
       "Bash(supabase db push:*)",
       "Bash(git push --force:*)"
     ]
+  },
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": false
   }
 }

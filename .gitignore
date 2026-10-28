@@ -28,6 +28,7 @@ supabase/.temp/
 coverage/
 playwright-report/
 test-results/
+.playwright-mcp/
 
 # os / editor
 .DS_Store

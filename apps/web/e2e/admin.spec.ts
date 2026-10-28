@@ -231,3 +231,19 @@ test('the admin reads the KPIs, exports a month, moderates a review and filters 
   await page.goto('/fr/admin/audit?action=review');
   await expect(page.getByText('Avis modéré').first()).toBeVisible();
 });
+
+test('an admin handles a quote request (ADR-040)', async ({ page }) => {
+  const email = `quote-admin-${Date.now()}@example.com`;
+  sql(`insert into public.quote_requests (kind, name, email, phone, from_city_id, start_date, days, passengers)
+    select 'hourly', 'Omar Quote', '${email}', '+212600000001', id, current_date + 7, 1, 3
+    from public.cities where slug = 'fes'`);
+
+  await signInAsAdmin(page);
+  await page.goto('/fr/admin/quotes');
+  const card = page.locator('li').filter({ hasText: email });
+  await expect(card.getByText('Nouvelle', { exact: true })).toBeVisible();
+  await card.getByRole('button', { name: 'Marquer traitée' }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Confirmer' }).click();
+  await expect(card.getByText('Traitée', { exact: true })).toBeVisible();
+  expect(sql(`select status from public.quote_requests where email = '${email}'`)).toBe('handled');
+});

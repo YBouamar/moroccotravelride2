@@ -49,7 +49,8 @@ export function Turnstile({ siteKey, nonce, locale, onToken }: TurnstileProps) {
         nonce={nonce}
         onReady={() => setReady(true)}
       />
-      <div ref={container} className="min-h-16" />
+      {/* Widget height (65 px) reserved so remounting it never shifts the button. */}
+      <div ref={container} className="min-h-[65px]" />
     </>
   );
 }

@@ -1,4 +1,13 @@
-import { Building2, ClipboardList, Gauge, Percent, Settings, ScrollText, Star } from 'lucide-react';
+import {
+  Building2,
+  ClipboardList,
+  Gauge,
+  MessageSquareQuote,
+  Percent,
+  Settings,
+  ScrollText,
+  Star,
+} from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { notFound, redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
@@ -46,6 +55,12 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       label: t('admin.nav.commissions'),
       icon: icon(Percent),
       href: '/admin/commissions',
+    },
+    {
+      key: 'quotes',
+      label: t('admin.nav.quotes'),
+      icon: icon(MessageSquareQuote),
+      href: '/admin/quotes',
     },
     { key: 'reviews', label: t('admin.nav.reviews'), icon: icon(Star), href: '/admin/reviews' },
     { key: 'audit', label: t('admin.nav.audit'), icon: icon(ScrollText), href: '/admin/audit' },

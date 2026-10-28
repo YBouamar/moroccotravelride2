@@ -21,12 +21,16 @@
     "main": "Navigation principale",
     "forCarriers": "Espace transporteur",
     "login": "Se connecter",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "offers": "Nos offres",
+    "transfers": "Transferts",
+    "hourly": "Mise à disposition",
+    "tours": "Voyages organisés"
   },
   "home": {
     "hero": {
-      "title": "Vos transferts au Maroc, réservés en toute confiance",
-      "subtitle": "Aéroports, hôtels, villes : des transporteurs touristiques agréés, des prix fixes connus à l'avance.",
+      "title": "Voyagez au Maroc avec des transporteurs agréés",
+      "subtitle": "Transferts aéroport et inter-villes à prix fixe, chauffeurs à disposition et voyages organisés : réservez en quelques minutes.",
       "cta": "Rechercher un trajet",
       "comingSoon": "La recherche de trajets arrive bientôt.",
       "closed": "Les réservations sont momentanément fermées. Réessayez un peu plus tard."
@@ -53,6 +57,111 @@
     "cities": {
       "title": "Transferts par ville",
       "link": "Transferts depuis {city}"
+    },
+    "services": {
+      "eyebrow": "Nos offres",
+      "title": "Un chauffeur pour chaque étape de votre séjour",
+      "badgeOnline": "Réservable en ligne",
+      "badgeQuote": "Sur devis",
+      "fromPrice": "À partir de {price}",
+      "onQuote": "Prix sur devis",
+      "transfer": {
+        "title": "Transferts",
+        "text": "Aéroport, hôtel, gare ou autre ville : un trajet direct à prix fixe, connu avant de réserver.",
+        "alt": "Minibus de transport touristique sur une route de montagne",
+        "cta": "Rechercher un transfert"
+      },
+      "hourly": {
+        "title": "Mise à disposition",
+        "text": "Un véhicule avec chauffeur pour une demi-journée, une journée ou plusieurs jours, selon votre programme.",
+        "alt": "Chauffeur au volant d’une berline",
+        "cta": "Demander un devis"
+      },
+      "tour": {
+        "title": "Voyages organisés",
+        "text": "Circuits dans le désert, villes impériales, excursions à la journée : nous construisons votre itinéraire.",
+        "alt": "Caravane de dromadaires dans les dunes du Sahara",
+        "cta": "Composer mon voyage"
+      }
+    },
+    "destinations": {
+      "eyebrow": "Destinations",
+      "title": "Où voulez-vous aller ?",
+      "subtitle": "Les villes desservies par nos transporteurs, avec le prix de transfert le plus bas constaté.",
+      "fromPrice": "Transferts dès {price}",
+      "noPrice": "Voir les transferts"
+    },
+    "routes": {
+      "eyebrow": "Idées de prix",
+      "title": "Transferts populaires",
+      "perVehicle": "Prix par véhicule, aller simple",
+      "from": "dès",
+      "note": "Prix les plus bas proposés par les transporteurs agréés. Le prix exact dépend du véhicule et s’affiche lors de la recherche."
+    },
+    "tours": {
+      "eyebrow": "Voyages organisés",
+      "title": "Idées de circuits au départ des grandes villes",
+      "onQuote": "Prix sur devis",
+      "tourCta": "Demander un devis de circuit",
+      "hourlyTitle": "Mise à disposition avec chauffeur",
+      "hourlyText": "Le véhicule et son chauffeur restent avec vous, au rythme de votre programme.",
+      "hourlyCta": "Demander un devis",
+      "ideas": {
+        "desert": {
+          "title": "Désert de Merzouga",
+          "duration": "3 jours, 2 nuits",
+          "stops": "Marrakech, Aït Ben Haddou, gorges du Dadès, Merzouga"
+        },
+        "imperial": {
+          "title": "Villes impériales",
+          "duration": "5 jours",
+          "stops": "Casablanca, Rabat, Meknès, Fès, Marrakech"
+        },
+        "ourika": {
+          "title": "Vallée de l’Ourika",
+          "duration": "1 journée",
+          "stops": "Marrakech, villages berbères, cascades de Setti Fatma"
+        },
+        "essaouira": {
+          "title": "Essaouira, la cité des alizés",
+          "duration": "1 journée",
+          "stops": "Marrakech, coopératives d’argan, médina d’Essaouira"
+        }
+      },
+      "hourly": {
+        "halfDay": {
+          "title": "Demi-journée",
+          "text": "Visites en ville, rendez-vous d’affaires, shopping."
+        },
+        "fullDay": {
+          "title": "Journée complète",
+          "text": "Excursion à votre rythme, arrêts à la demande."
+        },
+        "events": {
+          "title": "Événements et groupes",
+          "text": "Mariages, séminaires, navettes pour vos invités."
+        }
+      }
+    },
+    "steps": {
+      "title": "Comment ça marche",
+      "search": {
+        "title": "Recherchez",
+        "text": "Indiquez votre trajet, la date et le nombre de passagers."
+      },
+      "book": {
+        "title": "Réservez",
+        "text": "Comparez les offres des transporteurs agréés et réservez sans créer de compte."
+      },
+      "ride": {
+        "title": "Voyagez",
+        "text": "Le transporteur confirme, votre chauffeur vous attend au rendez-vous."
+      }
+    },
+    "carriers": {
+      "title": "Vous êtes une société de transport touristique ?",
+      "text": "Recevez des réservations et gérez vos trajets, chauffeurs, véhicules et factures sur une seule plateforme.",
+      "cta": "Créer mon espace transporteur"
     }
   },
   "footer": {
@@ -116,7 +225,8 @@
       "commissions": "Commissions",
       "settings": "Paramètres",
       "reviews": "Avis",
-      "audit": "Journal d'audit"
+      "audit": "Journal d'audit",
+      "quotes": "Demandes de devis"
     },
     "overview": {
       "title": "Vue d'ensemble",
@@ -366,7 +476,8 @@
     "time": "Indiquez une heure.",
     "flight": "Lettres et chiffres uniquement (par exemple AT 201).",
     "odometer": "Kilométrage en chiffres (par exemple 120500).",
-    "volume": "Volume en litres (par exemple 45,3)."
+    "volume": "Volume en litres (par exemple 45,3).",
+    "days": "Entre 1 et 30 jours."
   },
   "company": {
     "pending": {
@@ -596,6 +707,9 @@
     },
     "review": {
       "update": "Avis modéré"
+    },
+    "quote_request": {
+      "update": "Demande de devis traitée"
     }
   },
   "roles": {
@@ -1077,6 +1191,7 @@
     "to": "Arrivée",
     "date": "Date",
     "time": "Heure de prise en charge",
+    "timeShort": "Heure",
     "passengers": "Passagers",
     "submit": "Rechercher",
     "placePlaceholder": "Ville ou aéroport",
@@ -1100,6 +1215,7 @@
   "book": {
     "title": "Votre réservation",
     "summary": "Récapitulatif",
+    "route": "De {from} à {to}",
     "passengers": "{count, plural, one {# passager} other {# passagers}}",
     "carrier": "Transporteur agréé : {name}",
     "priceNote": "Prix tout compris, payé au transporteur.",
@@ -1108,6 +1224,8 @@
     "tooSoon": "Cette prise en charge est trop proche pour être réservée en ligne.",
     "backToSearch": "Nouvelle recherche",
     "submit": "Confirmer la réservation",
+    "submitting": "Envoi en cours…",
+    "fieldsToFix": "{count, plural, one {# champ à corriger} other {# champs à corriger}} avant de confirmer.",
     "fields": {
       "name": "Nom complet",
       "email": "Adresse e-mail",
@@ -1121,6 +1239,10 @@
       "notes": "Précisions (facultatif)",
       "payment": "Mode de paiement",
       "terms": "J'accepte les <link>conditions générales</link> et la politique d'annulation."
+    },
+    "sections": {
+      "contact": "Vos coordonnées",
+      "trip": "Prise en charge"
     },
     "payment": {
       "bank_transfer": {
@@ -1270,7 +1392,19 @@
       "technical_inspection": "Visite technique",
       "vignette": "Vignette",
       "transport_authorization": "Autorisation de transport",
-      "other": "Autre"
+      "other": "Autre",
+      "hourly": "Mise à disposition",
+      "tour": "Voyage organisé"
+    },
+    "quote_request_received": {
+      "subject": "Votre demande de devis est bien reçue",
+      "body": "Bonjour {name},\n\nNous avons bien reçu votre demande de devis ({kind}) au départ de {city}, à partir du {date}, pour {days} jour(s) et {passengers} passager(s).\n\nNous revenons vers vous rapidement avec une proposition d’un transporteur agréé.",
+      "action": "Visiter le site"
+    },
+    "quote_request_new": {
+      "subject": "Nouvelle demande de devis : {kind}",
+      "body": "Nouvelle demande de {name} : {kind} au départ de {city}, à partir du {date}, {days} jour(s), {passengers} passager(s).",
+      "action": "Voir les demandes"
     }
   },
   "commissions": {
@@ -1440,5 +1574,67 @@
     "carriers": "{count, plural, one {# transporteur} other {# transporteurs}}",
     "noRoute": "Aucun trajet n'est encore proposé au départ de cette ville. Lancez une recherche pour d'autres dates ou d'autres villes.",
     "allCities": "Toutes les villes"
+  },
+  "quote": {
+    "metaTitle": "Demande de devis : mise à disposition et voyages organisés",
+    "metaDescription": "Demandez un devis gratuit pour un chauffeur à disposition ou un voyage organisé au Maroc, auprès de transporteurs touristiques agréés.",
+    "intro": "Décrivez votre projet : nous revenons vers vous par e-mail avec une proposition de transporteur agréé. Gratuit et sans engagement.",
+    "sent": "Merci, votre demande est envoyée. Vous recevrez un e-mail de confirmation, puis notre proposition.",
+    "backHome": "Retour à l’accueil",
+    "submit": "Envoyer ma demande",
+    "errors": {
+      "invalid": "Vérifiez les champs du formulaire.",
+      "date": "La date de début doit être postérieure à aujourd’hui.",
+      "captcha": "La vérification anti-robot a échoué. Réessayez.",
+      "rateLimited": "Trop de demandes. Réessayez dans une heure.",
+      "unknown": "Une erreur est survenue. Réessayez plus tard."
+    },
+    "fields": {
+      "kind": "Votre besoin",
+      "city": "Ville de départ",
+      "startDate": "Date de début",
+      "days": "Nombre de jours",
+      "message": "Votre projet",
+      "messageHint": "Étapes souhaitées, horaires, type de véhicule, langue du chauffeur...",
+      "terms": "J’accepte que mes coordonnées soient utilisées pour traiter ma demande (<link>politique de confidentialité</link>)."
+    },
+    "kinds": {
+      "hourly": {
+        "title": "Mise à disposition",
+        "text": "Véhicule avec chauffeur à la demi-journée, à la journée ou plus.",
+        "heading": "Un chauffeur à votre disposition"
+      },
+      "tour": {
+        "title": "Voyage organisé",
+        "text": "Circuit ou excursion sur un ou plusieurs jours.",
+        "heading": "Votre voyage organisé au Maroc"
+      }
+    },
+    "how": {
+      "title": "Comment ça se passe",
+      "step1": "Vous décrivez votre projet.",
+      "step2": "Nous sélectionnons un transporteur agréé adapté.",
+      "step3": "Vous recevez une proposition chiffrée par e-mail."
+    },
+    "admin": {
+      "title": "Demandes de devis",
+      "none": "Aucune demande pour le moment.",
+      "summary": "Départ de {city}, le {date}, {days, plural, one {# jour} other {# jours}}, {passengers, plural, one {# passager} other {# passagers}}",
+      "status": {
+        "new": "Nouvelle",
+        "handled": "Traitée",
+        "closed": "Close"
+      },
+      "to": {
+        "new": "Rouvrir",
+        "handled": "Marquer traitée",
+        "closed": "Clore"
+      },
+      "toHelp": {
+        "new": "La demande repasse en « Nouvelle ».",
+        "handled": "Une proposition a été envoyée au voyageur.",
+        "closed": "La demande est terminée (acceptée, refusée ou sans suite)."
+      }
+    }
   }
 }

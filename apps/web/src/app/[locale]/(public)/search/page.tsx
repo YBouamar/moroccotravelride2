@@ -49,6 +49,9 @@ export default async function SearchPage({
       ? await searchOffers(search, locale)
       : [];
   const placeName = (id: string) => places.find((place) => place.id === id)?.name ?? '';
+  // Links of the home page prefill the route only: keep a known place even without a full search.
+  const knownPlace = (value: SearchParams[string]) =>
+    typeof value === 'string' && places.some((place) => place.id === value) ? value : undefined;
 
   const bookHref = (offerId: string) =>
     `/book?${new URLSearchParams({
@@ -66,7 +69,7 @@ export default async function SearchPage({
         <SearchForm
           places={places}
           minDay={earliestBookableDay(new Date(), lead)}
-          defaults={search ?? undefined}
+          defaults={search ?? { from: knownPlace(raw.from), to: knownPlace(raw.to) }}
           action={`/${locale}/search`}
         />
       </Card>

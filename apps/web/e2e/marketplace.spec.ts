@@ -18,7 +18,7 @@ test('a traveler searches a transfer and sees the verified carriers with their p
   page,
 }) => {
   await page.goto('/fr');
-  await page.getByLabel('Départ').selectOption({ label: 'Casablanca' });
+  await page.getByLabel('Départ', { exact: true }).selectOption({ label: 'Casablanca' });
   await page.getByLabel('Arrivée').selectOption({ label: 'Marrakech' });
   await page.getByLabel('Date').fill(moroccoDay(3));
   await page.getByLabel('Heure de prise en charge').fill('09:00');
@@ -60,7 +60,7 @@ test('the owner manages the price grid and the marketplace visibility', async ({
     .click();
   await expect(page.getByText('Votre société apparaît sur la marketplace')).toBeVisible();
 
-  await page.getByLabel('Départ').selectOption({ label: 'Rabat' });
+  await page.getByLabel('Départ', { exact: true }).selectOption({ label: 'Rabat' });
   await page.getByLabel('Arrivée').selectOption({ label: 'Casablanca' });
   await page.getByLabel('Type de véhicule').selectOption({ label: 'Berline' });
   await page.getByLabel('Prix tout compris (MAD)').fill('550');

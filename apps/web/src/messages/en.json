@@ -21,12 +21,16 @@
     "main": "Main navigation",
     "forCarriers": "Carrier area",
     "login": "Sign in",
-    "logout": "Sign out"
+    "logout": "Sign out",
+    "offers": "Our services",
+    "transfers": "Transfers",
+    "hourly": "Chauffeur hire",
+    "tours": "Organized tours"
   },
   "home": {
     "hero": {
-      "title": "Your transfers in Morocco, booked with confidence",
-      "subtitle": "Airports, hotels, cities: licensed tourist transport companies and fixed prices known in advance.",
+      "title": "Travel across Morocco with licensed carriers",
+      "subtitle": "Fixed-price airport and intercity transfers, chauffeur hire and organized tours: book in a few minutes.",
       "cta": "Search a ride",
       "comingSoon": "Ride search is coming soon.",
       "closed": "Bookings are temporarily closed. Please try again later."
@@ -53,6 +57,111 @@
     "cities": {
       "title": "Transfers by city",
       "link": "Transfers from {city}"
+    },
+    "services": {
+      "eyebrow": "Our services",
+      "title": "A driver for every step of your stay",
+      "badgeOnline": "Book online",
+      "badgeQuote": "On quote",
+      "fromPrice": "From {price}",
+      "onQuote": "Price on quote",
+      "transfer": {
+        "title": "Transfers",
+        "text": "Airport, hotel, station or another city: a direct ride at a fixed price, known before you book.",
+        "alt": "Tourist minibus on a mountain road",
+        "cta": "Find a transfer"
+      },
+      "hourly": {
+        "title": "Chauffeur hire",
+        "text": "A vehicle with driver for half a day, a full day or several days, following your plans.",
+        "alt": "Driver at the wheel of a sedan",
+        "cta": "Request a quote"
+      },
+      "tour": {
+        "title": "Organized tours",
+        "text": "Desert tours, imperial cities, day trips: we build your itinerary.",
+        "alt": "Camel caravan in the Sahara dunes",
+        "cta": "Plan my trip"
+      }
+    },
+    "destinations": {
+      "eyebrow": "Destinations",
+      "title": "Where would you like to go?",
+      "subtitle": "Cities served by our carriers, with the lowest transfer price available.",
+      "fromPrice": "Transfers from {price}",
+      "noPrice": "See transfers"
+    },
+    "routes": {
+      "eyebrow": "Price ideas",
+      "title": "Popular transfers",
+      "perVehicle": "Price per vehicle, one way",
+      "from": "from",
+      "note": "Lowest prices offered by licensed carriers. The exact price depends on the vehicle and is shown when you search."
+    },
+    "tours": {
+      "eyebrow": "Organized tours",
+      "title": "Tour ideas from the main cities",
+      "onQuote": "Price on quote",
+      "tourCta": "Request a tour quote",
+      "hourlyTitle": "Chauffeur hire",
+      "hourlyText": "The vehicle and its driver stay with you, at the pace of your plans.",
+      "hourlyCta": "Request a quote",
+      "ideas": {
+        "desert": {
+          "title": "Merzouga desert",
+          "duration": "3 days, 2 nights",
+          "stops": "Marrakech, Ait Ben Haddou, Dades gorges, Merzouga"
+        },
+        "imperial": {
+          "title": "Imperial cities",
+          "duration": "5 days",
+          "stops": "Casablanca, Rabat, Meknes, Fes, Marrakech"
+        },
+        "ourika": {
+          "title": "Ourika valley",
+          "duration": "1 day",
+          "stops": "Marrakech, Berber villages, Setti Fatma waterfalls"
+        },
+        "essaouira": {
+          "title": "Essaouira, the windy city",
+          "duration": "1 day",
+          "stops": "Marrakech, argan cooperatives, Essaouira medina"
+        }
+      },
+      "hourly": {
+        "halfDay": {
+          "title": "Half day",
+          "text": "City visits, business meetings, shopping."
+        },
+        "fullDay": {
+          "title": "Full day",
+          "text": "A trip at your own pace, stops on request."
+        },
+        "events": {
+          "title": "Events and groups",
+          "text": "Weddings, seminars, shuttles for your guests."
+        }
+      }
+    },
+    "steps": {
+      "title": "How it works",
+      "search": {
+        "title": "Search",
+        "text": "Enter your route, the date and the number of passengers."
+      },
+      "book": {
+        "title": "Book",
+        "text": "Compare offers from licensed carriers and book without creating an account."
+      },
+      "ride": {
+        "title": "Ride",
+        "text": "The carrier confirms and your driver waits for you at the meeting point."
+      }
+    },
+    "carriers": {
+      "title": "Do you run a tourist transport company?",
+      "text": "Receive bookings and manage your trips, drivers, vehicles and invoices on a single platform.",
+      "cta": "Create my carrier account"
     }
   },
   "footer": {
@@ -116,7 +225,8 @@
       "commissions": "Commissions",
       "settings": "Settings",
       "reviews": "Reviews",
-      "audit": "Audit trail"
+      "audit": "Audit trail",
+      "quotes": "Quote requests"
     },
     "overview": {
       "title": "Overview",
@@ -366,7 +476,8 @@
     "time": "Enter a time.",
     "flight": "Letters and digits only (for example AT 201).",
     "odometer": "Mileage in digits (for example 120500).",
-    "volume": "Volume in litres (for example 45.3)."
+    "volume": "Volume in litres (for example 45.3).",
+    "days": "Between 1 and 30 days."
   },
   "company": {
     "pending": {
@@ -596,6 +707,9 @@
     },
     "review": {
       "update": "Review moderated"
+    },
+    "quote_request": {
+      "update": "Quote request handled"
     }
   },
   "roles": {
@@ -1077,6 +1191,7 @@
     "to": "To",
     "date": "Date",
     "time": "Pickup time",
+    "timeShort": "Time",
     "passengers": "Passengers",
     "submit": "Search",
     "placePlaceholder": "City or airport",
@@ -1100,6 +1215,7 @@
   "book": {
     "title": "Your booking",
     "summary": "Summary",
+    "route": "From {from} to {to}",
     "passengers": "{count, plural, one {# passenger} other {# passengers}}",
     "carrier": "Licensed carrier: {name}",
     "priceNote": "All-inclusive price, paid to the carrier.",
@@ -1108,6 +1224,8 @@
     "tooSoon": "This pickup is too soon to be booked online.",
     "backToSearch": "New search",
     "submit": "Confirm the booking",
+    "submitting": "Sending…",
+    "fieldsToFix": "{count, plural, one {# field} other {# fields}} to fix before confirming.",
     "fields": {
       "name": "Full name",
       "email": "E-mail address",
@@ -1121,6 +1239,10 @@
       "notes": "Details (optional)",
       "payment": "Payment method",
       "terms": "I accept the <link>terms and conditions</link> and the cancellation policy."
+    },
+    "sections": {
+      "contact": "Your details",
+      "trip": "Pickup details"
     },
     "payment": {
       "bank_transfer": {
@@ -1270,7 +1392,19 @@
       "technical_inspection": "Technical inspection",
       "vignette": "Road tax",
       "transport_authorization": "Transport authorization",
-      "other": "Other"
+      "other": "Other",
+      "hourly": "Chauffeur hire",
+      "tour": "Organized tour"
+    },
+    "quote_request_received": {
+      "subject": "We have received your quote request",
+      "body": "Hello {name},\n\nWe have received your quote request ({kind}) from {city}, starting on {date}, for {days} day(s) and {passengers} passenger(s).\n\nWe will get back to you shortly with an offer from a licensed carrier.",
+      "action": "Visit the website"
+    },
+    "quote_request_new": {
+      "subject": "New quote request: {kind}",
+      "body": "New request from {name}: {kind} from {city}, starting on {date}, {days} day(s), {passengers} passenger(s).",
+      "action": "See the requests"
     }
   },
   "commissions": {
@@ -1440,5 +1574,67 @@
     "carriers": "{count, plural, one {# carrier} other {# carriers}}",
     "noRoute": "No route is offered from this city yet. Search other dates or cities.",
     "allCities": "All cities"
+  },
+  "quote": {
+    "metaTitle": "Quote request: chauffeur hire and organized tours",
+    "metaDescription": "Request a free quote for chauffeur hire or an organized tour in Morocco, with licensed tourist carriers.",
+    "intro": "Describe your plans: we get back to you by e-mail with an offer from a licensed carrier. Free and with no commitment.",
+    "sent": "Thank you, your request has been sent. You will receive a confirmation e-mail, then our offer.",
+    "backHome": "Back to home",
+    "submit": "Send my request",
+    "errors": {
+      "invalid": "Please check the form fields.",
+      "date": "The start date must be after today.",
+      "captcha": "The anti-bot check failed. Please try again.",
+      "rateLimited": "Too many requests. Try again in an hour.",
+      "unknown": "Something went wrong. Please try again later."
+    },
+    "fields": {
+      "kind": "What you need",
+      "city": "Departure city",
+      "startDate": "Start date",
+      "days": "Number of days",
+      "message": "Your plans",
+      "messageHint": "Stops, times, vehicle type, driver language...",
+      "terms": "I agree that my details are used to handle my request (<link>privacy policy</link>)."
+    },
+    "kinds": {
+      "hourly": {
+        "title": "Chauffeur hire",
+        "text": "Vehicle with driver for half a day, a day or more.",
+        "heading": "A driver at your disposal"
+      },
+      "tour": {
+        "title": "Organized tour",
+        "text": "Tour or excursion over one or several days.",
+        "heading": "Your organized tour in Morocco"
+      }
+    },
+    "how": {
+      "title": "What happens next",
+      "step1": "You describe your plans.",
+      "step2": "We select a suitable licensed carrier.",
+      "step3": "You receive a priced offer by e-mail."
+    },
+    "admin": {
+      "title": "Quote requests",
+      "none": "No request yet.",
+      "summary": "From {city}, on {date}, {days, plural, one {# day} other {# days}}, {passengers, plural, one {# passenger} other {# passengers}}",
+      "status": {
+        "new": "New",
+        "handled": "Handled",
+        "closed": "Closed"
+      },
+      "to": {
+        "new": "Reopen",
+        "handled": "Mark as handled",
+        "closed": "Close"
+      },
+      "toHelp": {
+        "new": "The request goes back to \"New\".",
+        "handled": "An offer has been sent to the traveler.",
+        "closed": "The request is over (accepted, declined or no follow-up)."
+      }
+    }
   }
 }

@@ -1487,6 +1487,66 @@ export type Database = {
         };
         Relationships: [];
       };
+      quote_requests: {
+        Row: {
+          created_at: string;
+          days: number;
+          email: string;
+          from_city_id: string;
+          id: string;
+          kind: string;
+          locale: string;
+          message: string;
+          name: string;
+          passengers: number;
+          phone: string;
+          start_date: string;
+          status: string;
+          updated_at: string;
+        };
+        ComputedFields: never;
+        Insert: {
+          created_at?: string;
+          days: number;
+          email: string;
+          from_city_id: string;
+          id?: string;
+          kind: string;
+          locale?: string;
+          message?: string;
+          name: string;
+          passengers: number;
+          phone: string;
+          start_date: string;
+          status?: string;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          days?: number;
+          email?: string;
+          from_city_id?: string;
+          id?: string;
+          kind?: string;
+          locale?: string;
+          message?: string;
+          name?: string;
+          passengers?: number;
+          phone?: string;
+          start_date?: string;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'quote_requests_from_city_id_fkey';
+            columns: ['from_city_id'];
+            isOneToOne: false;
+            referencedRelation: 'cities';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       reviews: {
         Row: {
           booking_id: string;
@@ -1954,6 +2014,7 @@ export type Database = {
           trip_id: string;
         }[];
       };
+      platform_admin_emails: { Args: Record<PropertyKey, never>; Returns: string[] };
       receipt_upload_allowed: { Args: { p_company: string }; Returns: boolean };
       record_driver_locations: { Args: { p_points: Json; p_trip: string }; Returns: number };
       record_statement_payment: {
@@ -1974,6 +2035,15 @@ export type Database = {
           p_reason?: string;
         };
         Returns: string;
+      };
+      route_price_overview: {
+        Args: Record<PropertyKey, never>;
+        Returns: {
+          carriers: number;
+          from_city_id: string;
+          min_price_cents: number;
+          to_city_id: string;
+        }[];
       };
       route_prices: {
         Args: { p_from: string };

@@ -25,7 +25,7 @@ test('switches language and flips to RTL for Arabic', async ({ page }) => {
   await expect(page).toHaveURL(/\/ar$/);
   await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'تنقلاتك في المغرب، محجوزة بكل ثقة',
+    'سافر عبر المغرب مع ناقلين معتمدين',
   );
 
   await page.getByRole('link', { name: 'English' }).click();

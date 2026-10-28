@@ -1,6 +1,6 @@
 # Avancement
 
-**Dernière mise à jour** : 2026-10-26 · **Phase en cours** : Phase 7 terminée côté code (étapes 28 à 30) · **Prochaine étape** : actions externes de la checklist de lancement (RUNBOOK §6), puis déploiement sur le VPS
+**Dernière mise à jour** : 2026-10-27 · **Phase en cours** : Phase 7 terminée côté code (étapes 28 à 30) · **Prochaine étape** : actions externes de la checklist de lancement (RUNBOOK §6), puis déploiement sur le VPS
 
 ## 1. Plan d'exécution par étapes
 
@@ -60,6 +60,9 @@ Le découpage des phases 2 à 7 en étapes sera affiné au début de chaque phas
 - 2026-10-26, étapes 25 à 27 (Phase 6) : indicateurs admin du mois, exports comptables CSV, journal d'audit consultable, avis voyageurs modérés et note publique dans la recherche. 194 tests unitaires, 223 pgTAP, 63 E2E (ADR-036).
 - 2026-10-26 : décision de Yassine : un seul VPS au lancement, staging plus tard, Supabase conservé en auto-hébergement (ADR-039).
 - 2026-10-26, Phase 7 : audit de sécurité (0 critique, 0 haut, 5 moyens, 8 bas) et corrections des constats 1 à 6, 8 et 13 (ADR-037) ; SEO (métadonnées, plan du site, robots, pages villes), pages légales à valider, test de charge local, Dockerfile et docker compose de production testés, scripts de sauvegarde et restauration, configuration EAS, checklist de lancement (ADR-038). 196 tests unitaires, 240 pgTAP, 72 E2E (4 workers en local pour la stabilité).
+
+- 2026-10-27 : page d'accueil refondue à la demande de Yassine (ADR-040) : photos Unsplash hébergées par l'app, trois offres, destinations avec prix réels « dès », transferts populaires, idées de circuits, étapes ; demande de devis pour la mise à disposition et les voyages organisés (table `quote_requests`, Turnstile, e-mails, page admin) ; menu des offres dans l'en-tête ; recherche préremplie depuis les liens de l'accueil ; correctif de développement `/sw.js` (désinscrit un ancien service worker de localhost). 202 tests unitaires, 250 pgTAP, E2E ajoutés (accueil, devis, admin). À CONFIRMER : conservation des devis 12 mois (BR-017).
+- 2026-10-28 : outillage Claude (plugin frontend-design désactivé pour le projet, theme-factory et webapp-testing inscrits dans `skills-lock.json`, règle « charte prioritaire sur theme-factory » dans CLAUDE.md). Formulaire de réservation retouché : nom en pleine largeur puis e-mail et téléphone côte à côte, « Précisions » en zone de texte (`Textarea`), saisie du n° de vol en majuscules, clavier numérique pour les bagages, récapitulatif extrait (`booking-summary.tsx`) avec flèche de trajet inversée en RTL, icônes et bloc prix séparé (clé `book.route`). Validé par Yassine. `.playwright-mcp/` (captures du MCP Playwright) ajouté au `.gitignore`. Reste à traiter séparément : menu des offres coupé dans l'en-tête mobile.
 
 ## 3. En cours
 

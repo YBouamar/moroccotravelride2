@@ -16,3 +16,4 @@ export * from './marketplace';
 export * from './bookings';
 export * from './expenses';
 export * from './fleet';
+export * from './quotes';

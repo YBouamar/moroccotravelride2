@@ -131,6 +131,9 @@ Rayons : 12 px pour les cartes et boutons (cohérent avec les angles arrondis de
 | Admin : documents d'une société (consulter, approuver, refuser avec motif) | `/[locale]/admin/companies/[id]` | Fait | 7 |
 | Admin : paramètres (coordonnées de paiement des abonnements, délai de grâce) | `/[locale]/admin/settings` | Fait | 6 |
 | Admin : vue d'ensemble chiffrée, liste des sociétés (filtre statut), fiche société (vérification, marketplace, commission, abonnement, historique) | `/[locale]/admin`, `/admin/companies`, `/admin/companies/[id]` | Fait | 6 |
+| Accueil refondu : photo plein écran avec recherche, trois offres (transferts réservables, mise à disposition et voyages organisés sur devis), destinations en photos avec prix « dès », transferts populaires, idées de circuits, étapes, réassurance, appel aux transporteurs ; menu des offres dans l'en-tête | `/[locale]` | Fait | ADR-040 |
+| Demande de devis (mise à disposition ou voyage organisé, Turnstile) | `/[locale]/quote?type=hourly\|tour` | Fait | ADR-040 |
+| Admin : demandes de devis (nouvelle, traitée, close) | `/[locale]/admin/quotes` | Fait | ADR-040 |
 
 Composants disponibles (`apps/web/src/components`) : `Button` (primary, secondary, outline, ghost ; 44 px minimum), `Card`, `Badge` (verified, neutral), `Input`, `Label`, `Skeleton`, `EmptyState`, `Logo` (horizontal / vertical / symbole × couleur / négatif / blanc), `LocaleSwitcher`, `SiteHeader`, `SiteFooter`, `AppShell`. En-tête mobile : logo et « Espace transporteur » sur la première ligne, langues sur la seconde (aucun débordement à 390 px, vérifié par Playwright).
 
@@ -138,3 +141,22 @@ Formulaires (étape 5) : validation à la saisie avec les schémas Zod partagés
 
 Étape 6 : confirmations explicites par `<dialog>` natif rappelant la conséquence (vérifier, suspendre, lever une suspension) ; navigation latérale avec lien actif calculé côté client ; historique avec libellés traduits (statuts, offres, rôles, dates).
 Bandeaux d'abonnement (ADR-022) : essai en cours (jours restants), paiement en retard (jours avant résiliation), lecture seule (essai ou abonnement terminé), chacun avec un lien vers les offres. Coordonnées de paiement sur la page Abonnement (RIB groupé par 4 chiffres, e-mail et téléphone cliquables).
+
+## 8. Photos (ADR-040)
+
+Photos Unsplash (licence Unsplash : usage commercial gratuit, attribution non obligatoire, revente des photos seules interdite), converties en WebP et servies par l'application (`apps/web/src/assets/photos`). Sur une photo, le texte est toujours posé sur un dégradé ou un voile bleu nuit pour garder le contraste. Crédits :
+
+| Fichier | Sujet | Photographe | Source |
+|---|---|---|---|
+| `hero-sahara.webp` | Dunes de l'erg | Andrzej Kryszpiniuk | https://unsplash.com/photos/landscape-photography-of-desert-D1IS5s5O9xo |
+| `service-transfer.webp` | Minibus sur une route de montagne | Kendal Percimoney | https://unsplash.com/photos/white-van-on-road-under-cloudy-sky-during-daytime-TF4xMZdbQ24 |
+| `service-hourly.webp` | Chauffeur au volant | Fortune Vieyra | https://unsplash.com/photos/man-in-white-dress-shirt-driving-car-during-daytime-W1lLPnz8Chc |
+| `service-tour.webp` | Caravane de dromadaires | Y K | https://unsplash.com/photos/group-of-people-riding-on-camels-mhJml7Fusfs |
+| `city-marrakech.webp` | Koutoubia et Atlas | Paul Macallan | https://unsplash.com/photos/koutoubia-mosque-minaret-in-marrakesh-CFKksjYRSQ8 |
+| `city-casablanca.webp` | Mosquée Hassan II | Hans-Jürgen Weinhardt | https://unsplash.com/photos/concrete-building-with-tower-xijil3cOsis |
+| `city-rabat.webp` | Tour Hassan | Xhiliana | https://unsplash.com/photos/hassan-tower-and-palm-trees-under-clear-sky-ePPkzDnExt0 |
+| `city-fes.webp` | Médina de Fès | Mohammed | https://unsplash.com/photos/brown-concrete-building-under-blue-sky-during-daytime-7d3rAyEyw2U |
+| `city-tanger.webp` | Tanger de nuit | Raúl Cacho Oses | https://unsplash.com/photos/atwIEcpyeSM |
+| `city-agadir.webp` | Baie et plage | Louis Hansel | https://unsplash.com/photos/birds-eye-view-photography-of-beach-E6QT35zL4UM |
+
+À VÉRIFIER : la photo « Agadir » vient d'une recherche « Agadir » sans lieu certifié ; la remplacer par une photo de la baie d'Agadir confirmée ou par une photo du transporteur avant le lancement. Une ville ajoutée sans photo reprend la photo du désert.

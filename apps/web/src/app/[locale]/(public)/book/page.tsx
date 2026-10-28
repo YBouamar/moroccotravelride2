@@ -2,8 +2,9 @@ import { formatMoney, isBookableAt, searchPickupAt } from '@mtr/shared';
 import { getFormatter, getTranslations, setRequestLocale } from 'next-intl/server';
 import { Alert } from '@/components/ui/alert';
 import { buttonVariants } from '@/components/ui/button';
-import { Card, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { BookingForm } from '@/features/booking/components/booking-form';
+import { BookingSummary } from '@/features/booking/components/booking-summary';
 import { getBookableOffer } from '@/features/booking/queries';
 import { getPublicPlaces, parseSearch, type SearchParams } from '@/features/search/queries';
 import { getPlatformSettings } from '@/features/settings/queries';
@@ -74,25 +75,21 @@ export default async function BookPage({
           nonce={await getNonce()}
         />
       </Card>
-      <aside>
-        <Card className="flex flex-col gap-2 lg:sticky lg:top-6">
-          <CardTitle>{t('summary')}</CardTitle>
-          <p className="font-medium">
-            {placeName(search.from)} / {placeName(search.to)}
-          </p>
-          <p className="text-sm text-muted">
-            {format.dateTime(searchPickupAt(search), { dateStyle: 'full', timeStyle: 'short' })}
-          </p>
-          <p className="text-sm text-muted">
-            {offer.vehicleType} · {t('passengers', { count: search.passengers })}
-          </p>
-          <p className="text-sm text-muted">{t('carrier', { name: offer.carrierName })}</p>
-          <p className="mt-2 text-2xl font-bold">{formatMoney(offer.priceCents, locale)}</p>
-          <p className="text-xs text-muted">{t('priceNote')}</p>
-          <p className="mt-2 text-xs text-muted">
-            {t('acceptNote', { hours: settings.carrier_accept_hours })}
-          </p>
-        </Card>
+      {/* First on mobile: the traveler sees what and how much before filling the form. */}
+      <aside className="order-first lg:order-last">
+        <BookingSummary
+          from={placeName(search.from)}
+          to={placeName(search.to)}
+          pickup={format.dateTime(searchPickupAt(search), {
+            dateStyle: 'full',
+            timeStyle: 'short',
+          })}
+          vehicleType={offer.vehicleType}
+          passengers={search.passengers}
+          carrierName={offer.carrierName}
+          price={formatMoney(offer.priceCents, locale)}
+          acceptHours={settings.carrier_accept_hours}
+        />
       </aside>
     </div>
   );

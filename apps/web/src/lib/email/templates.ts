@@ -14,6 +14,8 @@ export const EMAIL_TEMPLATES = [
   'booking_refused',
   'booking_cancelled',
   'deadline_reminder',
+  'quote_request_received',
+  'quote_request_new',
 ] as const;
 export type EmailTemplate = (typeof EMAIL_TEMPLATES)[number];
 
