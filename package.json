@@ -28,15 +28,15 @@
     "@types/node": "24.19.2",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
-    "globals": "17.13.0",
+    "globals": "17.14.0",
     "husky": "9.1.7",
-    "lint-staged": "17.6.0",
-    "prettier": "3.9.10",
-    "supabase": "2.122.0",
-    "turbo": "2.11.10",
+    "lint-staged": "17.6.2",
+    "prettier": "3.10.1",
+    "supabase": "3.2.0",
+    "turbo": "2.11.13",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.72.0",
-    "vitest": "5.0.5"
+    "typescript-eslint": "8.73.0",
+    "vitest": "5.1.1"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs}": [
